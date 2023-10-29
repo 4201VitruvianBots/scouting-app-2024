@@ -1,0 +1,15 @@
+{
+  "name": "scouting-app-2024",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "workspaces": [
+    "client",
+    "server",
+    "database"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4201VitruvianBots/scouting-app-2023.git"
+  }
+}
