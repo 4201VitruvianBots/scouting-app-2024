@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "rootDir": "src/",
+        "moduleResolution": "nodenext",
+        "outDir": "dist/",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+    }
+  }
+  
