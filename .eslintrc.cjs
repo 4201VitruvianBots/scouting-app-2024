@@ -16,6 +16,6 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     ignorePatterns: ['dist/', '.eslintrc.cjs'],
     env: {
-        node: true
-    }
+        node: true,
+    },
 };

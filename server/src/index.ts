@@ -1,7 +1,7 @@
-import {startDockerContainer, stopDockerContainer} from 'database';
+import { startDockerContainer, stopDockerContainer } from 'database';
 
-console.log("hello world");
+console.log('hello world');
 
-const container = await startDockerContainer('socal-db')
-stopDockerContainer(container)
-console.log('Done')
+const container = await startDockerContainer('socal-db');
+stopDockerContainer(container);
+console.log('Done');
