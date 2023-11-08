@@ -1,3 +1,6 @@
+/**
+ * @type {import('eslint').Linter.Config}
+ */
 module.exports = {
     extends: [
         'eslint:recommended',
@@ -12,4 +15,7 @@ module.exports = {
     },
     plugins: ['@typescript-eslint'],
     ignorePatterns: ['dist/', '.eslintrc.cjs'],
+    env: {
+        node: true
+    }
 };
