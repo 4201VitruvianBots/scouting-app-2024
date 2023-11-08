@@ -8,6 +8,7 @@ async function buildDockerImage() {
     await docker.buildImage(
         {
             src: ['Dockerfile'],
+            context: '.',
         },
         { t: process.env.IMAGE_NAME },
         (err, stream) => {
