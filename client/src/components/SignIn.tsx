@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 
-function signIn() {
+function SignIn() {
     return(
         <div>
-            <Button></Button>
+            <Button>Hi</Button>
         </div>
     );
 }
