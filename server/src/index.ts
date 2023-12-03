@@ -1,7 +1,5 @@
 import { startDockerContainer, stopDockerContainer } from 'database';
 
-console.log('hello world');
-
 const container = await startDockerContainer('socal-db');
-stopDockerContainer(container);
+await stopDockerContainer(container);
 console.log('Done');

@@ -1,5 +1,6 @@
 import Docker from 'dockerode';
-import 'dotenv/config';
+import dotenv from 'dotenv-mono';
+dotenv.load();
 
 const docker = new Docker();
 
