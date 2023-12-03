@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "npm run build --workspaces && shx cp -r client/dist server/dist/static",
+    "start": "npm run start --workspace server",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint --fix .",
@@ -22,13 +24,7 @@
     "@typescript-eslint/parser": "^6.9.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.0.3"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.19",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.7",
-    "styled-components": "^6.1.1"
+    "prettier": "^3.0.3",
+    "shx": "^0.3.4"
   }
 }
