@@ -1,9 +1,19 @@
-function signIn() {
-    return(
-        <div>
-            
-        </div>
-    );
-}
+import { useState } from "react";
 
-export default {signIn}
+function SignIn({onChangeName}:{onChangeName:}) {
+ 
+}
+export { SignIn }
+
+// const [goof, setGoof] = useState(false);
+
+// function handleClick() {
+//     setGoof(!goof)
+// }
+
+// return(
+// <div>
+// {goof?6:2}
+// <button onClick={handleClick}>:3</button>
+// </div>
+// )
