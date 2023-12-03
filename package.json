@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build --workspaces && shx cp -r client/dist server/dist/static",
     "start": "npm run start --workspace server",
-    "dev": "concurrently \"npm run dev --workspace client\" \"npm run dev --workspace server\"",
+    "dev": "concurrently --kill-others \"npm run dev --workspace client\" \"npm run dev --workspace server\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint --fix .",
