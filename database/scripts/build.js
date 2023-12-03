@@ -20,7 +20,9 @@ async function buildDockerImage() {
 
             // Print build process
             stream.on('data', chunk => {
-                process.stdout.write(JSON.parse(chunk)?.stream ?? '');
+                try {
+                    process.stdout.write(JSON.parse(chunk)?.stream ?? '');
+                } catch (e) { /* empty */ }
             });
 
             stream.on('end', () => {
