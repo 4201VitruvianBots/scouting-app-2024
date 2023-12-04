@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "npm run build && cross-env NODE_ENV=dev npm run start"
+    "dev": "npm run build && cross-env NODE_ENV=dev npm run start",
+    "postinstall": "pip install -r requirements.txt"
   },
   "keywords": [],
   "author": "",
