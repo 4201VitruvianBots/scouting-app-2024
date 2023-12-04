@@ -2,7 +2,7 @@ name: Build all components
 
 on:
     push:
-        branches: ['main']
+        branches: ['main', 'build-action']
     
     pull_request:
         branches: ['main']
