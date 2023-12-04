@@ -1,0 +1,31 @@
+name: Build all components
+
+on:
+    push:
+        branches: ['main', 'build-action']
+    
+    pull_request:
+        branches: ['main']
+
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+            
+        strategy:
+            matrix:
+                workspace:
+                    - client
+                    - server
+                    - database
+            fail-fast: false
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Install dependencies
+              run: npm install --workspace ${{ matrix.workspace }}
+            
+            - name: Build app
+              run: npm run build --workspace ${{ matrix.workspace }}

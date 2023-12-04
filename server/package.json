@@ -14,5 +14,8 @@
   "type": "module",
   "devDependencies": {
     "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "database": "^1.0.0"
   }
 }
