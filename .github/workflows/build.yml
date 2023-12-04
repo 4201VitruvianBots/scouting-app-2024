@@ -24,10 +24,12 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - run: npm install --workspace ${{ matrix.workspace }}
+            - name: Install ${{ matrix.workspace }} dependencies
+              run: npm install --workspace ${{ matrix.workspace }}
             
             # Server requires database methods
-            - run: npm install --workspace database
+            - name: Install additional dependencies
+              run: npm install --workspace database
               if: matrix.workspace == 'server'
 
             - name: Build app
