@@ -24,7 +24,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - name: Install ${{ matrix.workspace }} dependencies
+            - name: Install dependencies
               run: npm install --workspace ${{ matrix.workspace }}
             
             - name: Build app
