@@ -8,7 +8,7 @@ false = False
 # WRITE YOUR CODE HERE
 #
 # Limitations:
-# - Arguments can only be made of primitive data types (str, list, int, dict)
+# - Arguments can only be made of primitive data types (str, list, int, dict, bool)
 # - Only 1 argument per function. If you need multiple arguments, take in a list that you then seperate into arguments
 # ---------------------------------------------------------
 

@@ -1,0 +1,3 @@
+matplotlib
+
+# Add packages to check for install python packages
