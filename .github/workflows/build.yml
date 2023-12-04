@@ -27,10 +27,5 @@ jobs:
             - name: Install ${{ matrix.workspace }} dependencies
               run: npm install --workspace ${{ matrix.workspace }}
             
-            # Server requires database methods
-            - name: Install additional dependencies
-              run: npm install --workspace database
-              if: matrix.workspace == 'server'
-
             - name: Build app
               run: npm run build --workspace ${{ matrix.workspace }}
