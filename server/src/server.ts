@@ -14,6 +14,10 @@ if (DEV) {
     );
 } else {
     app.use(express.static('static'));
+
+    app.get('/', (_, res) => {
+        res.sendFile('static/index.html');
+    })
 }
 
 export { app };
