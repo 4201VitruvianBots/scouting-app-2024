@@ -8,16 +8,13 @@ const app = express();
 
 // Since this is the fallback is must go after all other routes
 if (DEV) {
-    app.use(
-        '/',
-        createProxyMiddleware('http://localhost:5173', { ws: true })
-    );
+    app.use('/', createProxyMiddleware('http://localhost:5173', { ws: true }));
 } else {
     app.use(express.static('static'));
 
     app.get('/', (_, res) => {
         res.sendFile('static/index.html');
-    })
+    });
 }
 
 export { app };
