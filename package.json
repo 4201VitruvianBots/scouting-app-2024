@@ -23,12 +23,5 @@
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.19",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.7",
-    "styled-components": "^6.1.1"
   }
 }
