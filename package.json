@@ -15,7 +15,8 @@
   "workspaces": [
     "client",
     "server",
-    "database"
+    "database",
+    "server/requests"
   ],
   "repository": {
     "type": "git",
