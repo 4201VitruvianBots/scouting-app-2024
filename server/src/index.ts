@@ -1,9 +1,21 @@
 import { startDockerContainer, stopDockerContainer } from 'database';
-
-// If DEV is true then the app should forward requests to localhost:5173 instead of serving from /static
-const DEV = process.env.NODE_ENV === 'dev';
+import { app } from './server.js';
 
 const container = await startDockerContainer('socal-db');
-console.log(DEV ? 'Developemnt' : 'Production');
-await stopDockerContainer(container);
-console.log('Done');
+const server = app.listen(8080, () => {
+    console.log('Server running on port 8080');
+});
+
+let stopping = false;
+
+process.on('SIGINT', async () => {
+    if (stopping) return;
+    stopping = true;
+
+    console.log('Stopping server...');
+    server.close();
+    await stopDockerContainer(container);
+
+    console.log('Done');
+    process.exit();
+});

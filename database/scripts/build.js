@@ -22,7 +22,9 @@ async function buildDockerImage() {
             stream.on('data', chunk => {
                 try {
                     process.stdout.write(JSON.parse(chunk)?.stream ?? '');
-                } catch (e) { /* empty */ }
+                } catch (e) {
+                    /* empty */
+                }
             });
 
             stream.on('end', () => {

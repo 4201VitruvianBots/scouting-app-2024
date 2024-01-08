@@ -36,8 +36,12 @@ async function startDockerContainer(containerName) {
         });
     }
 
-    await container.start();
-    console.log('Started container');
+    if ((await container.inspect()).State.Running) {
+        console.log('Container already running');
+    } else {
+        await container.start();
+        console.log('Started container');
+    }
     return container;
 }
 
