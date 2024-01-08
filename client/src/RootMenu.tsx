@@ -1,23 +1,20 @@
-import { Link } from 'react-router-dom';
+import LinkButton from './components/LinkButton';
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
+import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 
 function RootMenu() {
     return (
-        <main>
-            <p>
-                <Link to='/admin'>Admin</Link>
-            </p>
-            <p>
-                <Link to='/match'>Match</Link>
-            </p>
-            <p>
-                <Link to='/pit'>Pit</Link>
-            </p>
-            <p>
-                <Link to='/recon'>Recon</Link>
-            </p>
-            <p>
-                <Link to='/super'>Super</Link>
-            </p>
+        <main className='box-border grid h-screen grid-cols-2 items-stretch gap-5 p-5'>
+            <LinkButton
+                link='/match'
+                icon={<ContentPasteSearchIcon style={{ fontSize: '50px' }} />}>
+                Match
+            </LinkButton>
+            <LinkButton
+                link='/super'
+                icon={<ScreenSearchDesktopIcon style={{ fontSize: '50px' }} />}>
+                Super
+            </LinkButton>
         </main>
     );
 }
