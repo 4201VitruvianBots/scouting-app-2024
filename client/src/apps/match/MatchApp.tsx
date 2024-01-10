@@ -1,9 +1,11 @@
+ {/*This is used for testing. it will be deleted later */}
 import {MatchData} from "server/requests";
 import { postJson } from "../../util";
 
 function MatchApp() {
     
-    
+
+    {/*This is used for testing. it will be deleted later */}    
     const test = async () => {
         const data: MatchData = {
             metadata: {
@@ -33,6 +35,7 @@ function MatchApp() {
         <>
             <h1>Match App</h1>
 
+            {/*This is used for testing. it will be deleted later */}
             <button onClick={test}> test </button>
         </>
     );
