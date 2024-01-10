@@ -28,8 +28,6 @@ function LinkButton({
     );
 }
 
-export {LinkButton, Bleh};
-
 // Christian's Funny Buttons vvv
 // const foilage = new Audio("/src/audio/vine-boom.mp3")
 
@@ -48,12 +46,4 @@ export {LinkButton, Bleh};
     <button className='text-red-800 text-2xl font-black cursor-not-allowed underline' onClick={poo}><Link to='/match'>VINE BOOM</Link></button>
     <button className='text-green-700 text-2xl font-serif cursor-wait underline' onClick={po}><Link to='/super'>Trumpet!</Link></button> */
 }
-
-function Bleh() {
-    return(
-        <div>
-            <p className='text-red-700 uppercase'>nomnomnom</p>
-            <button className='border-2 rounded-lg border-green-900 border-dotted shadow-xl px-4'>Yippee</button>
-        </div>
-    );
-}
+export default LinkButton

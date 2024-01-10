@@ -1,12 +1,10 @@
-import { Bleh, LinkButton } from "../../components/LinkButton";
+import Bleh from "../../components/Bleh";
 
 function MatchApp() {
     return (
         <>
             <h1>Match App</h1>
             <Bleh />
-            <LinkButton link="/super">Woah</LinkButton>
-            <LinkButton link="/admin">Crazy</LinkButton>
         </>
     );
 }
