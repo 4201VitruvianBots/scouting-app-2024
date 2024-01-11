@@ -1,8 +1,6 @@
 #Create MySQL Image for JSP Tutorial Application
-FROM mysql
+FROM mongodb
 
-ENV MYSQL_ROOT_PASSWORD my-secret-pw
-ENV MYSQL_DATABASE=rawData
 
 # COPY create_tables.sql /docker-entrypoint-initdb.d/
 
