@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import {MatchData} from 'server/requests';
+import {matchApp} from './Schema.js';
 
 // If DEV is true then the app should forward requests to localhost:5173 instead of serving from /static
 const DEV = process.env.NODE_ENV === 'dev';
@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/data/match', (req,res) => {
-    const data: MatchData = req.body;
+    const data:  {matchApp} = req.body;
     console.log(data.ampNotes);
 
     res.end();
