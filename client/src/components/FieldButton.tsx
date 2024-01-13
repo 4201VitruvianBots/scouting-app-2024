@@ -10,7 +10,6 @@ function FieldButton() {
     const [counterMid, setCounterMid] = useState(0);
     const [counterFar, setCounterFar] = useState(0);
     const [AMP, setAMP] = useState(0);
-
     const handleToggle = () => {
         setIsBlueAlliance(!isBlueAlliance);
     };
