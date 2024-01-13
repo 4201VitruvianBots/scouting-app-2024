@@ -29,13 +29,27 @@ function FieldButton() {
         setCounterFar(counterFar + 1);
     }
     function addOneAMP() {
-        setAMP(AMP + 1);
+        if (AMP < 10) {
+            setAMP(AMP + 1)
+        } else if (AMP >= 10) {
+            setAMP(10)
+        }
     }
     function addOneTrap() {
+        if (counterTrap < 3) {
         setCounterTrap(counterTrap + 1);
+        } else if (counterTrap >= 3) {
+            setCounterTrap(3)
+        }
+        
     }
     function addOneHigh() {
-        setCounterHigh(counterHigh + 1);
+        if (counterHigh < 3) {
+            setCounterHigh(counterHigh + 1);
+        } else if (counterHigh >= 3) {
+            setCounterHigh(3)
+        }
+
     }
 
     return (
@@ -78,28 +92,35 @@ function FieldButton() {
                     id='one'>
                     {counterFar}
                 </button>
+                <br />
+                <br />
+                {/* above over here for text outside of button */}
                 <button
                     className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
                     onClick={addOneAMP}
-                    id='one'>
+                    id='one'>  Amp Note: { /* or inside the button here */}
                     {AMP}
                 </button>
+                <br />
+                <br />
                 <button
                     className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneTrap}>
+                    onClick={addOneTrap}> Trap Note: { /* <br /> or break and over here to have the words above the number */}
                     {counterTrap}
                 </button>
+                <br />
+                <br />
                 <button
                     className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneHigh}>
+                    onClick={addOneHigh}> High Note:
                     {counterHigh}
                 </button>
-            </div>
-            <br />
-            <p>hello {isBlueAlliance ? 'world' : 'natalie'}</p>
+                <br />
+                <p>hello {isBlueAlliance ? 'world' : 'natalie'}</p>
 
-            {/* <img src={currentImage} className='background-image' /> */}
-            <p>Alliance: {isBlueAlliance ? 'Blue' : 'Red'}</p>
+                {/* <img src={currentImage} className='background-image' /> */}
+                <p>Alliance: {isBlueAlliance ? 'Blue' : 'Red'}</p>
+            </div>
         </>
     );
 }
