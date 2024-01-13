@@ -12,12 +12,51 @@ function FieldButton() {
     const [AMP, setAMP] = useState(0);
     const [counterTrap, setCounterTrap] = useState(0);
     const [counterHigh, setCounterHigh] = useState(0);
-    // const [AMPtoggle, setAMPToggle] = useState(false);
-    // const AMPtoggleBoo = Boolean; //hopefully this works for amp switch
+
+    // const mementos = []
+    // const input = document.querySelector('input') //this is the 'easy' way, memory intensive
+   
+    // const commands = []
+    // const input = document.querySelector('input') the not easy way
 
     const handleToggle = () => {
         setIsBlueAlliance(!isBlueAlliance);
     };
+
+    // function saveMemento() {
+    //     mementos.push(input.value)
+    // }
+    // function undo() {
+    //     const lastMemento = mementos.pop()
+
+    //     input.value = lastMemento : input.value
+    // }
+
+   //e
+
+    // function saveCommand(e) {
+    //     commands.push({
+    //       // the action is also saved for implementing redo, which
+    //       // is not implemented in this example.
+    //       action: { type: 'add', key: e.key, index: input.selectionStart },
+    //       inverse: { type: 'remove', index: input.selectionStart }
+    //     })
+    //   }
+
+    //   function undo() {
+    //     let value = //dunno yet? example is for text so 
+    //     const lastCommand = commands.pop()
+       
+    //     if (!lastCommand) return
+          
+    //     switch (lastCommand.inverse.type) {
+    //       case 'remove':
+    //         value.splice(lastCommand.inverse.index, 1)
+    //         break;      
+    //     }
+        
+    //     input.value = value.join('')
+    //   } harder way but more good i think
 
     function addOneNear() {
         setCounterNear(counterNear + 1);
@@ -121,6 +160,9 @@ function FieldButton() {
                 {/* <img src={currentImage} className='background-image' /> */}
                 <p>Alliance: {isBlueAlliance ? 'Blue' : 'Red'}</p>
             </div>
+
+
+
         </>
     );
 }
