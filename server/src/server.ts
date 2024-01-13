@@ -1,6 +1,7 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import {matchApp} from './Schema.js';
+// import { MatchData } from '../requests/index.js';
 
 // If DEV is true then the app should forward requests to localhost:5173 instead of serving from /static
 const DEV = process.env.NODE_ENV === 'dev';
@@ -9,12 +10,17 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/data/match', (req,res) => {
-    const data:  {matchApp} = req.body;
-    console.log(data.ampNotes);
+app.post('/data/match', async(req,res) => {
+    
+    const matchapp = new matchApp(req.body);
+    const aMatchApp = await matchapp.save();
+    
+
+    console.log(aMatchApp);
 
     res.end();
-})
+    
+});
 
 // Since this is the fallback is must go after all other routes
 if (DEV) {

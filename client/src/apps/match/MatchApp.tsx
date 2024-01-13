@@ -1,5 +1,5 @@
  {/*This is used for testing. it will be deleted later */}
-import {MatchData} from "server/requests";
+import {matchApp} from "server/src/Schema";
 import { postJson } from "../../util";
 
 function MatchApp() {
@@ -7,25 +7,9 @@ function MatchApp() {
 
     {/*This is used for testing. it will be deleted later */}    
     const test = async () => {
-        const data: MatchData = {
-            metadata: {
-                scouterName: 'Kyle Sue Baki',
-                robotPosition: 'blue_1',
-                robotTeam: 4201,
-            },
-            ampedSpeakerNotes: 100000,
-            ampNotes: 2,
-            climb: "harmony",
-            disabledSeconds: 5,
-            highNotes: 252,
-            nonAmpedSpeakerNotes: 1,
-            parked: true,
-            scoringLocations: {
-                A: 10,
-                B: 10,
-            },
-            trapNotes: 5
-        }
+        const data = matchApp.create({
+            ampNotes: 68
+        })
 
         await postJson('/data/match', data);
 

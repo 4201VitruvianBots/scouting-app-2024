@@ -6,7 +6,7 @@ import { app } from './server.js';
 
 const container = await startDockerContainer('socal-db');
 
-mongoose.connect('mongodb://127.0.0.1:27017');
+mongoose.connect('mongodb+srv://bestUsername:bestPassword23@cluster0.hr4gmev.mongodb.net/');
 
 const server = app.listen(8080, () => {
     console.log('Server running on port 8080');

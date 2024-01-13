@@ -5,17 +5,17 @@ import mongoose  from "mongoose";
 const metaDataSchema = new mongoose.Schema({
     scouterName: String,
     robotTeam: Number,
-    robotPosistion: {
-        red: {
-            type: Number,
-            min: 1,
-            max: 3
-    },
-        blue: {
-            type: Number,
-            min: 1,
-            max: 3
-    }}
+    // robotPosistion: {
+    //     red: {
+    //         type: Number,
+    //         min: 1,
+    //         max: 3
+    // },
+    //     blue: {
+    //         type: Number,
+    //         min: 1,
+    //         max: 3
+    // }}
 });
 
 const matchDataSchema = new mongoose.Schema({
@@ -35,32 +35,32 @@ const matchDataSchema = new mongoose.Schema({
 
 });
 
-// const superScoutDataSchema = new mongoose.Schema({
-//     metaData: [metaDataSchema],
-//     fouls: {
+/* const superScoutDataSchema = new mongoose.Schema({
+     metaData: [metaDataSchema],
+     fouls: {
 
-//     },
-//     defense: Number,
-//     driverSkill: Number,
-//     spotLitRobots: Number,
-//     coOp: Boolean,
-//     stationPlayerTeam: Number
-// });
- //'ssApp', superScoutDataSchema
+     },
+     defense: Number,
+     spotLitRobots: Number,
+     coOp: Boolean,
+     stationPlayerTeam: Number
+ });
+*/
 
-// const pitDataSchema = new mongoose.Schema({
-//     ScoutName: String,
-//     teamNumber: Number,
-//     heightMeters: Number,
-//     weightKg: Number,
-//     pitBattery: Number,
-//     drivebase: {
+ const pitDataSchema = new mongoose.Schema({
+     ScoutName: String,
+     teamNumber: Number,
+     heightMeters: Number,
+     weightKg: Number,
+     pitBattery: Number,
+     drivebase: {
 
-//     }
-// });
-//'pitApp', pitDataSchema
+     }
+ });
 
+// const ssApp = ('ssApp', superScoutDataSchema);
+const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
 
-export {matchApp};
+export {matchApp, pitApp};
 
