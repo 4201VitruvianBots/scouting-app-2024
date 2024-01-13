@@ -10,10 +10,10 @@ function FieldButton() {
     const [counterMid, setCounterMid] = useState(0);
     const [counterFar, setCounterFar] = useState(0);
     const [AMP, setAMP] = useState(0);
-    const [counterTrap, setCounterTrap] = useState(0); 
-    const [counterHigh, setCounterHigh] = useState(0); 
-    // const [AMPtoggle, setAMPToggle] = useState(false); 
-    // const AMPtoggleBoo = Boolean; //hopefully this works for amp switch 
+    const [counterTrap, setCounterTrap] = useState(0);
+    const [counterHigh, setCounterHigh] = useState(0);
+    // const [AMPtoggle, setAMPToggle] = useState(false);
+    // const AMPtoggleBoo = Boolean; //hopefully this works for amp switch
 
     const handleToggle = () => {
         setIsBlueAlliance(!isBlueAlliance);
@@ -31,13 +31,12 @@ function FieldButton() {
     function addOneAMP() {
         setAMP(AMP + 1);
     }
-    function addOneTrap(){ 
-        setCounterTrap(counterTrap + 1); 
-    } 
-    function addOneHigh(){ 
-        setCounterHigh(counterHigh + 1); 
-    } 
-    
+    function addOneTrap() {
+        setCounterTrap(counterTrap + 1);
+    }
+    function addOneHigh() {
+        setCounterHigh(counterHigh + 1);
+    }
 
     return (
         <>
@@ -79,12 +78,24 @@ function FieldButton() {
                     id='one'>
                     {counterFar}
                 </button>
-                <button className='px-4 border border-1 rounded-lg border-gray-700 shadow-xl' onClick={addOneAMP} id='one'>{AMP}</button> 
-                       <button className='px-4 border border-1 rounded-lg border-gray-700 shadow-xl' onClick={addOneTrap}>{counterTrap}</button> 
-                       <button className='px-4 border border-1 rounded-lg border-gray-700 shadow-xl' onClick={addOneHigh}>{counterHigh}</button> 
-                       
-                    </div> 
-                    <br /> 
+                <button
+                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    onClick={addOneAMP}
+                    id='one'>
+                    {AMP}
+                </button>
+                <button
+                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    onClick={addOneTrap}>
+                    {counterTrap}
+                </button>
+                <button
+                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    onClick={addOneHigh}>
+                    {counterHigh}
+                </button>
+            </div>
+            <br />
             <p>hello {isBlueAlliance ? 'world' : 'natalie'}</p>
 
             {/* <img src={currentImage} className='background-image' /> */}
