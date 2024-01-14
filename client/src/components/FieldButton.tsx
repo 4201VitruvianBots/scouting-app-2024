@@ -27,10 +27,10 @@ function FieldButton() {
                 onChange={handleImage}
                 className='font-serif'>Toggle Map Color
             </ToggleButton> */}
-            <Button onClick={() => handleCount('near')}>{count.near}</Button>
-            <Button onClick={() => handleCount('mid')}>{count.mid}</Button>
-            <Button onClick={() => handleCount('far')}>{count.far}</Button>
-            <Button onClick={() => handleCount('amp')}>{count.amp}</Button>
+            <Button variant='outlined' onClick={() => handleCount('near')}>{count.near}</Button>
+            <Button variant='outlined' onClick={() => handleCount('mid')}>{count.mid}</Button>
+            <Button variant='outlined' onClick={() => handleCount('far')}>{count.far}</Button>
+            <Button variant='outlined' onClick={() => handleCount('amp')}>{count.amp}</Button>
         </div>
     );
 }
