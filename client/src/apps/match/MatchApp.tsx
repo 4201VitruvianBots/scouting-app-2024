@@ -1,9 +1,14 @@
+import FieldButton from "../../components/FieldButton";
+
 function MatchApp() {
     return (
         <>
-            <h1>Match App</h1>
+            <p>Match Scouting App</p>
+            <FieldButton />
         </>
     );
 }
+
+
 
 export default MatchApp;
