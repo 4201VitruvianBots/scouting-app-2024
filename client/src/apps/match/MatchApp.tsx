@@ -34,7 +34,7 @@ function MatchApp() {
             <h1>Match App</h1>
             {/* <form method="POST" action="/data/match" /> */}
             {/*This is used for testing. it will be deleted later */}
-            <button onClick={test}> test </button>
+            <button onClick={test}> submit </button>
         </>
     );
  }
