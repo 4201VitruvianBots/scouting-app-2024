@@ -9,11 +9,11 @@ function MatchApp() {
     const test = async () => {
         const data = new matchApp({
             metaData:{
-                scouterName: "ncjds",
-                robotTeam: 12
+                scouterName: "vdsabgh",
+                robotTeam: 23
             },
-            nonAmpedSpeakerNotes: 213,
-            ampedSpeakerNotes: 32,
+            nonAmpedSpeakerNotes: 121,
+            ampedSpeakerNotes: 39,
             ampNotes: 321,
             trapNotes: 45453,
             highNotes: 5443,
@@ -25,7 +25,7 @@ function MatchApp() {
             parked: true,
             disabledSeconds: 0
         })
-        await postJson('/data/match', data);
+        await postJson('http://localhost:8080/data/match', data);
         console.log(test)
     }
         

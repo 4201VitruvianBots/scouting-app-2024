@@ -1,5 +1,5 @@
 #Create MySQL Image for JSP Tutorial Application
-FROM mongodb
+FROM mongo
 
 
 # COPY create_tables.sql /docker-entrypoint-initdb.d/

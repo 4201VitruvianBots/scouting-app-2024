@@ -23,6 +23,7 @@
     "url": "git+https://github.com/4201VitruvianBots/scouting-app-2023.git"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "concurrently": "^8.2.2",
@@ -33,6 +34,7 @@
   },
   "dependencies": {
     "@types/mongoose": "^5.11.97",
+    "cors": "^2.8.5",
     "mongoose": "^8.0.4",
     "typescript": "^5.3.3"
   }
