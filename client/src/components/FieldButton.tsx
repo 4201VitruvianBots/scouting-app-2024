@@ -1,71 +1,36 @@
-import fieldmapRED from '../images/fieldmapRED.png';
-import fieldmapBLUE from '../images/fieldmapBLUE.png';
-import { ToggleButton } from '@mui/material';
 import { useState } from 'react';
+import { ToggleButton } from '@mui/material';
+import fieldRed from '../images/fieldRed.png';
+import fieldBlue from '../images/fieldBlue.png';
 
 function FieldButton() {
-    const [isBlueAlliance, setIsBlueAlliance] = useState(false);
-    const currentImage = isBlueAlliance ? fieldmapBLUE : fieldmapRED; //use this boolean whenever switching from red/blue is needed
-    const [counterNear, setCounterNear] = useState(0);
-    const [counterMid, setCounterMid] = useState(0);
-    const [counterFar, setCounterFar] = useState(0);
-    const [AMP, setAMP] = useState(0);
-    const [counterTrap, setCounterTrap] = useState(0);
-    const [counterHigh, setCounterHigh] = useState(0);
-    // const [AMPtoggle, setAMPToggle] = useState(false);
-    // const AMPtoggleBoo = Boolean; //hopefully this works for amp switch
+    const [count, setCount] = useState({near: 0, mid: 0, far: 0, amp: 0, trap: 0, high: 0});
+    type countKeys = 'near' | 'mid' | 'far' | 'amp' | 'trap' | 'high';
+    const [alliance, setAlliance] = useState(false); //false=blue, true=red
+    const image = alliance ? fieldBlue : fieldRed;
 
-    const handleToggle = () => {
-        setIsBlueAlliance(!isBlueAlliance);
+    const handleCount = (key: countKeys) => {
+        setCount(prevCount => ({
+            ...prevCount,
+            [key]: prevCount[key] + 1,
+        }));
     };
-
-    function addOneNear() {
-        setCounterNear(counterNear + 1);
-    }
-    function addOneMid() {
-        setCounterMid(counterMid + 1);
-    }
-    function addOneFar() {
-        setCounterFar(counterFar + 1);
-    }
-    function addOneAMP() {
-        if (AMP < 10) {
-            setAMP(AMP + 1)
-        } else if (AMP >= 10) {
-            setAMP(10)
-        }
-    }
-    function addOneTrap() {
-        if (counterTrap < 3) {
-        setCounterTrap(counterTrap + 1);
-        } else if (counterTrap >= 3) {
-            setCounterTrap(3)
-        }
-        
-    }
-    function addOneHigh() {
-        if (counterHigh < 3) {
-            setCounterHigh(counterHigh + 1);
-        } else if (counterHigh >= 3) {
-            setCounterHigh(3)
-        }
-
-    }
+    const handleImage = () => {
+        setAlliance(!alliance);
+    };
 
     return (
         <>
             <ToggleButton
                 value='check'
-                selected={currentImage === fieldmapRED}
-                onChange={handleToggle}
+                selected={image === fieldRed}
+                onChange={handleImage}
                 className='font-serif'>
                 Toggle Map Color
             </ToggleButton>
-
-            {/* <div style={{ backgroundImage: `url(${currentImage})` }}> */}
             <div
                 style={{
-                    backgroundImage: `url(${currentImage})`,
+                    backgroundImage: `url(${image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: '40em',
@@ -76,51 +41,45 @@ function FieldButton() {
                 }}>
                 <button
                     className='h-full w-1/3 bg-orange-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneNear}
+                    onClick={() => handleCount('near')}
                     id='one'>
-                    {counterNear}
+                    {count.near}
                 </button>
+
                 <button
                     className='h-full w-1/3 bg-blue-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneMid}
+                    onClick={() => handleCount('mid')}
                     id='one'>
-                    {counterMid}
+                    {count.mid}
                 </button>
-                <button
-                    className='h-full w-1/3 bg-green-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneFar}
-                    id='one'>
-                    {counterFar}
-                </button>
-                <br />
-                <br />
-                {/* above over here for text outside of button */}
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneAMP}
-                    id='one'>  Amp Note: { /* or inside the button here */}
-                    {AMP}
-                </button>
-                <br />
-                <br />
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneTrap}> Trap Note: { /* <br /> or break and over here to have the words above the number */}
-                    {counterTrap}
-                </button>
-                <br />
-                <br />
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneHigh}> High Note:
-                    {counterHigh}
-                </button>
-                <br />
-                <p>hello {isBlueAlliance ? 'world' : 'natalie'}</p>
 
-                {/* <img src={currentImage} className='background-image' /> */}
-                <p>Alliance: {isBlueAlliance ? 'Blue' : 'Red'}</p>
+                <button
+                    className='h-full w-1/3 bg-green-600 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
+                    onClick={() => handleCount('far')}
+                    id='one'>
+                    {count.far}
+                </button>
+
+                <br />
             </div>
+            <button
+                className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                onClick={() => handleCount('amp')}>
+                {' '}
+                AMP Note: {count.amp}{' '}
+            </button>
+            <button
+                className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                onClick={() => handleCount('high')}>
+                {' '}
+                High Note: {count.high}{' '}
+            </button>
+            <button
+                className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                onClick={() => handleCount('trap')}>
+                {' '}
+                Trap Note: {count.trap}{' '}
+            </button>
         </>
     );
 }
