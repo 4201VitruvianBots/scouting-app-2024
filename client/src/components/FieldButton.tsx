@@ -8,6 +8,7 @@ function FieldButton() {
     type countKeys = 'near' | 'mid' | 'far' | 'amp' | 'trap' | 'high';
     const [alliance, setAlliance] = useState(false); //false=blue, true=red
     const image = alliance ? fieldBlue : fieldRed;
+    const [amplified, setAmplified] = useState(false) //false=off, true=on
 
     const handleCount = (key: countKeys) => {
         setCount(prevCount => ({
@@ -18,6 +19,9 @@ function FieldButton() {
     const handleImage = () => {
         setAlliance(!alliance);
     };
+    const handleAmplified = () => {
+        setAmplified(!amplified);
+    };
 
     return (
         <>
@@ -27,6 +31,12 @@ function FieldButton() {
                 onChange={handleImage}
                 className='font-serif'>
                 Toggle Map Color
+            </ToggleButton>
+            <ToggleButton
+                value='check'
+                onChange={handleAmplified}
+                className='font-serif'>
+                {amplified ? 'Amp On' : 'Amp Off'}
             </ToggleButton>
             <div
                 style={{
