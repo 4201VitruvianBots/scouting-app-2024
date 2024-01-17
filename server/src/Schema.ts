@@ -5,17 +5,10 @@ import mongoose  from "mongoose";
 const metaDataSchema = new mongoose.Schema({
     scouterName: String,
     robotTeam: Number,
-    // robotPosistion: {
-    //     red: {
-    //         type: Number,
-    //         min: 1,
-    //         max: 3
-    // },
-    //     blue: {
-    //         type: Number,
-    //         min: 1,
-    //         max: 3
-    // }}
+    robotPosition: {
+        type: String,
+        enum: ['red 1', 'red 2', 'red 3', 'blue 1', 'blue 2', 'blue 3']
+    }
 });
 
 const matchDataSchema = new mongoose.Schema({
@@ -26,9 +19,8 @@ const matchDataSchema = new mongoose.Schema({
     trapNotes: Number,
     highNotes: Number,
     climb: {
-        failed: Boolean,
-        success: Boolean,
-        harmony: Boolean,
+        type: String,
+        enum: ['failed', 'success', 'harmony']
     },
     parked: Boolean,
     disabledSeconds: Number
