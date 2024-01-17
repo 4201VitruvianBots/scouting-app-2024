@@ -1,18 +1,19 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
 
 import mongoose  from "mongoose";
+import { MatchData, PitFile, MetaData } from "../requests/index.js";
 
-const metaDataSchema = new mongoose.Schema({
+const metaDataSchema = new mongoose.Schema<MetaData>({
     scouterName: String,
     robotTeam: Number,
     robotPosition: {
         type: String,
-        enum: ['red 1', 'red 2', 'red 3', 'blue 1', 'blue 2', 'blue 3']
+        enum: ['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']
     }
 });
 
-const matchDataSchema = new mongoose.Schema({
-    metaData: [metaDataSchema],
+const matchDataSchema = new mongoose.Schema<MatchData>({
+    metadata: [metaDataSchema],
     nonAmpedSpeakerNotes: Number,
     ampedSpeakerNotes: Number,
     ampNotes: Number,
@@ -27,10 +28,11 @@ const matchDataSchema = new mongoose.Schema({
 
 });
 
-/* const superScoutDataSchema = new mongoose.Schema({
-     metaData: [metaDataSchema],
+/* const superScoutDataSchema = new mongoose.Schema<SuperData>({
+     metadata: [metaDataSchema],
      fouls: {
-
+        A: Number,
+        B: Number
      },
      defense: Number,
      spotLitRobots: Number,
@@ -39,12 +41,12 @@ const matchDataSchema = new mongoose.Schema({
  });
 */
 
- const pitDataSchema = new mongoose.Schema({
-     ScoutName: String,
+ const pitDataSchema = new mongoose.Schema<PitFile>({
+     scouterName: String,
      teamNumber: Number,
      heightMeters: Number,
      weightKg: Number,
-     pitBattery: Number,
+     pitBatteryCount: Number,
      drivebase: {
 
      }
@@ -53,6 +55,7 @@ const matchDataSchema = new mongoose.Schema({
 // const ssApp = ('ssApp', superScoutDataSchema);
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
+/* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
 
-export {matchApp, pitApp};
+export {matchApp, pitApp, };
 

@@ -6,7 +6,7 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 'A' | 'B';
-export type ScoringLocation = 'A' | 'B';
+// export type ScoringLocation = 'A' | 'B';
 
 export interface MetaData {
     scouterName: string;
@@ -24,7 +24,7 @@ export interface MatchData {
     ampNotes: number;
     trapNotes: number;
     highNotes: number;
-    scoringLocations: Record<ScoringLocation, number>;
+//    scoringLocations: Record<ScoringLocation, number>;
     climb: 'failed' | 'success' | 'harmony';
     parked: boolean;
     disabledSeconds: number;
