@@ -33,12 +33,12 @@ function FieldButton() {
     };
 
     return(
-        <div>
+        <div className='grid place-content-center'>
             <ToggleButton value='check' onClick={handleImage}>Switch Alliance</ToggleButton>
             <Button onClick={undoCount}>Undo Count</Button>
-            <div>
+            <div className='flex'>
                 <img src={image} />
-                <ButtonGroup className=''>
+                <ButtonGroup className='absolute box-border items-stretch h-screen'>
                     <Button onClick={() => handleCount('near')}>{count.near}</Button>
                     <Button onClick={() => handleCount('mid')}>{count.mid}</Button>
                     <Button onClick={() => handleCount('far')}>{count.far}</Button>
