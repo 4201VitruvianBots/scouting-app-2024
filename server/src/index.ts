@@ -4,12 +4,12 @@ import { app } from './server.js';
 
 
 
-const container = await startDockerContainer('socal-db');
+const container = await startDockerContainer(process.env.CONTAINER_NAME);
 
 mongoose.connect('mongodb://0.0.0.0:27107/');
 
 const server = app.listen(8080, () => {
-    console.log('Server running on port 8080');
+    console.log('Server running at http://localhost:8080');
 });
 
 let stopping = false;
