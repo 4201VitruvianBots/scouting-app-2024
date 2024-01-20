@@ -9,6 +9,7 @@ import MatchApp from './apps/match/MatchApp';
 import PitApp from './apps/pit/PitApp';
 import ReconApp from './apps/recon/ReconApp';
 import SuperApp from './apps/super/SuperSApp';
+import PublicApp from './apps/public/PublicApp';
 
 
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: 'pit',
                 element: <PitApp />,
+            },
+            {
+                path: 'public',
+                element: <PublicApp />,
             },
             {
                 path: 'recon',

@@ -1,10 +1,10 @@
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
 
-function PitApp() {
+function PublicApp() {
     return (
         <>
-            <h1>Pit App</h1>
+            <h1>Public App</h1>
             <BackHome
                     link='/'
                     icon={
@@ -12,8 +12,9 @@ function PitApp() {
                     }>
                   
             </BackHome>
+            
         </>
     );
 }
 
-export default PitApp;
+export default PublicApp;

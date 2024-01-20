@@ -1,3 +1,6 @@
+
+import BackHome from "../../components/BackHome";
+import HomeIcon from '@mui/icons-material/Home';
 import { postJson } from '../../util';
 import { MatchData } from 'server/requests';
 
@@ -28,8 +31,18 @@ function MatchApp() {
     return (
         <>
             <h1>Match App</h1>
+
+            <BackHome
+                    link='/'
+                    icon={
+                        <HomeIcon style={{ fontSize: '30px' }} />
+                    }>
+                  
+            </BackHome>
+
             {/*This is used for testing. it will be deleted later */}
             <button onClick={test}> submit </button>
+
         </>
     );
 }

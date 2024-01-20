@@ -19,7 +19,7 @@ function LinkButton({
                 <Button
                     variant='outlined'
                     color='success'
-                    style={{ width: '100%', height: '100%', fontSize: '30px' }}
+                    style={{ width: '100%', height: '100%', fontSize: '30px', backgroundColor:'lightgray', borderColor:'darkgray'}}
                     startIcon={icon}>
                     {children}
                 </Button>
