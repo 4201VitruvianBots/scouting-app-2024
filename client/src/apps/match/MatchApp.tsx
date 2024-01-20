@@ -1,4 +1,4 @@
-import FieldButton from "../../components/FieldButton";
+import FieldButton from "../../components/CleanUp";
 
 function MatchApp() {
     return (
