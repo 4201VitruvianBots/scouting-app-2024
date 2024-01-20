@@ -7,11 +7,13 @@ function LinkButton({
     icon,
     className,
     children,
+  
 }: {
     link: string;
     icon?: ReactNode;
     className?: string;
     children?: string;
+   
 }) {
     return (
         <>
@@ -20,9 +22,13 @@ function LinkButton({
                     variant='outlined'
                     color='success'
                     style={{ width: '100%', height: '100%', fontSize: '30px' }}
-                    startIcon={icon}>
+                    startIcon={icon}
+                    
+                >
                     {children}
+                    
                 </Button>
+                
             </Link>
         </>
     );
