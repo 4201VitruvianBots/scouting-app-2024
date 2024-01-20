@@ -59,4 +59,3 @@ const matchApp =  mongoose.model("matchApp", matchDataSchema);
 /* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
 
 export {matchApp, pitApp, };
-
