@@ -1,10 +1,10 @@
-import Test from "../../components/cleanUp";
+import FieldButton from "../../components/CleanUp";
 
 function MatchApp() {
     return (
         <>
             <p>Match Scouting App</p>
-            <Test />
+            <FieldButton />
         </>
     );
 }
