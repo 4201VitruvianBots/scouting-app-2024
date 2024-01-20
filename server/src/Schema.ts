@@ -48,7 +48,8 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
      weightKg: Number,
      pitBatteryCount: Number,
      drivebase: {
-
+            type: String,
+            enum: ['Tank', 'swerve', 'other' ]
      }
  });
 
