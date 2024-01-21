@@ -1,6 +1,6 @@
 import { postJson } from '../../util';
 import { MatchData } from 'server/requests';
-
+import {useQueue} from "../../queue";
 function MatchApp() {
     {
         /*This is used for testing. it will be deleted later */
@@ -23,13 +23,17 @@ function MatchApp() {
         };
         await postJson('/data/match', data);
         console.log(test);
+        
     };
+    
+   useQueue()
 
     return (
         <>
             <h1>Match App</h1>
             {/*This is used for testing. it will be deleted later */}
             <button onClick={test}> submit </button>
+
         </>
     );
 }

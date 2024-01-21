@@ -6,7 +6,7 @@ import { useEffect, /*useState */} from "react";
 
 
 
-function test() {
+function useQueue() {
     
     // const [data, setData] = useState("");
        
@@ -36,4 +36,4 @@ function test() {
     
 // };
 
-export default test;
+export {useQueue};
