@@ -2,22 +2,23 @@ import FieldButton from "../../components/FieldButton";
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
 import { useState } from "react";
+import { Button } from '@mui/material';
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
-    autoNear: number,
-    autoMid: number,
-    autoFar: number,
-    autoAmp: number,
-    teleNear: number,
-    teleMid: number,
-    teleFar: number,
-    teleAmp: number,
-    trap: number,
-    high: number,
-    aNear: number, 
-    aMid: number, 
-    aFar: number
+    autoNear: number;
+    autoMid: number;
+    autoFar: number;
+    autoAmp: number;
+    teleNear: number;
+    teleMid: number;
+    teleFar: number;
+    teleAmp: number;
+    trap: number;
+    high: number;
+    aNear: number;
+    aMid: number;
+    aFar: number;
 }
 
 function MatchApp() {
@@ -32,35 +33,50 @@ function MatchApp() {
         teleAmp: 0,
         trap: 0,
         high: 0,
-        aNear: 0, 
-        aMid: 0, 
-        aFar: 0
+        aNear: 0,
+        aMid: 0,
+        aFar: 0,
     });
-  
-    const handleCount = (
-        key: countKeys
-    ) => {
-       
-        setCount(prevCount => ({
-            ...prevCount,
-            [key]: prevCount[key] + 1,
-        }));
+    const [countHistory, setCountHistory] = useState<
+        { key: countKeys; oldValue: number; newValue: number }[]
+    >([]);
+
+    const handleCount = (key: countKeys) => {
+        setCount(prevCount => {
+            const newCount = { ...prevCount, [key]: prevCount[key] + 1 };
+            setCountHistory(prevHistory => [
+                { key, oldValue: prevCount[key], newValue: newCount[key] },
+                ...prevHistory,
+            ]);
+            return newCount;
+        });
+    };
+
+    const undoCount = () => {
+        if (countHistory.length > 0) {
+            setCount(prevCount => {
+                const lastCount = countHistory[0];
+                const newCount = {
+                    ...prevCount,
+                    [lastCount.key]: lastCount.oldValue,
+                };
+                setCountHistory(prevHistory => prevHistory.slice(1));
+                return newCount;
+            });
+        }
     };
 
     return (
-        <main className="text-center">
+        <main className='text-center'>
             <p>Match Scouting App</p>
             <BackHome
-                    link='/'
-                    icon={
-                        <HomeIcon style={{ fontSize: '30px' }} />
-                    }>
-                  
-            </BackHome>
-            <FieldButton count={count} setCount={setCount} teleop={false}/>
-            <FieldButton count={count} setCount={setCount} teleop={true}/>
+                link='/'
+                icon={<HomeIcon style={{ fontSize: '30px' }} />}></BackHome>
 
-            
+            <Button onClick={undoCount}>Undo Count</Button>
+            <FieldButton count={count} setCount={setCount} teleop={false} />
+            <FieldButton count={count} setCount={setCount} teleop={true} />
+
             <button
                 className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
                 onClick={() => handleCount('high')}>
@@ -73,7 +89,6 @@ function MatchApp() {
                 {' '}
                 Trap Note: {count.trap}{' '}
             </button>
-            
         </main>
     );
 }
