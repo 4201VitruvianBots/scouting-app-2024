@@ -1,51 +1,195 @@
-// Using this file to re-write other files and clean em up
-import { useState } from 'react';
-import { Button, ButtonGroup, ToggleButton } from '@mui/material';
-import fieldRed from '../images/fieldRed.png';
-import fieldBlue from '../images/fieldBlue.png';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { styled } from '@mui/material';
+import MuiToggleButton from '@mui/material/ToggleButton';
+import { MatchScores } from '../apps/match/MatchApp';
+type countKeys = keyof MatchScores;
 
-function FieldButton() {
-    type countKeys = 'near' | 'mid' | 'far' | 'amp' | 'trap' | 'high';
-    const [count, setCount] = useState({near: 0, mid: 0, far: 0, amp: 0, trap: 0, high: 0});
-    const [countHistory, setCountHistory] = useState<{key: countKeys, oldValue: number, newValue: number}[]>([]);
-    const [alliance, setAlliance] = useState(false); //false=blue, true=red
-    const image = alliance ? fieldBlue : fieldRed; //sets image to Blue/Red depending on alliance
+function RegionButton({
+    count,
+    teleop,
+    className,
+    handleCount,
+    autokey,
+    telekey,
+    akey,
+}: {
+    count: MatchScores;
 
-    const handleCount = (key: countKeys) => {
-        setCount(prevCount => {
-            const newCount = {...prevCount, [key]: prevCount[key] + 1};
-            setCountHistory(prevHistory => [{key, oldValue: prevCount[key], newValue: newCount[key]}, ...prevHistory]);
-            return newCount;
-        });
-    };
-    const undoCount = () => {
-        if (countHistory.length > 0) {
-            setCount(prevCount => {
-                const lastCount = countHistory[0];
-                const newCount = {...prevCount, [lastCount.key]: lastCount.oldValue};
-                setCountHistory(prevHistory => prevHistory.slice(1));
-                return newCount;
-            });
-        }
-    };
-    const handleImage = () => {
-        setAlliance(!alliance)
-    };
-
-    return(
-        <div className='grid place-content-center'>
-            <ToggleButton value='check' onClick={handleImage}>Switch Alliance</ToggleButton>
-            <Button onClick={undoCount}>Undo Count</Button>
-            <div className='flex'>
-                <img src={image} />
-                <ButtonGroup className='absolute box-border items-stretch h-screen'>
-                    <Button onClick={() => handleCount('near')}>{count.near}</Button>
-                    <Button onClick={() => handleCount('mid')}>{count.mid}</Button>
-                    <Button onClick={() => handleCount('far')}>{count.far}</Button>
-                </ButtonGroup>
-            </div>
-        </div>
+    teleop: boolean;
+    className: string;
+    handleCount: (
+        autokey: countKeys,
+        telekey: countKeys,
+        aKey?: countKeys
+    ) => void;
+    autokey: countKeys;
+    telekey: countKeys;
+    akey: countKeys;
+}) {
+    return (
+        <button
+            className={`${className} h-full w-1/3 overflow-hidden text-6xl font-semibold  text-white first-letter:font-sans md:bg-opacity-50 `}
+            onClick={() => handleCount(autokey, telekey, akey)}
+            id='one'>
+            <p>{count[teleop ? telekey : autokey]}</p>
+            {teleop && (
+                <p className='m-[10px] text-[20px]'>AMP: {count[akey]}</p>
+            )}
+        </button>
     );
 }
 
-export default FieldButton
+function FieldButton({
+    count,
+    setCount,
+    teleop,
+}: {
+    count: MatchScores;
+    setCount: Dispatch<SetStateAction<MatchScores>>;
+    teleop: boolean;
+}) {
+    const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
+
+    const [amplified, setAmplified] = useState(false); //false=off, true=on
+
+    const handleCount = (
+        autokey: countKeys,
+        telekey: countKeys,
+        aKey?: countKeys
+    ) => {
+        const finalKey = teleop
+            ? aKey && amplified
+                ? aKey
+                : telekey
+            : autokey;
+        amplified == true && aKey;
+        setCount(prevCount => ({
+            ...prevCount,
+            [finalKey]: prevCount[finalKey] + 1,
+        }));
+    };
+
+    const handleImage = () => {
+        setAllianceBlue(!allianceBlue);
+    };
+
+    const handleAmplified = () => {
+        setAmplified(!amplified);
+    };
+
+    const ToggleButton1 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#3268a8',
+        },
+    });
+
+    const ToggleButton2 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#00ff00',
+        },
+    });
+
+    return (
+        <>
+            <ToggleButton1
+                value='check'
+                selected={allianceBlue}
+                onChange={handleImage}
+                className='bg-red-400 font-serif'>
+                Toggle Map Color
+            </ToggleButton1>
+
+            {teleop && (
+                <ToggleButton2
+                    value='check'
+                    onChange={handleAmplified}
+                    selected={amplified}
+                    className={`${amplified ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
+                    Amp {amplified ? 'On' : 'Off'}
+                    {/* {amplified ? <>Amp <span>On</span></> : 'Amp Off'} */}
+                </ToggleButton2>
+            )}
+
+            <div
+                className={`${allianceBlue ? 'bg-field-blue' : 'bg-field-red'} align-center flex h-[40em] w-[40em] flex-row bg-cover bg-center object-contain brightness-75`}>
+                {allianceBlue ? (
+                    <>
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-red-400'
+                            handleCount={handleCount}
+                            autokey='autoFar'
+                            telekey='teleFar'
+                            akey='aFar'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-green-400'
+                            handleCount={handleCount}
+                            autokey='autoNear'
+                            telekey='teleNear'
+                            akey='aNear'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-blue-400'
+                            handleCount={handleCount}
+                            autokey='autoMid'
+                            telekey='teleMid'
+                            akey='aMid'
+                        />
+                    </>
+                ) : (
+                    <>
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-blue-400'
+                            handleCount={handleCount}
+                            autokey='autoMid'
+                            telekey='teleMid'
+                            akey='aMid'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-green-400'
+                            handleCount={handleCount}
+                            autokey='autoNear'
+                            telekey='teleNear'
+                            akey='aNear'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-red-400'
+                            handleCount={handleCount}
+                            autokey='autoFar'
+                            telekey='teleFar'
+                            akey='aFar'
+                        />
+
+
+                    </>
+                )}
+
+               
+
+                <br />
+            </div>
+            <button
+                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    onClick={() => handleCount('autoAmp','teleAmp' )}>
+                   
+                    AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
+            </button>
+        </>
+    );
+}
+
+export default FieldButton;
