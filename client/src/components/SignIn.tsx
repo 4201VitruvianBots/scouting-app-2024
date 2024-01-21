@@ -7,9 +7,10 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, ButtonGroup } from '@mui/material';
+import { styled } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import MuiToggleButton from '@mui/material/ToggleButton';
 
 function SignIn() {
     const [event, setEvent] = React.useState('');
@@ -26,6 +27,20 @@ function SignIn() {
     ) => {
         setAlliance(newAlliance);
     };
+
+    const ToggleButtonRed = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#a83232',
+        },
+    });
+
+    const ToggleButtonBlue = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#323aa8',
+        },
+    });
 
     return (
         <div>
@@ -72,24 +87,24 @@ function SignIn() {
                     exclusive
                     onChange={handleChangeAlliance}
                     aria-label='text alignment'>
-                    <ToggleButton value='Red 1' aria-label='Red 1'>
-                        <p className='font-semibold text-red-500'>Red 1</p>
-                    </ToggleButton>
-                    <ToggleButton value='Red 2' aria-label='Red 2'>
+                    <ToggleButtonRed value='Red 1' aria-label='Red 1'>
+                        <p className='font-semibold text-red-500 bg-5'>Red 1</p>
+                    </ToggleButtonRed>
+                    <ToggleButtonRed value='Red 2' aria-label='Red 2'>
                         <p className='font-semibold text-red-500'> Red 2</p>
-                    </ToggleButton>
-                    <ToggleButton value='Red 3' aria-label='Red 3'>
+                    </ToggleButtonRed>
+                    <ToggleButtonRed value='Red 3' aria-label='Red 3'>
                         <p className='font-semibold text-red-500'>Red 3</p>
-                    </ToggleButton>
-                    <ToggleButton value='Blue 1' aria-label='Blue 1'>
+                    </ToggleButtonRed>
+                    <ToggleButtonBlue value='Blue 1' aria-label='Blue 1'>
                         <p className='font-semibold text-blue-500'>Blue 1</p>
-                    </ToggleButton>
-                    <ToggleButton value='Blue 2' aria-label='Blue 2'>
+                    </ToggleButtonBlue>
+                    <ToggleButtonBlue value='Blue 2' aria-label='Blue 2'>
                         <p className='font-semibold text-blue-500'>Blue 2</p>
-                    </ToggleButton>
-                    <ToggleButton value='Blue 3' aria-label='Blue 3'>
+                    </ToggleButtonBlue>
+                    <ToggleButtonBlue value='Blue 3' aria-label='Blue 3'>
                         <p className='font-semibold text-blue-500'>Blue 3</p>
-                    </ToggleButton>
+                    </ToggleButtonBlue>
                 </ToggleButtonGroup>
             </div>
         </div>
