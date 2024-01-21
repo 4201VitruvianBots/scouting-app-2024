@@ -6,7 +6,7 @@ function MatchApp() {
     return (
         <>
             <p>Match Scouting App</p>
-            <FieldButton />
+            
             <BackHome
                     link='/'
                     icon={
@@ -14,6 +14,7 @@ function MatchApp() {
                     }>
                   
             </BackHome>
+            <FieldButton />
         </>
     );
 }
