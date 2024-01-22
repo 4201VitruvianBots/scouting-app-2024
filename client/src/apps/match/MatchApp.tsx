@@ -1,8 +1,10 @@
 import FieldButton from "../../components/FieldButton";
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
+import EndgameButton from "../../components/EndGameButton";
 import { useState } from "react";
 type countKeys = keyof MatchScores;
+type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none'
 
 interface MatchScores {
     autoNear: number,
@@ -17,7 +19,9 @@ interface MatchScores {
     high: number,
     aNear: number, 
     aMid: number, 
-    aFar: number
+    aFar: number,
+    
+    
 }
 
 function MatchApp() {
@@ -34,9 +38,9 @@ function MatchApp() {
         high: 0,
         aNear: 0, 
         aMid: 0, 
-        aFar: 0
+        aFar: 0,
     });
-  
+  const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
     const handleCount = (
         key: countKeys
     ) => {
@@ -60,6 +64,7 @@ function MatchApp() {
             </BackHome>
             <FieldButton count={count} setCount={setCount} teleop={false}/>
             <FieldButton count={count} setCount={setCount} teleop={true}/>
+            <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
 
             
             <button
@@ -75,10 +80,11 @@ function MatchApp() {
                 Trap Note: {count.trap}{' '}
             </button>
             
+            
         </>
     );
 }
 
 
 export default MatchApp;
-export type{MatchScores}
+export type{MatchScores, ClimbPosition}
