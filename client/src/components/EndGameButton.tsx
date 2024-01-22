@@ -28,10 +28,10 @@ function EndgameButton({
 
     const ToggleButton2 = styled(MuiToggleButton)({
         '&, &:hover':{
-            backgroundColor: 'fuchsia'
+            backgroundColor: '#a6b2bf'
         },
         '&.Mui-selected, &.Mui-selected:hover': {
-            backgroundColor: '#99FF99',
+            backgroundColor: '#48c55c',
         },
     });
     
