@@ -1,7 +1,7 @@
 import FieldButton from "../../components/FieldButton";
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
-import { useState } from "react";
+import { SetStateAction, useState } from 'react';
 import { Button } from '@mui/material';
 type countKeys = keyof MatchScores;
 
@@ -37,32 +37,21 @@ function MatchApp() {
         aMid: 0,
         aFar: 0,
     });
-    const [countHistory, setCountHistory] = useState<
-        { key: countKeys; oldValue: number; newValue: number }[]
-    >([]);
+    const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
 
     const handleCount = (key: countKeys) => {
-        setCount(prevCount => {
-            const newCount = { ...prevCount, [key]: prevCount[key] + 1 };
-            setCountHistory(prevHistory => [
-                { key, oldValue: prevCount[key], newValue: newCount[key] },
-                ...prevHistory,
-            ]);
-            return newCount;
-        });
+        handleSetCount({ ...count, [key]: count[key] + 1 });
+    };
+
+    const handleSetCount = (newCount: SetStateAction<MatchScores>) => {
+        setCountHistory([...countHistory, count]);
+        setCount(newCount);
     };
 
     const undoCount = () => {
         if (countHistory.length > 0) {
-            setCount(prevCount => {
-                const lastCount = countHistory[0];
-                const newCount = {
-                    ...prevCount,
-                    [lastCount.key]: lastCount.oldValue,
-                };
-                setCountHistory(prevHistory => prevHistory.slice(1));
-                return newCount;
-            });
+            setCountHistory(prevHistory => prevHistory.slice(0, -1));
+            setCount(countHistory.at(-1)!);
         }
     };
 
@@ -74,8 +63,16 @@ function MatchApp() {
                 icon={<HomeIcon style={{ fontSize: '30px' }} />}></BackHome>
 
             <Button onClick={undoCount}>Undo Count</Button>
-            <FieldButton count={count} setCount={setCount} teleop={false} />
-            <FieldButton count={count} setCount={setCount} teleop={true} />
+            <FieldButton
+                count={count}
+                setCount={handleSetCount}
+                teleop={false}
+            />
+            <FieldButton
+                count={count}
+                setCount={handleSetCount}
+                teleop={true}
+            />
 
             <button
                 className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
