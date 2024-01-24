@@ -71,8 +71,8 @@ function Signup() {
            
             // commented code below is for preventing people from pressing buttons beyond the popup, but it also affects the opacity of he popup so its commented for now
          //<div className='opacity-75' style={{backgroundColor: 'lightgrey', padding: '20px', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: 2}}>
-          <div className="rounded-xl border-green-900 border-8 text-5xl opacity-100" style={{backgroundColor: 'lightgray', padding: '20px', position: 'fixed', top: 150, bottom: 150, left: 150, right: 150, zIndex: 1}}>
-            Sign In with your name please :D
+          <div className="rounded-xl border-green-900 border-8 text-5xl align-middle opacity-100 " style={{backgroundColor: 'lightgray', padding: '20px', position: 'fixed', top: 150, bottom: 150, left: 150, right: 150, zIndex: 1}}>
+            Sign in with your name please :D
             
             <br></br>
             <br></br>
@@ -99,10 +99,10 @@ function Signup() {
                 </FormControl>
             </Box>
 
-            <div className='textArea'>
+            <div className='textArea align-middle'>
                 <FormControl>
                     <FormLabel id='demo-controlled-radio-buttons-group'>
-                        ALLIANCE
+                        Alliance
                     </FormLabel>
                 </FormControl>
 
