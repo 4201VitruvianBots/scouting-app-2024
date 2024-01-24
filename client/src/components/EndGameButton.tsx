@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { ToggleButtonGroup, styled } from '@mui/material';
 import MuiToggleButton from '@mui/material/ToggleButton';
-import { ClimbPosition } from '../apps/match/MatchApp';
+import { ClimbPosition } from 'server/requests';
 
 
 
@@ -100,7 +100,8 @@ function EndgameButton({
                      <ToggleButton2 value="none">
                         None
                      </ToggleButton2>
-
+                     <ToggleButton2 value="failed">
+                        Failed</ToggleButton2>
                       </ToggleButtonGroup>
                     </>
                 ) : (
@@ -149,7 +150,9 @@ function EndgameButton({
                      <ToggleButton2 value="none">
                         None
                      </ToggleButton2>
-
+                     <ToggleButton2 value="failed">
+                        Failed</ToggleButton2>
+                    
                       </ToggleButtonGroup>
                     </>
                 )}

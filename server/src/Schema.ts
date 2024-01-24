@@ -12,19 +12,25 @@ const metaDataSchema = new mongoose.Schema<MetaData>({
     }
 });
 
+const scoreRanges = {
+    near: Number,
+    mid: Number,
+    far: Number
+}
+
 const matchDataSchema = new mongoose.Schema<MatchData>({
     metadata: [metaDataSchema],
-    nonAmpedSpeakerNotes: Number,
-    ampedSpeakerNotes: Number,
-    ampNotes: Number,
+    autoSpeakerNotes: scoreRanges,
+    autoAmpNotes: Number,
+    teleNonAmpedSpeakerNotes: scoreRanges,
+    teleAmpedSpeakerNotes: scoreRanges,
+    teleAmpNotes: Number,
     trapNotes: Number,
     highNotes: Number,
     climb: {
         type: String,
-        enum: ['failed', 'success', 'harmony']
-    },
-    parked: Boolean,
-    disabledSeconds: Number
+        enum: ['amp', 'source', 'center', 'park', 'none', 'failed']
+    }
 
 });
 
