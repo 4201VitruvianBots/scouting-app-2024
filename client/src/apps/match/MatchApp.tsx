@@ -1,9 +1,11 @@
 import FieldButton from "../../components/FieldButton";
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
+import EndgameButton from "../../components/EndGameButton";
 import { SetStateAction, useState } from 'react';
 import { Button } from '@mui/material';
 type countKeys = keyof MatchScores;
+type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none'
 
 interface MatchScores {
     autoNear: number;
@@ -38,7 +40,7 @@ function MatchApp() {
         aFar: 0,
     });
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
-
+const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
     const handleCount = (key: countKeys) => {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
@@ -73,6 +75,7 @@ function MatchApp() {
                 setCount={handleSetCount}
                 teleop={true}
             />
+            <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
 
             <button
                 className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
@@ -92,4 +95,4 @@ function MatchApp() {
 
 
 export default MatchApp;
-export type { MatchScores }
+export type { MatchScores , ClimbPosition}
