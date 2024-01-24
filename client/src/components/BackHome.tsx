@@ -2,18 +2,16 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-function LinkButton({
+function BackHome({
     link,
     icon,
     className,
     children,
-  
 }: {
     link: string;
-    icon?: ReactNode;
+    icon: ReactNode;
     className?: string;
     children?: string;
-   
 }) {
     return (
         <>
@@ -21,15 +19,13 @@ function LinkButton({
                 <Button
                     variant='outlined'
                     color='success'
-                    style={{ width: '100%', height: '100%', fontSize: '30px', backgroundColor:'lightgray', borderColor:'darkgray'}}
+                    style={{ width: '6%', height: '10%', fontSize: '20px', backgroundColor:'lightgray', borderColor:'darkgray', textAlign:'center'}}
                     startIcon={icon}>
-                    {children}
-                    
+                {children}
                 </Button>
-                
             </Link>
         </>
     );
 }
 
-export default LinkButton;
+export default BackHome;

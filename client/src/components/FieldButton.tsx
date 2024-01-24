@@ -1,127 +1,193 @@
-import fieldmapRED from '../images/fieldmapRED.png';
-import fieldmapBLUE from '../images/fieldmapBLUE.png';
-import { ToggleButton } from '@mui/material';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { styled } from '@mui/material';
+import MuiToggleButton from '@mui/material/ToggleButton';
+import { MatchScores } from '../apps/match/MatchApp';
+type countKeys = keyof MatchScores;
 
-function FieldButton() {
-    const [isBlueAlliance, setIsBlueAlliance] = useState(false);
-    const currentImage = isBlueAlliance ? fieldmapBLUE : fieldmapRED; //use this boolean whenever switching from red/blue is needed
-    const [counterNear, setCounterNear] = useState(0);
-    const [counterMid, setCounterMid] = useState(0);
-    const [counterFar, setCounterFar] = useState(0);
-    const [AMP, setAMP] = useState(0);
-    const [counterTrap, setCounterTrap] = useState(0);
-    const [counterHigh, setCounterHigh] = useState(0);
-    // const [AMPtoggle, setAMPToggle] = useState(false);
-    // const AMPtoggleBoo = Boolean; //hopefully this works for amp switch
+function RegionButton({
+    count,
+    teleop,
+    className,
+    handleCount,
+    autokey,
+    telekey,
+    akey,
+}: {
+    count: MatchScores;
+    teleop: boolean;
+    className: string;
+    handleCount: (
+        autokey: countKeys,
+        telekey: countKeys,
+        aKey?: countKeys
+    ) => void;
+    autokey: countKeys;
+    telekey: countKeys;
+    akey: countKeys;
+}) {
+    return (
+        <button
+            className={`${className} h-full w-1/3 overflow-hidden text-6xl font-semibold  text-white first-letter:font-sans md:bg-opacity-50 `}
+            onClick={() => handleCount(autokey, telekey, akey)}
+            id='one'>
+            <p>{count[teleop ? telekey : autokey]}</p>
+            {teleop && (
+                <p className='m-[10px] text-[20px]'>AMP: {count[akey]}</p>
+            )}
+        </button>
+    );
+}
 
-    const handleToggle = () => {
-        setIsBlueAlliance(!isBlueAlliance);
+function FieldButton({
+    count,
+    setCount,
+    teleop,
+}: {
+    count: MatchScores;
+    setCount: Dispatch<SetStateAction<MatchScores>>;
+    teleop: boolean;
+}) {
+    const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
+
+    const [amplified, setAmplified] = useState(false); //false=off, true=on
+
+    const handleCount = (
+        autokey: countKeys,
+        telekey: countKeys,
+        aKey?: countKeys
+    ) => {
+        const finalKey = teleop
+            ? aKey && amplified
+                ? aKey
+                : telekey
+            : autokey;
+        amplified == true && aKey;
+        setCount(prevCount => ({
+            ...prevCount,
+            [finalKey]: prevCount[finalKey] + 1,
+        }));
     };
 
-    function addOneNear() {
-        setCounterNear(counterNear + 1);
-    }
-    function addOneMid() {
-        setCounterMid(counterMid + 1);
-    }
-    function addOneFar() {
-        setCounterFar(counterFar + 1);
-    }
-    function addOneAMP() {
-        if (AMP < 10) {
-            setAMP(AMP + 1)
-        } else if (AMP >= 10) {
-            setAMP(10)
-        }
-    }
-    function addOneTrap() {
-        if (counterTrap < 3) {
-        setCounterTrap(counterTrap + 1);
-        } else if (counterTrap >= 3) {
-            setCounterTrap(3)
-        }
-        
-    }
-    function addOneHigh() {
-        if (counterHigh < 3) {
-            setCounterHigh(counterHigh + 1);
-        } else if (counterHigh >= 3) {
-            setCounterHigh(3)
-        }
+    const handleImage = () => {
+        setAllianceBlue(!allianceBlue);
+    };
 
-    }
+    const handleAmplified = () => {
+        setAmplified(!amplified);
+    };
+
+    const ToggleButton1 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#3268a8',
+        },
+    });
+
+    const ToggleButton2 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#00ff00',
+        },
+    });
 
     return (
-        <>
-            <ToggleButton
+        <div>
+            <ToggleButton1
                 value='check'
-                selected={currentImage === fieldmapRED}
-                onChange={handleToggle}
-                className='font-serif'>
+                selected={allianceBlue}
+                onChange={handleImage}
+                className='bg-red-400 font-serif'>
                 Toggle Map Color
-            </ToggleButton>
+            </ToggleButton1>
 
-            {/* <div style={{ backgroundImage: `url(${currentImage})` }}> */}
+            {teleop && (
+                <ToggleButton2
+                    value='check'
+                    onChange={handleAmplified}
+                    selected={amplified}
+                    className={`${amplified ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
+                    Amp {amplified ? 'On' : 'Off'}
+                    {/* {amplified ? <>Amp <span>On</span></> : 'Amp Off'} */}
+                </ToggleButton2>
+            )}
+
             <div
-                style={{
-                    backgroundImage: `url(${currentImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    height: '40em',
-                    width: '40em',
-                    objectFit: 'contain',
-                    filter: 'brightness(80%)',
-                    alignSelf: 'center',
-                }}>
-                <button
-                    className='h-full w-1/3 bg-orange-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneNear}
-                    id='one'>
-                    {counterNear}
-                </button>
-                <button
-                    className='h-full w-1/3 bg-blue-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneMid}
-                    id='one'>
-                    {counterMid}
-                </button>
-                <button
-                    className='h-full w-1/3 bg-green-500 font-sans text-6xl  font-semibold text-white md:bg-opacity-50'
-                    onClick={addOneFar}
-                    id='one'>
-                    {counterFar}
-                </button>
-                <br />
-                <br />
-                {/* above over here for text outside of button */}
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneAMP}
-                    id='one'>  Amp Note: { /* or inside the button here */}
-                    {AMP}
-                </button>
-                <br />
-                <br />
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneTrap}> Trap Note: { /* <br /> or break and over here to have the words above the number */}
-                    {counterTrap}
-                </button>
-                <br />
-                <br />
-                <button
-                    className='border-1 rounded-lg border border-gray-700 px-4 shadow-xl'
-                    onClick={addOneHigh}> High Note:
-                    {counterHigh}
-                </button>
-                <br />
-                <p>hello {isBlueAlliance ? 'world' : 'natalie'}</p>
+                className={`${allianceBlue ? 'bg-field-blue' : 'bg-field-red'} align-center flex h-[40em] w-[40em] flex-row bg-cover bg-center object-contain brightness-75`}>
+                {allianceBlue ? (
+                    <>
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-red-400'
+                            handleCount={handleCount}
+                            autokey='autoFar'
+                            telekey='teleFar'
+                            akey='aFar'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-green-400'
+                            handleCount={handleCount}
+                            autokey='autoNear'
+                            telekey='teleNear'
+                            akey='aNear'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-blue-400'
+                            handleCount={handleCount}
+                            autokey='autoMid'
+                            telekey='teleMid'
+                            akey='aMid'
+                        />
+                    </>
+                ) : (
+                    <>
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-blue-400'
+                            handleCount={handleCount}
+                            autokey='autoMid'
+                            telekey='teleMid'
+                            akey='aMid'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-green-400'
+                            handleCount={handleCount}
+                            autokey='autoNear'
+                            telekey='teleNear'
+                            akey='aNear'
+                        />
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='bg-red-400'
+                            handleCount={handleCount}
+                            autokey='autoFar'
+                            telekey='teleFar'
+                            akey='aFar'
+                        />
 
-                {/* <img src={currentImage} className='background-image' /> */}
-                <p>Alliance: {isBlueAlliance ? 'Blue' : 'Red'}</p>
+
+                    </>
+                )}
+
+               
+
+                <br />
             </div>
-        </>
+            <button
+                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    onClick={() => handleCount('autoAmp','teleAmp' )}>
+                   
+                    AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
+            </button>
+        </div>
     );
 }
 

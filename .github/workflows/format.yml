@@ -1,0 +1,30 @@
+name: Format with Prettier
+
+on:
+    workflow_dispatch:
+
+jobs:
+    format:
+        runs-on: 'ubuntu-latest'
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  cache: 'npm'
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Format code
+              run: npm run format
+
+            - name: Commit changes
+              run: |
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add .
+                  git commit -m "Format code with Prettier"
+                  git push
