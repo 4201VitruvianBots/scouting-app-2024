@@ -10,6 +10,7 @@ import PitApp from './apps/pit/PitApp';
 import ReconApp from './apps/recon/ReconApp';
 import SuperApp from './apps/super/SuperSApp';
 import PublicApp from './apps/public/PublicApp';
+import { SignInProvider } from './SignInContext';
 
 
 
@@ -52,6 +53,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <SignInProvider><RouterProvider router={router} /></SignInProvider>
     </React.StrictMode>
 );

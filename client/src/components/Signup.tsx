@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useContext, useState } from 'react';
 
 
 import FormControl from '@mui/material/FormControl';
@@ -14,6 +14,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import React from 'react';
 import { Margin } from '@mui/icons-material';
+import { AllianceContext, ScouterNameContext, SetAllianceContext, SetScouterNameContext } from '../SignInContext';
+import { RobotPosition } from 'server/requests';
 
 
 // "savedValue" is where the signin user is saved
@@ -23,8 +25,10 @@ function Signup() {
     const [inputValue, setInputValue] = useState('');
     const [savedValue, setSavedValue] = useState('');
 
-    const [alliance, setAlliance] = React.useState<string | null>('left');
-    const [event, setEvent] = React.useState('');
+   const scouterName = useContext (ScouterNameContext);
+   const setscouterName = useContext (SetScouterNameContext);
+   const alliance = useContext (AllianceContext);
+   const setalliance = useContext (SetAllianceContext)
 
     const ToggleButtonRed = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
@@ -44,19 +48,14 @@ function Signup() {
 
     const handleChangeAlliance = (
         event: React.MouseEvent<HTMLElement>,
-        newAlliance: string | null
+        newAlliance: RobotPosition
     ) => {
-        setAlliance(newAlliance);
+        setalliance(newAlliance);
     };
 
-    const handleChangeEvent = (event: SelectChangeEvent) => {
-        setEvent(event.target.value as string);
+    const handleChangeUser = (event: SelectChangeEvent) => {
+        setscouterName (event.target.value as string);
     };
-
-
-    const handleChangeUser = (event) => {
-        setInputValue(event.target.value);
-     };
     
      const handleSaveAndClose = () => {
         setSavedValue(inputValue);
@@ -78,7 +77,7 @@ function Signup() {
            
             
             <div className="flex justify-center items-center mt-20">
-            <input className='border-1 rounded-lg border border-gray-700 text-4xl' type="text" value={inputValue} onChange={handleChangeUser}></input>
+            <input className='border-1 rounded-lg border border-gray-700 text-4xl' type="text" value={scouterName} onChange={handleChangeUser}></input>
             </div>
 
             <br/>
@@ -94,22 +93,22 @@ function Signup() {
                     exclusive
                     onChange={handleChangeAlliance}
                     aria-label='text alignment'>
-                    <ToggleButtonRed value='Red 1' aria-label='Red 1'>
+                    <ToggleButtonRed value='red_1' aria-label='Red 1'>
                         <p className='font-semibold text-red-500 text-xl bg-5'>Red 1</p>
                     </ToggleButtonRed>
-                    <ToggleButtonRed value='Red 2' aria-label='Red 2'>
+                    <ToggleButtonRed value='red_2' aria-label='Red 2'>
                         <p className='font-semibold text-red-500 text-xl'> Red 2</p>
                     </ToggleButtonRed>
-                    <ToggleButtonRed value='Red 3' aria-label='Red 3'>
+                    <ToggleButtonRed value='red_3' aria-label='Red 3'>
                         <p className='font-semibold text-red-500 text-xl'>Red 3</p>
                     </ToggleButtonRed>
-                    <ToggleButtonBlue value='Blue 1' aria-label='Blue 1'>
+                    <ToggleButtonBlue value='blue_1' aria-label='Blue 1'>
                         <p className='font-semibold text-blue-500 text-xl'>Blue 1</p>
                     </ToggleButtonBlue>
-                    <ToggleButtonBlue value='Blue 2' aria-label='Blue 2'>
+                    <ToggleButtonBlue value='blue_2' aria-label='Blue 2'>
                         <p className='font-semibold text-blue-500 text-xl'>Blue 2</p>
                     </ToggleButtonBlue>
-                    <ToggleButtonBlue value='Blue 3' aria-label='Blue 3'>
+                    <ToggleButtonBlue value='blue_3' aria-label='Blue 3'>
                         <p className='font-semibold text-blue-500 text-xl'>Blue 3</p>
                     </ToggleButtonBlue>
                 </ToggleButtonGroup>
