@@ -67,7 +67,7 @@ function MatchApp() {
     };
 
     return (
-        <main className='text-center'>
+        <main className='grid place-content-center text-center'>
             <p>Match Scouting App</p>
             <BackHome
                 link='/'
@@ -95,4 +95,4 @@ function MatchApp() {
 
 
 export default MatchApp;
-export type{MatchScores}
+export type { MatchScores }
