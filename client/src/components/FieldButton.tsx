@@ -14,7 +14,6 @@ function RegionButton({
     akey,
 }: {
     count: MatchScores;
-
     teleop: boolean;
     className: string;
     handleCount: (
@@ -92,7 +91,7 @@ function FieldButton({
     });
 
     return (
-        <>
+        <div>
             <ToggleButton1
                 value='check'
                 selected={allianceBlue}
@@ -188,7 +187,7 @@ function FieldButton({
                    
                     AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
             </button>
-        </>
+        </div>
     );
 }
 
