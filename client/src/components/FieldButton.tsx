@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { styled } from '@mui/material';
+import { ToggleButton, styled } from '@mui/material';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { MatchScores } from '../apps/match/MatchApp';
 type countKeys = keyof MatchScores;
+
 
 function RegionButton({
     count,
@@ -50,6 +51,8 @@ function FieldButton({
     const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
 
     const [amplified, setAmplified] = useState(false); //false=off, true=on
+    
+    const [leave, setLeave] = useState(false); //false=notleft, true=left
 
     const handleCount = (
         autokey: countKeys,
@@ -76,6 +79,10 @@ function FieldButton({
         setAmplified(!amplified);
     };
 
+    const handleLeave = () => {
+        setLeave(!leave)
+    }
+
     const ToggleButton1 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
@@ -99,6 +106,15 @@ function FieldButton({
                 className='bg-red-400 font-serif'>
                 Toggle Map Color
             </ToggleButton1>
+
+            <ToggleButton
+                value = 'check'
+                selected = {leave}
+                onChange={handleLeave}
+                className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
+                The nice person {leave ? 'has left' : 'is still here'}
+
+            </ToggleButton>
 
             {teleop && (
                 <ToggleButton2
