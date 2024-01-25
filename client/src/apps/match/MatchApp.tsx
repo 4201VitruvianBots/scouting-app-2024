@@ -4,8 +4,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import EndgameButton from "../../components/EndGameButton";
 import { SetStateAction, useState } from 'react';
 import { Button } from '@mui/material';
+import {ClimbPosition, MatchData} from 'server/requests';
+import { postJson } from "../../util";
 type countKeys = keyof MatchScores;
-type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none'
+
 
 interface MatchScores {
     autoNear: number;
@@ -23,8 +25,7 @@ interface MatchScores {
     aFar: number;
 }
 
-function MatchApp() {
-    const [count, setCount] = useState<MatchScores>({
+const defualtScores:MatchScores = {
         autoNear: 0,
         autoMid: 0,
         autoFar: 0,
@@ -38,7 +39,11 @@ function MatchApp() {
         aNear: 0,
         aMid: 0,
         aFar: 0,
-    });
+}
+
+function MatchApp() {
+    const [count, setCount] = useState<MatchScores>(defualtScores);
+
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
 const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
     const handleCount = (key: countKeys) => {
@@ -55,6 +60,48 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
             setCountHistory(prevHistory => prevHistory.slice(0, -1));
             setCount(countHistory.at(-1)!);
         }
+
+
+    };
+
+    const handleSubmit = async () => {
+        const data: MatchData = {
+            metadata: {
+                scouterName: "hjcd",
+                robotTeam: 48392,
+                robotPosition: 'blue_1',
+            },
+            autoSpeakerNotes: {
+                near: count.autoNear,
+                mid: count.autoMid,
+                far: count.autoFar
+            },
+            autoAmpNotes: count.autoAmp,
+            teleNonAmpedSpeakerNotes: {
+                near: count.teleNear,
+                mid: count.teleMid,
+                far: count.teleFar
+            },
+            teleAmpedSpeakerNotes: {
+                near: count.aNear,
+                mid: count.aMid,
+                far: count.aFar
+            },
+            teleAmpNotes: count.teleAmp,
+            trapNotes: count.trap,
+            highNotes: count.high,
+            climb: climbPosition
+        };
+
+    try{
+        const result = await postJson('/data/match', data);
+        if(!result.ok) throw new Error('request did not succeed')
+        setCount(defualtScores);
+        setClimbPosition("none");
+    } catch {
+        alert('sending data failed') 
+    }
+       
     };
 
     return (
@@ -89,6 +136,7 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 {' '}
                 Trap Note: {count.trap}{' '}
             </button>
+            <Button onClick={handleSubmit}>submit :3</Button>
         </main>
     );
 }
