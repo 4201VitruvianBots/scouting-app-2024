@@ -1,7 +1,7 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
 
 import mongoose  from "mongoose";
-import { MatchData, PitFile } from "../requests/index.js";
+import { MatchData, PitFile } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
