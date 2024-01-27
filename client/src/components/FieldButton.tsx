@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { styled } from '@mui/material';
+import {styled} from '@mui/material';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { MatchScores } from '../apps/match/MatchApp';
 type countKeys = keyof MatchScores;
+
 
 function RegionButton({
     count,
@@ -41,15 +42,20 @@ function RegionButton({
 function FieldButton({
     count,
     setCount,
+    leave,
+    setLeave,
     teleop,
 }: {
     count: MatchScores;
     setCount: Dispatch<SetStateAction<MatchScores>>;
+    leave?: boolean;
+    setLeave?: Dispatch<boolean>;
     teleop: boolean;
 }) {
     const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
 
     const [amplified, setAmplified] = useState(false); //false=off, true=on
+    
 
     const handleCount = (
         autokey: countKeys,
@@ -76,6 +82,10 @@ function FieldButton({
         setAmplified(!amplified);
     };
 
+    const handleLeave = () => {
+        setLeave?.(!leave)
+    }
+
     const ToggleButton1 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
@@ -84,6 +94,13 @@ function FieldButton({
     });
 
     const ToggleButton2 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#00ff00',
+        },
+    });
+
+    const ToggleButton3 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
             backgroundColor: '#00ff00',
@@ -100,6 +117,16 @@ function FieldButton({
                 Toggle Map Color
             </ToggleButton1>
 
+            {!teleop && (
+            <ToggleButton3
+                value = 'check'
+                selected = {leave}
+                onChange={handleLeave}
+                className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
+                Robot has {leave ? 'left' : 'not left'}
+
+            </ToggleButton3>
+            )}
             {teleop && (
                 <ToggleButton2
                     value='check'

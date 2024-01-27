@@ -43,6 +43,7 @@ const defualtScores:MatchScores = {
 
 function MatchApp() {
     const [count, setCount] = useState<MatchScores>(defualtScores);
+    const [leave, setLeave] = useState(false); //false=notleft, true=left
 
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
 const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
@@ -116,6 +117,8 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 count={count}
                 setCount={handleSetCount}
                 teleop={false}
+                leave={leave}
+                setLeave={setLeave}
             />
             <FieldButton
                 count={count}
