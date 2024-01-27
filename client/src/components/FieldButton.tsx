@@ -97,6 +97,13 @@ function FieldButton({
         },
     });
 
+    const ToggleButton3 = styled(MuiToggleButton)({
+        '&.Mui-selected, &.Mui-selected:hover': {
+            color: 'white',
+            backgroundColor: '#00ff00',
+        },
+    });
+    
     return (
         <div>
             <ToggleButton1
@@ -107,15 +114,16 @@ function FieldButton({
                 Toggle Map Color
             </ToggleButton1>
 
-            <ToggleButton
+            {!teleop && (
+            <ToggleButton3
                 value = 'check'
                 selected = {leave}
                 onChange={handleLeave}
                 className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
-                The nice person {leave ? 'has left' : 'is still here'}
+                Robot has {leave ? 'left' : 'not left'}
 
-            </ToggleButton>
-
+            </ToggleButton3>
+            )}
             {teleop && (
                 <ToggleButton2
                     value='check'
