@@ -72,6 +72,7 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 robotTeam: 48392,
                 robotPosition: 'blue_1',
             },
+            leftStartingZone: leave,
             autoSpeakerNotes: {
                 near: count.autoNear,
                 mid: count.autoMid,
@@ -99,6 +100,7 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
         if(!result.ok) throw new Error('request did not succeed')
         setCount(defualtScores);
         setClimbPosition("none");
+        setLeave(false);
     } catch {
         alert('sending data failed') 
     }

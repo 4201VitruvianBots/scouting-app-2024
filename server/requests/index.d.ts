@@ -27,6 +27,7 @@ interface ScoreRanges {
 export interface MatchData {
     metadata: MetaData;
     // No competition info
+    leftStartingZone: boolean;
     autoSpeakerNotes: ScoreRanges;
     autoAmpNotes: number;
     teleNonAmpedSpeakerNotes: ScoreRanges;
