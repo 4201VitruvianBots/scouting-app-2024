@@ -27,6 +27,7 @@ for (let i = 0; i < 40; i++) {
         },
         climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
         highNotes: randint(5),
+        leftStartingZone: Math.random() > 0.5,
         metadata: {
             robotPosition: choose(['blue_1', 'blue_2', 'blue_3', 'red_1', 'red_2', 'red_3']),
             robotTeam: choose(teams),
