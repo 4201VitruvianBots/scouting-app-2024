@@ -39,6 +39,8 @@ function MatchApp() {
         aMid: 0,
         aFar: 0,
     });
+    const [leave, setLeave] = useState(false); //false=notleft, true=left
+
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
 const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
     const handleCount = (key: countKeys) => {
@@ -69,6 +71,8 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 count={count}
                 setCount={handleSetCount}
                 teleop={false}
+                leave={leave}
+                setLeave={setLeave}
             />
             <FieldButton
                 count={count}

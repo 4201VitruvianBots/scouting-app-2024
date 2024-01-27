@@ -42,17 +42,20 @@ function RegionButton({
 function FieldButton({
     count,
     setCount,
+    leave,
+    setLeave,
     teleop,
 }: {
     count: MatchScores;
     setCount: Dispatch<SetStateAction<MatchScores>>;
+    leave?: boolean;
+    setLeave?: Dispatch<boolean>;
     teleop: boolean;
 }) {
     const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
 
     const [amplified, setAmplified] = useState(false); //false=off, true=on
     
-    const [leave, setLeave] = useState(false); //false=notleft, true=left
 
     const handleCount = (
         autokey: countKeys,
@@ -80,7 +83,7 @@ function FieldButton({
     };
 
     const handleLeave = () => {
-        setLeave(!leave)
+        setLeave?.(!leave)
     }
 
     const ToggleButton1 = styled(MuiToggleButton)({
