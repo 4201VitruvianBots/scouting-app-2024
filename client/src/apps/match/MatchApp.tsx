@@ -115,6 +115,8 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 icon={<HomeIcon style={{ fontSize: '30px' }} />}></BackHome>
 
             <Button onClick={undoCount}>Undo Count</Button>
+
+            <p className="font-semibold text-[40px]">Auto</p>
             <FieldButton
                 count={count}
                 setCount={handleSetCount}
@@ -122,11 +124,13 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 leave={leave}
                 setLeave={setLeave}
             />
+             <p className="font-semibold text-[40px]">Teleop</p>
             <FieldButton
                 count={count}
                 setCount={handleSetCount}
                 teleop={true}
             />
+             <p className="font-semibold text-[40px]">Endgame</p>
             <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
 
             <button
