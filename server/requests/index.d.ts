@@ -1,3 +1,5 @@
+export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+
 export type RobotPosition =
     | 'red_1'
     | 'red_2'
@@ -14,20 +16,26 @@ export interface MetaData {
     robotPosition: RobotPosition;
 }
 
+interface ScoreRanges {
+    near: number,
+    mid: number,
+    far: number
+}
+
 // - `POST` `/data/match`
 
 export interface MatchData {
     metadata: MetaData;
     // No competition info
-    nonAmpedSpeakerNotes: number;
-    ampedSpeakerNotes: number;
-    ampNotes: number;
+    autoSpeakerNotes: ScoreRanges;
+    autoAmpNotes: number;
+    teleNonAmpedSpeakerNotes: ScoreRanges;
+    teleAmpedSpeakerNotes: ScoreRanges;
+    teleAmpNotes: number;
     trapNotes: number;
     highNotes: number;
-//    scoringLocations: Record<ScoringLocation, number>;
-    climb: 'failed' | 'success' | 'harmony';
-    parked: boolean;
-    disabledSeconds: number;
+    climb: ClimbPosition;
+    // disabledSeconds: number;
 }
 
 // - `POST` `/data/super`
