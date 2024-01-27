@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts"
+    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
+    "gen-fake-data": "node --loader ts-node/esm src/addFakeData.ts",
+    "gen-fake-csv": "node --loader ts-node/esm src/genFakeCsv.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "cross-env": "^7.0.3",
+    "csv-stringify": "^6.4.5",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1"
   },

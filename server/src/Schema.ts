@@ -1,16 +1,16 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
 
 import mongoose  from "mongoose";
-import { MatchData, PitFile, MetaData } from "../requests/index.js";
+import { MatchData, PitFile } from "../requests/index.js";
 
-const metaDataSchema = new mongoose.Schema<MetaData>({
+const metaDataSchema = {
     scouterName: String,
     robotTeam: Number,
     robotPosition: {
         type: String,
         enum: ['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']
     }
-});
+};
 
 const scoreRanges = {
     near: Number,
@@ -19,7 +19,7 @@ const scoreRanges = {
 }
 
 const matchDataSchema = new mongoose.Schema<MatchData>({
-    metadata: [metaDataSchema],
+    metadata: metaDataSchema,
     leftStartingZone: Boolean,
     autoSpeakerNotes: scoreRanges,
     autoAmpNotes: Number,
@@ -36,7 +36,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 });
 
 /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
-     metadata: [metaDataSchema],
+     metadata: metaDataSchema,
      fouls: {
         A: Number,
         B: Number
