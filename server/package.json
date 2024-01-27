@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts"
+    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
+    "gen-fake-data": "node --loader ts-node/esm src/addFakeData.ts"
   },
   "keywords": [],
   "author": "",

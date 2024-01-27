@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import { startDockerContainer, stopDockerContainer } from 'database';
 import { app } from './server.js';
 
-
-
 const container = await startDockerContainer(process.env.CONTAINER_NAME);
 
 mongoose.connect('mongodb://0.0.0.0:27107/');
