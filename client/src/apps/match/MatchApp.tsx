@@ -5,7 +5,7 @@ import EndgameButton from "../../components/EndGameButton";
 import { SetStateAction, useState } from 'react';
 import { Button } from '@mui/material';
 import { ClimbPosition, MatchData } from 'requests';
-import { postJson } from "../../util";
+import { postJson } from '../../lib/postJson';
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
