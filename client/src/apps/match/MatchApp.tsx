@@ -4,10 +4,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import EndgameButton from "../../components/EndGameButton";
 import { SetStateAction, useState } from 'react';
 import { Button } from '@mui/material';
-import {ClimbPosition, MatchData} from 'server/requests';
+import { ClimbPosition, MatchData } from 'requests';
 import { postJson } from "../../util";
 type countKeys = keyof MatchScores;
-
 
 interface MatchScores {
     autoNear: number;

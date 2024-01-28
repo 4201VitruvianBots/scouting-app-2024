@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { ToggleButtonGroup, styled } from '@mui/material';
 import MuiToggleButton from '@mui/material/ToggleButton';
-import { ClimbPosition } from 'server/requests';
+import { ClimbPosition } from 'requests';
 
 
 
