@@ -23,11 +23,13 @@ app.post('/data/match', async(req,res) => {
     
 });
 
+app.use(express.static('static'));
+
 // Since this is the fallback is must go after all other routes
 if (DEV) {
     app.use('/', createProxyMiddleware('http://localhost:5173', { ws: true }));
 } else {
-    app.use(express.static('static'));
+    app.use(express.static('../client/dist'));
 
     app.get('/', (_, res) => {
         res.sendFile('static/index.html');
