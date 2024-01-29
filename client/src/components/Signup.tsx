@@ -69,7 +69,7 @@ function Signup() {
   
         {showPopup && (
            
-            // commented code below is for preventing people from pressing buttons beyond the popup, but it also affects the opacity of he popup so its commented for now
+            
           <div className='bg-neutral-700/75 p-5 fixed top-0 bottom-0 left-0 right-0 z-10'>
           <div className='flex flex-col items-center rounded-xl border-green-900 border-8 text-5xl text-center align-middle bg-neutral-200 p-5 fixed top-40 bottom-40 left-40 right-40 z-10'>
             Sign in with your name please :D

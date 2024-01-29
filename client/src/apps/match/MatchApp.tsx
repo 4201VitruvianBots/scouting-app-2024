@@ -78,7 +78,7 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 teleop={true}
             />
             <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
-
+            <div className='grid place-content-center text-center'>
             <button
                 className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
                 onClick={() => handleCount('high')}>
@@ -91,6 +91,7 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
                 {' '}
                 Trap Note: {count.trap}{' '}
             </button>
+            </div>
         </main>
     );
 }
