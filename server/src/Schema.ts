@@ -1,6 +1,6 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
 
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 import { MatchData, PitFile, MetaData } from "../requests/index.js";
 
 const metaDataSchema = new mongoose.Schema<MetaData>({
@@ -18,7 +18,7 @@ const scoreRanges = {
     far: Number
 }
 
-const matchDataSchema = new mongoose.Schema<MatchData>({
+const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: number, totalTele: number, total: number}>({
     metadata: [metaDataSchema],
     leftStartingZone: Boolean,
     autoSpeakerNotes: scoreRanges,
@@ -32,8 +32,25 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         type: String,
         enum: ['amp', 'source', 'center', 'park', 'none', 'failed']
     }
-
 });
+
+ matchDataSchema.virtual('totalAuto')
+     .get(function(){
+         return this.autoSpeakerNotes.near + this.autoSpeakerNotes.mid + this.autoSpeakerNotes.far + this.autoAmpNotes;
+     }); 
+matchDataSchema.virtual('totalTele')
+     .get(function(){
+        return this.teleAmpNotes + this.teleAmpedSpeakerNotes.far + this.teleAmpedSpeakerNotes.mid + this.teleAmpedSpeakerNotes.near + 
+        this.teleNonAmpedSpeakerNotes.far + this.teleNonAmpedSpeakerNotes.mid + this.teleNonAmpedSpeakerNotes.near;
+     });
+matchDataSchema.virtual('total')
+     .get(function() {
+        return this.totalAuto + this.totalTele;
+     });
+
+     
+
+matchDataSchema.set('toObject', { virtuals: true }); 
 
 /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: [metaDataSchema],
