@@ -43,7 +43,7 @@ function EndgameButton({
     }
 
     return (
-        <>
+        <div>
             <ToggleButton1
                 value='check'
                 selected={allianceBlue}
@@ -159,7 +159,7 @@ function EndgameButton({
                 <br />
             </div>
            
-        </>
+        </div>
     );
 }
 
