@@ -3,15 +3,20 @@
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
-        extend:{
+        extend: {
             backgroundImage: {
-                'field-blue': "url('images/fieldBlue.png')",
-                'field-red': "url('images/fieldRed.png')",
+                'field-blue': "url('images/blueSideCropped.png')",
+                'field-red': "url('images/redSideCropped.png')",
                 'field-red-endgame': "url('images/fieldmapREDendgame.png')",
-                'field-blue-endgame': "url('images/fieldmapBLUEendgame.png')"
-              }
-        }
-       
+                'field-blue-endgame': "url('images/fieldmapBLUEendgame.png')",
+            },
+            colors: {
+                darkred: '#7c1034',
+                lightblue: 'cfe5ff',
+                medblue: '252f9c'
+            },
+        },
+
+        plugins: [],
     },
-    plugins: [],
 };
