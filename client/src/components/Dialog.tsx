@@ -27,7 +27,7 @@ function Dialog({
 
     return (
         <>
-            <dialog ref={dialogRef}>
+            <dialog ref={dialogRef} onClose={() => setOpen(false)}>
                 {open &&
                     (typeof children === 'function'
                         ? children(() => setOpen(false))

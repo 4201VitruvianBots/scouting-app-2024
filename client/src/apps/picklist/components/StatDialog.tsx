@@ -1,14 +1,16 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, SimpleTable } from '../data';
+import { AnalysisEntry, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Select from '../../../components/Select';
 import Checkbox from '../../../components/Checkbox';
 
 function StatDialog({
     onSubmit,
+    onClose,
     data,
 }: {
-    onSubmit: Dispatch<SimpleTable>;
+    onSubmit: Dispatch<StatTableData>;
+    onClose?: () => void;
     data: AnalysisEntry[];
 }) {
     const columns = Object.keys(data[0]).filter(
@@ -22,6 +24,7 @@ function StatDialog({
     const handleSubmit = () => {
         if (column) {
             onSubmit({ title: title || column, column, ascending });
+            onClose?.();
         }
     };
 
