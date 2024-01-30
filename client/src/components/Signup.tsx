@@ -3,17 +3,17 @@ import { SetStateAction, useContext, useState } from 'react';
 
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Box from '@mui/material/Box';
-//import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material';
 //import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import React from 'react';
-import { Margin } from '@mui/icons-material';
+// import { Margin } from '@mui/icons-material';
 import { AllianceContext, ScouterNameContext, SetAllianceContext, SetScouterNameContext } from '../SignInContext';
 import { RobotPosition } from 'server/requests';
 
@@ -28,7 +28,7 @@ function Signup() {
    const scouterName = useContext (ScouterNameContext);
    const setscouterName = useContext (SetScouterNameContext);
    const alliance = useContext (AllianceContext);
-   const setalliance = useContext (SetAllianceContext)
+   const setalliance = useContext (SetAllianceContext);
 
     const ToggleButtonRed = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
@@ -114,6 +114,16 @@ function Signup() {
                 </ToggleButtonGroup>
             </div>
             <br/>
+            <div className="flex space-x-80 text-xl">
+            <div>Team Number</div>
+            <div>Match Number</div>
+            </div>
+
+            <div className='align-middle'>
+            <input className='border-1 rounded-lg border border-gray-700 text-4xl resize-x overflow-auto' type="number"></input>
+            <input className='border-1 rounded-lg border border-gray-700 text-4xl resize-x overflow-auto' type="number"></input>
+            </div>
+            <br></br>
             <div className="flex justify-center items-center">
             <button className=' bg-green-500 font-sans text-6xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl'
             onClick={handleSaveAndClose}>Sign In</button>
