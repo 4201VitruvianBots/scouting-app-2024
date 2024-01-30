@@ -96,14 +96,14 @@ function FieldButton({
     const ToggleButton2 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
-            backgroundColor: '#00ff00',
+            backgroundColor: '#f0cf00',
         },
     });
 
     const ToggleButton3 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
-            backgroundColor: '#00ff00',
+            backgroundColor: '#00cf00',
         },
     });
 
@@ -209,7 +209,7 @@ function FieldButton({
                 <br />
             </div>
             <button
-                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 my-5 shadow-xl text-xl'
                     onClick={() => handleCount('autoAmp','teleAmp' )}>
                    
                     AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
