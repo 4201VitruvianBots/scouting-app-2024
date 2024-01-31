@@ -55,8 +55,13 @@ function PitApp() {
         <>
             <br/>
             <br/>
-            <h1 className="text-center text-3xl">Pit App</h1>
+
+            <div className="border border-green-900">
+              <br/>
+              <h1 className="text-center text-3xl">Pit App</h1>
+
             <br/>
+
             <BackHome
                     link='/'
                     className="place-content-center mx-auto w-min !flex"
@@ -65,6 +70,12 @@ function PitApp() {
                     }>
                   
             </BackHome>
+            <br/>
+            </div>
+
+            <br/>
+            <br/>
+
             <h1 className="text-center">Team Number</h1>
             <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number"></input>
             <br></br>
