@@ -8,38 +8,37 @@ import {
 import { PaneData, StateProps, TabsData } from './workspaceData';
 import Pane from './Pane';
 import { DragType, WorkspaceControls } from './useWorkspaceState';
+import MultiContext from '../../lib/MultiContext';
 
 function Workspace<T>({
     value,
     onChange,
     controls,
     children,
+    title,
     className = '',
 }: StateProps<PaneData<T>> & {
     controls: WorkspaceControls<T>;
     children: FunctionComponent<StateProps<T>>;
+    title: (value: T) => string;
     className?: string;
 }) {
     const { dragging, setDragging, changeActiveTab } = controls;
 
     return (
-        <TabChildContext.Provider
-            value={children as FunctionComponent<StateProps<unknown>>}>
-            <SetDraggingContext.Provider value={setDragging}>
-                <ChangeActiveTabContext.Provider
-                    value={
-                        changeActiveTab as MutableRefObject<
-                            Dispatch<SetStateAction<TabsData<unknown>>>
-                        >
-                    }>
-                    <Pane
-                        value={value}
-                        onChange={onChange}
-                        className={`${className} ${dragging === 'vertical' ? 'cursor-ns-resize select-none' : dragging === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
-                    />
-                </ChangeActiveTabContext.Provider>
-            </SetDraggingContext.Provider>
-        </TabChildContext.Provider>
+        <MultiContext
+            contexts={[
+                [TabChildContext, children],
+                [SetDraggingContext, setDragging],
+                [ChangeActiveTabContext, changeActiveTab],
+                [CreateTitleContext, title],
+            ]}>
+            <Pane
+                value={value}
+                onChange={onChange}
+                className={`${className} ${dragging === 'vertical' ? 'cursor-ns-resize select-none' : dragging === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
+            />
+        </MultiContext>
     );
 }
 
@@ -55,5 +54,14 @@ const ChangeActiveTabContext = createContext<
     MutableRefObject<Dispatch<SetStateAction<TabsData<unknown>>> | undefined>
 >({ current: undefined });
 
+const CreateTitleContext = createContext<
+    (value: unknown, index: number) => string
+>((_, index) => `Tab ${index}`);
+
 export default Workspace;
-export { TabChildContext, SetDraggingContext, ChangeActiveTabContext };
+export {
+    TabChildContext,
+    SetDraggingContext,
+    ChangeActiveTabContext,
+    CreateTitleContext,
+};

@@ -24,6 +24,7 @@ class SplitData<T> {
 class TabsData<T> {
     readonly type = 'tabs'
     tabs: T[];
+    selected = 0;
 
     constructor(...tabs: T[]) {
         this.tabs = tabs;

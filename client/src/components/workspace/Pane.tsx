@@ -40,7 +40,7 @@ function Pane<T>({
 } & StateProps<PaneData<T>>) {
     return (
         <div
-            className={`${className} ${height === 'auto' || width === 'auto' ? 'flex-grow' : ''} overflow-auto`}
+            className={`${className} ${height === 'auto' || width === 'auto' ? 'flex-grow' : ''}`}
             style={
                 typeof height === 'number'
                     ? { height: `${height}px` }
