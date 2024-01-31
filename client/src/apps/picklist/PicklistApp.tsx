@@ -1,68 +1,52 @@
-import { useEffect, useState } from 'react';
 import { TableData } from './data';
-import {
-    PaneData,
-    SplitData,
-    TabsData,
-} from '../../components/workspace/workspaceData';
+import { SplitData, TabsData } from '../../components/workspace/workspaceData';
 import Workspace from '../../components/workspace/Workspace';
+import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
+import TextInput from '../../components/TextInput';
 
 function PicklistApp() {
     // const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
 
-    const [views, setViews] = useState<PaneData<TableData>>(
-        new SplitData(
-            [
-                new TabsData([
-                    { ascending: false, column: 'teamNumber', title: 'hi' },
-                ]),
-                new TabsData([
-                    { ascending: false, column: 'teamNumber', title: 'hi' },
-                ]),
-                new SplitData(
-                    [
-                        new TabsData([
-                            {
-                                ascending: false,
-                                column: 'teamNumber',
-                                title: 'hi',
-                            },
-                        ]),
-                        new TabsData([
-                            {
-                                ascending: false,
-                                column: 'teamNumber',
-                                title: 'hi',
-                            },
-                        ]),
-                    ],
-                    false
-                ),
-            ],
-            true
+    const [views, setViews, handleAdd, controls] = useWorkspaceState<TableData>(
+        SplitData.Horizontal(
+            new TabsData({
+                ascending: false,
+                column: 'teamNumber',
+                title: 'hi',
+            }),
+            new TabsData({
+                ascending: false,
+                column: 'teamNumber',
+                title: 'hi',
+            }),
+            SplitData.Vertical(
+                new TabsData({
+                    ascending: false,
+                    column: 'teamNumber',
+                    title: 'hi',
+                }),
+                new TabsData({
+                    ascending: false,
+                    column: 'teamNumber',
+                    title: 'hi',
+                })
+            )
         )
     );
 
-    useEffect(() => {
-        if (views.type === 'split') {
-            setViews({
-                ...views,
-                sizes: [300, 300],
-                panes: [
-                    ...views.panes.slice(0, 2),
-                    {
-                        ...(views.panes[2] as SplitData<TableData>),
-                        sizes: [300],
-                    },
-                ],
-            });
-        }
-    }, []);
-
     return (
         <main>
-            <Workspace value={views} onChange={setViews} className='h-screen'>
-                {({ value }) => <div>{value.title}</div>}
+            <Workspace
+                value={views}
+                onChange={setViews}
+                controls={controls}
+                className='h-screen'>
+                {({ value, onChange }) => (
+                    <TextInput
+                        value={value.title}
+                        onChange={title => onChange({ ...value, title })}
+                    />
+                )}
             </Workspace>
         </main>
     );

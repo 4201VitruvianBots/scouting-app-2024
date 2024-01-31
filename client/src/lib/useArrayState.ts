@@ -1,8 +1,12 @@
-import { useMemo, useRef } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
+
+function apply<T>(action: SetStateAction<T>, oldValue: T): T {
+    return typeof action === 'function' ? (action as (prev: T) => T)(oldValue) : action;
+}
 
 interface ArrayOperations<T> {
     add: (value: T) => void,
-    set: (index: number, value: T) => void,
+    set: (index: number, value: SetStateAction<T>) => void,
     remove: (index: number) => void,
     insert: (index: number, value: T) => void,
     splice: (startIndex: number, deleteCount: number, replaceWith: T[]) => void,
@@ -15,29 +19,26 @@ interface ArrayOperations<T> {
  * @param setArray - The state setter function.
  * @returns An object containing array manipulation functions.
  */
-function useArrayState<T>(array: T[], setArray: (array: T[]) => void): ArrayOperations<T> {
-    const arrayRef = useRef(array);
-    arrayRef.current = array;
-
-    const actions = useMemo(() => ({
+function useArrayState<T>(setArray: Dispatch<SetStateAction<T[]>>): ArrayOperations<T> {
+    const actions = useMemo<ArrayOperations<T>>(() => ({
         add(value: T) {
-            setArray([...arrayRef.current, value]);
+            setArray(array => [...array, value]);
         },
         remove(index: number) {
-            setArray(arrayRef.current.filter((_, i) => i !== index));
+            setArray(array => array.filter((_, i) => i !== index));
         },
-        set(index: number, value: T) {
-            setArray(arrayRef.current.map((e, i) => i === index ? value : e));
+        set(index: number, value: SetStateAction<T>) {
+            setArray(array => array.map((e, i) => i === index ? apply(value, e) : e));
         },
         insert(index: number, value: T) {
-            setArray([...arrayRef.current.slice(0, index), value, ...arrayRef.current.slice(index)]);
+            setArray(array => [...array.slice(0, index), value, ...array.slice(index)]);
         },
         splice(startIndex: number, deleteCount: number, replaceWith: T[] = []) {
-            setArray([...arrayRef.current.slice(0, startIndex), ...replaceWith, ...arrayRef.current.slice(startIndex + deleteCount)])
+            setArray(array => [...array.slice(0, startIndex), ...replaceWith, ...array.slice(startIndex + deleteCount)])
         },
     }), [setArray]);
 
     return actions;
 }
 
-export { useArrayState, ArrayOperations };
+export { useArrayState, type ArrayOperations };
