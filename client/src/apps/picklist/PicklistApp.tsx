@@ -22,15 +22,13 @@ function PicklistApp() {
                 <Dialog
                     open
                     trigger={open => <button onClick={open}>+</button>}>
-                    {close =>
-                        analyzedData && (
-                            <StatDialog
-                                data={analyzedData}
-                                onSubmit={addTable}
-                                onClose={close}
-                            />
-                        )
-                    }
+                    {close => (
+                        <StatDialog
+                            data={analyzedData}
+                            onSubmit={addTable}
+                            onClose={close}
+                        />
+                    )}
                 </Dialog>
             </div>
         </main>

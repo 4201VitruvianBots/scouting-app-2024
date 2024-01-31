@@ -11,11 +11,13 @@ function StatDialog({
 }: {
     onSubmit: Dispatch<StatTableData>;
     onClose?: () => void;
-    data: AnalysisEntry[];
+    data: AnalysisEntry[] | undefined;
 }) {
-    const columns = Object.keys(data[0]).filter(
-        e => e !== 'teamNumber' && typeof data[0][e] === 'number'
-    );
+    const columns = data
+        ? Object.keys(data[0]).filter(
+              e => e !== 'teamNumber' && typeof data[0][e] === 'number'
+          )
+        : [];
 
     const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
