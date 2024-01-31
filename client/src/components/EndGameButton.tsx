@@ -97,12 +97,12 @@ function EndgameButton({
                      <ToggleButton2 value="parked">
                         Parked
                      </ToggleButton2>
-                     <ToggleButton2 value="none">
-                        None
-                     </ToggleButton2>
                      <ToggleButton2 value="failed">
                         Failed</ToggleButton2>
                       </ToggleButtonGroup>
+                      <ToggleButton2 value="none">
+                        None
+                     </ToggleButton2>
                     </>
                 ) : (
                     <>

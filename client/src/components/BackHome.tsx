@@ -19,7 +19,7 @@ function BackHome({
                 <Button
                     variant='outlined'
                     color='success'
-                    style={{ width: '6%', height: '10%', fontSize: '20px', backgroundColor:'lightgray', borderColor:'darkgray', textAlign:'center'}}
+                    style={{ width: '10%', height: '100%', fontSize: '20px', backgroundColor:'lightgray', borderColor:'darkgray', textAlign:'center', padding:'5px'}}
                     startIcon={icon}>
                 {children}
                 </Button>
