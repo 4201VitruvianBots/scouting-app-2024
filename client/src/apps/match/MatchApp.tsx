@@ -1,6 +1,6 @@
 import FieldButton from '../../components/FieldButton';
 import BackHome from '../../components/BackHome';
-import HomeIcon from '@mui/icons-material/Home';
+
 import EndgameButton from '../../components/EndGameButton';
 import { SetStateAction, useState } from 'react';
 // import { Button } from '@mui/material';
@@ -111,9 +111,7 @@ function MatchApp() {
             </p>
 
             <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
-                <BackHome link='/' className='contents'>
-                    <HomeIcon style={{ fontSize: '40px' }} />
-                </BackHome>{' '}
+                <BackHome className='contents'/>
                 <button
                     onClick={undoCount}
                     className='z-10 rounded bg-[#f07800] p-5 text-[100%] font-bold text-black'>
