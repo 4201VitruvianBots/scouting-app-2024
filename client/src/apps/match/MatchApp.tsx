@@ -121,7 +121,7 @@ function MatchApp() {
             </button>
 
 
-            <Button onClick={undoCount}>Undo Count</Button>
+          
 
             <p className="font-semibold text-[40px]">Auto</p>
 
