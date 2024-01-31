@@ -142,7 +142,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400 p-[0.5em] text-left  '
+                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-left  '
                             handleCount={handleCount}
                             autokey='autoNear'
                             telekey='teleNear'
@@ -152,7 +152,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='absolute left-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400  p-[2em] pb-[8em] text-left '
+                            className='absolute left-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-left '
                             handleCount={handleCount}
                             autokey='autoMid'
                             telekey='teleMid'
@@ -162,7 +162,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400 p-[2.5em] pb-[7em] text-left '
+                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-left '
                             handleCount={handleCount}
                             autokey='autoFar'
                             telekey='teleFar'
@@ -174,7 +174,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='absolute bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400 p-[0.5em] text-right '
+                            className='absolute bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-right '
                             handleCount={handleCount}
                             autokey='autoNear'
                             telekey='teleNear'
@@ -184,7 +184,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='absolute right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400  p-[2em] pb-[8em] text-right '
+                            className='absolute right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-right '
                             handleCount={handleCount}
                             autokey='autoMid'
                             telekey='teleMid'
@@ -193,7 +193,7 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400 p-[2.5em] pb-[7em] text-right '
+                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-right '
                             handleCount={handleCount}
                             autokey='autoFar'
                             telekey='teleFar'
