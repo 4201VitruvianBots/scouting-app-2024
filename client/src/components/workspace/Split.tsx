@@ -16,7 +16,7 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
 
     return (
         <div
-            className={`flex h-full w-full ${value.vertical ? 'flex-col' : 'flex-row'}`}>
+            className={`flex h-full w-full ${value.vertical ? 'flex-col py-2' : 'flex-row px-2'}`}>
             {otherPanes.map((pane, i) => (
                 <Fragment key={i}>
                     <Pane
@@ -26,10 +26,7 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
                     />
                     <ResizeHandle
                         size={sizes[i]}
-                        onResize={newSize => {
-                            console.log(newSize);
-                            sizesA.set(i, newSize);
-                        }}
+                        onResize={newSize => sizesA.set(i, newSize)}
                         vertical={value.vertical}
                     />
                 </Fragment>
@@ -37,7 +34,7 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
             <Pane
                 value={lastPane}
                 {...{ [value.vertical ? 'height' : 'width']: 'auto' }}
-                onChange={newPane => panesA.set(panes.length, newPane)}
+                onChange={newPane => panesA.set(panes.length - 1, newPane)}
             />
         </div>
     );

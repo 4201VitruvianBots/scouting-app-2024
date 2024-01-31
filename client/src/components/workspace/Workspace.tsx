@@ -6,7 +6,7 @@ function Workspace<T>({
     value,
     onChange,
     children,
-    className,
+    className = '',
 }: StateProps<PaneData<T>> & {
     children: FunctionComponent<StateProps<T>>;
     className?: string;
@@ -14,7 +14,11 @@ function Workspace<T>({
     return (
         <TabChildContext.Provider
             value={children as FunctionComponent<StateProps<unknown>>}>
-            <Pane value={value} onChange={onChange} className={className} />
+            <Pane
+                value={value}
+                onChange={onChange}
+                className={`${className} ${value.type === 'tabs' ? 'p-2' : value.vertical ? 'px-2' : 'py-2'}`}
+            />
         </TabChildContext.Provider>
     );
 }

@@ -9,12 +9,13 @@ function ResizeHandle({
     size: number;
     onResize: (size: number) => void;
 }) {
-    const handleMouseDown: MouseEventHandler = () => {
-        let newSize = size;
+    const handleMouseDown: MouseEventHandler = event => {
+        const initial = vertical ? event.clientY : event.clientX;
 
         const handleMouseMove = (event: MouseEvent) => {
-            newSize += vertical ? event.movementY : event.movementX;
-            onResize(newSize);
+            onResize(
+                size + (vertical ? event.clientY : event.clientX) - initial
+            );
         };
 
         const handleMouseUp = () => {
@@ -28,8 +29,12 @@ function ResizeHandle({
 
     return (
         <div
-            className={`${vertical ? 'h-2 cursor-ns-resize' : 'w-2 cursor-ew-resize'} bg-black`}
-            onMouseDown={handleMouseDown}></div>
+            className={`${vertical ? 'cursor-ns-resize py-2' : 'cursor-ew-resize px-2'}`}
+            onMouseDown={handleMouseDown}>
+            <div
+                className={`${vertical ? 'h-px w-full' : 'h-full w-px'} bg-black`}
+            />
+        </div>
     );
 }
 
