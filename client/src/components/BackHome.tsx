@@ -4,14 +4,12 @@ import { Button } from '@mui/material';
 
 function BackHome({
     link,
-    icon,
     className,
     children,
 }: {
     link: string;
-    icon: ReactNode;
     className?: string;
-    children?: string;
+    children?: ReactNode;
 }) {
     return (
         <>
@@ -19,8 +17,7 @@ function BackHome({
                 <Button
                     variant='outlined'
                     color='success'
-                    style={{ width: '10%', height: '100%', fontSize: '20px', backgroundColor:'lightgray', borderColor:'darkgray', textAlign:'center', padding:'5px'}}
-                    startIcon={icon}>
+                    style={{  fontSize: '20px', backgroundColor:'lightgray', borderColor:'darkgray', textAlign:'center', paddingLeft:'20px', paddingRight:'20px'}}>
                 {children}
                 </Button>
             </Link>
