@@ -1,12 +1,13 @@
 import FieldButton from '../../components/FieldButton';
 import BackHome from '../../components/BackHome';
-import HomeIcon from '@mui/icons-material/Home';
+
 import EndgameButton from '../../components/EndGameButton';
 import { SetStateAction, useState } from 'react';
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import { ClimbPosition, MatchData } from 'requests';
 import { postJson } from '../../lib/postJson';
 type countKeys = keyof MatchScores;
+import { Undo } from '@mui/icons-material';
 
 interface MatchScores {
     autoNear: number;
@@ -104,26 +105,23 @@ function MatchApp() {
     };
 
     return (
-        <main className='flex flex-col place-content-center items-center text-center'>
-            <p className='p-7 text-3xl font-bold text-green-700 '>
-                <BackHome
-                    link='/'
-                    icon={
-                        <HomeIcon style={{ fontSize: '30px' }} />
-                    }></BackHome>{' '}
+        <main className='flex flex-col place-content-center items-center text-center '>
+            <p className='p-7 text-3xl font-bold text-green-700'>
                 Match Scouting App{' '}
             </p>
 
-            <button
-                onClick={undoCount}
-                className='text-[100% m-5 mt-[-10px] h-[50px] w-[15%] items-center rounded bg-[#f07800] font-bold text-black'>
-                Undo Count
-            </button>
+            <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
+                <BackHome className='contents'/>
+                <button
+                    onClick={undoCount}
+                    className='z-10 rounded bg-[#f07800] p-5 text-[100%] font-bold text-black'>
+                    
+                    <Undo style={{ fontSize: '40px' }}/>
+                    
+                </button>
+            </div>
 
-
-          
-
-            <p className="font-semibold text-[40px]">Auto</p>
+            <p className='text-[40px] font-semibold'>Auto</p>
 
             <FieldButton
                 count={count}
@@ -132,33 +130,38 @@ function MatchApp() {
                 leave={leave}
                 setLeave={setLeave}
             />
-             <p className="font-semibold text-[40px]">Teleop</p>
+            <p className='text-[40px] font-semibold'>Teleop</p>
             <FieldButton
                 count={count}
                 setCount={handleSetCount}
                 teleop={true}
             />
 
-             <p className="font-semibold text-[40px]">Endgame</p>
-            <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
-
+            <p className='text-[40px] font-semibold'>Endgame</p>
+            <EndgameButton
+                climbPosition={climbPosition}
+                setClimbPosition={setClimbPosition}></EndgameButton>
 
             <div className='flex flex-row gap-5'>
                 <button
-                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700  shadow-xl text-xl'
+                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700  text-xl shadow-xl'
                     onClick={() => handleCount('high')}>
                     {' '}
                     High Note: {count.high}{' '}
                 </button>
                 <button
-                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700 shadow-xl text-xl'
+                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700 text-xl shadow-xl'
                     onClick={() => handleCount('trap')}>
                     {' '}
                     Trap Note: {count.trap}{' '}
                 </button>
             </div>
 
-            <button onClick={handleSubmit} className="text-[100% m-5 h-[50px] w-[35%] items-center my-5 rounded bg-blue-300 font-bold text-black">submit :3</button>
+            <button
+                onClick={handleSubmit}
+                className='text-[100% m-5 my-5 h-[50px] w-[35%] items-center rounded bg-blue-300 font-bold text-black'>
+                submit :3
+            </button>
         </main>
     );
 }
