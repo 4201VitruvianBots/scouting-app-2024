@@ -1,36 +1,69 @@
-import { useState } from 'react';
-import { useFetchJson } from '../../lib/useFetchJson';
-import { AnalysisEntry, TableData } from './data';
-import Dialog from '../../components/Dialog';
-import StatDialog from './components/StatDialog';
-import StatTable from './components/StatTable';
+import { useEffect, useState } from 'react';
+import { TableData } from './data';
+import {
+    PaneData,
+    SplitData,
+    TabsData,
+} from '../../components/workspace/workspaceData';
+import Workspace from '../../components/workspace/Workspace';
 
 function PicklistApp() {
-    const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
+    // const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
 
-    const [tables, setTables] = useState<TableData[]>([]);
+    const [views, setViews] = useState<PaneData<TableData>>(
+        new SplitData(
+            [
+                new TabsData([
+                    { ascending: false, column: 'teamNumber', title: 'hi' },
+                ]),
+                new TabsData([
+                    { ascending: false, column: 'teamNumber', title: 'hi' },
+                ]),
+                new SplitData(
+                    [
+                        new TabsData([
+                            {
+                                ascending: false,
+                                column: 'teamNumber',
+                                title: 'hi',
+                            },
+                        ]),
+                        new TabsData([
+                            {
+                                ascending: false,
+                                column: 'teamNumber',
+                                title: 'hi',
+                            },
+                        ]),
+                    ],
+                    false
+                ),
+            ],
+            true
+        )
+    );
 
-    const addTable = (table: TableData) => setTables([...tables, table]);
+    useEffect(() => {
+        if (views.type === 'split') {
+            setViews({
+                ...views,
+                sizes: [300, 300],
+                panes: [
+                    ...views.panes.slice(0, 2),
+                    {
+                        ...(views.panes[2] as SplitData<TableData>),
+                        sizes: [300],
+                    },
+                ],
+            });
+        }
+    }, []);
 
     return (
-        <main className='flex h-screen gap-4 p-8'>
-            {analyzedData &&
-                tables.map((table, i) => (
-                    <StatTable data={analyzedData} table={table} key={i} />
-                ))}
-            <div className='grid min-w-16 flex-grow place-items-center'>
-                <Dialog
-                    open
-                    trigger={open => <button onClick={open}>+</button>}>
-                    {close => (
-                        <StatDialog
-                            data={analyzedData}
-                            onSubmit={addTable}
-                            onClose={close}
-                        />
-                    )}
-                </Dialog>
-            </div>
+        <main>
+            <Workspace value={views} onChange={setViews} className='h-screen'>
+                {({ value }) => <div>{value.title}</div>}
+            </Workspace>
         </main>
     );
 }
