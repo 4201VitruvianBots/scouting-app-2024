@@ -3,6 +3,7 @@ import { StateProps, TabsData } from './workspaceData';
 import { CreateTitleContext, TabChildContext } from './Workspace';
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
+import Tab from './Tab';
 
 function Tabs<T>({ value, onChange }: StateProps<TabsData<T>>) {
     const [selected, setSelected] = usePropState(value, onChange, 'selected');
@@ -19,12 +20,12 @@ function Tabs<T>({ value, onChange }: StateProps<TabsData<T>>) {
         <div className='flex h-full w-full flex-col'>
             <div className='flex flex-row overflow-x-auto border-b border-black'>
                 {tabs.map((tab, i) => (
-                    <div
+                    <Tab
                         key={i}
                         onClick={() => setSelected(i)}
-                        className={`cursor-pointer border-r border-black px-2 py-1 ${i !== selected ? 'text-neutral-500' : ''}`}>
-                        {createTitle(tab, i)}
-                    </div>
+                        selected={selected === i}
+                        title={createTitle(tab, i)}
+                    />
                 ))}
             </div>
             <div className='flex-grow overflow-auto p-2'>
