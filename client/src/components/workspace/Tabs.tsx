@@ -62,7 +62,10 @@ function Tabs<T>({
                         selected={selected === i}
                         title={createTitle(tab, i)}
                         value={tab}
-                        onInsertBefore={value => tabsA.insert(i, value)}
+                        onInsertBefore={value => {
+                            tabsA.insert(i, value);
+                            setSelected(i);
+                        }}
                         onRemove={() => {
                             // If that was the last tab
                             if (tabs.length === 1) {
@@ -80,7 +83,13 @@ function Tabs<T>({
                         }}
                     />
                 ))}
-                <DropTarget onDrop={tabsA.add} className='min-w-8 flex-grow' />
+                <DropTarget
+                    onDrop={(value: T) => {
+                        tabsA.add(value);
+                        setSelected(tabs.length);
+                    }}
+                    className='min-w-8 flex-grow'
+                />
             </div>
             <div className='relative flex-grow overflow-auto p-2'>
                 {tabContext(tabs[selected], tab =>

@@ -53,7 +53,7 @@ function Tab<T>({
             onDragEnd={handleDragEnd}
             // drop is triggered before dragEnd
             onClick={onClick}
-            className={`relative min-w-32 cursor-pointer select-none border border-black px-2 py-1 ${selected ? '' : 'text-neutral-500'}`}>
+            className={`relative min-w-32 cursor-pointer select-none border border-black px-2 py-1 ${selected ? 'bg-neutral-200' : 'text-neutral-500'}`}>
             {dragging && (
                 <DropTarget
                     disabled={draggingSelf}
