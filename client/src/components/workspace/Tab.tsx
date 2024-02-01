@@ -58,7 +58,7 @@ function Tab<T>({
                 <DropTarget
                     disabled={draggingSelf}
                     onDrop={onInsertBefore}
-                    className='absolute bottom-0 left-0 right-0 top-0'
+                    className='absolute inset-0'
                 />
             )}
             {title}

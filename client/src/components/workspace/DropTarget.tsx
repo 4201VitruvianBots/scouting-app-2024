@@ -1,14 +1,22 @@
-import { DragEventHandler, useContext, useEffect, useState } from 'react';
+import {
+    DragEventHandler,
+    HTMLAttributes,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 import { DragContext } from './useWorkspaceState';
 
 function DropTarget<T>({
     disabled = false,
     onDrop,
     className = '',
+    areaClassName,
 }: {
     disabled?: boolean;
     onDrop: (value: T) => void;
     className?: string;
+    areaClassName?: string;
 }) {
     const dragging = useContext(DragContext)[0] as T;
     const [dragTarget, setDragTarget] = useState(false);
@@ -39,14 +47,25 @@ function DropTarget<T>({
         }
     };
 
-    return (
+    const listeners: HTMLAttributes<HTMLDivElement> = {
+        onDragEnter: handleDragEnter,
+        onDragOver: handleDragOver,
+        onDragExit: handleDragExit,
+        onDrop: handleDrop,
+    };
+
+    return areaClassName === undefined ? (
         <div
-            onDragEnter={handleDragEnter}
-            onDragOver={handleDragOver}
-            onDragExit={handleDragExit}
-            onDrop={handleDrop}
+            {...listeners}
             className={`${dragTarget ? 'bg-neutral-500/50' : ''} ${className}`}
         />
+    ) : (
+        <>
+            <div
+                className={`${areaClassName} ${dragTarget ? 'bg-neutral-500/50' : ''}`}
+            />
+            <div {...listeners} className={`${className} z-10`} />
+        </>
     );
 }
 

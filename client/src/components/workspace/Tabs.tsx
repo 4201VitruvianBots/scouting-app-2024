@@ -1,5 +1,5 @@
-import { SetStateAction, useContext } from 'react';
-import { StateProps, TabsData } from './workspaceData';
+import { Dispatch, SetStateAction, useContext } from 'react';
+import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
 import {
     CreateTitleContext,
     DragContext,
@@ -24,6 +24,16 @@ function Tabs<T>({
 
     const dragging = useContext(DragContext)[0] as T;
 
+    const handleSplit = (vertical: boolean, start: boolean) => (other: T) => {
+        (onChange as Dispatch<PaneData<T>>)(
+            new SplitData(
+                vertical,
+                start ? new TabsData(other) : value,
+                start ? value : new TabsData(other)
+            )
+        );
+    };
+
     return (
         <div className='flex h-full w-full flex-col'>
             <div className='flex flex-row overflow-x-auto border-b border-black'>
@@ -36,7 +46,6 @@ function Tabs<T>({
                         value={tab}
                         onInsertBefore={value => tabsA.insert(i, value)}
                         onRemove={() => {
-                            console.log(tabs);
                             // If that was the last tab
                             if (tabs.length === 1) {
                                 onRemove();
@@ -55,9 +64,38 @@ function Tabs<T>({
                 ))}
                 <DropTarget onDrop={tabsA.add} className='min-w-8 flex-grow' />
             </div>
-            <div className='flex-grow overflow-auto p-2'>
+            <div className='relative flex-grow overflow-auto p-2'>
                 {tabContext(tabs[selected], tab =>
                     tabsA.set(selected, tab as SetStateAction<T>)
+                )}
+                {dragging && (
+                    <div className='absolute inset-0 grid grid-cols-[1fr_2fr_1fr] grid-rows-[1fr_2fr_1fr]'>
+                        <DropTarget
+                            onDrop={tabsA.add}
+                            className='col-start-2 row-start-2'
+                            areaClassName='absolute inset-0'
+                        />
+                        <DropTarget
+                            onDrop={handleSplit(true, true)}
+                            className='col-start-2 row-start-1'
+                            areaClassName='absolute inset-x-0 top-0 h-1/2'
+                        />
+                        <DropTarget
+                            onDrop={handleSplit(true, false)}
+                            className='col-start-2 row-start-3'
+                            areaClassName='absolute inset-x-0 bottom-0 h-1/2'
+                        />
+                        <DropTarget
+                            onDrop={handleSplit(false, true)}
+                            className='col-start-1 row-start-2'
+                            areaClassName='absolute inset-y-0 left-0 w-1/2'
+                        />
+                        <DropTarget
+                            onDrop={handleSplit(false, false)}
+                            className='col-start-3 row-start-2'
+                            areaClassName='absolute inset-y-0 right-0 w-1/2'
+                        />
+                    </div>
                 )}
             </div>
         </div>
