@@ -7,44 +7,45 @@ import TextInput from '../../components/TextInput';
 function PicklistApp() {
     // const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
 
-    const [views, setViews, handleAdd, controls] = useWorkspaceState<TableData>(
-        SplitData.Horizontal(
-            new TabsData({
-                ascending: false,
-                column: 'teamNumber',
-                title: 'hi',
-            }),
-            new TabsData({
-                ascending: false,
-                column: 'teamNumber',
-                title: 'hi',
-            }),
-            SplitData.Vertical(
-                new TabsData(
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'hi',
-                    },
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'hi',
-                    },
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'hi',
-                    }
-                ),
+    const [views, setViews, addToActive, controls] =
+        useWorkspaceState<TableData>(
+            SplitData.Horizontal(
                 new TabsData({
                     ascending: false,
                     column: 'teamNumber',
                     title: 'hi',
-                })
+                }),
+                new TabsData({
+                    ascending: false,
+                    column: 'teamNumber',
+                    title: 'hi',
+                }),
+                SplitData.Vertical(
+                    new TabsData(
+                        {
+                            ascending: false,
+                            column: 'teamNumber',
+                            title: 'hi',
+                        },
+                        {
+                            ascending: false,
+                            column: 'teamNumber',
+                            title: 'hi',
+                        },
+                        {
+                            ascending: false,
+                            column: 'teamNumber',
+                            title: 'hi',
+                        }
+                    ),
+                    new TabsData({
+                        ascending: false,
+                        column: 'teamNumber',
+                        title: 'hi',
+                    })
+                )
             )
-        )
-    );
+        );
 
     return (
         <main>

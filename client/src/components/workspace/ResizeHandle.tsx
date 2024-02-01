@@ -1,5 +1,5 @@
 import { MouseEventHandler, useContext } from 'react';
-import { SetDraggingContext } from './Workspace';
+import { ResizeContext } from './useWorkspaceState';
 
 function ResizeHandle({
     vertical,
@@ -10,10 +10,10 @@ function ResizeHandle({
     size: number;
     onResize: (size: number) => void;
 }) {
-    const setDragging = useContext(SetDraggingContext);
+    const setResizing = useContext(ResizeContext);
 
     const handleMouseDown: MouseEventHandler = event => {
-        setDragging(vertical ? 'vertical' : 'horizontal');
+        setResizing(vertical ? 'vertical' : 'horizontal');
 
         const initial = vertical ? event.clientY : event.clientX;
 
@@ -26,7 +26,7 @@ function ResizeHandle({
         const handleMouseUp = () => {
             removeEventListener('mousemove', handleMouseMove);
             removeEventListener('mouseup', handleMouseUp);
-            setDragging(undefined);
+            setResizing(undefined);
         };
 
         addEventListener('mousemove', handleMouseMove);

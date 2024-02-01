@@ -1,17 +1,17 @@
 import {
     Dispatch,
     MutableRefObject,
+    ReactNode,
     SetStateAction,
+    createContext,
     useRef,
     useState,
 } from 'react';
 import { PaneData, SplitData, TabsData } from './workspaceData';
 
-type DragType = 'horizontal' | 'vertical' | undefined;
+type ResizeType = 'horizontal' | 'vertical' | undefined;
 
 interface WorkspaceControls<T> {
-    dragging: DragType;
-    setDragging: Dispatch<SetStateAction<DragType>>;
     changeActiveTab: MutableRefObject<
         Dispatch<SetStateAction<TabsData<T>>> | undefined
     >;
@@ -31,8 +31,6 @@ function useWorkspaceState<T>(
             : new TabsData(initialState)
     );
 
-    const [dragging, setDragging] = useState<DragType>();
-
     const changeActiveTab = useRef<Dispatch<SetStateAction<TabsData<T>>>>();
 
     const handleAdd = (tab: T) => {
@@ -42,13 +40,37 @@ function useWorkspaceState<T>(
         }));
     };
 
-    return [
-        views,
-        setViews,
-        handleAdd,
-        { dragging, setDragging, changeActiveTab },
-    ];
+    return [views, setViews, handleAdd, { changeActiveTab }];
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export { useWorkspaceState, type WorkspaceControls, type DragType };
+const TabContentContext = createContext<
+    (value: unknown, onChange: Dispatch<SetStateAction<unknown>>) => ReactNode
+>(() => undefined);
+
+const ResizeContext = createContext<Dispatch<SetStateAction<ResizeType>>>(
+    () => {}
+);
+
+const DragContext = createContext<[unknown, Dispatch<SetStateAction<unknown>>]>(
+    [undefined, () => {}]
+);
+
+const ChangeActiveTabContext = createContext<
+    MutableRefObject<Dispatch<SetStateAction<TabsData<unknown>>> | undefined>
+>({ current: undefined });
+
+const CreateTitleContext = createContext<
+    (value: unknown, index: number) => string
+>((_, index) => `Tab ${index}`);
+
+export {
+    // eslint-disable-next-line react-refresh/only-export-components
+    useWorkspaceState,
+    TabContentContext,
+    ResizeContext,
+    DragContext,
+    ChangeActiveTabContext,
+    CreateTitleContext,
+    type WorkspaceControls,
+    type ResizeType,
+};

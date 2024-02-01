@@ -1,6 +1,6 @@
 import { SetStateAction, useContext } from 'react';
 import { StateProps, TabsData } from './workspaceData';
-import { CreateTitleContext, TabContentContext } from './Workspace';
+import { CreateTitleContext, TabContentContext } from './useWorkspaceState';
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
@@ -22,6 +22,9 @@ function Tabs<T>({ value, onChange }: StateProps<TabsData<T>>) {
                         onClick={() => setSelected(i)}
                         selected={selected === i}
                         title={createTitle(tab, i)}
+                        value={tab}
+                        //TODO
+                        onRemove={() => {}}
                     />
                 ))}
             </div>

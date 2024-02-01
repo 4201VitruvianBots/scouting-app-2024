@@ -1,14 +1,14 @@
-import {
-    Dispatch,
-    MutableRefObject,
-    ReactNode,
-    SetStateAction,
-    createContext,
-} from 'react';
-import { PaneData, StateProps, TabsData } from './workspaceData';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import { PaneData, StateProps } from './workspaceData';
 import Pane from './Pane';
-import { DragType, WorkspaceControls } from './useWorkspaceState';
+import { DragContext, WorkspaceControls } from './useWorkspaceState';
 import MultiContext from '../../lib/MultiContext';
+import {
+    TabContentContext,
+    ResizeContext,
+    ChangeActiveTabContext,
+    CreateTitleContext,
+} from './useWorkspaceState';
 
 function Workspace<T>({
     value,
@@ -23,45 +23,28 @@ function Workspace<T>({
     title: (value: T) => string;
     className?: string;
 }) {
-    const { dragging, setDragging, changeActiveTab } = controls;
+    const { changeActiveTab } = controls;
+
+    const [resizeType, setResizeType] = useState<T>();
+    const [dragging, setDragging] = useState<T>();
 
     return (
         <MultiContext
             contexts={[
+                // THIS PART IS NOT TYPECHECKED! CHECK CAREFULLY!
                 [TabContentContext, children],
-                [SetDraggingContext, setDragging],
+                [ResizeContext, setResizeType],
+                [DragContext, [dragging, setDragging]],
                 [ChangeActiveTabContext, changeActiveTab],
                 [CreateTitleContext, title],
             ]}>
             <Pane
                 value={value}
                 onChange={onChange}
-                className={`${className} ${dragging === 'vertical' ? 'cursor-ns-resize select-none' : dragging === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
+                className={`${className} ${resizeType === 'vertical' ? 'cursor-ns-resize select-none' : resizeType === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
             />
         </MultiContext>
     );
 }
 
-const TabContentContext = createContext<
-    (value: unknown, onChange: Dispatch<SetStateAction<unknown>>) => ReactNode
->(() => undefined);
-
-const SetDraggingContext = createContext<Dispatch<SetStateAction<DragType>>>(
-    () => {}
-);
-
-const ChangeActiveTabContext = createContext<
-    MutableRefObject<Dispatch<SetStateAction<TabsData<unknown>>> | undefined>
->({ current: undefined });
-
-const CreateTitleContext = createContext<
-    (value: unknown, index: number) => string
->((_, index) => `Tab ${index}`);
-
 export default Workspace;
-export {
-    TabContentContext,
-    SetDraggingContext,
-    ChangeActiveTabContext,
-    CreateTitleContext,
-};
