@@ -11,12 +11,14 @@ import { DragContext } from './useWorkspaceState';
 function Tab<T>({
     value,
     onRemove,
+    onInsertBefore,
     onClick,
     title,
     selected,
 }: {
     value: T;
     onRemove: () => void;
+    onInsertBefore: (value: T) => void;
     onClick: () => void;
     title: string;
     selected: boolean;
@@ -30,7 +32,7 @@ function Tab<T>({
     const [dragTarget, setDragTarget] = useState(false);
 
     useEffect(() => {
-        if (dragging !== 'content' && dragTarget) setDragTarget(false);
+        if (!dragging && dragTarget) setDragTarget(false);
     }, [dragTarget, dragging]);
 
     const handleDragStart: DragEventHandler = event => {
@@ -41,13 +43,16 @@ function Tab<T>({
     };
 
     const handleDragEnd: DragEventHandler = event => {
-        // if (event.dataTransfer.dropEffect) ;
+        // If successful
+        if (event.dataTransfer.dropEffect === 'move') {
+            onRemove();
+        }
         setDraggingSelf(false);
         setDragging(undefined);
     };
 
     const handleDragEnter: DragEventHandler = event => {
-        if (draggingSelf) return;
+        if (draggingSelf || !dragging) return;
         event.preventDefault();
         setDragTarget(true);
     };
@@ -58,8 +63,14 @@ function Tab<T>({
     };
 
     const handleDragOver: DragEventHandler = event => {
-        if (draggingSelf) return;
+        if (draggingSelf || !dragging) return;
         event.preventDefault();
+    };
+
+    const handleDrop: DragEventHandler = () => {
+        if (dragging) {
+            onInsertBefore(dragging);
+        }
     };
 
     return (
@@ -70,6 +81,8 @@ function Tab<T>({
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragExit={handleDragExit}
+            onDrop={handleDrop}
+            // drop is triggered before dragEnd
             onClick={onClick}
             className={`cursor-pointer select-none border-r border-black px-2 py-1 ${selected ? '' : 'text-neutral-500'} ${dragTarget ? 'bg-green-500' : ''}`}>
             {title}

@@ -5,7 +5,8 @@ import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
 
 function stateToPane<T>(
     value: PaneData<T>,
-    onChange: Dispatch<SetStateAction<PaneData<T>>>
+    onChange: Dispatch<SetStateAction<PaneData<T>>>,
+    onRemove: () => void
 ) {
     switch (value.type) {
         case 'split':
@@ -22,6 +23,7 @@ function stateToPane<T>(
                 <Tabs
                     value={value}
                     onChange={onChange as Dispatch<SetStateAction<TabsData<T>>>}
+                    onRemove={onRemove}
                 />
             );
     }
@@ -32,10 +34,12 @@ function Pane<T>({
     onChange,
     height,
     width,
+    onRemove,
     className = '',
 }: {
     height?: number | 'auto';
     width?: number | 'auto';
+    onRemove: () => void;
     className?: string;
 } & StateProps<PaneData<T>>) {
     return (
@@ -48,7 +52,7 @@ function Pane<T>({
                       ? { width: `${width}px` }
                       : undefined
             }>
-            {stateToPane(value, onChange)}
+            {stateToPane(value, onChange, onRemove)}
         </div>
     );
 }

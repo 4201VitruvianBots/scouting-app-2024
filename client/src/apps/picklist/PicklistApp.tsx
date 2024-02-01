@@ -10,40 +10,28 @@ function PicklistApp() {
     const [views, setViews, addToActive, controls] =
         useWorkspaceState<TableData>(
             SplitData.Horizontal(
-                new TabsData({
-                    ascending: false,
-                    column: 'teamNumber',
-                    title: 'hi',
-                }),
-                new TabsData({
-                    ascending: false,
-                    column: 'teamNumber',
-                    title: 'hi',
-                }),
-                SplitData.Vertical(
-                    new TabsData(
-                        {
-                            ascending: false,
-                            column: 'teamNumber',
-                            title: 'hi',
-                        },
-                        {
-                            ascending: false,
-                            column: 'teamNumber',
-                            title: 'hi',
-                        },
-                        {
-                            ascending: false,
-                            column: 'teamNumber',
-                            title: 'hi',
-                        }
-                    ),
-                    new TabsData({
+                new TabsData(
+                    {
                         ascending: false,
                         column: 'teamNumber',
-                        title: 'hi',
-                    })
-                )
+                        title: 'A',
+                    },
+                    {
+                        ascending: false,
+                        column: 'teamNumber',
+                        title: 'B',
+                    },
+                    {
+                        ascending: false,
+                        column: 'teamNumber',
+                        title: 'C',
+                    }
+                ),
+                new TabsData({
+                    ascending: false,
+                    column: 'teamNumber',
+                    title: 'D',
+                })
             )
         );
 
