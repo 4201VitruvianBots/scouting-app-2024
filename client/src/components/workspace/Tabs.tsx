@@ -1,6 +1,13 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
+import {
+    Dispatch,
+    MutableRefObject,
+    SetStateAction,
+    useCallback,
+    useContext,
+} from 'react';
 import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
 import {
+    AddToFocusedContext,
     CreateTitleContext,
     DragContext,
     TabContentContext,
@@ -9,6 +16,7 @@ import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
 import DropTarget from './DropTarget';
+import { useWatch } from '../../lib/useWatch';
 
 function Tabs<T>({
     value,
@@ -21,7 +29,9 @@ function Tabs<T>({
 
     const tabContext = useContext(TabContentContext);
     const createTitle = useContext(CreateTitleContext);
-
+    const addToFocusedRef = useContext(AddToFocusedContext) as MutableRefObject<
+        Dispatch<T>
+    >;
     const dragging = useContext(DragContext)[0] as T;
 
     const handleSplit = (vertical: boolean, start: boolean) => (other: T) => {
@@ -34,8 +44,16 @@ function Tabs<T>({
         );
     };
 
+    const handleFocus = useCallback(() => {
+        addToFocusedRef.current = tabsA.add;
+    }, [addToFocusedRef, tabsA.add]);
+
+    useWatch(() => {
+        handleFocus();
+    }, value.tabs);
+
     return (
-        <div className='flex h-full w-full flex-col'>
+        <div className='flex h-full w-full flex-col' onClick={handleFocus}>
             <div className='flex flex-row overflow-x-auto border-b border-black'>
                 {tabs.map((tab, i) => (
                     <Tab
@@ -56,7 +74,7 @@ function Tabs<T>({
                             } else {
                                 tabsA.remove(i + 1);
                             }
-                            // If the selected item does not exist
+                            // If the selected tab does not exist
                             if (tabs.length - 2 < selected)
                                 setSelected(selected - 1);
                         }}
@@ -68,7 +86,7 @@ function Tabs<T>({
                 {tabContext(tabs[selected], tab =>
                     tabsA.set(selected, tab as SetStateAction<T>)
                 )}
-                {dragging && (
+                {dragging && !(tabs.length === 1 && tabs[0] === dragging) && (
                     <div className='absolute inset-0 grid grid-cols-[1fr_2fr_1fr] grid-rows-[1fr_2fr_1fr]'>
                         <DropTarget
                             onDrop={tabsA.add}

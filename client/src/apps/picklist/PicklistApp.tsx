@@ -7,42 +7,36 @@ import TextInput from '../../components/TextInput';
 function PicklistApp() {
     // const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
 
-    const [views, setViews, addToActive, controls] =
+    const [views, setViews, addToFocused, controls] =
         useWorkspaceState<TableData>(
             SplitData.Horizontal(
-                new TabsData(
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'A',
-                    },
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'B',
-                    },
-                    {
-                        ascending: false,
-                        column: 'teamNumber',
-                        title: 'C',
-                    }
-                ),
                 new TabsData({
                     ascending: false,
                     column: 'teamNumber',
-                    title: 'D',
+                    title: 'A',
                 })
             )
         );
 
     return (
-        <main>
+        <main className='grid h-screen grid-rows-[auto_1fr]'>
+            <div className='border-b border-black'>
+                <button
+                    onClick={() =>
+                        addToFocused({
+                            ascending: false,
+                            column: 'hi',
+                            title: 'IIIIIII',
+                        })
+                    }>
+                    +
+                </button>
+            </div>
             <Workspace
                 value={views}
                 onChange={setViews}
                 controls={controls}
-                title={table => table.title}
-                className='h-screen'>
+                title={table => table.title}>
                 {/* {(value, onChange) => <StatTable data={analyzedData} table={value} />} */}
                 {(value, onChange) => (
                     <TextInput

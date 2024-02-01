@@ -6,7 +6,7 @@ import MultiContext from '../../lib/MultiContext';
 import {
     TabContentContext,
     ResizeContext,
-    ChangeActiveTabContext,
+    AddToFocusedContext,
     CreateTitleContext,
 } from './useWorkspaceState';
 
@@ -23,7 +23,7 @@ function Workspace<T>({
     title: (value: T) => string;
     className?: string;
 }) {
-    const { changeActiveTab } = controls;
+    const { addToFocused } = controls;
 
     const [resizeType, setResizeType] = useState<T>();
     const [dragging, setDragging] = useState<T>();
@@ -35,13 +35,16 @@ function Workspace<T>({
                 [TabContentContext, children],
                 [ResizeContext, setResizeType],
                 [DragContext, [dragging, setDragging]],
-                [ChangeActiveTabContext, changeActiveTab],
+                [AddToFocusedContext, addToFocused],
                 [CreateTitleContext, title],
             ]}>
             <Pane
                 value={value}
                 onChange={onChange}
                 className={`${className} ${resizeType === 'vertical' ? 'cursor-ns-resize select-none' : resizeType === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
+                onRemove={() => {
+                    /*TODO*/
+                }}
             />
         </MultiContext>
     );

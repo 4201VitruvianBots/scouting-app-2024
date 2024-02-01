@@ -12,9 +12,7 @@ import { PaneData, SplitData, TabsData } from './workspaceData';
 type ResizeType = 'horizontal' | 'vertical' | undefined;
 
 interface WorkspaceControls<T> {
-    changeActiveTab: MutableRefObject<
-        Dispatch<SetStateAction<TabsData<T>>> | undefined
-    >;
+    addToFocused: MutableRefObject<Dispatch<T> | undefined>;
 }
 
 function useWorkspaceState<T>(
@@ -31,16 +29,14 @@ function useWorkspaceState<T>(
             : new TabsData(initialState)
     );
 
-    const changeActiveTab = useRef<Dispatch<SetStateAction<TabsData<T>>>>();
+    const addToFocused = useRef<Dispatch<SetStateAction<T>>>();
 
-    const handleAdd = (tab: T) => {
-        changeActiveTab.current?.(old => ({
-            ...old,
-            tabs: [...old.tabs, tab],
-        }));
-    };
-
-    return [views, setViews, handleAdd, { changeActiveTab }];
+    return [
+        views,
+        setViews,
+        addToFocused.current ?? (() => {}),
+        { addToFocused },
+    ];
 }
 
 const TabContentContext = createContext<
@@ -55,8 +51,8 @@ const DragContext = createContext<[unknown, Dispatch<SetStateAction<unknown>>]>(
     [undefined, () => {}]
 );
 
-const ChangeActiveTabContext = createContext<
-    MutableRefObject<Dispatch<SetStateAction<TabsData<unknown>>> | undefined>
+const AddToFocusedContext = createContext<
+    MutableRefObject<Dispatch<unknown> | undefined>
 >({ current: undefined });
 
 const CreateTitleContext = createContext<
@@ -69,7 +65,7 @@ export {
     TabContentContext,
     ResizeContext,
     DragContext,
-    ChangeActiveTabContext,
+    AddToFocusedContext,
     CreateTitleContext,
     type WorkspaceControls,
     type ResizeType,
