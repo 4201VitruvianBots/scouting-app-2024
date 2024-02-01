@@ -8,6 +8,7 @@ import {
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
+import DropTarget from './DropTarget';
 
 function Tabs<T>({
     value,
@@ -52,6 +53,7 @@ function Tabs<T>({
                         }}
                     />
                 ))}
+                <DropTarget onDrop={tabsA.add} className='min-w-8 flex-grow' />
             </div>
             <div className='flex-grow overflow-auto p-2'>
                 {tabContext(tabs[selected], tab =>

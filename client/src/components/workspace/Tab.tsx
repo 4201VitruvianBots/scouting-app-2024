@@ -3,10 +3,10 @@ import {
     DragEventHandler,
     SetStateAction,
     useContext,
-    useEffect,
     useState,
 } from 'react';
 import { DragContext } from './useWorkspaceState';
+import DropTarget from './DropTarget';
 
 function Tab<T>({
     value,
@@ -29,11 +29,6 @@ function Tab<T>({
     ];
 
     const [draggingSelf, setDraggingSelf] = useState(false);
-    const [dragTarget, setDragTarget] = useState(false);
-
-    useEffect(() => {
-        if (!dragging && dragTarget) setDragTarget(false);
-    }, [dragTarget, dragging]);
 
     const handleDragStart: DragEventHandler = event => {
         event.dataTransfer.setData('text/custom', 'dummy data');
@@ -51,40 +46,21 @@ function Tab<T>({
         setDragging(undefined);
     };
 
-    const handleDragEnter: DragEventHandler = event => {
-        if (draggingSelf || !dragging) return;
-        event.preventDefault();
-        setDragTarget(true);
-    };
-
-    const handleDragExit: DragEventHandler = () => {
-        if (draggingSelf) return;
-        setDragTarget(false);
-    };
-
-    const handleDragOver: DragEventHandler = event => {
-        if (draggingSelf || !dragging) return;
-        event.preventDefault();
-    };
-
-    const handleDrop: DragEventHandler = () => {
-        if (dragging) {
-            onInsertBefore(dragging);
-        }
-    };
-
     return (
         <div
             draggable
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
-            onDragEnter={handleDragEnter}
-            onDragOver={handleDragOver}
-            onDragExit={handleDragExit}
-            onDrop={handleDrop}
             // drop is triggered before dragEnd
             onClick={onClick}
-            className={`cursor-pointer select-none border-r border-black px-2 py-1 ${selected ? '' : 'text-neutral-500'} ${dragTarget ? 'bg-green-500' : ''}`}>
+            className={`relative min-w-32 cursor-pointer select-none border-r border-black px-2 py-1 ${selected ? '' : 'text-neutral-500'}`}>
+            {dragging && (
+                <DropTarget
+                    disabled={draggingSelf}
+                    onDrop={onInsertBefore}
+                    className='absolute bottom-0 left-0 right-0 top-0'
+                />
+            )}
             {title}
         </div>
     );
