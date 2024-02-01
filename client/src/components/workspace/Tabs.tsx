@@ -1,6 +1,6 @@
-import { FunctionComponent, useContext } from 'react';
+import { SetStateAction, useContext } from 'react';
 import { StateProps, TabsData } from './workspaceData';
-import { CreateTitleContext, TabChildContext } from './Workspace';
+import { CreateTitleContext, TabContentContext } from './Workspace';
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
@@ -10,10 +10,7 @@ function Tabs<T>({ value, onChange }: StateProps<TabsData<T>>) {
     const [tabs, setTabs] = usePropState(value, onChange, 'tabs');
     const tabsA = useArrayState(setTabs);
 
-    const TabChild = useContext(TabChildContext) as FunctionComponent<
-        StateProps<T>
-    >;
-
+    const tabContext = useContext(TabContentContext);
     const createTitle = useContext(CreateTitleContext);
 
     return (
@@ -29,10 +26,9 @@ function Tabs<T>({ value, onChange }: StateProps<TabsData<T>>) {
                 ))}
             </div>
             <div className='flex-grow overflow-auto p-2'>
-                <TabChild
-                    value={tabs[selected]}
-                    onChange={tab => tabsA.set(selected, tab)}
-                />
+                {tabContext(tabs[selected], tab =>
+                    tabsA.set(selected, tab as SetStateAction<T>)
+                )}
             </div>
         </div>
     );

@@ -3,22 +3,6 @@ import { SplitData, TabsData } from '../../components/workspace/workspaceData';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import TextInput from '../../components/TextInput';
-import { Dispatch, SetStateAction } from 'react';
-
-function TableRender({
-    value,
-    onChange,
-}: {
-    value: TableData;
-    onChange: Dispatch<SetStateAction<TableData>>;
-}) {
-    return (
-        <TextInput
-            value={value.title}
-            onChange={title => onChange({ ...value, title })}
-        />
-    );
-}
 
 function PicklistApp() {
     // const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
@@ -70,7 +54,13 @@ function PicklistApp() {
                 controls={controls}
                 title={table => table.title}
                 className='h-screen'>
-                {TableRender}
+                {/* {(value, onChange) => <StatTable data={analyzedData} table={value} />} */}
+                {(value, onChange) => (
+                    <TextInput
+                        value={value.title}
+                        onChange={title => onChange({ ...value, title })}
+                    />
+                )}
             </Workspace>
         </main>
     );

@@ -1,7 +1,7 @@
 import {
     Dispatch,
-    FunctionComponent,
     MutableRefObject,
+    ReactNode,
     SetStateAction,
     createContext,
 } from 'react';
@@ -19,7 +19,7 @@ function Workspace<T>({
     className = '',
 }: StateProps<PaneData<T>> & {
     controls: WorkspaceControls<T>;
-    children: FunctionComponent<StateProps<T>>;
+    children: (value: T, onChange: Dispatch<SetStateAction<T>>) => ReactNode;
     title: (value: T) => string;
     className?: string;
 }) {
@@ -28,7 +28,7 @@ function Workspace<T>({
     return (
         <MultiContext
             contexts={[
-                [TabChildContext, children],
+                [TabContentContext, children],
                 [SetDraggingContext, setDragging],
                 [ChangeActiveTabContext, changeActiveTab],
                 [CreateTitleContext, title],
@@ -42,9 +42,9 @@ function Workspace<T>({
     );
 }
 
-const TabChildContext = createContext<FunctionComponent<StateProps<unknown>>>(
-    () => undefined
-);
+const TabContentContext = createContext<
+    (value: unknown, onChange: Dispatch<SetStateAction<unknown>>) => ReactNode
+>(() => undefined);
 
 const SetDraggingContext = createContext<Dispatch<SetStateAction<DragType>>>(
     () => {}
@@ -60,7 +60,7 @@ const CreateTitleContext = createContext<
 
 export default Workspace;
 export {
-    TabChildContext,
+    TabContentContext,
     SetDraggingContext,
     ChangeActiveTabContext,
     CreateTitleContext,
