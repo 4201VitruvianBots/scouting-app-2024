@@ -5,7 +5,7 @@ import {
     useEffect,
     useState,
 } from 'react';
-import { DragContext } from './useWorkspaceState';
+import { DragContext } from './workspaceContexts';
 
 function DropTarget<T>({
     disabled = false,

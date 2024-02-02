@@ -1,5 +1,5 @@
 import { DragEventHandler, useContext, useState } from 'react';
-import { DragContext } from './useWorkspaceState';
+import { DragContext } from './workspaceContexts';
 import DropTarget from './DropTarget';
 
 function Tab<T>({

@@ -12,7 +12,7 @@ import {
     CreateTitleContext,
     DragContext,
     TabContentContext,
-} from './useWorkspaceState';
+} from './workspaceContexts';
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
@@ -27,11 +27,11 @@ function Tabs<T>({
     const [tabs, setTabs] = usePropState(value, onChange, 'tabs');
     const tabsA = useArrayState(setTabs);
 
-    const tabContext = useContext(TabContentContext);
-    const createTitle = useContext(CreateTitleContext);
-    const setAddToFocused = useContext(SetAddToFocusedContext) as Dispatch<
-        Dispatch<T>
-    >;
+    const tabContext = useContext(TabContentContext) as TabContentContext<T>;
+    const createTitle = useContext(CreateTitleContext) as CreateTitleContext<T>;
+    const setAddToFocused = useContext(
+        SetAddToFocusedContext
+    ) as SetAddToFocusedContext<T>;
     const [[dragging]] = useContext(DragContext) as DragContext<T>;
 
     const handleSplit = (vertical: boolean, start: boolean) => (other: T) => {

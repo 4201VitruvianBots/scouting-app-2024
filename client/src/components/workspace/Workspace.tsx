@@ -1,14 +1,15 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { PaneData, StateProps, TabsData } from './workspaceData';
 import Pane from './Pane';
-import { DragContext, WorkspaceControls } from './useWorkspaceState';
+import { WorkspaceControls } from './useWorkspaceState';
+import { DragContext } from './workspaceContexts';
 import MultiContext from '../../lib/MultiContext';
 import {
     TabContentContext,
     ResizeContext,
     SetAddToFocusedContext,
     CreateTitleContext,
-} from './useWorkspaceState';
+} from './workspaceContexts';
 
 function Workspace<T>({
     value,

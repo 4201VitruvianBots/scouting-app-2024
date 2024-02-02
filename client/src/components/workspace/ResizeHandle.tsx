@@ -1,5 +1,5 @@
 import { MouseEventHandler, useContext } from 'react';
-import { ResizeContext } from './useWorkspaceState';
+import { ResizeContext } from './workspaceContexts';
 
 function ResizeHandle({
     vertical,
