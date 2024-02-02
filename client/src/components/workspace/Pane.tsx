@@ -1,33 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import Split from './Split';
 import Tabs from './Tabs';
-import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
-
-function stateToPane<T>(
-    value: PaneData<T>,
-    onChange: Dispatch<SetStateAction<PaneData<T>>>,
-    onRemove: () => void
-) {
-    switch (value.type) {
-        case 'split':
-            return (
-                <Split
-                    value={value}
-                    onChange={
-                        onChange as Dispatch<SetStateAction<SplitData<T>>>
-                    }
-                />
-            );
-        case 'tabs':
-            return (
-                <Tabs
-                    value={value}
-                    onChange={onChange as Dispatch<SetStateAction<TabsData<T>>>}
-                    onRemove={onRemove}
-                />
-            );
-    }
-}
+import {
+    PaneData,
+    SplitData,
+    StateProps,
+    TabsData,
+    TabsSplice,
+} from './workspaceData';
 
 function Pane<T>({
     value,
@@ -36,23 +16,40 @@ function Pane<T>({
     width,
     onRemove,
     className = '',
+    onReplaceHoriz,
+    onReplaceVert,
 }: {
-    height?: number | 'auto';
-    width?: number | 'auto';
+    height?: number;
+    width?: number;
     onRemove: () => void;
     className?: string;
+    onReplaceHoriz?: TabsSplice<T>;
+    onReplaceVert?: TabsSplice<T>;
 } & StateProps<PaneData<T>>) {
     return (
         <div
-            className={`${className} ${height === 'auto' || width === 'auto' ? 'flex-grow' : ''}`}
+            className={className}
             style={
-                typeof height === 'number'
+                height !== undefined
                     ? { height: `${100 * height}%` }
-                    : typeof width === 'number'
+                    : width !== undefined
                       ? { width: `${100 * width}%` }
                       : undefined
             }>
-            {stateToPane(value, onChange, onRemove)}
+            {value.type === 'split' ? (
+                <Split
+                    value={value}
+                    onChange={
+                        onChange as Dispatch<SetStateAction<SplitData<T>>>
+                    }
+                />
+            ) : (
+                <Tabs
+                    value={value}
+                    onChange={onChange as Dispatch<SetStateAction<TabsData<T>>>}
+                    {...{ onRemove, onReplaceHoriz, onReplaceVert }}
+                />
+            )}
         </div>
     );
 }

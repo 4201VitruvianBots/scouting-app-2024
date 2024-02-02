@@ -6,7 +6,13 @@ import {
     useEffect,
     useRef,
 } from 'react';
-import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
+import {
+    PaneData,
+    SplitData,
+    StateProps,
+    TabsData,
+    TabsSplice,
+} from './workspaceData';
 import {
     SetAddToFocusedContext,
     CreateTitleContext,
@@ -22,7 +28,13 @@ function Tabs<T>({
     value,
     onChange,
     onRemove,
-}: StateProps<TabsData<T>> & { onRemove: () => void }) {
+    onReplaceHoriz,
+    onReplaceVert,
+}: StateProps<TabsData<T>> & {
+    onRemove: () => void;
+    onReplaceHoriz?: TabsSplice<T>;
+    onReplaceVert?: TabsSplice<T>;
+}) {
     const [selected, setSelected] = usePropState(value, onChange, 'selected');
     const [tabs, setTabs] = usePropState(value, onChange, 'tabs');
     const tabsA = useArrayState(setTabs);
@@ -35,6 +47,14 @@ function Tabs<T>({
     const [[dragging]] = useContext(DragContext) as DragContext<T>;
 
     const handleSplit = (vertical: boolean, start: boolean) => (other: T) => {
+        const replaceFunction = vertical ? onReplaceVert : onReplaceHoriz;
+        if (replaceFunction) {
+            replaceFunction(value => [
+                start ? new TabsData(other) : value,
+                start ? value : new TabsData(other),
+            ]);
+            return;
+        }
         (onChange as Dispatch<SetStateAction<PaneData<T>>>)(
             value =>
                 new SplitData(

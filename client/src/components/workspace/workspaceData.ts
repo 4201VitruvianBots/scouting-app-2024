@@ -9,7 +9,7 @@ class SplitData<T> {
     constructor(vertical: boolean, ...panes: PaneData<T>[]) {
         this.vertical = vertical;
         this.panes = panes;
-        this.sizes = new Array(panes.length - 1).fill(0);
+        this.sizes = new Array(panes.length).fill(0);
     }
 
     static Vertical<T>(...panes: PaneData<T>[]) {
@@ -38,4 +38,6 @@ interface StateProps<T> {
     onChange: Dispatch<SetStateAction<T>>;
 }
 
-export { SplitData, TabsData, type PaneData, type StateProps };
+type TabsSplice<T> = (values: (value: TabsData<T>) => TabsData<T>[]) => void;
+
+export { SplitData, TabsData, type PaneData, type StateProps, type TabsSplice };
