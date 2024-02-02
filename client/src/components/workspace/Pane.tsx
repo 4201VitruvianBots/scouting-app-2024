@@ -47,9 +47,9 @@ function Pane<T>({
             className={`${className} ${height === 'auto' || width === 'auto' ? 'flex-grow' : ''}`}
             style={
                 typeof height === 'number'
-                    ? { height: `${height}px` }
+                    ? { height: `${100 * height}%` }
                     : typeof width === 'number'
-                      ? { width: `${width}px` }
+                      ? { width: `${100 * width}%` }
                       : undefined
             }>
             {stateToPane(value, onChange, onRemove)}

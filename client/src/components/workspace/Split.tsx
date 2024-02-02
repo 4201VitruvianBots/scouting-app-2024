@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, useEffect, useLayoutEffect, useRef } from 'react';
+import { Dispatch, Fragment, useEffect, useRef } from 'react';
 import { useArrayState } from '../../lib/useArrayState';
 import { usePropState } from '../../lib/usePropState';
 import Pane from './Pane';
@@ -16,15 +16,8 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
     const lastPane = panes.at(-1);
     const otherPanes = panes.slice(0, panes.length - 1);
 
-    useLayoutEffect(() => {
-        if (!divRef.current) return;
-        setSizes(
-            new Array(sizes.length).fill(
-                (value.vertical
-                    ? divRef.current.offsetHeight
-                    : divRef.current.offsetWidth) / panes.length
-            )
-        );
+    useEffect(() => {
+        setSizes(new Array(sizes.length).fill(1 / panes.length));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -35,6 +28,17 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
             return;
         }
     }, [onChange, panes]);
+
+    const handleResize = (index: number) => (size: number) => {
+        const newSize =
+            size /
+            (value.vertical
+                ? divRef.current!.offsetHeight
+                : divRef.current!.offsetWidth);
+        sizesA.set(index, newSize);
+        if (index < sizes.length)
+            sizesA.set(index + 1, sizes[index] + sizes[index + 1] - newSize);
+    };
 
     return (
         <div
@@ -49,8 +53,13 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
                         {...{ [value.vertical ? 'height' : 'width']: sizes[i] }}
                     />
                     <ResizeHandle
-                        size={sizes[i]}
-                        onResize={newSize => sizesA.set(i, newSize)}
+                        size={
+                            sizes[i] *
+                            ((value.vertical
+                                ? divRef.current?.offsetHeight
+                                : divRef.current?.offsetWidth) ?? 0)
+                        }
+                        onResize={handleResize(i)}
                         vertical={value.vertical}
                     />
                 </Fragment>
