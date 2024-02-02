@@ -1,10 +1,8 @@
 import {
     Dispatch,
-    MutableRefObject,
     ReactNode,
     SetStateAction,
     createContext,
-    useRef,
     useState,
 } from 'react';
 import { PaneData, SplitData, TabsData } from './workspaceData';
@@ -12,7 +10,7 @@ import { PaneData, SplitData, TabsData } from './workspaceData';
 type ResizeType = 'horizontal' | 'vertical' | undefined;
 
 interface WorkspaceControls<T> {
-    addToFocused: MutableRefObject<Dispatch<T> | undefined>;
+    setAddToFocused: Dispatch<Dispatch<T>>;
 }
 
 function useWorkspaceState<T>(
@@ -29,14 +27,9 @@ function useWorkspaceState<T>(
             : new TabsData(initialState)
     );
 
-    const addToFocused = useRef<Dispatch<SetStateAction<T>>>();
+    const [addToFocused, setAddToFocused] = useState<Dispatch<T>>(() => {});
 
-    return [
-        views,
-        setViews,
-        addToFocused.current ?? (() => {}),
-        { addToFocused },
-    ];
+    return [views, setViews, addToFocused, { setAddToFocused }];
 }
 
 const TabContentContext = createContext<
@@ -47,23 +40,19 @@ const ResizeContext = createContext<Dispatch<SetStateAction<ResizeType>>>(
     () => {}
 );
 
-const DragContext = createContext<
-    [
-        [unknown, () => void] | [undefined, undefined],
-        Dispatch<
-            SetStateAction<[unknown, () => void] | [undefined, undefined]>
-        >,
-    ]
->([[undefined, undefined], () => {}]);
+const DragContext = createContext<DragContext<unknown>>([
+    [undefined, undefined],
+    () => {},
+]);
 
 type DragContext<T> = [
     [T, () => void] | [undefined, undefined],
     Dispatch<SetStateAction<[T, () => void] | [undefined, undefined]>>,
 ];
 
-const AddToFocusedContext = createContext<
-    MutableRefObject<Dispatch<unknown> | undefined>
->({ current: undefined });
+const SetAddToFocusedContext = createContext<Dispatch<Dispatch<unknown>>>(
+    () => {}
+);
 
 const CreateTitleContext = createContext<
     (value: unknown, index: number) => string
@@ -75,7 +64,7 @@ export {
     TabContentContext,
     ResizeContext,
     DragContext,
-    AddToFocusedContext,
+    SetAddToFocusedContext,
     CreateTitleContext,
     type WorkspaceControls,
     type ResizeType,

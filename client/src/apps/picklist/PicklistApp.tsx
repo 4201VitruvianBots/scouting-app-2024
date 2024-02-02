@@ -1,5 +1,5 @@
 import { TableData } from './data';
-import { SplitData, TabsData } from '../../components/workspace/workspaceData';
+import { TabsData } from '../../components/workspace/workspaceData';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import TextInput from '../../components/TextInput';

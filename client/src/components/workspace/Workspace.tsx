@@ -6,7 +6,7 @@ import MultiContext from '../../lib/MultiContext';
 import {
     TabContentContext,
     ResizeContext,
-    AddToFocusedContext,
+    SetAddToFocusedContext,
     CreateTitleContext,
 } from './useWorkspaceState';
 
@@ -23,7 +23,7 @@ function Workspace<T>({
     title: (value: T) => string;
     className?: string;
 }) {
-    const { addToFocused } = controls;
+    const { setAddToFocused } = controls;
 
     const [resizeType, setResizeType] = useState<T>();
     const [dragging, setDragging] = useState<
@@ -37,7 +37,7 @@ function Workspace<T>({
                 [TabContentContext, children],
                 [ResizeContext, setResizeType],
                 [DragContext, [dragging, setDragging]],
-                [AddToFocusedContext, addToFocused],
+                [SetAddToFocusedContext, setAddToFocused],
                 [CreateTitleContext, title],
             ]}>
             <Pane

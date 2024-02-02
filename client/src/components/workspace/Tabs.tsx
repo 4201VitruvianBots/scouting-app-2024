@@ -1,6 +1,5 @@
 import {
     Dispatch,
-    MutableRefObject,
     SetStateAction,
     useCallback,
     useContext,
@@ -9,7 +8,7 @@ import {
 } from 'react';
 import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
 import {
-    AddToFocusedContext,
+    SetAddToFocusedContext,
     CreateTitleContext,
     DragContext,
     TabContentContext,
@@ -30,8 +29,8 @@ function Tabs<T>({
 
     const tabContext = useContext(TabContentContext);
     const createTitle = useContext(CreateTitleContext);
-    const addToFocusedRef = useContext(AddToFocusedContext) as MutableRefObject<
-        Dispatch<T> | undefined
+    const setAddToFocused = useContext(SetAddToFocusedContext) as Dispatch<
+        Dispatch<T>
     >;
     const [[dragging]] = useContext(DragContext) as DragContext<T>;
 
@@ -47,10 +46,9 @@ function Tabs<T>({
     };
 
     const handleFocus = useCallback(() => {
-        console.log('Focus changed');
-        addToFocusedRef.current = tabsA.add;
-        console.log(addToFocusedRef.current);
-    }, [addToFocusedRef, tabsA.add]);
+        // Passing a function to a setState will run it, so to set a state to a function a wrapper arrow is needed
+        setAddToFocused(() => tabsA.add);
+    }, [setAddToFocused, tabsA.add]);
 
     const tabCount = useRef(0);
 
@@ -58,6 +56,13 @@ function Tabs<T>({
         if (tabs.length > tabCount.current) handleFocus();
         tabCount.current = tabs.length;
     }, [handleFocus, tabs.length]);
+
+    useEffect(() => {
+        if (tabs.length === 0) {
+            onRemove();
+            return;
+        }
+    }, [onRemove, tabs.length]);
 
     return (
         <div className='flex h-full w-full flex-col' onClick={handleFocus}>
@@ -74,11 +79,6 @@ function Tabs<T>({
                             setSelected(i);
                         }}
                         onRemove={() => {
-                            // If that was the last tab
-                            if (tabs.length === 1) {
-                                onRemove();
-                                return;
-                            }
                             tabsA.remove(i);
                             // If the selected tab does not exist
                             if (tabs.length - 2 < selected)
@@ -89,15 +89,18 @@ function Tabs<T>({
                 <DropTarget
                     onDrop={(value: T) => {
                         tabsA.add(value);
-                        setSelected(tabs.length);
+                        setSelected(
+                            tabs.includes(value) ? tabs.length - 1 : tabs.length
+                        );
                     }}
                     className='min-w-8 flex-grow'
                 />
             </div>
             <div className='relative flex-grow overflow-auto p-2'>
-                {tabContext(tabs[selected], tab =>
-                    tabsA.set(selected, tab as SetStateAction<T>)
-                )}
+                {tabs[selected] &&
+                    tabContext(tabs[selected], tab =>
+                        tabsA.set(selected, tab as SetStateAction<T>)
+                    )}
                 {dragging && !(tabs.length === 1 && tabs[0] === dragging) && (
                     <div className='absolute inset-0 grid grid-cols-[1fr_2fr_1fr] grid-rows-[1fr_2fr_1fr]'>
                         <DropTarget
