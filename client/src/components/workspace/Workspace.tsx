@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
-import { PaneData, StateProps } from './workspaceData';
+import { PaneData, StateProps, TabsData } from './workspaceData';
 import Pane from './Pane';
 import { DragContext, WorkspaceControls } from './useWorkspaceState';
 import MultiContext from '../../lib/MultiContext';
@@ -17,7 +17,7 @@ function Workspace<T>({
     children,
     title,
     className = '',
-}: StateProps<PaneData<T>> & {
+}: StateProps<PaneData<T> | undefined> & {
     controls: WorkspaceControls<T>;
     children: (value: T, onChange: Dispatch<SetStateAction<T>>) => ReactNode;
     title: (value: T) => string;
@@ -40,14 +40,19 @@ function Workspace<T>({
                 [SetAddToFocusedContext, setAddToFocused],
                 [CreateTitleContext, title],
             ]}>
-            <Pane
-                value={value}
-                onChange={onChange}
-                className={`${className} ${resizeType === 'vertical' ? 'cursor-ns-resize select-none' : resizeType === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
-                onRemove={() => {
-                    /*TODO*/
-                }}
-            />
+            {value && (
+                <Pane
+                    value={value}
+                    onChange={onChange as Dispatch<SetStateAction<PaneData<T>>>}
+                    className={`${className} ${resizeType === 'vertical' ? 'cursor-ns-resize select-none' : resizeType === 'horizontal' ? 'cursor-ew-resize select-none' : ''}`}
+                    onRemove={() => {
+                        onChange(undefined);
+                        setAddToFocused(
+                            () => (value: T) => onChange(new TabsData(value))
+                        );
+                    }}
+                />
+            )}
         </MultiContext>
     );
 }

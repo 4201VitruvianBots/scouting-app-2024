@@ -14,20 +14,27 @@ interface WorkspaceControls<T> {
 }
 
 function useWorkspaceState<T>(
-    initialState: T | PaneData<T>
+    initialState?: T | PaneData<T> | undefined
 ): [
-    views: PaneData<T>,
-    setViews: Dispatch<SetStateAction<PaneData<T>>>,
+    views: PaneData<T> | undefined,
+    setViews: Dispatch<SetStateAction<PaneData<T> | undefined>>,
     handleAdd: Dispatch<T>,
     controls: WorkspaceControls<T>,
 ] {
-    const [views, setViews] = useState<PaneData<T>>(() =>
-        initialState instanceof SplitData || initialState instanceof TabsData
-            ? initialState
-            : new TabsData(initialState)
+    const [views, setViews] = useState<PaneData<T> | undefined>(() =>
+        initialState === undefined
+            ? undefined
+            : initialState instanceof SplitData ||
+                initialState instanceof TabsData
+              ? initialState
+              : new TabsData(initialState)
     );
 
-    const [addToFocused, setAddToFocused] = useState<Dispatch<T>>(() => {});
+    const [addToFocused, setAddToFocused] = useState<Dispatch<T>>(
+        views === undefined
+            ? () => (value: T) => setViews(new TabsData(value))
+            : () => () => {}
+    );
 
     return [views, setViews, addToFocused, { setAddToFocused }];
 }
@@ -50,7 +57,7 @@ type DragContext<T> = [
     Dispatch<SetStateAction<[T, () => void] | [undefined, undefined]>>,
 ];
 
-const SetAddToFocusedContext = createContext<Dispatch<Dispatch<unknown>>>(
+const SetAddToFocusedContext = createContext<Dispatch<() => Dispatch<unknown>>>(
     () => {}
 );
 

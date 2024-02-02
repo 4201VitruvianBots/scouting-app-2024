@@ -96,7 +96,7 @@ function Tabs<T>({
                     className='min-w-8 flex-grow'
                 />
             </div>
-            <div className='relative flex-grow overflow-auto p-2'>
+            <div className='relative flex-grow basis-0 overflow-auto p-2'>
                 {tabs[selected] &&
                     tabContext(tabs[selected], tab =>
                         tabsA.set(selected, tab as SetStateAction<T>)
