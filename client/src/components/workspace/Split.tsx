@@ -20,9 +20,9 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
     const panesA = useArrayState(setPanes);
 
     useEffect(() => {
-        setSizes(new Array(sizes.length).fill(1 / panes.length));
+        setSizes(new Array(panes.length).fill(1 / panes.length));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [panes.length]);
 
     useEffect(() => {
         // If there is less than one remaining
@@ -46,19 +46,11 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
     const handleSplice =
         (i: number): TabsSplice<T> =>
         values => {
-            setPanes(panes => {
-                const newPanes = values(panes[i] as TabsData<T>);
-                sizesA.splice(
-                    i,
-                    1,
-                    new Array(newPanes.length).fill(sizes[i] / newPanes.length)
-                );
-                return [
-                    ...panes.slice(0, i),
-                    ...newPanes,
-                    ...panes.slice(i + 1),
-                ];
-            });
+            setPanes(panes => [
+                ...panes.slice(0, i),
+                ...values(panes[i] as TabsData<T>),
+                ...panes.slice(i + 1),
+            ]);
         };
 
     return (
