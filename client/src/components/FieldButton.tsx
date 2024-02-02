@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import {styled} from '@mui/material';
+import { styled } from '@mui/material';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { MatchScores } from '../apps/match/MatchApp';
 type countKeys = keyof MatchScores;
-
 
 function RegionButton({
     count,
@@ -28,7 +27,7 @@ function RegionButton({
 }) {
     return (
         <button
-            className={`${className} h-full w-1/3 overflow-hidden text-6xl font-semibold  text-white first-letter:font-sans md:bg-opacity-50 `}
+            className={`${className} overflow-hidden text-7xl font-semibold  text-white first-letter:font-sans md:bg-opacity-55 `}
             onClick={() => handleCount(autokey, telekey, akey)}
             id='one'>
             <p>{count[teleop ? telekey : autokey]}</p>
@@ -55,7 +54,6 @@ function FieldButton({
     const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
 
     const [amplified, setAmplified] = useState(false); //false=off, true=on
-    
 
     const handleCount = (
         autokey: countKeys,
@@ -83,8 +81,8 @@ function FieldButton({
     };
 
     const handleLeave = () => {
-        setLeave?.(!leave)
-    }
+        setLeave?.(!leave);
+    };
 
     const ToggleButton1 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
@@ -96,14 +94,14 @@ function FieldButton({
     const ToggleButton2 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
-            backgroundColor: '#00ff00',
+            backgroundColor: '#f0cf00',
         },
     });
 
     const ToggleButton3 = styled(MuiToggleButton)({
         '&.Mui-selected, &.Mui-selected:hover': {
             color: 'white',
-            backgroundColor: '#00ff00',
+            backgroundColor: '#00cf00',
         },
     });
 
@@ -118,14 +116,13 @@ function FieldButton({
             </ToggleButton1>
 
             {!teleop && (
-            <ToggleButton3
-                value = 'check'
-                selected = {leave}
-                onChange={handleLeave}
-                className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
-                Robot has {leave ? 'left' : 'not left'}
-
-            </ToggleButton3>
+                <ToggleButton3
+                    value='check'
+                    selected={leave}
+                    onChange={handleLeave}
+                    className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
+                    Robot has {leave ? 'left' : 'not left'}
+                </ToggleButton3>
             )}
             {teleop && (
                 <ToggleButton2
@@ -139,35 +136,37 @@ function FieldButton({
             )}
 
             <div
-                className={`${allianceBlue ? 'bg-field-blue' : 'bg-field-red'} align-center flex h-[40em] w-[40em] flex-row bg-cover bg-center object-contain brightness-75`}>
+                className={`${allianceBlue ? 'bg-field-blue' : 'bg-field-red'} h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
                 {allianceBlue ? (
                     <>
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='bg-red-400'
-                            handleCount={handleCount}
-                            autokey='autoFar'
-                            telekey='teleFar'
-                            akey='aFar'
-                        />
-                        <RegionButton
-                            count={count}
-                            teleop={teleop}
-                            className='bg-green-400'
+                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-left  '
                             handleCount={handleCount}
                             autokey='autoNear'
                             telekey='teleNear'
                             akey='aNear'
                         />
+
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='bg-blue-400'
+                            className='absolute left-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-left '
                             handleCount={handleCount}
                             autokey='autoMid'
                             telekey='teleMid'
                             akey='aMid'
+                        />
+
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-left '
+                            handleCount={handleCount}
+                            autokey='autoFar'
+                            telekey='teleFar'
+                            akey='aFar'
                         />
                     </>
                 ) : (
@@ -175,7 +174,17 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='bg-blue-400'
+                            className='absolute bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-right '
+                            handleCount={handleCount}
+                            autokey='autoNear'
+                            telekey='teleNear'
+                            akey='aNear'
+                        />
+
+                        <RegionButton
+                            count={count}
+                            teleop={teleop}
+                            className='absolute right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-right '
                             handleCount={handleCount}
                             autokey='autoMid'
                             telekey='teleMid'
@@ -184,35 +193,24 @@ function FieldButton({
                         <RegionButton
                             count={count}
                             teleop={teleop}
-                            className='bg-green-400'
-                            handleCount={handleCount}
-                            autokey='autoNear'
-                            telekey='teleNear'
-                            akey='aNear'
-                        />
-                        <RegionButton
-                            count={count}
-                            teleop={teleop}
-                            className='bg-red-400'
+                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-right '
                             handleCount={handleCount}
                             autokey='autoFar'
                             telekey='teleFar'
                             akey='aFar'
                         />
-
-
                     </>
                 )}
-
-               
 
                 <br />
             </div>
             <button
-                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
+
+                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 my-5 shadow-xl text-xl'
                     onClick={() => handleCount('autoAmp','teleAmp' )}>
                    
                     AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
+
             </button>
         </div>
     );
