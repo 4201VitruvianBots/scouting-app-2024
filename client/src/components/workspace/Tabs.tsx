@@ -120,11 +120,13 @@ function Tabs<T>({
                     className='min-w-8 flex-grow'
                 />
             </div>
-            <div className='relative flex-grow basis-0 overflow-auto p-2'>
-                {tabs[selected] &&
-                    tabContext(tabs[selected], tab =>
-                        tabsA.set(selected, tab as SetStateAction<T>)
-                    )}
+            <div className='relative flex-grow basis-0'>
+                <div className='absolute inset-0 overflow-auto p-2'>
+                    {tabs[selected] &&
+                        tabContext(tabs[selected], tab =>
+                            tabsA.set(selected, tab as SetStateAction<T>)
+                        )}
+                </div>
                 {dragging && !(tabs.length === 1 && tabs[0] === dragging) && (
                     <>
                         <DropTarget
