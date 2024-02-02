@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, useLayoutEffect, useRef } from 'react';
+import { Dispatch, Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useArrayState } from '../../lib/useArrayState';
 import { usePropState } from '../../lib/usePropState';
 import Pane from './Pane';
@@ -28,16 +28,13 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleRemove = (index: number) => {
-        return () => {
-            // If there is less than one remaining
-            if (panes.length === 2) {
-                (onChange as Dispatch<PaneData<T>>)(panes[index === 0 ? 1 : 0]);
-                return;
-            }
-            panesA.remove(index);
-        };
-    };
+    useEffect(() => {
+        // If there is less than one remaining
+        if (panes.length <= 1) {
+            (onChange as Dispatch<PaneData<T>>)(panes[0]);
+            return;
+        }
+    }, [onChange, panes]);
 
     return (
         <div
@@ -48,7 +45,7 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
                     <Pane
                         value={pane}
                         onChange={newPane => panesA.set(i, newPane)}
-                        onRemove={handleRemove(i)}
+                        onRemove={() => panesA.remove(i)}
                         {...{ [value.vertical ? 'height' : 'width']: sizes[i] }}
                     />
                     <ResizeHandle
@@ -63,7 +60,7 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
                     value={lastPane}
                     {...{ [value.vertical ? 'height' : 'width']: 'auto' }}
                     onChange={newPane => panesA.set(panes.length - 1, newPane)}
-                    onRemove={handleRemove(panes.length - 1)}
+                    onRemove={() => panesA.remove(panes.length - 1)}
                 />
             )}
         </div>

@@ -26,7 +26,9 @@ function Workspace<T>({
     const { addToFocused } = controls;
 
     const [resizeType, setResizeType] = useState<T>();
-    const [dragging, setDragging] = useState<T>();
+    const [dragging, setDragging] = useState<
+        [T, () => void] | [undefined, undefined]
+    >([undefined, undefined]);
 
     return (
         <MultiContext

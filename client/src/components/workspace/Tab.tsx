@@ -1,10 +1,4 @@
-import {
-    Dispatch,
-    DragEventHandler,
-    SetStateAction,
-    useContext,
-    useState,
-} from 'react';
+import { DragEventHandler, useContext, useState } from 'react';
 import { DragContext } from './useWorkspaceState';
 import DropTarget from './DropTarget';
 
@@ -23,10 +17,7 @@ function Tab<T>({
     title: string;
     selected: boolean;
 }) {
-    const [dragging, setDragging] = useContext(DragContext) as [
-        T | undefined,
-        Dispatch<SetStateAction<T | undefined>>,
-    ];
+    const [[dragging], setDragging] = useContext(DragContext) as DragContext<T>;
 
     const [draggingSelf, setDraggingSelf] = useState(false);
 
@@ -34,16 +25,12 @@ function Tab<T>({
         event.dataTransfer.setData('text/custom', 'dummy data');
         event.dataTransfer.dropEffect = 'move';
         setDraggingSelf(true);
-        setDragging(value);
+        setDragging([value, onRemove]);
     };
 
-    const handleDragEnd: DragEventHandler = event => {
-        // If successful
-        if (event.dataTransfer.dropEffect === 'move') {
-            onRemove();
-        }
+    const handleDragEnd: DragEventHandler = () => {
         setDraggingSelf(false);
-        setDragging(undefined);
+        setDragging([undefined, undefined]);
     };
 
     return (

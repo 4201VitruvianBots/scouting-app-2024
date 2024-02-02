@@ -47,9 +47,19 @@ const ResizeContext = createContext<Dispatch<SetStateAction<ResizeType>>>(
     () => {}
 );
 
-const DragContext = createContext<[unknown, Dispatch<SetStateAction<unknown>>]>(
-    [undefined, () => {}]
-);
+const DragContext = createContext<
+    [
+        [unknown, () => void] | [undefined, undefined],
+        Dispatch<
+            SetStateAction<[unknown, () => void] | [undefined, undefined]>
+        >,
+    ]
+>([[undefined, undefined], () => {}]);
+
+type DragContext<T> = [
+    [T, () => void] | [undefined, undefined],
+    Dispatch<SetStateAction<[T, () => void] | [undefined, undefined]>>,
+];
 
 const AddToFocusedContext = createContext<
     MutableRefObject<Dispatch<unknown> | undefined>

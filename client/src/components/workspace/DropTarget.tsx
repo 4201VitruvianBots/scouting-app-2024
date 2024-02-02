@@ -18,7 +18,9 @@ function DropTarget<T>({
     className?: string;
     areaClassName?: string;
 }) {
-    const dragging = useContext(DragContext)[0] as T;
+    const [[dragging, removeDragged]] = useContext(
+        DragContext
+    ) as DragContext<T>;
     const [dragTarget, setDragTarget] = useState(false);
 
     useEffect(() => {
@@ -43,6 +45,7 @@ function DropTarget<T>({
 
     const handleDrop: DragEventHandler = () => {
         if (dragging) {
+            removeDragged!();
             onDrop(dragging);
         }
     };

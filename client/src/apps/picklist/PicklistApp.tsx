@@ -9,13 +9,11 @@ function PicklistApp() {
 
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<TableData>(
-            SplitData.Horizontal(
-                new TabsData({
-                    ascending: false,
-                    column: 'teamNumber',
-                    title: 'A',
-                })
-            )
+            new TabsData({
+                ascending: false,
+                column: 'teamNumber',
+                title: 'A',
+            })
         );
 
     return (

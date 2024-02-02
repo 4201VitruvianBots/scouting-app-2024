@@ -4,6 +4,8 @@ import {
     SetStateAction,
     useCallback,
     useContext,
+    useEffect,
+    useRef,
 } from 'react';
 import { PaneData, SplitData, StateProps, TabsData } from './workspaceData';
 import {
@@ -16,7 +18,6 @@ import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
 import DropTarget from './DropTarget';
-import { useWatch } from '../../lib/useWatch';
 
 function Tabs<T>({
     value,
@@ -30,27 +31,33 @@ function Tabs<T>({
     const tabContext = useContext(TabContentContext);
     const createTitle = useContext(CreateTitleContext);
     const addToFocusedRef = useContext(AddToFocusedContext) as MutableRefObject<
-        Dispatch<T>
+        Dispatch<T> | undefined
     >;
-    const dragging = useContext(DragContext)[0] as T;
+    const [[dragging]] = useContext(DragContext) as DragContext<T>;
 
     const handleSplit = (vertical: boolean, start: boolean) => (other: T) => {
-        (onChange as Dispatch<PaneData<T>>)(
-            new SplitData(
-                vertical,
-                start ? new TabsData(other) : value,
-                start ? value : new TabsData(other)
-            )
+        (onChange as Dispatch<SetStateAction<PaneData<T>>>)(
+            value =>
+                new SplitData(
+                    vertical,
+                    start ? new TabsData(other) : value,
+                    start ? value : new TabsData(other)
+                )
         );
     };
 
     const handleFocus = useCallback(() => {
+        console.log('Focus changed');
         addToFocusedRef.current = tabsA.add;
+        console.log(addToFocusedRef.current);
     }, [addToFocusedRef, tabsA.add]);
 
-    useWatch(() => {
-        handleFocus();
-    }, value.tabs);
+    const tabCount = useRef(0);
+
+    useEffect(() => {
+        if (tabs.length > tabCount.current) handleFocus();
+        tabCount.current = tabs.length;
+    }, [handleFocus, tabs.length]);
 
     return (
         <div className='flex h-full w-full flex-col' onClick={handleFocus}>
@@ -72,11 +79,7 @@ function Tabs<T>({
                                 onRemove();
                                 return;
                             }
-                            if (tab === dragging) {
-                                tabsA.remove(i);
-                            } else {
-                                tabsA.remove(i + 1);
-                            }
+                            tabsA.remove(i);
                             // If the selected tab does not exist
                             if (tabs.length - 2 < selected)
                                 setSelected(selected - 1);
