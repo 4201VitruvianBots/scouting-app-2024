@@ -116,6 +116,7 @@ function Tabs<T>({
                             tabs.includes(value) ? tabs.length - 1 : tabs.length
                         );
                     }}
+                    disabled={tabs.length === 1 && dragging === tabs[0]}
                     className='min-w-8 flex-grow'
                 />
             </div>
@@ -125,33 +126,33 @@ function Tabs<T>({
                         tabsA.set(selected, tab as SetStateAction<T>)
                     )}
                 {dragging && !(tabs.length === 1 && tabs[0] === dragging) && (
-                    <div className='absolute inset-0 grid grid-cols-[1fr_2fr_1fr] grid-rows-[1fr_2fr_1fr]'>
+                    <>
                         <DropTarget
                             onDrop={tabsA.add}
-                            className='col-start-2 row-start-2'
+                            className='absolute inset-1/4'
                             areaClassName='absolute inset-0'
                         />
                         <DropTarget
                             onDrop={handleSplit(true, true)}
-                            className='col-start-2 row-start-1'
+                            className='trapezoid-b absolute inset-x-0 top-0 h-1/4'
                             areaClassName='absolute inset-x-0 top-0 h-1/2'
                         />
                         <DropTarget
                             onDrop={handleSplit(true, false)}
-                            className='col-start-2 row-start-3'
+                            className='trapezoid-t absolute inset-x-0 bottom-0 h-1/4'
                             areaClassName='absolute inset-x-0 bottom-0 h-1/2'
                         />
                         <DropTarget
                             onDrop={handleSplit(false, true)}
-                            className='col-start-1 row-start-2'
+                            className='trapezoid-r absolute inset-y-0 left-0 w-1/4'
                             areaClassName='absolute inset-y-0 left-0 w-1/2'
                         />
                         <DropTarget
                             onDrop={handleSplit(false, false)}
-                            className='col-start-3 row-start-2'
+                            className='trapzoid-l absolute inset-y-0 right-0 w-1/4'
                             areaClassName='absolute inset-y-0 right-0 w-1/2'
                         />
-                    </div>
+                    </>
                 )}
             </div>
         </div>
