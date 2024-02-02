@@ -25,10 +25,16 @@ function Tab<T>({
         event.dataTransfer.setData('text/custom', 'dummy data');
         event.dataTransfer.dropEffect = 'move';
         setDraggingSelf(true);
-        setDragging([value, onRemove]);
+        setDragging([
+            value,
+            () => {
+                onRemove();
+                handleDragEnd();
+            },
+        ]);
     };
 
-    const handleDragEnd: DragEventHandler = () => {
+    const handleDragEnd = () => {
         setDraggingSelf(false);
         setDragging([undefined, undefined]);
     };

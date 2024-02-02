@@ -34,7 +34,6 @@ function DropTarget<T>({
     };
 
     const handleDragExit: DragEventHandler = () => {
-        if (disabled) return;
         setDragTarget(false);
     };
 

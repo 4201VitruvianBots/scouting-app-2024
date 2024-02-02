@@ -47,8 +47,11 @@ function Tabs<T>({
 
     const handleFocus = useCallback(() => {
         // Passing a function to a setState will run it, so to set a state to a function a wrapper arrow is needed
-        setAddToFocused(() => tabsA.add);
-    }, [setAddToFocused, tabsA.add]);
+        setAddToFocused(() => value => {
+            tabsA.add(value);
+            setSelected(tabs.length);
+        });
+    }, [setAddToFocused, setSelected, tabs.length, tabsA]);
 
     const tabCount = useRef(0);
 
