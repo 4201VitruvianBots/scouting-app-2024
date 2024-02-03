@@ -10,6 +10,7 @@ import PitApp from './apps/pit/PitApp';
 import ReconApp from './apps/recon/ReconApp';
 import SuperApp from './apps/super/SuperSApp';
 import PublicApp from './apps/public/PublicApp';
+import PicklistApp from './apps/picklist/PicklistApp';
 
 
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: 'super',
                 element: <SuperApp />,
+            },
+            {
+                path: 'picklist',
+                element: <PicklistApp />,
             },
         ],
     },

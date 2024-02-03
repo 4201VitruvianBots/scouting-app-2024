@@ -8,7 +8,7 @@
     "start": "node dist/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
     "gen-fake-data": "node --loader ts-node/esm src/addFakeData.ts",
-    "gen-fake-csv": "node --loader ts-node/esm src/genFakeCsv.ts"
+    "gen-fake-json": "node --loader ts-node/esm src/genFakeJson.ts"
   },
   "keywords": [],
   "author": "",

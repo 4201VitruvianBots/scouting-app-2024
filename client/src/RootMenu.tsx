@@ -4,6 +4,7 @@ import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import ListIcon from '@mui/icons-material/ListAlt';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
@@ -13,28 +14,22 @@ function RootMenu() {
            
          
             <LinkButton
-                    link='/public'
-                    icon={
-                        <PersonSearchIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Public
+                link='/public'
+                icon={<PersonSearchIcon style={{ fontSize: '50px' }} />}>
+                Public
             </LinkButton>
 
-                <LinkButton
-                    link='/match'
-                    icon={
-                        <ContentPasteSearchIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Match
-                </LinkButton>
+            <LinkButton
+                link='/match'
+                icon={<ContentPasteSearchIcon style={{ fontSize: '50px' }} />}>
+                Match
+            </LinkButton>
 
-                <LinkButton
-                    link='/super'
-                    icon={
-                        <ScreenSearchDesktopIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Super
-                </LinkButton>
+            <LinkButton
+                link='/super'
+                icon={<ScreenSearchDesktopIcon style={{ fontSize: '50px' }} />}>
+                Super
+            </LinkButton>
 
                 <LinkButton
                     link='/pit'
