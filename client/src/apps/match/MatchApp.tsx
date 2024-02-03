@@ -143,12 +143,7 @@ function MatchApp() {
                 setClimbPosition={setClimbPosition}></EndgameButton>
 
             <div className='flex flex-row gap-5'>
-                <button
-                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700  text-xl shadow-xl'
-                    onClick={() => handleCount('high')}>
-                    {' '}
-                    High Note: {count.high}{' '}
-                </button>
+                
                 <button
                     className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700 text-xl shadow-xl'
                     onClick={() => handleCount('trap')}>
