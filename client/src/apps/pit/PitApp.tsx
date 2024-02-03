@@ -72,8 +72,13 @@ function PitApp() {
         <>
             <br/>
             <br/>
-            <h1 className="text-center text-3xl">Pit App</h1>
+
+            <div className="border border-green-900">
+              <br/>
+              <h1 className="text-center text-3xl">Pit App</h1>
+
             <br/>
+
             <BackHome
                     link='/'
                     className="place-content-center mx-auto w-min !flex"

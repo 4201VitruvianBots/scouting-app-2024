@@ -61,7 +61,9 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
 
     return (
         <main className='grid place-content-center text-center bg-gray-300'>
-            <p>Match Scouting App</p>
+            <br/>
+            <p className="text-xl">Match Scouting App</p>
+            <br/>
             <BackHome
                 link='/'
                 icon={<HomeIcon style={{ fontSize: '30px' }} />}></BackHome>
