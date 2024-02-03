@@ -4,19 +4,13 @@ import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import ListIcon from '@mui/icons-material/ListAlt';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
     return (
-        <main className='box-border grid h-screen grid-cols-1 items-stretch gap-5 p-5'>
-            <p
-                style={{
-                    fontSize: '30px',
-                    fontFamily: 'monospace',
-                    color: 'green',
-                    textAlign: 'center',
-                }}>
-                welcome to vitruvian scouting
+        <main className='box-border grid h-screen auto-rows-fr grid-cols-2 grid-rows-[auto] items-stretch gap-5 p-5'>
+            <p className='col-span-2 text-center font-mono text-3xl text-green-700'>
+                Welcome to Vitruvian Scouting
             </p>
 
             <LinkButton
@@ -50,9 +44,9 @@ function RootMenu() {
             </LinkButton>
 
             <LinkButton
-                link='/picklist'
-                icon={<ListIcon style={{ fontSize: '50px' }} />}>
-                Picklist
+                link='/recon'
+                icon={<SportsEsportsIcon style={{ fontSize: '50px' }} />}>
+                Cone Stacker
             </LinkButton>
         </main>
     );
