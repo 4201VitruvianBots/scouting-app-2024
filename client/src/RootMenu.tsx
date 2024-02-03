@@ -4,12 +4,14 @@ import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
     return (
-        <main className='box-border grid h-screen grid-cols-1 items-stretch gap-5 p-5'>
-            <p style={{fontSize:'30px', fontFamily:'monospace', color:'green', textAlign:'center'}}>welcome to vitruvian scouting</p>
+        <main >
+            <p style={{fontSize:'30px', fontFamily:'monospace', color:'green', textAlign:'center', paddingTop:'10px'}}>welcome to vitruvian scouting</p>
            
+           <div className='box-border grid h-screen grid-cols-2 items-stretch gap-5 p-5 pb-10 '>
             <LinkButton
                     link='/public'
                     icon={
@@ -41,9 +43,6 @@ function RootMenu() {
                     }>
                     Pit
                 </LinkButton>
-
-                
-
                
 
                 <LinkButton
@@ -53,6 +52,15 @@ function RootMenu() {
                     }>
                     Recon
                 </LinkButton>
+
+                <LinkButton
+                    link='/recon'
+                    icon={
+                        <SportsEsportsIcon style={{ fontSize: '50px' }} />
+                    }>
+                    Cone Stacker
+                </LinkButton>
+                </div>
            
         </main>
     );
