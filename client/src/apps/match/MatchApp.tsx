@@ -106,7 +106,8 @@ function MatchApp() {
     };
 
     return (
-        <main className='flex flex-col place-content-center items-center text-center '>
+        <div className="snap-y snap-mandatory">
+        <main className='flex flex-col place-content-center items-center text-center md:snap-y'>
             <p className='p-7 text-3xl font-bold text-green-700'>
                 Match Scouting App{' '}
             </p>
@@ -122,7 +123,7 @@ function MatchApp() {
                 </button>
             </div>
 
-            <p className='text-[40px] font-semibold'>Auto</p>
+            <p className='snap-start text-[40px] font-semibold'>Auto</p>
 
             <FieldButton
                 count={count}
@@ -130,13 +131,17 @@ function MatchApp() {
                 teleop={false}
                 leave={leave}
                 setLeave={setLeave}
+            
             />
+            <br/>
+            <br/>
             <p className='text-[40px] font-semibold'>Teleop</p>
             <FieldButton
                 count={count}
                 setCount={handleSetCount}
                 teleop={true}
             />
+            <br/>
 
             <p className='text-[40px] font-semibold'>Endgame</p>
             <EndgameButton
@@ -156,9 +161,10 @@ function MatchApp() {
             <button
                 onClick={handleSubmit}
                 className='text-[100% m-5 my-5 h-[50px] w-[35%] items-center rounded bg-blue-300 font-bold text-black'>
-                submit :3
+                Submit :3
             </button>
         </main>
+        </div>
     );
 }
 
