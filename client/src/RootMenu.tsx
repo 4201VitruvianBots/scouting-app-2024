@@ -4,15 +4,15 @@ import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import ListIcon from '@mui/icons-material/ListAlt';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
     return (
-        <main className='box-border grid h-screen grid-cols-2 items-stretch gap-5 p-5 grid-rows-[auto] auto-rows-fr'>
-            <p className='text-3xl font-mono text-green-700 text-center col-span-2'>Welcome to Vitruvian Scouting</p>
-           
-         
+        <main className='box-border grid h-screen auto-rows-fr grid-cols-2 grid-rows-[auto] items-stretch gap-5 p-5'>
+            <p className='col-span-2 text-center font-mono text-3xl text-green-700'>
+                Welcome to Vitruvian Scouting
+            </p>
+
             <LinkButton
                 link='/public'
                 icon={<PersonSearchIcon style={{ fontSize: '50px' }} />}>
@@ -31,32 +31,23 @@ function RootMenu() {
                 Super
             </LinkButton>
 
-                <LinkButton
-                    link='/pit'
-                    icon={
-                        <SettingsIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Pit
-                </LinkButton>
-               
+            <LinkButton
+                link='/pit'
+                icon={<SettingsIcon style={{ fontSize: '50px' }} />}>
+                Pit
+            </LinkButton>
 
-                <LinkButton
-                    link='/recon'
-                    icon={
-                        <QueryStatsIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Recon
-                </LinkButton>
+            <LinkButton
+                link='/recon'
+                icon={<QueryStatsIcon style={{ fontSize: '50px' }} />}>
+                Recon
+            </LinkButton>
 
-                <LinkButton
-                    link='/recon'
-                    icon={
-                        <SportsEsportsIcon style={{ fontSize: '50px' }} />
-                    }>
-                    Cone Stacker
-                </LinkButton>
-               
-           
+            <LinkButton
+                link='/recon'
+                icon={<SportsEsportsIcon style={{ fontSize: '50px' }} />}>
+                Cone Stacker
+            </LinkButton>
         </main>
     );
 }
