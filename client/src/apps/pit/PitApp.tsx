@@ -1,21 +1,38 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
-import MuiToggleButton from '@mui/material/ToggleButton';
-import { styled } from '@mui/material';
 import React, { useState } from "react";
+
+import Dropdown from '../../components/dropdowns';
 
 
 function PitApp() {
 
   const [role, setRole] = useState<'scoring' | 'defense' | 'support' | 'all-round'>();
   const [drivetrain, setDrivetrain] = useState<'tank' | 'swerve' | 'MECANUM' | 'other'>();
+  const [autoCapability, setAutoCapability] = useState<'e' | 'a' | 'sports' | 'inthegame'>(); //this is placeholder
+  const [scoreStates, setScoreStates] = React.useState(["scoreState1", "scoreState1", "scoreState1"]);
 
 
- 
 
-
-    const [scoreStates, setScoreStates] = React.useState(["scoreState1", "scoreState1", "scoreState1"]);
+  // const ParentComponent: React.FC = () => {
+  //  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  
+  //  const options: Option[] = [
+  //     { label: "Option 1", value: "1" },
+  //     { label: "Option 2", value: "2" },
+  //     // Add more options as needed
+  //  ];
+  
+  //  return (
+  //     <div>
+  //       <Dropdown options={options} onSelect={setSelectedOption} />
+  //       {/* Use selectedOption as needed */}
+  //     </div>
+  //  );
+  // };
+  
+   
 
 
     const handleScoreChange = (index: number) => {
@@ -65,6 +82,7 @@ function PitApp() {
                     }>
                   
             </BackHome>
+            <br/>
             <h1 className="text-center">Team Number</h1>
             <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number"></input>
             <br></br>
@@ -106,6 +124,13 @@ function PitApp() {
             <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" value='0'></input>
             <br></br>
             <h1 className="text-center">Auto Capability?</h1>
+            
+            <ToggleButtonGroup className='place-content-center mx-auto w-min !flex' value={autoCapability} onChange={(_, value) => setAutoCapability(value)}>
+            <ToggleButton value='e'>e</ToggleButton>
+            <ToggleButton value='a'>a</ToggleButton>
+            <ToggleButton value='sports'>sports</ToggleButton>
+            <ToggleButton value='inthegame'>itsinthegame</ToggleButton>
+            </ToggleButtonGroup>
             <br></br>
             <h1 className="text-center">Team role?</h1>
             
@@ -131,7 +156,9 @@ function PitApp() {
             <h1 className="text-center">Additional Notes?</h1>
             <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="text"></input>
 
-
+            <br></br>
+            <button className='bg-green-500 font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl'>Submit</button>
+            
         </>
     );
 }
