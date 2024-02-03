@@ -91,7 +91,6 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
             },
             teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
-            highNotes: count.high,
             climb: climbPosition
         };
 

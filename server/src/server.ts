@@ -23,6 +23,17 @@ app.post('/data/match', async(req,res) => {
     
 });
 
+// app.get('/test', async(req,res) => {
+//     const averageSpeakerNotes = await matchApp.aggregate([
+//         { $group:{
+//             _id: null,
+//             avgNotes: { $avg: {$add: ['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far',
+//              '$teleNonAmpedSpeakerNotes.near', '$teleNonAmpedSpeakerNotes.mid', '$teleNonAmpedSpeakerNotes.far']}}
+//         }}
+//     ]);
+//     res.send(averageSpeakerNotes);
+// })
+
 // Since this is the fallback is must go after all other routes
 if (DEV) {
     app.use('/', createProxyMiddleware('http://localhost:5173', { ws: true }));

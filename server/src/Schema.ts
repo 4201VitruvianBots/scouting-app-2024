@@ -27,14 +27,13 @@ const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: numb
     teleAmpedSpeakerNotes: scoreRanges,
     teleAmpNotes: Number,
     trapNotes: Number,
-    highNotes: Number,
     climb: {
         type: String,
         enum: ['amp', 'source', 'center', 'park', 'none', 'failed']
     }
 });
 
- matchDataSchema.virtual('totalAuto')
+matchDataSchema.virtual('totalAuto')
      .get(function(){
          return this.autoSpeakerNotes.near + this.autoSpeakerNotes.mid + this.autoSpeakerNotes.far + this.autoAmpNotes;
      }); 
@@ -43,12 +42,9 @@ matchDataSchema.virtual('totalTele')
         return this.teleAmpNotes + this.teleAmpedSpeakerNotes.far + this.teleAmpedSpeakerNotes.mid + this.teleAmpedSpeakerNotes.near + 
         this.teleNonAmpedSpeakerNotes.far + this.teleNonAmpedSpeakerNotes.mid + this.teleNonAmpedSpeakerNotes.near;
      });
-matchDataSchema.virtual('total')
-     .get(function() {
-        return this.totalAuto + this.totalTele;
-     });
+    
 
-     
+
 
 matchDataSchema.set('toObject', { virtuals: true }); 
 
@@ -59,8 +55,8 @@ matchDataSchema.set('toObject', { virtuals: true });
         B: Number
      },
      defense: Number,
+     highNotes: Number,
      spotLitRobots: Number,
-     coOp: Boolean,
      stationPlayerTeam: Number
  });
 */
@@ -81,5 +77,6 @@ matchDataSchema.set('toObject', { virtuals: true });
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
 /* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
+
 
 export {matchApp, pitApp, };
