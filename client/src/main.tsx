@@ -8,7 +8,7 @@ import AdminApp from './apps/admin/AdminApp';
 import MatchApp from './apps/match/MatchApp';
 import PitApp from './apps/pit/PitApp';
 import ReconApp from './apps/recon/ReconApp';
-import SuperApp from './apps/super/SuperSApp';
+import SuperApp from './apps/super/SuperApp';
 import PublicApp from './apps/public/PublicApp';
 
 
