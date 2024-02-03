@@ -8,10 +8,10 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
     return (
-        <main >
-            <p style={{fontSize:'30px', fontFamily:'monospace', color:'green', textAlign:'center', paddingTop:'10px'}}>welcome to vitruvian scouting</p>
+        <main className='box-border grid h-screen grid-cols-2 items-stretch gap-5 p-5 grid-rows-[auto] auto-rows-fr'>
+            <p className='text-3xl font-mono text-green-700 text-center col-span-2'>Welcome to Vitruvian Scouting</p>
            
-           <div className='box-border grid h-screen grid-cols-2 items-stretch gap-5 p-5 pb-10 '>
+         
             <LinkButton
                     link='/public'
                     icon={
@@ -60,7 +60,7 @@ function RootMenu() {
                     }>
                     Cone Stacker
                 </LinkButton>
-                </div>
+               
            
         </main>
     );
