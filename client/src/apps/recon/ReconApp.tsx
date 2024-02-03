@@ -1,4 +1,4 @@
-import BackHome from "../../components/BackHome";
+import LinkButton from "../../components/LinkButton";
 
 import { useFetchString } from '../../lib/useFetchString';
 
@@ -9,8 +9,7 @@ function ReconApp() {
     return (
         <>
             <h1>Recon App</h1>
-
-            <BackHome/>
+            <LinkButton link='/'>Home</LinkButton>
             <p>{analyzedData ?? 'Data loading...'}</p>
         </>
     );
