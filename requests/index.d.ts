@@ -45,7 +45,7 @@ export type SuperData = {
     defense: unknown;
     driverSKill: unknown; // Similar to defense
     spotlitRobots: number;
-    coOp: boolean;
+    highNotes: number;
     stationPlayerTeam: number; // Team Number
 }[];
 

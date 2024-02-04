@@ -18,7 +18,7 @@ const scoreRanges = {
     far: Number
 }
 
-const matchDataSchema = new mongoose.Schema<MatchData>({
+const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: number, totalTele: number, total: number}>({
     metadata: metaDataSchema,
     leftStartingZone: Boolean,
     autoSpeakerNotes: scoreRanges,
@@ -30,8 +30,21 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         type: String,
         enum: ['amp', 'source', 'center', 'park', 'none', 'failed']
     }
-
 });
+
+matchDataSchema.virtual('totalAuto')
+     .get(function(){
+         return this.autoSpeakerNotes.near + this.autoSpeakerNotes.mid + this.autoSpeakerNotes.far + this.autoAmpNotes;
+     }); 
+matchDataSchema.virtual('totalTele')
+     .get(function(){
+        return this.teleAmpNotes + this.teleSpeakerNotes.far + this.teleSpeakerNotes.mid + this.teleSpeakerNotes.near 
+     });
+    
+
+
+
+matchDataSchema.set('toObject', { virtuals: true }); 
 
 /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: metaDataSchema,
@@ -40,8 +53,8 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         B: Number
      },
      defense: Number,
+     highNotes: Number,
      spotLitRobots: Number,
-     coOp: Boolean,
      stationPlayerTeam: Number
  });
 */
@@ -62,5 +75,6 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
 /* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
+
 
 export {matchApp, pitApp, };

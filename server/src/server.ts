@@ -23,6 +23,16 @@ app.post('/data/match', async(req,res) => {
     
 });
 
+//  app.get('/test', async(req,res) => {
+//      const maxSpeakerNotes = await matchApp.aggregate([
+//         { $group:{
+//             _id: null,
+//              maxNotes: { $max: {$add: ['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far']}}
+//          }}
+//      ]);
+//      res.send(maxSpeakerNotes);
+// })
+
 app.use(express.static('static'));
 
 // Since this is the fallback is must go after all other routes
