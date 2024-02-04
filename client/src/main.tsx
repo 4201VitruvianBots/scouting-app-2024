@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import '@fontsource/poppins';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './Root';
 import RootMenu from './RootMenu';
@@ -8,8 +9,10 @@ import AdminApp from './apps/admin/AdminApp';
 import MatchApp from './apps/match/MatchApp';
 import PitApp from './apps/pit/PitApp';
 import ReconApp from './apps/recon/ReconApp';
-import SuperApp from './apps/super/SuperSApp';
+import SuperApp from './apps/super/SuperApp';
 import PublicApp from './apps/public/PublicApp';
+import PicklistApp from './apps/picklist/PicklistApp';
+import 'react-material-symbols/rounded';
 
 
 
@@ -45,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: 'super',
                 element: <SuperApp />,
+            },
+            {
+                path: 'picklist',
+                element: <PicklistApp />,
             },
         ],
     },

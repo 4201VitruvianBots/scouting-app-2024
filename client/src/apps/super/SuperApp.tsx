@@ -1,12 +1,13 @@
 import LinkButton from "../../components/LinkButton";
 
-function ReconApp() {
+
+function SuperApp() {
     return (
         <>
-            <h1>Recon App</h1>
+            <h1>Super Scouting App</h1>
             <LinkButton link='/'>Home</LinkButton>
         </>
     );
 }
 
-export default ReconApp;
+export default SuperApp;

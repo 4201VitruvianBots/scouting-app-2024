@@ -1,17 +1,10 @@
-import BackHome from "../../components/BackHome";
-import HomeIcon from '@mui/icons-material/Home';
+import LinkButton from '../../components/LinkButton';
 
 function PitApp() {
     return (
         <>
             <h1>Pit App</h1>
-            <BackHome
-                    link='/'
-                    icon={
-                        <HomeIcon style={{ fontSize: '30px' }} />
-                    }>
-                  
-            </BackHome>
+            <LinkButton link='/'>Home</LinkButton>
         </>
     );
 }

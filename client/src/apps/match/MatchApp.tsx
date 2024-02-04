@@ -1,13 +1,13 @@
-import FieldButton from "../../components/FieldButton";
-import BackHome from "../../components/BackHome";
-import HomeIcon from '@mui/icons-material/Home';
-import EndgameButton from "../../components/EndGameButton";
+import EndgameButton from '../../components/EndGameButton';
+import FieldButton from '../../components/FieldButton';
+import LinkButton from '../../components/LinkButton';
+import { ClimbPosition, MatchData } from 'requests';
 import { SetStateAction, useState } from 'react';
-import { Button } from '@mui/material';
-import {ClimbPosition, MatchData} from 'server/requests';
-import { postJson } from "../../util";
-type countKeys = keyof MatchScores;
+import { postJson } from '../../lib/postJson';
+import { MaterialSymbol } from 'react-material-symbols';
+import 'react-material-symbols/rounded';
 
+type countKeys = keyof MatchScores;
 
 interface MatchScores {
     autoNear: number;
@@ -19,56 +19,30 @@ interface MatchScores {
     teleFar: number;
     teleAmp: number;
     trap: number;
-    high: number;
-    aNear: number;
-    aMid: number;
-    aFar: number;
-}
-
-const defualtScores:MatchScores = {
-        autoNear: 0,
-        autoMid: 0,
-        autoFar: 0,
-        autoAmp: 0,
-        teleNear: 0,
-        teleMid: 0,
-        teleFar: 0,
-        teleAmp: 0,
-        trap: 0,
-        high: 0,
-        aNear: 0,
-        aMid: 0,
-        aFar: 0,
-}
+};
+const defualtScores: MatchScores = {
+    autoNear: 0,
+    autoMid: 0,
+    autoFar: 0,
+    autoAmp: 0,
+    teleNear: 0,
+    teleMid: 0,
+    teleFar: 0,
+    teleAmp: 0,
+    trap: 0,
+};
 
 function MatchApp() {
     const [count, setCount] = useState<MatchScores>(defualtScores);
-    const [leave, setLeave] = useState(false); //false=notleft, true=left
-
+    const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
-const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
-    const handleCount = (key: countKeys) => {
-        handleSetCount({ ...count, [key]: count[key] + 1 });
-    };
-
-    const handleSetCount = (newCount: SetStateAction<MatchScores>) => {
-        setCountHistory([...countHistory, count]);
-        setCount(newCount);
-    };
-
-    const undoCount = () => {
-        if (countHistory.length > 0) {
-            setCountHistory(prevHistory => prevHistory.slice(0, -1));
-            setCount(countHistory.at(-1)!);
-        }
-
-
-    };
-
+    const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
+    const [showCheck, setShowCheck] = useState<boolean>(false);
+    
     const handleSubmit = async () => {
         const data: MatchData = {
             metadata: {
-                scouterName: "hjcd",
+                scouterName: 'hjcd',
                 robotTeam: 48392,
                 robotPosition: 'blue_1',
             },
@@ -76,75 +50,81 @@ const [climbPosition, setClimbPosition] =useState<ClimbPosition>('none')
             autoSpeakerNotes: {
                 near: count.autoNear,
                 mid: count.autoMid,
-                far: count.autoFar
+                far: count.autoFar,
             },
             autoAmpNotes: count.autoAmp,
-            teleNonAmpedSpeakerNotes: {
+            teleSpeakerNotes: {
                 near: count.teleNear,
                 mid: count.teleMid,
-                far: count.teleFar
-            },
-            teleAmpedSpeakerNotes: {
-                near: count.aNear,
-                mid: count.aMid,
-                far: count.aFar
+                far: count.teleFar,
             },
             teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
-            climb: climbPosition
+            climb: climbPosition,
         };
 
-    try{
-        const result = await postJson('/data/match', data);
-        if(!result.ok) throw new Error('request did not succeed')
-        setCount(defualtScores);
-        setClimbPosition("none");
-        setLeave(false);
-    } catch {
-        alert('sending data failed') 
-    }
-       
+        try {
+            const result = await postJson('/data/match', data);
+            if (!result.ok) throw new Error('Request Did Not Succeed');
+            setCount(defualtScores);
+            setClimbPosition('none');
+            setLeave(false);
+        } catch {
+            alert('Sending Data Failed');
+        }
+
+        setShowCheck(true);
+
     };
 
-    return (
-        <main className='grid place-content-center text-center'>
-            <p>Match Scouting App</p>
-            <BackHome
-                link='/'
-                icon={<HomeIcon style={{ fontSize: '30px' }} />}></BackHome>
+    const undoCount = () => {
+        if (countHistory.length > 0) {
+            setCountHistory(prevHistory => prevHistory.slice(0, -1));
+            setCount(countHistory.at(-1)!);
+        }
+    };
+    const handleSetCount = (newCount: SetStateAction<MatchScores>) => {
+        setCountHistory([...countHistory, count]);
+        setCount(newCount);
+    };
+    const handleCount = (key: countKeys) => {
+        handleSetCount({ ...count, [key]: count[key] + 1 });
+    };
 
-            <Button onClick={undoCount}>Undo Count</Button>
-            <FieldButton
-                count={count}
-                setCount={handleSetCount}
-                teleop={false}
-                leave={leave}
-                setLeave={setLeave}
-            />
-            <FieldButton
-                count={count}
-                setCount={handleSetCount}
-                teleop={true}
-            />
-            <EndgameButton climbPosition={climbPosition} setClimbPosition={setClimbPosition}></EndgameButton>
-
-            <button
-                className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
-                onClick={() => handleCount('high')}>
-                {' '}
-                High Note: {count.high}{' '}
-            </button>
-            <button
-                className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 shadow-xl'
-                onClick={() => handleCount('trap')}>
-                {' '}
-                Trap Note: {count.trap}{' '}
-            </button>
-            <Button onClick={handleSubmit}>submit :3</Button>
+    return(
+        <main className='w-min mx-auto'>
+            <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
+            <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
+                <LinkButton link='/'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' /></LinkButton>
+                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' /></button>
+            </div>
+            
+            <div>
+                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
+                <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
+                count={count} leave={leave}/>
+            </div>
+            <div>
+                <h2 className='text-2xl text-center my-4'>Tele-Op</h2>
+                <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
+            </div>
+            <div>
+                <h2 className='text-2xl text-center my-4'>Endgame</h2>
+                <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
+                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
+                    Trap Note: {count.trap}
+                </button>
+            </div>
+            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            
+            <div>
+                {showCheck && (   
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
+                )}
+            </div>
         </main>
     );
 }
 
-
-export default MatchApp;
-export type { MatchScores , ClimbPosition}
+export type { MatchScores, ClimbPosition };
+export default MatchApp
