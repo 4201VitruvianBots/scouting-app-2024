@@ -26,24 +26,18 @@ for (let i = 0; i < 40; i++) {
             far: randint(5),
         },
         climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
-        highNotes: randint(5),
         leftStartingZone: Math.random() > 0.5,
         metadata: {
             robotPosition: choose(['blue_1', 'blue_2', 'blue_3', 'red_1', 'red_2', 'red_3']),
             robotTeam: choose(teams),
             scouterName: 'Jim',
         },
-        teleAmpedSpeakerNotes: {
+        teleSpeakerNotes: {
             far: randint(5),
             mid: randint(5),
             near: randint(5),
         },
         teleAmpNotes: randint(5),
-        teleNonAmpedSpeakerNotes: {
-            far: randint(5),
-            mid: randint(5),
-            near: randint(5),
-        },
         trapNotes: randint(2),
     } satisfies MatchData).save()
 }

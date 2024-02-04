@@ -1,26 +1,25 @@
-import { Dispatch, InputHTMLAttributes } from 'react';
+import { ReactNode } from "react";
 
 function Checkbox({
-    value,
+    className,
+    boxClassName = '',
+    children,
     onChange,
-    ...otherProps
-}: {
-    value?: boolean;
-    onChange?: Dispatch<boolean>;
-} & Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'onChange' | 'value' | 'checked'
->) {
-    return (
-        <input
-            type='checkbox'
-            checked={value}
-            onChange={
-                onChange ? event => onChange(event.target.checked) : undefined
-            }
-            {...otherProps}
-        />
+    checked
+} : {
+    className? : string,
+    boxClassName?: string,
+    children? : ReactNode;
+    onChange? : (value: boolean) => void;
+    checked? : boolean
+}) {
+    return(
+        <label className={`${className} select-none`}>
+            <input type='checkbox' checked={checked} className={boxClassName}
+            onChange={event => onChange?.(event.target.checked)}/> 
+            {children}
+        </label>
     );
 }
 
-export default Checkbox;
+export default Checkbox

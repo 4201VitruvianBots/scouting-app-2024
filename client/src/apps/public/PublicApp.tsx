@@ -1,10 +1,10 @@
-import BackHome from "../../components/BackHome";
+import LinkButton from "../../components/LinkButton";
 
 function PublicApp() {
     return (
         <>
             <h1>Public App</h1>
-            <BackHome/>
+            <LinkButton link='/'>Home</LinkButton>
         </>
     );
 }
