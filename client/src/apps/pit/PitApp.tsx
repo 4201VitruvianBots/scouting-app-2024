@@ -1,10 +1,10 @@
-import BackHome from '../../components/BackHome';
+import LinkButton from '../../components/LinkButton';
 
 function PitApp() {
     return (
         <>
             <h1>Pit App</h1>
-            <BackHome/>
+            <LinkButton link='/'>Home</LinkButton>
         </>
     );
 }
