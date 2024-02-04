@@ -4,6 +4,8 @@ import LinkButton from '../../components/LinkButton';
 import { ClimbPosition, MatchData } from 'requests';
 import { SetStateAction, useState } from 'react';
 import { postJson } from '../../lib/postJson';
+import { MaterialSymbol } from 'react-material-symbols';
+import 'react-material-symbols/rounded';
 
 type countKeys = keyof MatchScores;
 
@@ -17,10 +19,6 @@ interface MatchScores {
     teleFar: number;
     teleAmp: number;
     trap: number;
-    high: number;
-    aNear: number;
-    aMid: number;
-    aFar: number;
 };
 const defualtScores: MatchScores = {
     autoNear: 0,
@@ -32,10 +30,6 @@ const defualtScores: MatchScores = {
     teleFar: 0,
     teleAmp: 0,
     trap: 0,
-    high: 0,
-    aNear: 0,
-    aMid: 0,
-    aFar: 0,
 };
 
 function MatchApp() {
@@ -43,6 +37,7 @@ function MatchApp() {
     const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
+    const [showCheck, setShowCheck] = useState<boolean>(false);
     
     const handleSubmit = async () => {
         const data: MatchData = {
@@ -58,19 +53,13 @@ function MatchApp() {
                 far: count.autoFar,
             },
             autoAmpNotes: count.autoAmp,
-            teleNonAmpedSpeakerNotes: {
+            teleSpeakerNotes: {
                 near: count.teleNear,
                 mid: count.teleMid,
                 far: count.teleFar,
             },
-            teleAmpedSpeakerNotes: {
-                near: count.aNear,
-                mid: count.aMid,
-                far: count.aFar,
-            },
             teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
-            highNotes: count.high,
             climb: climbPosition,
         };
 
@@ -83,6 +72,9 @@ function MatchApp() {
         } catch {
             alert('Sending Data Failed');
         }
+
+        setShowCheck(true);
+
     };
 
     const undoCount = () => {
@@ -100,32 +92,36 @@ function MatchApp() {
     };
 
     return(
-        <main>
-            <p>Match Scouting App</p>
-            <div>
-                <LinkButton link='/'>Home</LinkButton>
-                <button onClick={undoCount}>Undo Count</button>
+        <main className='w-min mx-auto'>
+            <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
+            <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
+                <LinkButton link='/'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' /></LinkButton>
+                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' /></button>
             </div>
+            
             <div>
-                <p>Autonomous</p>
+                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
                 <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
                 count={count} leave={leave}/>
             </div>
             <div>
-                <p>Tele-Op</p>
+                <h2 className='text-2xl text-center my-4'>Tele-Op</h2>
                 <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
             </div>
             <div>
-                <p>Endgame</p>
+                <h2 className='text-2xl text-center my-4'>Endgame</h2>
                 <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
-                <button onClick={() => handleCount('high')}>
-                    High Note: {count.high}
-                </button>
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
-                    Trap NoteL {count.trap}
+                    Trap Note: {count.trap}
                 </button>
             </div>
-            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            
+            <div>
+                {showCheck && (   
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
+                )}
+            </div>
         </main>
     );
 }

@@ -23,11 +23,9 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
     leftStartingZone: Boolean,
     autoSpeakerNotes: scoreRanges,
     autoAmpNotes: Number,
-    teleNonAmpedSpeakerNotes: scoreRanges,
-    teleAmpedSpeakerNotes: scoreRanges,
+    teleSpeakerNotes: scoreRanges,
     teleAmpNotes: Number,
     trapNotes: Number,
-    highNotes: Number,
     climb: {
         type: String,
         enum: ['amp', 'source', 'center', 'park', 'none', 'failed']

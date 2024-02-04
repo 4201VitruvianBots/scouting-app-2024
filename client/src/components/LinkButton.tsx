@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import {ReactNode} from 'react';
 
 function LinkButton({
     link,
@@ -7,11 +8,11 @@ function LinkButton({
 }: {
     link: string;
     className?: string;
-    children?: string;
+    children?: ReactNode;
 }) {
     return (
         <>
-            <Link to={link}>
+            <Link to={link} className='contents'>
                 <button className={className}>{children}</button>
             </Link>
         </>

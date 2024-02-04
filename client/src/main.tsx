@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import '@fontsource/poppins';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './Root';
 import RootMenu from './RootMenu';
@@ -11,6 +12,8 @@ import ReconApp from './apps/recon/ReconApp';
 import SuperApp from './apps/super/SuperApp';
 import PublicApp from './apps/public/PublicApp';
 import PicklistApp from './apps/picklist/PicklistApp';
+import { MaterialSymbol } from 'react-material-symbols';
+import 'react-material-symbols/rounded';
 
 
 
