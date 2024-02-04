@@ -38,8 +38,7 @@ matchDataSchema.virtual('totalAuto')
      }); 
 matchDataSchema.virtual('totalTele')
      .get(function(){
-        return this.teleAmpNotes + this.teleAmpedSpeakerNotes.far + this.teleAmpedSpeakerNotes.mid + this.teleAmpedSpeakerNotes.near + 
-        this.teleNonAmpedSpeakerNotes.far + this.teleNonAmpedSpeakerNotes.mid + this.teleNonAmpedSpeakerNotes.near;
+        return this.teleAmpNotes + this.teleSpeakerNotes.far + this.teleSpeakerNotes.mid + this.teleSpeakerNotes.near 
      });
     
 

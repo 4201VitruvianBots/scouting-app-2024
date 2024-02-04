@@ -1,20 +1,11 @@
 import { matchApp } from "./Schema.js";
 
 
-async function averageTeleNonAmpedSpeaker() {
+async function averageTeleSpeakerNotes() {
     return await matchApp.aggregate([
     { $group:{
         _id: null,
-        avgTeleNonAmpedNotes: { $avg: {$add: ['$teleNonAmpedSpeakerNotes.near', '$teleNonAmpedSpeakerNotes.mid', '$teleNonAmpedSpeakerNotes.far']}}
-    }}
-]);
-}
-
-async function averageTeleAmpedSpeaker(){
-    return await matchApp.aggregate([
-    {$group:{
-        _id: null,
-        avgTeleAmpedNotes: { $avg: {$add: ['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far']}}
+        avgTeleSpeakerNotes: { $avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}}
     }}
 ]);
 }
@@ -46,20 +37,11 @@ async function averageAutoAmpNotes() {
 ]);
 }
 
-async function maxTeleNonAmpedSpeakerNotes() {
+async function maxTeleSpeakerNotes() {
     return await matchApp.aggregate([
         {$group:{
             _id: null,
-            maxTeleNonAmpedNotes: {$max: {$add:['$teleNonAmpedSpeakerNotes.near', '$teleNonAmpedSpeakerNotes.mid', '$teleNonAmpedSpeakerNotes.far']}}
-        }}
-    ]);
-}
-
-async function maxTeleAmpedSpeakerNotes() {
-    return await matchApp.aggregate([
-        {$group:{
-            _id: null,
-            maxteleAmpedNotes: {$max: {$add:['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far']}}
+            maxTeleNonAmpedNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}}
         }}
     ]);
 }
@@ -73,6 +55,15 @@ async function maxTeleAmpNotes() {
     ]);
 }
 
+async function maxAutoSpeakerNotes() {
+    return await matchApp.aggregate([
+       {$group:{
+            _id: null,
+            maxAutoSpeakerNotes: {$max: '$autoSpeakerNotes'}
+       }} 
+    ]);
+}
+
 async function maxAutoAmpNotes() {
     return await matchApp.aggregate([
        {$group:{
@@ -82,5 +73,5 @@ async function maxAutoAmpNotes() {
     ]);
 }
 
-export {averageAutoAmpNotes, averageTeleAmpNotes, averageTeleNonAmpedSpeaker, averageAutoSpeakerNotes, averageTeleAmpedSpeaker, maxTeleAmpedSpeakerNotes, 
-        maxTeleNonAmpedSpeakerNotes, maxTeleAmpNotes, maxAutoAmpNotes} 
+export {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
+        maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} 
