@@ -30,11 +30,9 @@ export interface MatchData {
     leftStartingZone: boolean;
     autoSpeakerNotes: ScoreRanges;
     autoAmpNotes: number;
-    teleNonAmpedSpeakerNotes: ScoreRanges;
-    teleAmpedSpeakerNotes: ScoreRanges;
+    teleSpeakerNotes: ScoreRanges;
     teleAmpNotes: number;
     trapNotes: number;
-    highNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
 }

@@ -1,35 +1,22 @@
-import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Link } from "react-router-dom";
+import {ReactNode} from 'react';
 
 function LinkButton({
     link,
-    icon,
     className,
-    children,
-  
+    children
 }: {
     link: string;
-    icon?: ReactNode;
     className?: string;
-    children?: string;
-   
+    children?: ReactNode;
 }) {
     return (
         <>
-            <Link to={link} className={className}>
-                <Button
-                    variant='outlined'
-                    color='success'
-                    style={{ width: '100%', height: '100%', fontSize: '30px', backgroundColor:'lightgray', borderColor:'darkgray'}}
-                    startIcon={icon}>
-                    {children}
-                    
-                </Button>
-                
+            <Link to={link} className='contents'>
+                <button className={className}>{children}</button>
             </Link>
         </>
     );
 }
 
-export default LinkButton;
+export default LinkButton

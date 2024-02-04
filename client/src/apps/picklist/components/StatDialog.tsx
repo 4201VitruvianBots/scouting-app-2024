@@ -54,10 +54,7 @@ function StatDialog({
                 </label>
             </p>
             <p>
-                <label>
-                    <Checkbox value={ascending} onChange={setAscending} />
-                    Ascending
-                </label>
+                    <Checkbox onChange={setAscending}>Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>

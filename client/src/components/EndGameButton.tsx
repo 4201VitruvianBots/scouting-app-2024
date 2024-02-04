@@ -1,151 +1,100 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ToggleButtonGroup, styled } from '@mui/material';
-import MuiToggleButton from '@mui/material/ToggleButton';
 import { ClimbPosition } from 'requests';
+import MultiButton from './MultiButton';
+import ToggleButton from './ToggleButton'
 
 function EndgameButton({
-    climbPosition,
-    setClimbPosition,
-}: {
+    setClimb,
+    climbPosition
+} : {
+    setClimb: Dispatch<SetStateAction<ClimbPosition>>;
     climbPosition: ClimbPosition;
-    setClimbPosition: Dispatch<SetStateAction<ClimbPosition>>;
 }) {
-    const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
+    const [alliance, setAlliance] = useState(false); //false=red, true=blue, null=hollow purple
+
+    const handleClimb = (
+        newClimb: ClimbPosition
+    ) => {
+        setClimb(newClimb);
+    };
 
     const handleImage = () => {
-        setAllianceBlue(!allianceBlue);
+        setAlliance(!alliance);
     };
 
-    const ToggleButton1 = styled(MuiToggleButton)({
-        '&.Mui-selected, &.Mui-selected:hover': {
-            color: 'white',
-            backgroundColor: '#3268a8',
-        },
-    });
-
-    const ToggleButton2 = styled(MuiToggleButton)({
-        '&, &:hover': {
-            backgroundColor: '#a6b2bf',
-        },
-        '&.Mui-selected, &.Mui-selected:hover': {
-            backgroundColor: '#48c55c',
-        },
-    });
-
-    const handleClimbPosition = (
-        _event: React.MouseEvent<HTMLElement>,
-        newClimbPosition: ClimbPosition
-    ) => {
-        setClimbPosition(newClimbPosition);
-    };
-
-    return (
+    return(
         <>
-            <ToggleButton1
-                value='check'
-                selected={allianceBlue}
-                onChange={handleImage}
-                className='bg-red-400 font-serif'>
-                Toggle Map Color
-            </ToggleButton1>
-
-            <div
-                className={`${allianceBlue ? 'bg-field-blue-endgame' : 'bg-field-red-endgame'} h-[40em] w-[40em] bg-cover bg-center object-contain brightness-75`}>
-                {allianceBlue ? (
-                    <>
-                        <ToggleButtonGroup
-                            value={climbPosition}
-                            exclusive
-                            onChange={handleClimbPosition}>
-                            <ToggleButton2
-                                value='amp'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '18em',
-                                    left: '22em',
-                                    rotate: '60deg',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-                            <ToggleButton2
-                                value='center'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '8em',
-                                    left: '3em',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-                            <ToggleButton2
-                                value='source'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '-1em',
-                                    left: '22em',
-                                    rotate: '-60deg',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-
-                            <ToggleButton2 value='parked'>Parked</ToggleButton2>
-                            <ToggleButton2 value='failed'>Failed</ToggleButton2>
-                            <ToggleButton2 value='none'>None</ToggleButton2>
-                        </ToggleButtonGroup>
-                        
-                    </>
-                ) : (
-                    <>
-                        <ToggleButtonGroup
-                            value={climbPosition}
-                            exclusive
-                            onChange={handleClimbPosition}>
-                            <ToggleButton2
-                                value='amp'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '19em',
-                                    left: '21em',
-                                    rotate: '-60deg',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-                            <ToggleButton2
-                                value='center'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '8em',
-                                    right: '2em',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-                            <ToggleButton2
-                                value='source'
-                                sx={{
-                                    position: 'absolute',
-                                    top: '-4em',
-                                    left: '22em',
-                                    rotate: '60deg',
-                                    backgroundColor: 'fuchsia',
-                                    height: '29em',
-                                    width: '4em',
-                                }}></ToggleButton2>
-
-                            <ToggleButton2 value='parked'>Parked</ToggleButton2>
-                            <ToggleButton2 value='failed'>Failed</ToggleButton2>
-                            <ToggleButton2 value='none'>None</ToggleButton2>
-                        </ToggleButtonGroup>
-                    </>
-                )}
-
-                <br />
+            <ToggleButton 
+            className='shadow-md rounded-lg px-5'
+            trueClassName='bg-blue-500'
+            falseClassName='bg-red-700'
+            value={alliance} 
+            onChange={handleImage}>  
+            Toggle Map Button 
+            </ToggleButton>
+            <br/>
+            <div className={`${alliance ? 'bg-field-blue-endgame' : 'bg-field-red-endgame'} h-[40em] w-[40em] bg-cover bg-center relative`}>
+                <MultiButton 
+                onChange={handleClimb} value={climbPosition} 
+                labels={['', '', '', 'Failed', 'None', 'Parked']}
+                values={['amp', 'center', 'source', 'failed', 'none', 'park']}
+                className={alliance
+                ? [/*blue*/ 'absolute top-[14em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[5em] left-[3em] h-[29em] w-[4em]', 'absolute top-[-4em] left-[18em] h-[29em] w-[4em] -rotate-60', '', '', ''] 
+                : [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[5em] h-[29em] w-[4em] right-[2em]', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]}/>
             </div>
-        </>
+        </> 
     );
 }
 
-export default EndgameButton;
+/*
+blue
+    "amp"
+        position: "absolute",
+        top: "18em",
+        left: "22em",
+        rotate: "60deg",
+        height: '29em',
+        width: '4em'
+
+    "center" 
+        position: "absolute",
+        top: "8em",
+        left: "3em",
+        height: '29em',
+        width: '4em'
+   
+    "source"
+        position: "absolute",
+        top: "-1em",
+        left: "22em",
+        rotate: "-60deg",
+        height: '29em',
+        width: '4em'
+red
+    "amp:"
+        position: "absolute",
+        top: "19em",
+        left: "21em",
+        rotate: "-60deg",
+        height: '29em',
+        width: '4em'
+        
+    "center"
+        position: "absolute",
+        top: "8em",
+        right: "2em",
+        height: '29em',
+        width: '4em'
+
+    "source"
+        position: "absolute",
+        top: "-4em",
+        left: "22em",
+        rotate: "60deg",
+        height: '29em',
+        width: '4em'
+
+
+*/
+
+export default EndgameButton

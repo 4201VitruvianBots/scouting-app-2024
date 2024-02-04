@@ -1,13 +1,13 @@
-import FieldButton from '../../components/FieldButton';
-import BackHome from '../../components/BackHome';
-
 import EndgameButton from '../../components/EndGameButton';
-import { SetStateAction, useState } from 'react';
-// import { Button } from '@mui/material';
+import FieldButton from '../../components/FieldButton';
+import LinkButton from '../../components/LinkButton';
 import { ClimbPosition, MatchData } from 'requests';
+import { SetStateAction, useState } from 'react';
 import { postJson } from '../../lib/postJson';
+import { MaterialSymbol } from 'react-material-symbols';
+import 'react-material-symbols/rounded';
+
 type countKeys = keyof MatchScores;
-import { Undo } from '@mui/icons-material';
 
 interface MatchScores {
     autoNear: number;
@@ -19,12 +19,7 @@ interface MatchScores {
     teleFar: number;
     teleAmp: number;
     trap: number;
-    high: number;
-    aNear: number;
-    aMid: number;
-    aFar: number;
-}
-
+};
 const defualtScores: MatchScores = {
     autoNear: 0,
     autoMid: 0,
@@ -35,35 +30,15 @@ const defualtScores: MatchScores = {
     teleFar: 0,
     teleAmp: 0,
     trap: 0,
-    high: 0,
-    aNear: 0,
-    aMid: 0,
-    aFar: 0,
 };
 
 function MatchApp() {
     const [count, setCount] = useState<MatchScores>(defualtScores);
-    const [leave, setLeave] = useState(false); //false=notleft, true=left
-
+    const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
+    const [showCheck, setShowCheck] = useState<boolean>(false);
     
-    const handleCount = (key: countKeys) => {
-        handleSetCount({ ...count, [key]: count[key] + 1 });
-    };
-
-    const handleSetCount = (newCount: SetStateAction<MatchScores>) => {
-        setCountHistory([...countHistory, count]);
-        setCount(newCount);
-    };
-
-    const undoCount = () => {
-        if (countHistory.length > 0) {
-            setCountHistory(prevHistory => prevHistory.slice(0, -1));
-            setCount(countHistory.at(-1)!);
-        }
-    };
-
     const handleSubmit = async () => {
         const data: MatchData = {
             metadata: {
@@ -78,89 +53,78 @@ function MatchApp() {
                 far: count.autoFar,
             },
             autoAmpNotes: count.autoAmp,
-            teleNonAmpedSpeakerNotes: {
+            teleSpeakerNotes: {
                 near: count.teleNear,
                 mid: count.teleMid,
                 far: count.teleFar,
             },
-            teleAmpedSpeakerNotes: {
-                near: count.aNear,
-                mid: count.aMid,
-                far: count.aFar,
-            },
             teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
-            highNotes: count.high,
             climb: climbPosition,
         };
 
         try {
             const result = await postJson('/data/match', data);
-            if (!result.ok) throw new Error('request did not succeed');
+            if (!result.ok) throw new Error('Request Did Not Succeed');
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
         } catch {
-            alert('sending data failed');
+            alert('Sending Data Failed');
         }
+
+        setShowCheck(true);
+
     };
 
-    return (
-        <main className='flex flex-col place-content-center items-center text-center '>
-            <p className='p-7 text-3xl font-bold text-green-700'>
-                Match Scouting App{' '}
-            </p>
+    const undoCount = () => {
+        if (countHistory.length > 0) {
+            setCountHistory(prevHistory => prevHistory.slice(0, -1));
+            setCount(countHistory.at(-1)!);
+        }
+    };
+    const handleSetCount = (newCount: SetStateAction<MatchScores>) => {
+        setCountHistory([...countHistory, count]);
+        setCount(newCount);
+    };
+    const handleCount = (key: countKeys) => {
+        handleSetCount({ ...count, [key]: count[key] + 1 });
+    };
 
+    return(
+        <main className='w-min mx-auto'>
+            <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
-                <BackHome className='contents'/>
-                <button
-                    onClick={undoCount}
-                    className='z-10 rounded bg-[#f07800] p-5 text-[100%] font-bold text-black'>
-                    
-                    <Undo style={{ fontSize: '40px' }}/>
-                    
+                <LinkButton link='/'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' /></LinkButton>
+                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' /></button>
+            </div>
+            
+            <div>
+                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
+                <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
+                count={count} leave={leave}/>
+            </div>
+            <div>
+                <h2 className='text-2xl text-center my-4'>Tele-Op</h2>
+                <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
+            </div>
+            <div>
+                <h2 className='text-2xl text-center my-4'>Endgame</h2>
+                <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
+                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
+                    Trap Note: {count.trap}
                 </button>
             </div>
-
-            <p className='text-[40px] font-semibold'>Auto</p>
-
-            <FieldButton
-                count={count}
-                setCount={handleSetCount}
-                teleop={false}
-                leave={leave}
-                setLeave={setLeave}
-            />
-            <p className='text-[40px] font-semibold'>Teleop</p>
-            <FieldButton
-                count={count}
-                setCount={handleSetCount}
-                teleop={true}
-            />
-
-            <p className='text-[40px] font-semibold'>Endgame</p>
-            <EndgameButton
-                climbPosition={climbPosition}
-                setClimbPosition={setClimbPosition}></EndgameButton>
-
-            <div className='flex flex-row gap-5'>
-                
-                <button
-                    className='border-1 my-4 h-24 w-48 rounded-lg border border-gray-700 text-xl shadow-xl'
-                    onClick={() => {if (count.trap < 3) handleCount('trap')}}>
-                    
-                    Trap Note: {count.trap}{' '}
-                </button>
+            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            
+            <div>
+                {showCheck && (   
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
+                )}
             </div>
-
-            <button
-                onClick={handleSubmit}
-                className='text-[100% m-5 my-5 h-[50px] w-[35%] items-center rounded bg-blue-300 font-bold text-black'>
-                submit :3
-            </button>
         </main>
     );
 }
 
-export default MatchApp;
 export type { MatchScores, ClimbPosition };
+export default MatchApp
