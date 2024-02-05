@@ -33,7 +33,7 @@ function DropTarget<T>({
         setDragTarget(true);
     };
 
-    const handleDragExit: DragEventHandler = () => {
+    const handleDragLeave: DragEventHandler = () => {
         setDragTarget(false);
     };
 
@@ -52,7 +52,7 @@ function DropTarget<T>({
     const listeners: HTMLAttributes<HTMLDivElement> = {
         onDragEnter: handleDragEnter,
         onDragOver: handleDragOver,
-        onDragExit: handleDragExit,
+        onDragLeave: handleDragLeave,
         onDrop: handleDrop,
     };
 

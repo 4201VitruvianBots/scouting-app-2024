@@ -89,7 +89,7 @@ function Tabs<T>({
 
     return (
         <div className='flex h-full w-full flex-col' onClick={handleFocus}>
-            <div className='flex flex-row overflow-x-auto border-b border-black'>
+            <div className='flex flex-row overflow-x-auto border-b border-black overflow-y-hidden'>
                 {tabs.map((tab, i) => (
                     <Tab
                         key={i}
