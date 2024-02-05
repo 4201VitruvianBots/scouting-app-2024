@@ -6,6 +6,14 @@ export interface StatTableData {
     title: string;
     column: string;
     ascending: boolean;
+    type: 'stat_table';
 }
 
-export type TableData = StatTableData; // | WeightedTableData | BlankTableData | ...
+export interface ScatterPlotData {
+    title: string;
+    xColumn: string;
+    yColumn: string;
+    type: 'scatter_plot';
+}
+
+export type WindowData = StatTableData | ScatterPlotData; // | WeightedTableData | BlankTableData | ...

@@ -1,28 +1,29 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, ScatterPlotData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Select from '../../../components/Select';
-import Checkbox from '../../../components/Checkbox';
 import { numberColumns } from '../util';
 
-function StatDialog({
+function ScatterDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<ScatterPlotData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
     const columns = numberColumns(data);
 
     const [title, setTitle] = useState('');
-    const [column, setColumn] = useState<string>();
-    const [ascending, setAscending] = useState(false);
+    const [xColumn, setXColumn] = useState<string>();
+    const [yColumn, setYColumn] = useState<string>();
+
+    const placeholderTitle = (xColumn && yColumn) ? `${xColumn} & ${yColumn}` : '';
 
     const handleSubmit = () => {
-        if (column) {
-            onSubmit({ title: title || column, column, ascending, type: 'stat_table' });
+        if (xColumn && yColumn) {
+            onSubmit({ title: title || placeholderTitle, xColumn, yColumn, type: 'scatter_plot' });
             onClose?.();
         }
     };
@@ -35,27 +36,35 @@ function StatDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={column}
+                        placeholder={placeholderTitle}
                     />
                 </label>
             </p>
             <p>
                 <label>
-                    Column
+                    X Column
                     <Select
                         options={columns}
-                        value={column}
-                        onChange={setColumn}
+                        value={xColumn}
+                        onChange={setXColumn}
                         placeholder='Choose column'
                     />
                 </label>
             </p>
             <p>
-                    <Checkbox onChange={setAscending}>Ascending</Checkbox>
+                <label>
+                    Y Column
+                    <Select
+                        options={columns}
+                        value={yColumn}
+                        onChange={setYColumn}
+                        placeholder='Choose column'
+                    />
+                </label>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
     );
 }
 
-export default StatDialog;
+export default ScatterDialog;
