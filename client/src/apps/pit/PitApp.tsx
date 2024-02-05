@@ -3,15 +3,26 @@ import BackHome from "../../components/BackHome";
 import HomeIcon from '@mui/icons-material/Home';
 import React, { useState } from "react";
 
-import Dropdown from '../../components/dropdowns';
+//import Dropdown from '../../components/dropdowns';
 
 
 function PitApp() {
 
+  
+
+
   const [role, setRole] = useState<'scoring' | 'defense' | 'support' | 'all-round'>();
   const [drivetrain, setDrivetrain] = useState<'tank' | 'swerve' | 'MECANUM' | 'other'>();
-  const [autoCapability, setAutoCapability] = useState<'e' | 'a' | 'sports' | 'inthegame'>(); //this is placeholder
   const [scoreStates, setScoreStates] = React.useState(["scoreState1", "scoreState1", "scoreState1"]);
+
+  const Input = () => {
+    return <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center' type="text" placeholder="Type and #" />;
+   };
+   const [inputList, setInputList] = useState([<Input key={0} />]);
+
+   const onAddBtnClick = event => {
+      setInputList([...inputList, <Input key={inputList.length} />]);
+   };   
 
 
 
@@ -70,12 +81,11 @@ function PitApp() {
        
     return (
         <>
-            <br/>
-            <br/>
 
             <div className="border border-green-900">
               <br/>
               <h1 className="text-center text-3xl">Pit App</h1>
+            </div>
 
             <br/>
 
@@ -126,16 +136,14 @@ function PitApp() {
 
 
             <h1 className="text-center">Number of batteries?</h1>
-            <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" value='0'></input>
+            <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder="0"></input>
             <br></br>
             <h1 className="text-center">Auto Capability?</h1>
             
-            <ToggleButtonGroup className='place-content-center mx-auto w-min !flex' value={autoCapability} onChange={(_, value) => setAutoCapability(value)}>
-            <ToggleButton value='e'>e</ToggleButton>
-            <ToggleButton value='a'>a</ToggleButton>
-            <ToggleButton value='sports'>sports</ToggleButton>
-            <ToggleButton value='inthegame'>itsinthegame</ToggleButton>
-            </ToggleButtonGroup>
+            <div>
+            {inputList}
+            <button className="bg-lime-300 font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad'" onClick={onAddBtnClick}>Add input</button>
+            </div>
             <br></br>
             <h1 className="text-center">Team role?</h1>
             
@@ -162,7 +170,7 @@ function PitApp() {
             <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="text"></input>
 
             <br></br>
-            <button className='bg-green-500 font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl'>Submit</button>
+            <button className='bg-green-500 font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad'>Submit</button>
             
         </>
     );
