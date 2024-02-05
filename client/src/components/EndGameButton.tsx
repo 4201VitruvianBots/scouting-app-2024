@@ -45,7 +45,6 @@ function EndgameButton({
         </> 
     );
 }
-
 /*
 blue
     "amp"
