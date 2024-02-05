@@ -2,7 +2,7 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp } from './Schema.js';
 import {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
-    maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} from './aggregate.js'
+    maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes, maxTrapNotes, averageTrapNotes} from './aggregate.js'
 import { matchDataAggregations } from 'requests';
 
 // import { MatchData } from 'requests';
@@ -30,7 +30,8 @@ app.post('/data/match', async(req,res) => {
     
     res.send({averageAutoAmpNotes:await averageAutoAmpNotes(), averageAutoSpeakerNotes:await averageAutoSpeakerNotes(),
         averageTeleAmpNotes: await averageTeleAmpNotes(), averageTeleSpeakerNotes:await averageTeleSpeakerNotes(), 
-        maxAutoAmpNotes:await maxAutoAmpNotes(), maxAutoSpeakerNotes:await maxAutoSpeakerNotes(), maxTeleSpeakerNotes:await maxTeleSpeakerNotes(), maxTeleAmpNotes:await maxTeleAmpNotes()}satisfies matchDataAggregations);
+        averageTrapNotes: await averageTrapNotes(), maxAutoAmpNotes:await maxAutoAmpNotes(), maxAutoSpeakerNotes:await maxAutoSpeakerNotes(), maxTeleSpeakerNotes:await maxTeleSpeakerNotes(),
+        maxTeleAmpNotes:await maxTeleAmpNotes(), maxTrapNotes:await maxTrapNotes()}satisfies matchDataAggregations);
  })
 
 app.use(express.static('static'));

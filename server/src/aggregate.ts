@@ -74,5 +74,23 @@ async function maxAutoAmpNotes():Promise<number> {
     ]))[0].maxAutoAmpNotes;
 }
 
+async function averageTrapNotes():Promise<number> {
+    return (await matchApp.aggregate([
+        {$group:{
+            _id: null,
+            avgTrapNotes: {$avg: '$trapNotes'}
+        }}
+    ]))[0].avgTrapNotes;
+}
+
+async function maxTrapNotes():Promise<number> {
+    return (await matchApp.aggregate([
+        {$group:{
+            _id: null,
+            maxTrapNotes: {$max: '$trapNotes'}
+        }}
+    ]))[0].maxTrapNotes;
+}
+
 export {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
-        maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} 
+        maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes, averageTrapNotes, maxTrapNotes} 
