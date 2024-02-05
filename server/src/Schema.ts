@@ -62,8 +62,8 @@ matchDataSchema.set('toObject', { virtuals: true });
  const pitDataSchema = new mongoose.Schema<PitFile>({
      scouterName: String,
      teamNumber: Number,
-     heightMeters: Number,
-     weightKg: Number,
+    //  heightMeters: Number,
+    //  weightKg: Number,
      pitBatteryCount: Number,
      drivebase: {
             type: String,

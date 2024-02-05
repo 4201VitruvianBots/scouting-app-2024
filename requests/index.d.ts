@@ -66,10 +66,15 @@ export type SuperData = {
 export interface PitFile {
     scouterName: string;
     teamNumber: number;
-    heightMeters: number;
-    weightKg: number;
+    autoType: string;
+    scoreCapability: 'cant'| 'can' | 'perferred';
+    teamRole: unknown;
+    timePerCycle: number;
     pitBatteryCount: number;
     drivebase: 'tank' | 'swerve' | 'mecanum' | 'other';
+    otherNotes: string;
+    // heightMeters: number;
+    // weightKg: number;
 }
 
 // - `WebSocket` `/status/report`
