@@ -8,4 +8,16 @@ function numberColumns(data: AnalysisEntry[] | undefined) {
     : [];
 }
 
-export {numberColumns};
+function Series<T extends object>(data: T[]): T[] & { [K in keyof T]: T[K][] } {
+    const props = [...new Set(data.flatMap(e => Object.keys(e)))] as (keyof T)[];
+    return new Proxy(data, {
+        get(target, prop, reciever) {
+            if (props.includes(prop as keyof T)) {
+                return target.map(e => e[prop as keyof T])
+            }
+            return Reflect.get(target, prop, reciever);
+        }
+    }) as T[] & { [K in keyof T]: T[K][] };
+}
+
+export { numberColumns, Series };
