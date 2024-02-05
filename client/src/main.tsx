@@ -12,7 +12,6 @@ import ReconApp from './apps/recon/ReconApp';
 import SuperApp from './apps/super/SuperApp';
 import PublicApp from './apps/public/PublicApp';
 import PicklistApp from './apps/picklist/PicklistApp';
-import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 
 
