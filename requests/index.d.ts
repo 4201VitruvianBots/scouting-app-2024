@@ -10,6 +10,17 @@ export type RobotPosition =
 export type Foul = 'A' | 'B';
 // export type ScoringLocation = 'A' | 'B';
 
+export interface matchDataAggregations{
+    averageTeleSpeakerNotes: number;
+    averageTeleAmpNotes: number;
+    averageAutoSpeakerNotes: number;
+    averageAutoAmpNotes: number;
+    maxTeleSpeakerNotes: number;
+    maxTeleAmpNotes: number;
+    maxAutoSpeakerNotes: number;
+    maxAutoAmpNotes: number;
+}
+
 export interface MetaData {
     scouterName: string;
     robotTeam: number;
