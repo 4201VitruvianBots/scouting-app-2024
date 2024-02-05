@@ -1,6 +1,9 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp } from './Schema.js';
+import {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
+    maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} from './aggregate.js'
+import { matchDataAggregations } from 'requests';
 
 // import { MatchData } from 'requests';
 
@@ -23,15 +26,12 @@ app.post('/data/match', async(req,res) => {
     
 });
 
-//  app.get('/test', async(req,res) => {
-//      const maxSpeakerNotes = await matchApp.aggregate([
-//         { $group:{
-//             _id: null,
-//              maxNotes: { $max: {$add: ['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far']}}
-//          }}
-//      ]);
-//      res.send(maxSpeakerNotes);
-// })
+ app.get('/data/retrieve', async(req,res) => {
+    
+    res.send({averageAutoAmpNotes:await averageAutoAmpNotes(), averageAutoSpeakerNotes:await averageAutoSpeakerNotes(),
+        averageTeleAmpNotes: await averageTeleAmpNotes(), averageTeleSpeakerNotes:await averageTeleSpeakerNotes(), 
+        maxAutoAmpNotes:await maxAutoAmpNotes(), maxAutoSpeakerNotes:await maxAutoSpeakerNotes(), maxTeleSpeakerNotes:await maxTeleSpeakerNotes(), maxTeleAmpNotes:await maxTeleAmpNotes()}satisfies matchDataAggregations);
+ })
 
 app.use(express.static('static'));
 
