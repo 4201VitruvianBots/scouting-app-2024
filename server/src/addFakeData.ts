@@ -12,7 +12,7 @@ function choose<T>(array: T[]) {
 }
 
 await startDockerContainer(process.env.CONTAINER_NAME);
-await mongoose.connect('mongodb://0.0.0.0:27107/');
+await mongoose.connect('mongodb://0.0.0.0:27017/');
 
 const teams = new Array(40).fill(0).map(() => Math.floor(10000 * Math.random()));
 
