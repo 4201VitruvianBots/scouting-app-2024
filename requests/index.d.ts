@@ -12,6 +12,7 @@ export type Foul = 'A' | 'B';
 
 export interface MetaData {
     scouterName: string;
+    matchNumber: number;
     robotTeam: number;
     robotPosition: RobotPosition;
 }

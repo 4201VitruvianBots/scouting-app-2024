@@ -45,6 +45,7 @@ function MatchApp() {
             metadata: {
                 scouterName: 'hjcd',
                 robotTeam: 48392,
+                matchNumber: 23,
                 robotPosition: 'blue_1',
             },
             leftStartingZone: leave,

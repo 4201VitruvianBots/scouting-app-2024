@@ -5,6 +5,7 @@ import { MatchData, PitFile } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
+    matchNumber: Number,
     robotTeam: Number,
     robotPosition: {
         type: String,
