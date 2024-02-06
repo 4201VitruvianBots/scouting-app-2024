@@ -93,7 +93,7 @@ function MatchApp() {
     };
 
     return(
-        <main className='w-min mx-auto items-center justify-center grid-flow-row content-center'>
+        <main className='w-min mx-auto items-center justify-center grid-flow-row content-center  flex flex-col'>
             <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
                 <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
