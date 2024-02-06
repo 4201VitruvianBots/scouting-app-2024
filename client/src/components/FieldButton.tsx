@@ -64,7 +64,7 @@ function FieldButton({
     return(
         <>
             <div>
-                <ToggleButton value={alliance} onChange={handleImage} className='px-2 py-1 bg-blue-500 rounded-md'>Toggle Map Color</ToggleButton>
+                <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton>
                 {!teleOp && (
                     <Checkbox checked={leave} onChange={handleLeave} className='text-2xl p-4' boxClassName='w-6 h-6'>
                        {' '}Robot has {leave ? `left` : `not left`}

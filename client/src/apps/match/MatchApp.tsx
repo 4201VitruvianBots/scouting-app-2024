@@ -6,6 +6,7 @@ import { SetStateAction, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
+import SignIn from '../../components/SignIn';
 
 type countKeys = keyof MatchScores;
 
@@ -92,12 +93,14 @@ function MatchApp() {
     };
 
     return(
-        <main className='w-min mx-auto'>
+        <main className='w-min mx-auto items-center justify-center grid-flow-row content-center'>
             <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
                 <LinkButton link='/'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' /></LinkButton>
                 <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' /></button>
             </div>
+
+            <SignIn />
             
             <div>
                 <h2 className='text-2xl text-center my-4'>Autonomous</h2>
