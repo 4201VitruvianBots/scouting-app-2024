@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { RobotPosition } from "requests";
 import MultiButton from "./MultiButton";
+import { MaterialSymbol } from 'react-material-symbols';
 
 function SignIn(){
     const [allianceColor, setAllianceColor] = useState<RobotPosition>()
+    const [showCheck, setShowCheck] = useState<boolean>(false);
 
     function handleSubmit(){
+
+        setShowCheck(true)
+        // setTimeout(() => { setShowCheck(false) }, 5000);
+
+        
 
 
     }
@@ -13,8 +20,8 @@ function SignIn(){
     return (
     <>
         < div className="w-[400px] h-[400px] box-border grid-cols-2 grid auto-rows-fr grid-rows-[auto] gap-3 justify-center ">
-            <p className='text-red-400'>Scouter Sign-In</p>
-            <input type="text" className=" text-black col-span-2 outline-double w-[250px] h-[40px] text-xl outline-sky-300 justify-center" placeholder="Name"></input>
+            <p className='text-green-600 col-span-2 justify-self-center'>Sign-In</p>
+            <input type="text" className=" text-black col-span-2 outline-double h-[40px] text-xl outline-sky-300 required justify-center" placeholder="Name"></input>
             
             <MultiButton 
                 onChange={setAllianceColor} value={allianceColor} 
@@ -24,10 +31,18 @@ function SignIn(){
                 unSelectedClassName= {['text-red-500 bg-gray-300 ', 'text-blue-500 bg-gray-300', 'text-red-500 bg-gray-300', 'text-blue-500 bg-gray-300','text-red-500 bg-gray-300', 'text-blue-500 bg-gray-300'] }
                 selectedClassName={['bg-red-500 text-white', 'bg-blue-500 text-white', 'bg-red-500 text-white', 'bg-blue-500 text-white', 'bg-red-500 text-white', 'bg-blue-500 text-white']}/>
                
-            
+               <div className="flex flex-row  col-span-2 justify-self-center">
 
-            <button onClick={handleSubmit} className='px-10 m-3  bg-gray-300 rounded-md  hover:bg-green-600  justify-center text-xl'>Submit</button>
+                 <button onClick={handleSubmit} className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 px-5 bg-gray-300 rounded-md  hover:bg-green-500  justify-center text-xl`}>Submit</button>
+                 {showCheck && (   
+                    <MaterialSymbol icon="check" size={60} fill grade={200} color='green' />               
+                )}
+        
+                
+            </div>
+            
         </div>
+        
     </>
     );
 }
