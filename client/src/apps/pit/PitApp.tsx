@@ -141,28 +141,27 @@ const handleImage = () => {
             <h1 className="text-center">Team role?</h1>
             
              <MultiButton 
-                onChange={} value={} 
+                onChange={setRole} 
+                value={role} 
                 labels={['Scoring', 'Defense', 'Support', 'All-Round']}
                 values={['scoring', 'defense', 'support', 'all-round']}
-                className={
-                ? [/*blue*/ 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', '', '', ''] 
-                : [/*red*/  'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', '', '', '' ]}/> 
+                className={alliance
+                ? [/*blue*/ 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex'] 
+                : [/*red*/  'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex' ]}/> 
 
-            <ToggleButtonGroup className='place-content-center mx-auto w-min !flex' value={role} onChange={(_, value) => setRole(value)}>
-            <ToggleButton value='scoring'>Scoring</ToggleButton>
-            <ToggleButton value='defense'>Defense</ToggleButton>
-            <ToggleButton value='support'>Support</ToggleButton>
-            <ToggleButton value='all-round'>All-Round</ToggleButton>
-            </ToggleButtonGroup>
+           
             <br></br>
             <h1 className="text-center">Drivetrain type?</h1>
-            
-            <ToggleButtonGroup className='place-content-center mx-auto w-min !flex' exclusive value={drivetrain} onChange={(_, value) => setDrivetrain(value)}>
-            <ToggleButton value='tank'>Tank</ToggleButton>
-            <ToggleButton value='swerve'>Swerve</ToggleButton>
-            <ToggleButton value='MECANUM'>Mecanum</ToggleButton> 
-            <ToggleButton value='other'>Other</ToggleButton>
-            </ToggleButtonGroup>
+
+            <MultiButton
+            onChange={setDrivetrain}
+            value={drivetrain}
+            labels={['Tank', 'Swerve', 'Mecanum', 'Other']}
+            values={['tank','swerve','MECANUM', 'other']}
+            className={alliance
+              ? [/*blue*/ ' bg-neutral-200 place-content-center mx-auto w-min !flex', ' bg-neutral-200 place-content-center mx-auto w-min !flex', ' bg-neutral-200 place-content-center mx-auto w-min !flex', ' bg-neutral-200 place-content-center mx-auto w-min !flex'] 
+              : [/*red*/  'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex', 'place-content-center mx-auto w-min !flex' ]}/>
+
             <br></br>
 
             <h1 className="text-center">Additional Notes?</h1>
