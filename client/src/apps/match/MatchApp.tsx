@@ -119,6 +119,7 @@ function MatchApp() {
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
                 )}
             </div>
+            </div>
         </main>
     );
 }
