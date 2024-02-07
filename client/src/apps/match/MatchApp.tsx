@@ -45,10 +45,12 @@ function MatchApp() {
 
     
     const handleSubmit = async () => {
+        if (robotPosition === undefined) return;
+        
         const data: MatchData = {
             metadata: {
-                scouterName: 'hjcd',
-                robotPosition: 'blue_1',
+                scouterName,
+                robotPosition,
                 matchNumber: 42,
                 robotTeam: 48392,
                 
