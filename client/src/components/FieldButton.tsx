@@ -92,6 +92,10 @@ function FieldButton({
                     </>
                 )}
             </div>
+            <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
+                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-yellow-200 w-[100px] left-[1000px]'/>
+            <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
+                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-purple-200 w-[100px]'/>
             <button onClick={() => handleCount('autoAmp', 'teleAmp')}>
                     Amp Note: {count[teleOp ? 'teleAmp' : 'autoAmp']}
             </button>

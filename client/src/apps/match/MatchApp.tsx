@@ -15,10 +15,12 @@ interface MatchScores {
     autoMid: number;
     autoFar: number;
     autoAmp: number;
+    autoMiss: number;
     teleNear: number;
     teleMid: number;
     teleFar: number;
     teleAmp: number;
+    teleMiss: number;
     trap: number;
 };
 const defualtScores: MatchScores = {
