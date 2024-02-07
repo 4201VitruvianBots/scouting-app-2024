@@ -1,8 +1,8 @@
 import { Dispatch, useState } from 'react';
 import { AnalysisEntry, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Select from '../../../components/Select';
 import Checkbox from '../../../components/Checkbox';
+import SelectSearch from 'react-select-search';
 
 function StatDialog({
     onSubmit,
@@ -42,19 +42,18 @@ function StatDialog({
                     />
                 </label>
             </p>
+            <label>
+                Column
+                <SelectSearch
+                    options={columns.map(e => ({ value: e, name: e }))}
+                    value={column}
+                    placeholder='Select Stat'
+                    onChange={value => setColumn(value as string)}
+                    search
+                />
+            </label>
             <p>
-                <label>
-                    Column
-                    <Select
-                        options={columns}
-                        value={column}
-                        onChange={setColumn}
-                        placeholder='Choose column'
-                    />
-                </label>
-            </p>
-            <p>
-                    <Checkbox onChange={setAscending}>Ascending</Checkbox>
+                <Checkbox onChange={setAscending}>Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
