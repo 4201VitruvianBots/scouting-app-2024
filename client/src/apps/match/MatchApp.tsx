@@ -1,7 +1,7 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData } from 'requests';
+import { ClimbPosition, MatchData, RobotPosition } from 'requests';
 import { SetStateAction, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -38,15 +38,20 @@ function MatchApp() {
     const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
-    const [showCheck, setShowCheck] = useState<boolean>(false);
+    const [showCheck, setShowCheck] = useState(false);
+
+    const [scouterName, setScouterName] = useState('');
+    const [robotPosition, setRobotPosition] = useState<RobotPosition>();
+
     
     const handleSubmit = async () => {
         const data: MatchData = {
             metadata: {
                 scouterName: 'hjcd',
-                robotTeam: 48392,
-                matchNumber: 23,
                 robotPosition: 'blue_1',
+                matchNumber: 42,
+                robotTeam: 48392,
+                
             },
             leftStartingZone: leave,
             autoSpeakerNotes: {
@@ -101,8 +106,10 @@ function MatchApp() {
                 <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' className='snap-none'/></button>
             </div>
 
-            <SignIn />
+            <SignIn scouterName={scouterName} onChangeScouterName={setScouterName} robotPosition={robotPosition} onChangeRobotPosition={setRobotPosition}/>
             
+           
+
             <div>
                 <h2 className='text-2xl text-center my-4'>Autonomous</h2>
                 <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
