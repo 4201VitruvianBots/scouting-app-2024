@@ -31,6 +31,7 @@ for (let i = 0; i < 40; i++) {
             robotPosition: choose(['blue_1', 'blue_2', 'blue_3', 'red_1', 'red_2', 'red_3']),
             robotTeam: choose(teams),
             scouterName: 'Jim',
+            matchNumber: randint(40),
         },
         teleSpeakerNotes: {
             far: randint(5),
