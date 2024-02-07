@@ -94,11 +94,16 @@ function MatchApp() {
     };
 
     return(
-        <main className='w-min mx-auto items-center justify-center grid-flow-row content-center  flex flex-col'>
+        <main className='w-min mx-auto items-center justify-center 
+        grid-flow-row content-center flex flex-col'>
             <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
-                <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
-                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' className='snap-none'/></button>
+                <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" 
+                size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
+                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 
+                    text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" 
+                    size={80} fill grade={200} color='black' className='snap-none'/>
+                </button>
             </div>
 
             <SignIn />
@@ -107,14 +112,17 @@ function MatchApp() {
                 <h2 className='text-2xl text-center my-4'>Autonomous</h2>
                 <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
                 count={count} leave={leave}/>
-                <h2 className='text-2xl text-center my-2 snap-start'>Tele-Op</h2>
+                <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
                 <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
-                <h2 className='text-2xl text-center my-2 snap-start'>Endgame</h2>
+                <h2 className='text-2xl text-center my-2'>Endgame</h2>
                 <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            <button onClick={handleSubmit} 
+                className='px-2 py-1 bg-blue-500 rounded-md'>
+                Submit
+            </button>
             <div>
                 {showCheck && (   
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
