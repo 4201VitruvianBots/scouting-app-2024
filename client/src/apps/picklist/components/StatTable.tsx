@@ -15,7 +15,7 @@ function StatTable({
     if (!table.ascending) sortedEntries.reverse();
 
     return (
-        <table className='block overflow-y-auto'>
+        <table>
             <thead className='sticky top-0'>
                 <tr>
                     <th colSpan={2}>{table.title}</th>
