@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import LinkButton from '../../components/LinkButton';
 
 const Games = () => {
