@@ -38,9 +38,13 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
             (value.vertical
                 ? divRef.current!.offsetHeight
                 : divRef.current!.offsetWidth);
+
+        const neighborSize = sizes[index] + sizes[index + 1] - newSize;
+
+        if (newSize < 0.1 || neighborSize < 0.1) return;
+
         sizesA.set(index, newSize);
-        if (index < sizes.length)
-            sizesA.set(index + 1, sizes[index] + sizes[index + 1] - newSize);
+        sizesA.set(index + 1, neighborSize);
     };
 
     const handleSplice =
