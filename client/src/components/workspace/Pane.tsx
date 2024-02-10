@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import Split from './Split';
 import Tabs from './Tabs';
 import {
@@ -8,6 +8,7 @@ import {
     TabsData,
     TabsSplice,
 } from './workspaceData';
+import { NestingContext } from './workspaceContexts';
 
 function Pane<T>({
     value,
@@ -26,31 +27,37 @@ function Pane<T>({
     onReplaceHoriz?: TabsSplice<T>;
     onReplaceVert?: TabsSplice<T>;
 } & StateProps<PaneData<T>>) {
+    const nesting = useContext(NestingContext);
+
     return (
-        <div
-            className={className}
-            style={
-                height !== undefined
-                    ? { height: `${100 * height}%` }
-                    : width !== undefined
-                      ? { width: `${100 * width}%` }
-                      : undefined
-            }>
-            {value.type === 'split' ? (
-                <Split
-                    value={value}
-                    onChange={
-                        onChange as Dispatch<SetStateAction<SplitData<T>>>
-                    }
-                />
-            ) : (
-                <Tabs
-                    value={value}
-                    onChange={onChange as Dispatch<SetStateAction<TabsData<T>>>}
-                    {...{ onRemove, onReplaceHoriz, onReplaceVert }}
-                />
-            )}
-        </div>
+        <NestingContext.Provider value={nesting + 1}>
+            <div
+                className={className}
+                style={
+                    height !== undefined
+                        ? { height: `${100 * height}%` }
+                        : width !== undefined
+                          ? { width: `${100 * width}%` }
+                          : undefined
+                }>
+                {value.type === 'split' ? (
+                    <Split
+                        value={value}
+                        onChange={
+                            onChange as Dispatch<SetStateAction<SplitData<T>>>
+                        }
+                    />
+                ) : (
+                    <Tabs
+                        value={value}
+                        onChange={
+                            onChange as Dispatch<SetStateAction<TabsData<T>>>
+                        }
+                        {...{ onRemove, onReplaceHoriz, onReplaceVert }}
+                    />
+                )}
+            </div>
+        </NestingContext.Provider>
     );
 }
 

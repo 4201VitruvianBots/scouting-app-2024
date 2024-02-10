@@ -18,6 +18,7 @@ import {
     CreateTitleContext,
     DragContext,
     TabContentContext,
+    NestingContext,
 } from './workspaceContexts';
 import { usePropState } from '../../lib/usePropState';
 import { useArrayState } from '../../lib/useArrayState';
@@ -38,6 +39,8 @@ function Tabs<T>({
     const [selected, setSelected] = usePropState(value, onChange, 'selected');
     const [tabs, setTabs] = usePropState(value, onChange, 'tabs');
     const tabsA = useArrayState(setTabs);
+
+    const nesting = useContext(NestingContext);
 
     const tabContext = useContext(TabContentContext) as TabContentContext<T>;
     const createTitle = useContext(CreateTitleContext) as CreateTitleContext<T>;
@@ -127,35 +130,37 @@ function Tabs<T>({
                             tabsA.set(selected, tab as SetStateAction<T>)
                         )}
                 </div>
-                {dragging && !(tabs.length === 1 && tabs[0] === dragging) && (
-                    <>
-                        <DropTarget
-                            onDrop={tabsA.add}
-                            className='absolute inset-1/4'
-                            areaClassName='absolute inset-0'
-                        />
-                        <DropTarget
-                            onDrop={handleSplit(true, true)}
-                            className='trapezoid-b absolute inset-x-0 top-0 h-1/4'
-                            areaClassName='absolute inset-x-0 top-0 h-1/2'
-                        />
-                        <DropTarget
-                            onDrop={handleSplit(true, false)}
-                            className='trapezoid-t absolute inset-x-0 bottom-0 h-1/4'
-                            areaClassName='absolute inset-x-0 bottom-0 h-1/2'
-                        />
-                        <DropTarget
-                            onDrop={handleSplit(false, true)}
-                            className='trapezoid-r absolute inset-y-0 left-0 w-1/4'
-                            areaClassName='absolute inset-y-0 left-0 w-1/2'
-                        />
-                        <DropTarget
-                            onDrop={handleSplit(false, false)}
-                            className='trapzoid-l absolute inset-y-0 right-0 w-1/4'
-                            areaClassName='absolute inset-y-0 right-0 w-1/2'
-                        />
-                    </>
-                )}
+                {nesting < 6 &&
+                    dragging &&
+                    !(tabs.length === 1 && tabs[0] === dragging) && (
+                        <>
+                            <DropTarget
+                                onDrop={tabsA.add}
+                                className='absolute inset-1/4'
+                                areaClassName='absolute inset-0'
+                            />
+                            <DropTarget
+                                onDrop={handleSplit(true, true)}
+                                className='trapezoid-b absolute inset-x-0 top-0 h-1/4'
+                                areaClassName='absolute inset-x-0 top-0 h-1/2'
+                            />
+                            <DropTarget
+                                onDrop={handleSplit(true, false)}
+                                className='trapezoid-t absolute inset-x-0 bottom-0 h-1/4'
+                                areaClassName='absolute inset-x-0 bottom-0 h-1/2'
+                            />
+                            <DropTarget
+                                onDrop={handleSplit(false, true)}
+                                className='trapezoid-r absolute inset-y-0 left-0 w-1/4'
+                                areaClassName='absolute inset-y-0 left-0 w-1/2'
+                            />
+                            <DropTarget
+                                onDrop={handleSplit(false, false)}
+                                className='trapzoid-l absolute inset-y-0 right-0 w-1/4'
+                                areaClassName='absolute inset-y-0 right-0 w-1/2'
+                            />
+                        </>
+                    )}
             </div>
         </div>
     );
