@@ -7,6 +7,7 @@ import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
+import Dialog from '../../components/Dialog';
 
 type countKeys = keyof MatchScores;
 
@@ -20,7 +21,7 @@ interface MatchScores {
     teleFar: number;
     teleAmp: number;
     trap: number;
-};
+}
 const defualtScores: MatchScores = {
     autoNear: 0,
     autoMid: 0,
@@ -41,12 +42,16 @@ function MatchApp() {
     const [showCheck, setShowCheck] = useState(false);
 
     const [scouterName, setScouterName] = useState('');
+
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
-    
+    const redAlliance = (
+        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
+    ).includes(robotPosition);
+
     const handleSubmit = async () => {
         if (robotPosition === undefined) return;
-        
+
         const data: MatchData = {
             metadata: {
                 scouterName,
@@ -83,7 +88,6 @@ function MatchApp() {
         }
 
         setShowCheck(true);
-
     };
 
     const undoCount = () => {
@@ -100,39 +104,112 @@ function MatchApp() {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
 
-    return(
-        <main className='w-min mx-auto items-center justify-center grid-flow-row content-center  flex flex-col'>
-            <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
-                <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
-                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' className='snap-none'/></button>
+    return (
+        <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
+            <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
+            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+                <LinkButton link='/' className='snap-none'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='green'
+                        className='snap-none'
+                    />
+                </LinkButton>
+
+                <Dialog
+                    trigger={open => (
+                        <button onClick={open}>
+                            <MaterialSymbol
+                                icon='account_circle'
+                                size={60}
+                                fill
+                                grade={200}
+                                className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                            />
+                        </button>
+                    )}>
+                    {close => (
+                        <SignIn
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={robotPosition}
+                            onChangeRobotPosition={setRobotPosition}
+                            onSubmit={close}
+                        />
+                    )}
+                </Dialog>
+                <button
+                    onClick={undoCount}
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                    <MaterialSymbol
+                        icon='undo'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='black'
+                        className='snap-none'
+                    />
+                </button>
+               
             </div>
 
-            <SignIn scouterName={scouterName} onChangeScouterName={setScouterName} robotPosition={robotPosition} onChangeRobotPosition={setRobotPosition}/>
-            
-           
-
             <div>
-                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
-                <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
-                count={count} leave={leave}/>
-                <h2 className='text-2xl text-center my-2 snap-start'>Tele-Op</h2>
-                <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
-                <h2 className='text-2xl text-center my-2 snap-start'>Endgame</h2>
-                <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
-                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
+                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
+                <FieldButton
+                    setCount={handleSetCount}
+                    setLeave={setLeave}
+                    teleOp={false}
+                    count={count}
+                    leave={leave}
+                    alliance={redAlliance}
+                />
+                <h2 className='my-2 snap-start text-center text-2xl'>
+                    Tele-Op
+                </h2>
+                <FieldButton
+                    setCount={handleSetCount}
+                    teleOp={true}
+                    count={count}
+                    alliance={redAlliance}
+                />
+                <h2 className='my-2 snap-start text-center text-2xl'>
+                    Endgame
+                </h2>
+                <EndgameButton
+                    climbPosition={climbPosition}
+                    setClimb={setClimbPosition}
+                    alliance={redAlliance}
+                />
+                <button
+                    onClick={() => {
+                        if (count.trap < 3) handleCount('trap');
+                    }}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
-            <div>
-                {showCheck && (   
-                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
-                )}
+                <button
+                    onClick={handleSubmit}
+                    className='rounded-md bg-blue-500 px-2 py-1'>
+                    Submit
+                </button>
+                <div>
+                    {showCheck && (
+                        <MaterialSymbol
+                            icon='check'
+                            size={100}
+                            fill
+                            grade={200}
+                            color='green'
+                        />
+                    )}
+                </div>
             </div>
-            </div>
+            
         </main>
     );
 }
 
 export type { MatchScores, ClimbPosition };
-export default MatchApp
+export default MatchApp;
