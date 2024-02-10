@@ -99,7 +99,7 @@ function MatchApp() {
     const handleCount = (key: countKeys) => {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
-    
+
     return(
         <main className='w-min mx-auto items-center justify-center grid-flow-row content-center  flex flex-col'>
             <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
