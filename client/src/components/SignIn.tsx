@@ -37,7 +37,7 @@ function SignIn({
   
     return (
     <>
-        < div className="w-[400px] h-[400px] box-border grid-cols-2 grid auto-rows-fr grid-rows-[auto_auto_1fr_1fr_1fr_1fr] gap-3 grid-flow-col justify-center p-5 bg-gray-100">
+        < div className="w-[400px] h-[400px] selection:box-border grid-cols-2 grid auto-rows-fr grid-rows-[auto_auto_1fr_1fr_1fr_1fr] gap-3 grid-flow-col justify-center">
             <p className='text-green-600 col-span-2 justify-self-center text-2xl font-medium p-1'>Sign-In</p>
             <TextInput className=" text-black col-span-2 outline-double h-[40px] text-xl outline-sky-300 required justify-center" onChange={onChangeScouterName} placeholder="Name"></TextInput>
             
