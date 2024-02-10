@@ -91,14 +91,14 @@ function FieldButton({
                 )}
             </div>
 
-            <div className='w-[40em] flex-row flex'>
+            <div className='w-[40em] flex-row flex gap-2 py-2'>
                 {teleOp ?
                     ((count.teleShootNear || count.teleShootMid || count.teleShootFar || count.teleAmp || count.teleMiss || !count.hold) ?
                         <MultiButton values={['speaker', 'middle', 'source']} onChange={setPickupLocation} value={pickupLocation} labels={[`Speaker: ${count.telePickupSpeaker}`, `Middle: ${count.telePickupMiddle}`, `Source: ${count.telePickupSource}`]}
-                        className='h-[100px] flex-grow basis-0 border-4 border-black text-2xl'/> :
-                        <div className='bg-gray-200 h-[100px] flex-grow basis-0 border-4 border-black text-2xl grid place-items-center'>Note held from auto</div>) :
+                        className='h-[100px] flex-grow basis-0 text-2xl'/> :
+                        <div className='bg-gray-200 h-[100px] flex-grow basis-0 text-2xl grid place-items-center'>Note held from auto</div>) :
                     <MultiButton values={['preload', 'floor']} onChange={setPickupLocation} value={pickupLocation} labels={[`Preload: ${count.autoPreload}`, `Floor: ${count.autoPickupFloor}`]}
-                    className='h-[100px] flex-grow basis-0 border-4 text-2xl border-black'/>}
+                    className='h-[100px] flex-grow basis-0 text-2xl'/>}
             </div>
 
             <div className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75 mx-auto`}>
@@ -122,19 +122,19 @@ function FieldButton({
                 }
             </div>
 
-            <div className='w-[40em] flex-row flex'>
+            <div className='w-[40em] flex-row flex gap-2 py-2'>
             {
                 (count.hold === 0 || teleOp) ? (
                     <>
                     <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
-                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-orange-200 h-[100px] !static flex-grow basis-0 border-4 border-black' label='Amp'/>
+                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-orange-200 h-[100px] !static flex-grow basis-0' label='Amp'/>
                     <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
-                        autoKey='autoMiss' teleKey='teleMiss'  className='bg-red-200 h-[100px] !static flex-grow basis-0 border-4 border-black' label='Miss'/>
+                        autoKey='autoMiss' teleKey='teleMiss'  className='bg-red-200 h-[100px] !static flex-grow basis-0' label='Miss'/>
                     {!teleOp && <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
-                        autoKey='hold' teleKey='hold'  className='bg-gray-200 h-[100px] !static flex-grow basis-0 border-4 border-black' label='Held'/>}
+                        autoKey='hold' teleKey='hold'  className='bg-gray-200 h-[100px] !static flex-grow basis-0' label='Held'/>}
                     </>
                 ) :
-                (<div className='bg-gray-200 h-[100px] flex-grow basis-0 border-4 border-black text-5xl grid place-items-center'>Held: 1</div>)
+                (<div className='bg-gray-200 h-[100px] flex-grow basis-0 text-5xl grid place-items-center'>Held: 1</div>)
             }
 
             </div>
