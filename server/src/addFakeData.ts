@@ -19,11 +19,12 @@ const teams = new Array(40).fill(0).map(() => Math.floor(10000 * Math.random()))
 for (let i = 0; i < 40; i++) {
     console.log(i);
     await new matchApp({
-        autoAmpNotes: randint(5),
         autoSpeakerNotes: {
             near: randint(5),
             mid: randint(5),
             far: randint(5),
+            amp: randint(5),
+            miss: randint(5)
         },
         climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
         leftStartingZone: Math.random() > 0.5,
@@ -37,8 +38,10 @@ for (let i = 0; i < 40; i++) {
             far: randint(5),
             mid: randint(5),
             near: randint(5),
+            amp: randint(5),
+            miss: randint(5)
         },
-        teleAmpNotes: randint(5),
+       
         trapNotes: randint(2),
     } satisfies MatchData).save()
 }
