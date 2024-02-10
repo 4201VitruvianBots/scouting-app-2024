@@ -1,6 +1,7 @@
 import { DragEventHandler, useContext, useState } from 'react';
 import { DragContext } from './workspaceContexts';
 import DropTarget from './DropTarget';
+import { MaterialSymbol } from 'react-material-symbols';
 
 function Tab<T>({
     value,
@@ -55,7 +56,11 @@ function Tab<T>({
                 />
             )}
             {title}
-            <button onClick={onRemove}>x</button>
+            <button
+                onClick={onRemove}
+                className='grid aspect-square h-3/4 place-items-center rounded-full hover:bg-gray-500/50'>
+                <MaterialSymbol icon='close' />
+            </button>
         </div>
     );
 }
