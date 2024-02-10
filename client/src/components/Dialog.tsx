@@ -27,7 +27,10 @@ function Dialog({
 
     return (
         <>
-            <dialog ref={dialogRef} onClose={() => setOpen(false)}>
+            <dialog
+                ref={dialogRef}
+                onClose={() => setOpen(false)}
+                className='overflow-visible'>
                 {open &&
                     (typeof children === 'function'
                         ? children(() => setOpen(false))

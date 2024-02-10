@@ -1,4 +1,4 @@
-import { Dispatch, InputHTMLAttributes } from 'react';
+import { Dispatch, InputHTMLAttributes, RefObject } from 'react';
 
 function TextInput({
     value,
@@ -7,6 +7,7 @@ function TextInput({
 }: {
     value?: string;
     onChange?: Dispatch<string>;
+    ref?: RefObject<HTMLInputElement>;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'>) {
     return (
         <input
