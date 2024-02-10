@@ -1,8 +1,5 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
 
-export type TeamRolePit = 'scoring' | 'defense' | 'support' | 'all-round'
-export type DrivetrainPit = 'tank' | 'swerve' | 'MECANUM' | 'other'
-
 export type RobotPosition =
     | 'red_1'
     | 'red_2'
