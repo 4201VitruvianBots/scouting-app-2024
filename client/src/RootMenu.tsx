@@ -27,7 +27,7 @@ function RootMenu() {
                 className='text-5xl bg-[#2f3646] rounded-3xl'>
                     Public
                 </LinkButton>
-                <LinkButton link='/'
+                <LinkButton link='/games'
                 className='text-5xl bg-[#2f3646] rounded-3xl'>
                     Games
                 </LinkButton>
