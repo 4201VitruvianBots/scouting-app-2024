@@ -33,20 +33,6 @@ const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: numb
     }
 });
 
-matchDataSchema.virtual('totalAuto')
-     .get(function(){
-         return this.autoSpeakerNotes.near + this.autoSpeakerNotes.mid + this.autoSpeakerNotes.far + this.autoAmpNotes;
-     }); 
-matchDataSchema.virtual('totalTele')
-     .get(function(){
-        return this.teleAmpNotes + this.teleSpeakerNotes.far + this.teleSpeakerNotes.mid + this.teleSpeakerNotes.near 
-     });
-    
-
-
-
-matchDataSchema.set('toObject', { virtuals: true }); 
-
 /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: metaDataSchema,
      fouls: {
