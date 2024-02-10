@@ -5,6 +5,7 @@ import { MatchData, PitFile } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
+    matchNumber: Number,
     robotTeam: Number,
     robotPosition: {
         type: String,
@@ -18,7 +19,7 @@ const scoreRanges = {
     far: Number
 }
 
-const matchDataSchema = new mongoose.Schema<MatchData>({
+const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: number, totalTele: number, total: number}>({
     metadata: metaDataSchema,
     leftStartingZone: Boolean,
     autoSpeakerNotes: scoreRanges,
@@ -30,7 +31,6 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         type: String,
         enum: ['amp', 'source', 'center', 'park', 'none', 'failed']
     }
-
 });
 
 /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
@@ -40,8 +40,8 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         B: Number
      },
      defense: Number,
+     highNotes: Number,
      spotLitRobots: Number,
-     coOp: Boolean,
      stationPlayerTeam: Number
  });
 */
@@ -62,5 +62,6 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
 /* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
+
 
 export {matchApp, pitApp, };

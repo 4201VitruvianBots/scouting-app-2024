@@ -10,8 +10,22 @@ export type RobotPosition =
 export type Foul = 'A' | 'B';
 // export type ScoringLocation = 'A' | 'B';
 
+export interface matchDataAggregations{
+    averageTeleSpeakerNotes: number;
+    averageTeleAmpNotes: number;
+    averageAutoSpeakerNotes: number;
+    averageAutoAmpNotes: number;
+    averageTrapNotes:number;
+    maxTeleSpeakerNotes: number;
+    maxTeleAmpNotes: number;
+    maxAutoSpeakerNotes: number;
+    maxAutoAmpNotes: number;
+    maxTrapNotes: number;
+}
+
 export interface MetaData {
     scouterName: string;
+    matchNumber: number;
     robotTeam: number;
     robotPosition: RobotPosition;
 }
@@ -45,7 +59,7 @@ export type SuperData = {
     defense: unknown;
     driverSKill: unknown; // Similar to defense
     spotlitRobots: number;
-    coOp: boolean;
+    highNotes: number;
     stationPlayerTeam: number; // Team Number
 }[];
 
