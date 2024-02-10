@@ -16,10 +16,12 @@ export interface matchDataAggregations{
     averageTeleAmpNotes: number;
     averageAutoSpeakerNotes: number;
     averageAutoAmpNotes: number;
+    averageTrapNotes:number;
     maxTeleSpeakerNotes: number;
     maxTeleAmpNotes: number;
     maxAutoSpeakerNotes: number;
     maxAutoAmpNotes: number;
+    maxTrapNotes: number;
 }
 
 export interface MetaData {

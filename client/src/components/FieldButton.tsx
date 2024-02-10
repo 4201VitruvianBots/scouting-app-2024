@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { MatchScores } from '../apps/match/MatchApp';
 import Checkbox from './Checkbox';
 import ToggleButton from './ToggleButton';
 import { PickupLocation } from 'requests';
 import MultiButton from './MultiButton';
+
 
 type countKeys = keyof MatchScores;
 
@@ -28,23 +29,27 @@ function RegionButton({
         <button className={` ${className} text-5xl absolute`} 
         onClick={() => handleCount(autoKey, teleKey)} id='one'>
             <p>{label && `${label}: `}{count[teleOp ? teleKey : autoKey]}</p>
+
         </button>
     );
-};
+}
 
 function FieldButton({
     setLeave,
     setCount,
     teleOp,
     leave,
-    count
-} : {
+    count,
+    alliance,
+}: {
     setLeave?: Dispatch<boolean>;
     setCount: Dispatch<SetStateAction<MatchScores>>;
     teleOp: boolean;
     leave?: boolean;
     count: MatchScores;
+    alliance: boolean | undefined;
 }) {
+
     const [alliance, setAlliance] = useState(false); // false=red, true=blue, null=hollow purple
     const [pickupLocation, setPickupLocation] = useState<PickupLocation|undefined>();
     
@@ -73,17 +78,18 @@ function FieldButton({
         }
     };
 
-    const handleImage = () => {
-        setAlliance(!alliance);
-    };
+    // const handleImage = () => {
+    //     setAlliance(!alliance);
+    // };
+
     const handleLeave = () => {
         setLeave?.(!leave);
     };
 
-    return(
+    return (
         <>
-            <div>
-                <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton>
+          <div className="flex justify-center items-center " >
+                {/* <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton> */}
                 {!teleOp && (
                     <Checkbox checked={leave} onChange={handleLeave} className='text-2xl p-4' boxClassName='w-6 h-6'>
                        {' '}Robot has {leave ? 'left' : 'not left'}
@@ -138,9 +144,9 @@ function FieldButton({
             }
 
             </div>
-            
+
         </>
     );
 }
 
-export default FieldButton
+export default FieldButton;
