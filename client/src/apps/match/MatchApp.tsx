@@ -11,29 +11,41 @@ import SignIn from '../../components/SignIn';
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
-    autoNear: number;
-    autoMid: number;
-    autoFar: number;
+    autoShootNear: number;
+    autoShootMid: number;
+    autoShootFar: number;
     autoAmp: number;
     autoMiss: number;
-    teleNear: number;
-    teleMid: number;
-    teleFar: number;
+    autoPreload: number;
+    autoPickupFloor: number;
+    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
+    teleShootNear: number;
+    teleShootMid: number;
+    teleShootFar: number;
     teleAmp: number;
     teleMiss: number;
+    telePickupSpeaker: number;
+    telePickupMiddle: number;
+    telePickupSource: number;
     trap: number;
 };
 const defualtScores: MatchScores = {
-    autoNear: 0,
-    autoMid: 0,
-    autoFar: 0,
+    autoShootNear: 0,
+    autoShootMid: 0,
+    autoShootFar: 0,
     autoAmp: 0,
     autoMiss: 0,
-    teleNear: 0,
-    teleMid: 0,
-    teleFar: 0,
+    autoPreload: 0,
+    autoPickupFloor: 0,
+    hold: 0,
+    teleShootNear: 0,
+    teleShootMid: 0,
+    teleShootFar: 0,
     teleAmp: 0,
     teleMiss: 0,
+    telePickupSpeaker: 0,
+    telePickupMiddle: 0,
+    telePickupSource: 0,
     trap: 0,
 };
 
@@ -61,16 +73,16 @@ function MatchApp() {
             },
             leftStartingZone: leave,
             autoSpeakerNotes: {
-                near: count.autoNear,
-                mid: count.autoMid,
-                far: count.autoFar,
+                near: count.autoShootNear,
+                mid: count.autoShootMid,
+                far: count.autoShootFar,
                 amp: count.autoAmp,
                 miss: count.autoMiss
             },
             teleSpeakerNotes: {
-                near: count.teleNear,
-                mid: count.teleMid,
-                far: count.teleFar,
+                near: count.teleShootNear,
+                mid: count.teleShootMid,
+                far: count.teleShootFar,
                 amp: count.teleAmp,
                 miss: count.autoMiss
             },

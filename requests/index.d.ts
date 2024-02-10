@@ -1,4 +1,5 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'floor'
 
 export type RobotPosition =
     | 'red_1'
