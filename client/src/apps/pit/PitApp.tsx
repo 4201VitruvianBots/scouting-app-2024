@@ -118,7 +118,7 @@ function PitApp() {
 
             <br></br>
             <div className="flex justify-center items-center">
-            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-8 h-40 w-2/5 justify-center rounded-lg">
+            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-8 h-40 w-1/2 justify-center rounded-lg">
               <h1 className="text-center">Team role?</h1>
               <br/>
             <div className='flex justify-center space-x-4'>
@@ -136,7 +136,7 @@ function PitApp() {
            
             <br></br>
             <div className="flex justify-center items-center ">
-            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-8 h-40 w-2/5 justify-center rounded-lg ">
+            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-8 h-40 w-1/2 justify-center rounded-lg ">
             <div className='flex flex-col items-center '>
             <h1 className="text-center">Drivetrain type?</h1>
             <br/>
