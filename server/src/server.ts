@@ -1,6 +1,7 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp } from './Schema.js';
+import {averageAndMax} from './aggregate.js';
 
 // import { MatchData } from 'requests';
 
@@ -23,15 +24,10 @@ app.post('/data/match', async(req,res) => {
     
 });
 
-//  app.get('/test', async(req,res) => {
-//      const maxSpeakerNotes = await matchApp.aggregate([
-//         { $group:{
-//             _id: null,
-//              maxNotes: { $max: {$add: ['$teleAmpedSpeakerNotes.near', '$teleAmpedSpeakerNotes.mid', '$teleAmpedSpeakerNotes.far']}}
-//          }}
-//      ]);
-//      res.send(maxSpeakerNotes);
-// })
+ app.get('/data/retrieve', async(req,res) => {
+   
+    res.send(await averageAndMax());
+ })
 
 app.use(express.static('static'));
 

@@ -11,7 +11,7 @@ function MultiButton<T>({
     onChange: (value : T) => void;
     values: T[];
     labels: string[];
-    value: T;
+    value: T | undefined;
     selectedClassName?: string | string[];
     unSelectedClassName?: string | string[];
 

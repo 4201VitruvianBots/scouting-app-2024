@@ -1,77 +1,33 @@
 import { matchApp } from "./Schema.js";
 
+interface AverageAndMax{
+    _id: {teamNumber: number},
+    avgTeleSpeakerNotes:number,
+    avgTeleAmpNotes: number,
+    avgAutoSpeakerNotes: number,
+    avgAutoAmpNotes: number,
+    maxTeleSpeakerNotes: number,
+    maxTeleAmpNotes: number,
+    maxAutoSpeakerNotes: number,
+    maxAutoAmpNotes: number,
+    maxTrapNotes: number
+}
 
-async function averageTeleSpeakerNotes() {
-    return await matchApp.aggregate([
+async function averageAndMax():Promise<AverageAndMax[]>{
+    return (await matchApp.aggregate([
     { $group:{
-        _id: null,
-        avgTeleSpeakerNotes: { $avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}}
+        _id: {teamNumber: '$metadata.robotTeam'},
+        avgTeleSpeakerNotes: {$avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
+        avgTeleAmpNotes: { $avg: '$teleAmpNotes'},
+        avgAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
+        avgAutoAmpNotes: {$avg: '$autoAmpNotes'},
+        maxTeleSpeakerNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
+        maxTeleAmpNotes: {$max: '$teleAmpNotes'},
+        maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
+        maxAutoAmpNotes: {$max: '$autoAmpNotes'},
+        maxTrapNotes: {$max: '$trapNotes'}
     }}
-]);
+]));
 }
 
-async function averageTeleAmpNotes() {
-    return await matchApp.aggregate([
-    {$group:{
-        _id: null,
-        avgTeleAmpNotes: { $avg: '$teleAmpNotes'}
-    }}
-]);
-}
-
-async function averageAutoSpeakerNotes() {
-    return await matchApp.aggregate([
-    {$group:{
-        _id: null,
-        avgAutoSpeakerNotes: { $avg: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}}
-    }}
-]);
-}
-
-async function averageAutoAmpNotes() {
-    return await matchApp.aggregate([
-    {$group:{
-        _id: null,
-        avgAutoAmpNotes: {$avg: '$autoAmpNotes'}
-    }}
-]);
-}
-
-async function maxTeleSpeakerNotes() {
-    return await matchApp.aggregate([
-        {$group:{
-            _id: null,
-            maxTeleNonAmpedNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}}
-        }}
-    ]);
-}
-
-async function maxTeleAmpNotes() {
-    return await matchApp.aggregate([
-       {$group:{
-            _id: null,
-            maxteleAmpNotes: {$max: '$teleAmpNotes'}
-       }} 
-    ]);
-}
-
-async function maxAutoSpeakerNotes() {
-    return await matchApp.aggregate([
-       {$group:{
-            _id: null,
-            maxAutoSpeakerNotes: {$max: '$autoSpeakerNotes'}
-       }} 
-    ]);
-}
-
-async function maxAutoAmpNotes() {
-    return await matchApp.aggregate([
-       {$group:{
-            _id: null,
-            maxAutoAmpNotes: {$max: '$autoAmpNotes'}
-       }} 
-    ]);
-}
-
-export {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
-        maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} 
+export { averageAndMax,} 

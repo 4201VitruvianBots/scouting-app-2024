@@ -1,12 +1,17 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData } from 'requests';
-import { SetStateAction, useState } from 'react';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
+import Dialog from '../../components/Dialog';
+import { useFetchJson } from '../../lib/useFetchJson';
+import NumberInput from '../../components/NumberInput';
+
+
 
 type countKeys = keyof MatchScores;
 
@@ -34,19 +39,33 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
+
+    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [teamNumber, setTeamNumber] = useState<number>();
+    const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
     const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
-    const [showCheck, setShowCheck] = useState<boolean>(false);
+    const [showCheck, setShowCheck] = useState(false);
+
+    const [scouterName, setScouterName] = useState('');
+    const [robotPosition, setRobotPosition] = useState<RobotPosition>();
+
+    const redAlliance = (
+        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
+    ).includes(robotPosition);
     
     const handleSubmit = async () => {
+        if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
+
         const data: MatchData = {
             metadata: {
-                scouterName: 'hjcd',
-                robotTeam: 48392,
-                matchNumber: 23,
-                robotPosition: 'blue_1',
+                scouterName,
+                robotPosition,
+                matchNumber,
+                robotTeam: teamNumber,
+                
             },
             leftStartingZone: leave,
             autoSpeakerNotes: {
@@ -71,6 +90,7 @@ function MatchApp() {
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
+            setMatchNumber(matchNumber +1);
         } catch {
             alert('Sending Data Failed');
         }
@@ -93,29 +113,91 @@ function MatchApp() {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
 
-    return(
-        <main className='w-min mx-auto items-center justify-center 
-        grid-flow-row content-center flex flex-col'>
-            <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20  p-2 rounded-md flex gap-2'>
-                <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" 
-                size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
-                <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 
-                    text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" 
-                    size={80} fill grade={200} color='black' className='snap-none'/>
-                </button>
-            </div>
+    useEffect( () => {
+        setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
+    },[matchNumber, robotPosition, schedule])
 
-            <SignIn />
-            
+    return (
+        <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
+            <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
+            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+                <LinkButton link='/' className='snap-none'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='green'
+                        className='snap-none'
+                    />
+                </LinkButton>
+
+                <Dialog
+                    trigger={open => (
+                        <button onClick={open}>
+                            <MaterialSymbol
+                                icon='account_circle'
+                                size={60}
+                                fill
+                                grade={200}
+                                className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                            />
+                        </button>
+                    )}>
+                    {close => (
+                        <SignIn
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={robotPosition}
+                            onChangeRobotPosition={setRobotPosition}
+                            onSubmit={close}
+                        />
+                    )}
+                </Dialog>
+                <button
+                    onClick={undoCount}
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                    <MaterialSymbol
+                        icon='undo'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='black'
+                        className='snap-none'
+                    />
+                </button>
+               
+            </div>
+            <p>Team Number</p>
+            <NumberInput onChange={setTeamNumber} value={teamNumber}/> 
+            <p>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber}/>
+
+           
+
             <div>
                 <h2 className='text-2xl text-center my-4'>Autonomous</h2>
-                <FieldButton setCount={handleSetCount} setLeave={setLeave} teleOp={false}
-                count={count} leave={leave}/>
+                <FieldButton
+                    setCount={handleSetCount}
+                    setLeave={setLeave}
+                    teleOp={false}
+                    count={count}
+                    leave={leave}
+                    alliance={redAlliance}
+                />
                 <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
-                <FieldButton setCount={handleSetCount} teleOp={true} count={count}/>
+                <FieldButton
+                    setCount={handleSetCount}
+                    teleOp={true}
+                    count={count}
+                    alliance={redAlliance}
+                />
                 <h2 className='text-2xl text-center my-2'>Endgame</h2>
-                <EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>
+                <EndgameButton
+                    climbPosition={climbPosition}
+                    setClimb={setClimbPosition}
+                    alliance={redAlliance}
+                />
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>

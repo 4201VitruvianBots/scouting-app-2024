@@ -10,6 +10,19 @@ export type RobotPosition =
 export type Foul = 'A' | 'B';
 // export type ScoringLocation = 'A' | 'B';
 
+export interface matchDataAggregations{
+    averageTeleSpeakerNotes: number;
+    averageTeleAmpNotes: number;
+    averageAutoSpeakerNotes: number;
+    averageAutoAmpNotes: number;
+    averageTrapNotes:number;
+    maxTeleSpeakerNotes: number;
+    maxTeleAmpNotes: number;
+    maxAutoSpeakerNotes: number;
+    maxAutoAmpNotes: number;
+    maxTrapNotes: number;
+}
+
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
@@ -77,6 +90,4 @@ export interface StatusRecieve {
 
 // - `GET` `/data/schedule.json`
 
-export interface MatchSchedule {
-    matches: Record<RobotPosition, number>;
-}
+export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
