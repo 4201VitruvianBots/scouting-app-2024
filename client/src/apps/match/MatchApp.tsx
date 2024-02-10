@@ -1,12 +1,16 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, RobotPosition } from 'requests';
-import { SetStateAction, useState } from 'react';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
+import { useFetchJson } from '../../lib/useFetchJson';
+import NumberInput from '../../components/NumberInput';
+
+
 
 type countKeys = keyof MatchScores;
 
@@ -34,6 +38,10 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
+
+    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [teamNumber, setTeamNumber] = useState<number>();
+    const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
     const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
@@ -45,14 +53,14 @@ function MatchApp() {
 
     
     const handleSubmit = async () => {
-        if (robotPosition === undefined) return;
+        if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
         
         const data: MatchData = {
             metadata: {
                 scouterName,
                 robotPosition,
-                matchNumber: 42,
-                robotTeam: 23432,
+                matchNumber,
+                robotTeam: teamNumber,
                 
             },
             leftStartingZone: leave,
@@ -78,6 +86,7 @@ function MatchApp() {
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
+            setMatchNumber(matchNumber +1);
         } catch {
             alert('Sending Data Failed');
         }
@@ -100,6 +109,10 @@ function MatchApp() {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
 
+    useEffect( () => {
+        setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
+    },[matchNumber, robotPosition, schedule])
+
     return(
         <main className='w-min mx-auto items-center justify-center grid-flow-row content-center  flex flex-col'>
             <h1 className='text-3xl text-center my-8'>Match Scouting App</h1>
@@ -107,7 +120,10 @@ function MatchApp() {
                 <LinkButton link='/' className='snap-none'><MaterialSymbol icon="home" size={80} fill grade={200} color='green' className='snap-none'/></LinkButton>
                 <button onClick={undoCount} className='z-10 rounded bg-[#f07800] p-3 text-[100%] font-bold text-black snap-none'><MaterialSymbol icon="undo" size={80} fill grade={200} color='black' className='snap-none'/></button>
             </div>
-
+            <p>Team Number</p>
+            <NumberInput onChange={setTeamNumber} value={teamNumber}/> 
+            <p>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber}/>
             <SignIn scouterName={scouterName} onChangeScouterName={setScouterName} robotPosition={robotPosition} onChangeRobotPosition={setRobotPosition}/>
             
            
