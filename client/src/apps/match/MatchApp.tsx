@@ -152,9 +152,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
-                <button className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
-                    here
-                </button>
+               
             </div>
 
             <div>
@@ -207,11 +205,7 @@ function MatchApp() {
                     )}
                 </div>
             </div>
-            <p
-                className={`text-3xl ${redAlliance ? 'text-red-300' : 'text-blue-300'}`}>
-                color is...
-            </p>
-            <p>yep</p>
+            
         </main>
     );
 }

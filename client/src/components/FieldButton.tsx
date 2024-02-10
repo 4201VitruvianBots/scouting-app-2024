@@ -68,19 +68,20 @@ function FieldButton({
 
     return (
         <>
-            <div>
+          <div className="flex justify-center items-center " >
                 {/* <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton> */}
                 {!teleOp && (
                     <Checkbox
                         checked={leave}
                         onChange={handleLeave}
-                        className='p-4 text-2xl'
+                        className='p-4 text-2xl '
                         boxClassName='w-6 h-6'>
                         {' '}
                         Robot has {leave ? `left` : `not left`}
                     </Checkbox>
                 )}
             </div>
+         
             <div
                 className={`${alliance ? 'bg-field-red' : 'bg-field-blue'} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
                 {alliance ? (
