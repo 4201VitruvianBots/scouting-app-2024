@@ -1,13 +1,17 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, RobotPosition } from 'requests';
-import { SetStateAction, useState } from 'react';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
+import { useFetchJson } from '../../lib/useFetchJson';
+import NumberInput from '../../components/NumberInput';
+
+
 
 type countKeys = keyof MatchScores;
 
@@ -21,7 +25,7 @@ interface MatchScores {
     teleFar: number;
     teleAmp: number;
     trap: number;
-}
+};
 const defualtScores: MatchScores = {
     autoNear: 0,
     autoMid: 0,
@@ -35,6 +39,10 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
+
+    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [teamNumber, setTeamNumber] = useState<number>();
+    const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
     const [leave, setLeave] = useState(false); //false=Not Left, true=Left
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
@@ -42,22 +50,21 @@ function MatchApp() {
     const [showCheck, setShowCheck] = useState(false);
 
     const [scouterName, setScouterName] = useState('');
-
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
     const redAlliance = (
         ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
     ).includes(robotPosition);
-
+    
     const handleSubmit = async () => {
-        if (robotPosition === undefined) return;
+        if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
 
         const data: MatchData = {
             metadata: {
                 scouterName,
                 robotPosition,
-                matchNumber: 42,
-                robotTeam: 23432,
+                matchNumber,
+                robotTeam: teamNumber,
                 
             },
             leftStartingZone: leave,
@@ -83,11 +90,13 @@ function MatchApp() {
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
+            setMatchNumber(matchNumber +1);
         } catch {
             alert('Sending Data Failed');
         }
 
         setShowCheck(true);
+
     };
 
     const undoCount = () => {
@@ -103,6 +112,10 @@ function MatchApp() {
     const handleCount = (key: countKeys) => {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
+
+    useEffect( () => {
+        setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
+    },[matchNumber, robotPosition, schedule])
 
     return (
         <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
@@ -155,9 +168,15 @@ function MatchApp() {
                 </button>
                
             </div>
+            <p>Team Number</p>
+            <NumberInput onChange={setTeamNumber} value={teamNumber}/> 
+            <p>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber}/>
+
+           
 
             <div>
-                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
+                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
@@ -166,50 +185,32 @@ function MatchApp() {
                     leave={leave}
                     alliance={redAlliance}
                 />
-                <h2 className='my-2 snap-start text-center text-2xl'>
-                    Tele-Op
-                </h2>
+                <h2 className='text-2xl text-center my-2 snap-start'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
                     alliance={redAlliance}
                 />
-                <h2 className='my-2 snap-start text-center text-2xl'>
-                    Endgame
-                </h2>
+                <h2 className='text-2xl text-center my-2 snap-start'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
                     alliance={redAlliance}
                 />
-                <button
-                    onClick={() => {
-                        if (count.trap < 3) handleCount('trap');
-                    }}>
+                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>
-                <button
-                    onClick={handleSubmit}
-                    className='rounded-md bg-blue-500 px-2 py-1'>
-                    Submit
-                </button>
-                <div>
-                    {showCheck && (
-                        <MaterialSymbol
-                            icon='check'
-                            size={100}
-                            fill
-                            grade={200}
-                            color='green'
-                        />
-                    )}
-                </div>
+            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            <div>
+                {showCheck && (   
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
+                )}
             </div>
-            
+            </div>
         </main>
     );
 }
 
 export type { MatchScores, ClimbPosition };
-export default MatchApp;
+export default MatchApp

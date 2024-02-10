@@ -1,6 +1,6 @@
 import { startDockerContainer } from 'database';
 import mongoose from 'mongoose';
-import { matchApp } from './Schema.js';
+import { matchApp } from '../src/Schema.js';
 import { MatchData } from 'requests';
 
 function randint(max: number, min = 0) {

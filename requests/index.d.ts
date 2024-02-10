@@ -90,6 +90,4 @@ export interface StatusRecieve {
 
 // - `GET` `/data/schedule.json`
 
-export interface MatchSchedule {
-    matches: Record<RobotPosition, number>;
-}
+export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
