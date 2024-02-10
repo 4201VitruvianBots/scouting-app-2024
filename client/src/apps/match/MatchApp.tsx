@@ -185,14 +185,14 @@ function MatchApp() {
                     leave={leave}
                     alliance={redAlliance}
                 />
-                <h2 className='text-2xl text-center my-2 snap-start'>Tele-Op</h2>
+                <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
                     alliance={redAlliance}
                 />
-                <h2 className='text-2xl text-center my-2 snap-start'>Endgame</h2>
+                <h2 className='text-2xl text-center my-2'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
@@ -201,7 +201,10 @@ function MatchApp() {
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} className='px-2 py-1 bg-blue-500 rounded-md'>Submit</button>
+            <button onClick={handleSubmit} 
+                className='px-2 py-1 bg-blue-500 rounded-md'>
+                Submit
+            </button>
             <div>
                 {showCheck && (   
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
