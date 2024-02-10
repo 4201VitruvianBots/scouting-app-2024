@@ -56,13 +56,14 @@ function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
     return (
         <div
             ref={divRef}
-            className={`flex h-full w-full ${value.vertical ? 'flex-col' : 'flex-row'}`}>
+            className={`flex h-full w-full ${value.vertical ? 'flex-col' : 'flex-row'} *:flex-shrink-0`}>
             {panes.map((pane, i) => (
                 <Fragment key={i}>
                     <Pane
                         value={pane}
                         onChange={newPane => panesA.set(i, newPane)}
                         onRemove={() => panesA.remove(i)}
+                        className={value.vertical ? '-mb-px' : '-mr-px'}
                         {...{
                             [value.vertical ? 'height' : 'width']: sizes[i],
                             [value.vertical
