@@ -11,7 +11,8 @@ function RegionButton({
     teleKey,
     autoKey,
     teleOp,
-    count
+    count,
+    label
 } : {
     handleCount: (autokey: countKeys, telekey: countKeys, aKey?: countKeys) => void;
     className?: string;
@@ -19,11 +20,12 @@ function RegionButton({
     autoKey: countKeys;
     teleOp: boolean;
     count: MatchScores;
+    label?: string;
 }) {
     return(
         <button className={` ${className} text-5xl absolute`}
         onClick={() => handleCount(autoKey, teleKey)} id='one'>
-            <p>{count[teleOp ? teleKey : autoKey]}</p>
+            <p>{label && `${label}: `}{count[teleOp ? teleKey : autoKey]}</p>
         </button>
     );
 };
@@ -92,13 +94,12 @@ function FieldButton({
                     </>
                 )}
             </div>
+            <div className='w-[40em] flex-row flex'>
             <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
-                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-yellow-200 w-[100px] left-[1000px]'/>
+                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-yellow-200 h-[100px] !static flex-grow basis-0' label='Amp'/>
             <RegionButton teleOp={teleOp} count={count} handleCount={handleCount}
-                        autoKey='autoAmp' teleKey='teleAmp'  className='bg-purple-200 w-[100px]'/>
-            <button onClick={() => handleCount('autoAmp', 'teleAmp')}>
-                    Amp Note: {count[teleOp ? 'teleAmp' : 'autoAmp']}
-            </button>
+                        autoKey='autoMiss' teleKey='teleMiss'  className='bg-purple-200 h-[100px] !static flex-grow basis-0' label='Miss'/>
+            </div>
         </>
     );
 }

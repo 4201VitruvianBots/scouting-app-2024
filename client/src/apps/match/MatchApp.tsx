@@ -28,10 +28,12 @@ const defualtScores: MatchScores = {
     autoMid: 0,
     autoFar: 0,
     autoAmp: 0,
+    autoMiss: 0,
     teleNear: 0,
     teleMid: 0,
     teleFar: 0,
     teleAmp: 0,
+    teleMiss: 0,
     trap: 0,
 };
 
@@ -62,14 +64,16 @@ function MatchApp() {
                 near: count.autoNear,
                 mid: count.autoMid,
                 far: count.autoFar,
+                amp: count.autoAmp,
+                miss: count.autoMiss
             },
-            autoAmpNotes: count.autoAmp,
             teleSpeakerNotes: {
                 near: count.teleNear,
                 mid: count.teleMid,
                 far: count.teleFar,
+                amp: count.teleAmp,
+                miss: count.autoMiss
             },
-            teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
             climb: climbPosition,
         };

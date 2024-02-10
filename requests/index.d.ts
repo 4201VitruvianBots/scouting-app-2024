@@ -31,7 +31,9 @@ export interface MetaData {
 interface ScoreRanges {
     near: number,
     mid: number,
-    far: number
+    far: number,
+    amp: number,
+    miss: number
 }
 
 // - `POST` `/data/match`
@@ -41,9 +43,7 @@ export interface MatchData {
     // No competition info
     leftStartingZone: boolean;
     autoSpeakerNotes: ScoreRanges;
-    autoAmpNotes: number;
     teleSpeakerNotes: ScoreRanges;
-    teleAmpNotes: number;
     trapNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
