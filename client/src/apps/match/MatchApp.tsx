@@ -192,7 +192,7 @@ function MatchApp() {
                     count={count}
                     alliance={redAlliance}
                 />
-                <h2 className='<EndgameButton climbPosition={climbPosition} setClimb={setClimbPosition}/>text-2xl text-center my-2 snap-start'>Endgame</h2>
+                <h2 className='text-2xl text-center my-2 snap-start'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
