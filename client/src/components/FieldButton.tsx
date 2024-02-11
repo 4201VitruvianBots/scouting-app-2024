@@ -60,13 +60,7 @@ function FieldButton({
     >();
 
     const handleCount = (autoKey: countKeys, teleKey: countKeys) => {
-        if (pickupLocation ||
-            !(count.teleShootNear ||
-            count.teleShootMid ||
-            count.teleShootFar ||
-            count.teleAmp ||
-            count.teleMiss ||
-            !count.hold)) {
+        if (pickupLocation) {
             const finalKey = teleOp ? teleKey : autoKey;
             setCount(prevCount => ({
                 ...prevCount,
@@ -79,14 +73,26 @@ function FieldButton({
                 middle: 'telePickupMiddle',
                 source: 'telePickupSource',
             } as const;
-            if (pickupLocation){
-                setCount(prevCount => ({
-                    ...prevCount,
-                    [pickupKeys[pickupLocation]]:
-                        prevCount[pickupKeys[pickupLocation]] + 1,
-            }))};
+            setCount(prevCount => ({
+                ...prevCount,
+                [pickupKeys[pickupLocation]]:
+                    prevCount[pickupKeys[pickupLocation]] + 1,
+            }));
             setPickupLocation(undefined);
         }
+        else if (!(count.teleShootNear ||
+            count.teleShootMid ||
+            count.teleShootFar ||
+            count.teleAmp ||
+            count.teleMiss) &&
+            count.hold &&
+            !teleOp) {
+                const finalKey = teleOp ? teleKey : autoKey;
+                setCount(prevCount => ({
+                    ...prevCount,
+                    [finalKey]: prevCount[finalKey] + 1,
+                }));
+            }
     };
 
     // const handleImage = () => {
@@ -133,21 +139,23 @@ function FieldButton({
                             className='h-[100px] flex-grow basis-0 text-2xl'
                         />
                     ) : (
-                        <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-200 text-2xl'>
+                        <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-2xl'>
                             Note held from auto
                         </div>
                     )
                 ) : (
-                    <MultiButton
-                        values={['preload', 'floor']}
-                        onChange={setPickupLocation}
-                        value={pickupLocation}
-                        labels={[
-                            `Preload: ${count.autoPreload}`,
-                            `Floor: ${count.autoPickupFloor}`,
-                        ]}
-                        className='h-[100px] flex-grow basis-0 text-2xl'
-                    />
+                    count.hold ?
+                        <div className = 'bg-gray-400 w-[40em] h-[6.25em]'></div> :
+                        <MultiButton
+                            values={['preload', 'floor']}
+                            onChange={setPickupLocation}
+                            value={pickupLocation}
+                            labels={[
+                                `Preload: ${count.autoPreload}`,
+                                `Floor: ${count.autoPickupFloor}`,
+                            ]}
+                            className='h-[100px] flex-grow basis-0 text-2xl'
+                        />
                 )}
             </div>
 
@@ -238,13 +246,13 @@ function FieldButton({
                                 handleCount={handleCount}
                                 autoKey='hold'
                                 teleKey='hold'
-                                className='!static h-[100px] flex-grow basis-0 bg-gray-200'
+                                className='!static h-[100px] flex-grow basis-0 bg-gray-300'
                                 label='Held'
                             />
                         )}
                     </>
                 ) : (
-                    <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-200 text-5xl'>
+                    <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-5xl'>
                         Held: 1
                     </div>
                 )}
