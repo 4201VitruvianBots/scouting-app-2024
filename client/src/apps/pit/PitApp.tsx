@@ -6,30 +6,31 @@ import Checkbox from '../../components/Checkbox';
 
 function PitApp() {
 
-
   const [autoInputValues, setAutoInputValues] = useState(['']);
-
-
-  const Input = ({ value, onChange }) => {
-    return <input className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center' type="text" placeholder="Type and #" />;
+  const Input = ({ value, onChange }) => (
+    <input
+      className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center'
+      type="text"
+      placeholder="Type and #"
       value={value}
       onChange={onChange}
-     };
-
+    />
+  );
      const handleAutoInputChange = (index, event) => {
       const newAutoInputValues = [...autoInputValues];
       newAutoInputValues[index] = event.target.value;
       setAutoInputValues(newAutoInputValues);
     };
-
   const [role, setRole] = useState<'scoring' | 'defense' | 'support' | 'all-round'>();
   const [drivetrain, setDrivetrain] = useState<'tank' | 'swerve' | 'MECANUM' | 'other'>();
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [batteryNumber, setBatteryNumber] = useState(Number);
   const [teamNumber, setTeamNumber] = useState(Number);
-  const [autoList, setAutoList] = useState([<Input key={0} value={autoInputValues[0]} onChange={(event) => handleAutoInputChange(0, event)} />]);  
-
-
+  const [autoList, setAutoList] = useState([<Input key={0} value={autoInputValues[0]} onChange={(event) => handleAutoInputChange(0, event)} />]);
+  const removeAutoInput = (id) => {
+    const newInputValues = autoInputValues.filter((_, i) => i !== id);
+    setAutoInputValues(newInputValues);
+  };
   const inputBattery = {
     width: '70px',
     height: '50px',
@@ -38,15 +39,10 @@ function PitApp() {
     width: '150px',
     height: '50px',
   };
-
-  
-   
-
   const addAnotherAuto = () => {
     setAutoList([...autoList, <Input key={autoList.length} value={''} onChange={(event) => handleAutoInputChange(autoList.length, event)} />]);
     setAutoInputValues([...autoInputValues, '']);
-  }; 
-
+  };
    const handleAdditionalNotes = (event) => {
     setAdditionalNotes(event.target.value);
   };
@@ -82,33 +78,59 @@ function PitApp() {
 
 
             
-            <h1 className="text-center text-white">What can they score? Choose all that apply</h1>
+            <h1 className="text-center text-white mb-7">What can they score? Choose all that apply.</h1>
             
             <div className="place-content-center mx-auto w-min !flex pad">
             
             <br></br>
             
             <div className="flex items-center whitespace-nowrap">
-              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
+              <Checkbox className="form-checkbox h-5 w-10 text-blue-600" boxClassName='h-7 w-7'/>
               <label htmlFor="ampNotes" className="cursor-pointer text-white select-none mr-4">Amp Notes</label>
               </div>
               <br/>
               <div className="flex items-center whitespace-nowrap">
-              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
-              <label htmlFor="ampNotes" className="cursor-pointer text-white select-none mr-4">Speaker Notes</label>
+              <Checkbox className="form-checkbox h-5 w-10 text-blue-600" boxClassName='h-7 w-7'/>
+              <label htmlFor="speakerNotes" className="cursor-pointer text-white select-none mr-4">Speaker Notes</label>
               </div>
               <br/>
               <div className="flex items-center whitespace-nowrap">
-              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
-              <label htmlFor="ampNotes" className="cursor-pointer text-white select-none mr-4">Trap Notes</label>
+              <Checkbox className="form-checkbox h-5 w-10 text-blue-600" boxClassName='h-7 w-7'/>
+              <label htmlFor="trapNotes" className="cursor-pointer text-white select-none mr-4">Trap Notes</label>
               </div>
               <br/>
               <div className="flex items-center whitespace-nowrap">
-              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
-              <label htmlFor="ampNotes" className="cursor-pointer text-white select-none mr-4">Climbing Capability</label>
+              <Checkbox className="form-checkbox h-5 w-10 text-blue-600" boxClassName='h-7 w-7'/>
+              <label htmlFor="climbingCapability" className="cursor-pointer text-white select-none mr-4">Climbing Capability</label>
               </div>
               
               </div>
+
+              <h1 className="text-center text-white">What is their preference? Choose all that apply</h1>
+            <div className="place-content-center mx-auto w-min !flex pad">
+            <br/>
+            <div className="flex items-center whitespace-nowrap">
+              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
+              <label htmlFor="ampPreferred" className="cursor-pointer text-white select-none mr-4">Amp Preferred?</label>
+              </div>
+              <br/>
+              <div className="flex items-center whitespace-nowrap">
+              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
+              <label htmlFor="speakerPreferred" className="cursor-pointer text-white select-none mr-4">Speaker Preferred?</label>
+              </div>
+              <br/>
+              <div className="flex items-center whitespace-nowrap">
+              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
+              <label htmlFor="trapPreferred" className="cursor-pointer text-white select-none mr-4">Trap Preferred?</label>
+              </div>
+              <br/>
+              <div className="flex items-center whitespace-nowrap">
+              <Checkbox className="form-checkbox h-5 w-5 text-blue-600" />
+              <label htmlFor="climbPreferred" className="cursor-pointer text-white select-none mr-4">Climbing Preferred?</label>
+              </div>
+              </div>
+
+              
               <br/>
               <br/>
 
@@ -121,17 +143,27 @@ function PitApp() {
             
             <br></br>
             <h1 className="text-center text-white">Auto Capability?</h1>
-            
             <div>
-            {autoList}
+            {autoInputValues.map((value, index) => (
+          <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center'
+              type="text"
+              placeholder="Type and #"
+              value={value}
+              onChange={(event) => handleAutoInputChange(index, event)}
+            />
+            <button className="bg-lime-300 font-sans font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2" onClick={() => removeAutoInput(index)}>Remove</button>
+          </div>
+        ))}
             <br/>
-            <button className="bg-lime-300 font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad '" onClick={addAnotherAuto}>Add input</button>
+            <button className="bg-lime-300 font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad " onClick={addAnotherAuto}>Add input</button>
             </div>
 
             <br></br>
             <div className="flex justify-center items-center">
             <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-40 w-1/2 justify-center rounded-lg">
-              <h1 className="text-center">Team role?</h1>
+              <h1 className="text-center font-semibold">Team role?</h1>
               <br/>
             <div className='flex justify-center space-x-4'>
               <MultiButton
@@ -150,7 +182,7 @@ function PitApp() {
             <div className="flex justify-center items-center ">
             <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-40 w-1/2 justify-center rounded-lg ">
             <div className='flex flex-col items-center '>
-            <h1 className="text-center">Drivetrain type?</h1>
+            <h1 className="text-center font-semibold">Drivetrain type?</h1>
             <br/>
             <div className='flex justify-center space-x-4'>
             <MultiButton
