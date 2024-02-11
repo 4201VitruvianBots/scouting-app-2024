@@ -7,8 +7,15 @@ export type RobotPosition =
     | 'blue_1'
     | 'blue_2'
     | 'blue_3';
-export type Foul = 'A' | 'B';
-// export type ScoringLocation = 'A' | 'B';
+export type Foul = 
+    |'Reaching' 
+    | 'Jumping' 
+    | 'Banging'
+    | 'Y/R Card'
+    | 'Other';
+export type Break =
+    | 'Mechanical'
+    | 'Software_Comms'
 
 export interface matchDataAggregations{
     averageTeleSpeakerNotes: number;
@@ -53,15 +60,15 @@ export interface MatchData {
 
 // - `POST` `/data/super`
 
-export type SuperData = {
+export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
-    defense: unknown;
-    driverSKill: unknown; // Similar to defense
-    spotlitRobots: number;
-    highNotes: number;
-    stationPlayerTeam: number; // Team Number
-}[];
+    defense: boolean;
+    wasDefended:boolean;
+    spotLitRobots: boolean;
+    stationPlayerTeam: boolean; // Team Number
+    Break:Record<Break, number>;
+};
 
 // - `POST` `/data/pits`
 // `<form>` files?
