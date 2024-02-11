@@ -4,14 +4,15 @@ import SignIn from '../../components/SignIn';
 import ReactDropdown from 'react-dropdown';
 import Checkbox from '../../components/Checkbox';
 import { useState } from 'react';
-import { RobotPosition } from 'requests';
+import { SuperPosition } from 'requests';
+import Dialog from '../../components/Dialog';
 
 function SuperApp() {
     const tempOptions = ['one', 'two', 'three'];
     const defaultOption = tempOptions[0];
     const [scouterName, setScouterName] = useState('');
-    const [robotPosition, setRobotPosition] = useState<RobotPosition>();
-    
+    const [superPosition, setSuperPosition] = useState<SuperPosition>();
+
 
     return (
         <main className='flex select-none flex-col items-center text-center'>
@@ -28,13 +29,32 @@ function SuperApp() {
                     />
                 </LinkButton>
             </div>
-            <SignIn
-                scouterName={scouterName}
-                onChangeScouterName={setScouterName}
-                robotPosition={robotPosition}
-                onChangeRobotPosition={setRobotPosition}
-                onSubmit={close}
-            />
+            <Dialog
+                    trigger={open => (
+                        <button onClick={open}>
+                            <MaterialSymbol
+                                icon='account_circle'
+                                size={60}
+                                fill
+                                grade={200}
+                                className={` ${scouterName && superPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                            />
+                        </button>
+                    )}>
+                    {close => (
+                        <SignIn
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={superPosition}
+                            onChangeRobotPosition={setSuperPosition}
+                            onSubmit={close}
+                            superScouting
+                        />
+                    )}
+                </Dialog>
+
+
+          
             <table className='text-left'>
                 <tr>
                     <th>Fouls</th>

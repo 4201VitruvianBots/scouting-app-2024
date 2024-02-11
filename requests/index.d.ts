@@ -8,6 +8,9 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 'A' | 'B';
+export type SuperPosition = 
+    | 'red_ss'
+    | 'blue_ss'
 // export type ScoringLocation = 'A' | 'B';
 
 export interface matchDataAggregations{
@@ -85,7 +88,7 @@ export type StatusReport = MetaData;
 
 export interface StatusRecieve {
     scouters: MetaData[];
-    matches: Record<RobotPosition | 'red_ss' | 'blue_ss', boolean>[];
+    matches: Record<RobotPosition | SuperPosition, boolean>[];
 }
 
 // - `GET` `/data/schedule.json`
