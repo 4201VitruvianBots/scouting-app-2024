@@ -151,6 +151,7 @@ function MatchApp() {
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
                             onSubmit={close}
+                            
                         />
                     )}
                 </Dialog>
