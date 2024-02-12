@@ -13,7 +13,6 @@ function SuperApp() {
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
 
-
     return (
         <main className='flex select-none flex-col items-center text-center'>
             <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
@@ -30,31 +29,29 @@ function SuperApp() {
                 </LinkButton>
             </div>
             <Dialog
-                    trigger={open => (
-                        <button onClick={open}>
-                            <MaterialSymbol
-                                icon='account_circle'
-                                size={60}
-                                fill
-                                grade={200}
-                                className={` ${scouterName && superPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
-                            />
-                        </button>
-                    )}>
-                    {close => (
-                        <SignIn
-                            scouterName={scouterName}
-                            onChangeScouterName={setScouterName}
-                            robotPosition={superPosition}
-                            onChangeRobotPosition={setSuperPosition}
-                            onSubmit={close}
-                            superScouting
+                trigger={open => (
+                    <button onClick={open}>
+                        <MaterialSymbol
+                            icon='account_circle'
+                            size={60}
+                            fill
+                            grade={200}
+                            className={` ${scouterName && superPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
                         />
-                    )}
-                </Dialog>
+                    </button>
+                )}>
+                {close => (
+                    <SignIn
+                        scouterName={scouterName}
+                        onChangeScouterName={setScouterName}
+                        robotPosition={superPosition}
+                        onChangeRobotPosition={setSuperPosition}
+                        onSubmit={close}
+                        superScouting
+                    />
+                )}
+            </Dialog>
 
-
-          
             <table className='text-left'>
                 <tr>
                     <th>Fouls</th>
@@ -166,28 +163,69 @@ function SuperApp() {
                 <tr>
                     <td>Mechanical Break?</td>
                     <td>
-                        <input type='number' className='border'></input>
+                    <Checkbox />
                     </td>
                     <td>
-                        <input type='number' className='border'></input>
+                    <Checkbox />
                     </td>
                     <td>
-                        <input type='number' className='border'></input>
+                    <Checkbox />
                     </td>
                 </tr>
                 <tr>
                     <td>Comms/Software Break?</td>
                     <td>
-                        <input type='number' className='border'></input>
+                        <Checkbox />
                     </td>
                     <td>
-                        <input type='number' className='border'></input>
+                        <Checkbox />
                     </td>
                     <td>
-                        <input type='number' className='border'></input>
+                        <Checkbox />
                     </td>
                 </tr>
             </table>
+
+            <div className='bg- grid w-[400px] grid-flow-col auto-rows-fr grid-cols-2 grid-rows-[auto_1fr_1fr] justify-center gap-3 selection:box-border'>
+                <h2 className='col-span-2 row-start-1 justify-self-center p-1 text-2xl font-medium text-green-600'>
+                    Break Type
+                </h2>
+
+                <div className='col-start-1 row-start-2 grid '>
+                    <p>Mechanical</p>
+
+                    <Checkbox
+                        className='py-1  text-lg'
+                        boxClassName='w-5 h-5 m-3'>
+                        Result of driver's choice
+                    </Checkbox>
+
+                    <Checkbox
+                        className='py-1 text-lg'
+                        boxClassName='w-5 h-5 m-3'>
+                        Battery fell out
+                    </Checkbox>
+
+                    <Checkbox
+                        className=' py-1 text-lg '
+                        boxClassName='w-5 h-5 m-3'>
+                        Resorted to all defense
+                    </Checkbox>
+                </div>
+
+                <div className='col-start-2 row-start-2 grid gap-3'>
+                    <p>Software/Comms</p>
+
+                    <Checkbox className=' bg-green-300 text-xl '>
+                        Robot "come back"
+                    </Checkbox>
+                    <p> out for... </p>
+                    <ReactDropdown
+                        className=''
+                        options={['0-30s', '30-60s', '1-2 mins', '2+ mins']}
+                        value={defaultOption}></ReactDropdown>
+                </div>
+            </div>
         </main>
     );
 }

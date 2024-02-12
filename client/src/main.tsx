@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import 'react-dropdown/style.css';
 import 'react-select-search/style.css';
 import '@fontsource/poppins';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
