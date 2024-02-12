@@ -18,7 +18,7 @@ interface MatchScores {
     autoAmp: number;
     autoMiss: number;
     autoPreload: number;
-    autoPickupFloor: number;
+    autoPickup: number;
     hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
     teleShootNear: number;
     teleShootMid: number;
@@ -37,7 +37,7 @@ const defualtScores: MatchScores = {
     autoAmp: 0,
     autoMiss: 0,
     autoPreload: 0,
-    autoPickupFloor: 0,
+    autoPickup: 0,
     hold: 0,
     teleShootNear: 0,
     teleShootMid: 0,

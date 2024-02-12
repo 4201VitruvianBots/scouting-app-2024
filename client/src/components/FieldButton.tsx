@@ -68,7 +68,7 @@ function FieldButton({
             }));
             const pickupKeys = {
                 preload: 'autoPreload',
-                floor: 'autoPickupFloor',
+                pickup: 'autoPickup',
                 speaker: 'telePickupSpeaker',
                 middle: 'telePickupMiddle',
                 source: 'telePickupSource',
@@ -78,21 +78,37 @@ function FieldButton({
                 [pickupKeys[pickupLocation]]:
                     prevCount[pickupKeys[pickupLocation]] + 1,
             }));
-            setPickupLocation(undefined);
         }
-        else if (!(count.teleShootNear ||
+        else if (
+            !(count.teleShootNear ||
             count.teleShootMid ||
             count.teleShootFar ||
             count.teleAmp ||
             count.teleMiss) &&
             count.hold &&
-            !teleOp) {
-                const finalKey = teleOp ? teleKey : autoKey;
-                setCount(prevCount => ({
-                    ...prevCount,
-                    [finalKey]: prevCount[finalKey] + 1,
-                }));
-            }
+            teleOp
+        ) {
+            const finalKey = teleOp ? teleKey : autoKey;
+            setCount(prevCount => ({
+                ...prevCount,
+                [finalKey]: prevCount[finalKey] + 1,
+            }));
+        }
+        else if (
+            count.autoPreload ||
+            count.autoPickup &&
+            !count.hold &&
+            !teleOp
+        ) {
+            const finalKey = teleOp ? teleKey : autoKey;
+            const finalPickupLocation = (pickupLocation == 'autoPreload') ? 'autoPreload' : 'autoPickup';
+            setCount(prevCount => ({
+                ...prevCount,
+                [finalKey]: prevCount[finalKey] + 1,
+                [finalPickupLocation]: prevCount[finalPickupLocation] + 1,
+            }));
+        }
+        setPickupLocation(undefined);
     };
 
     // const handleImage = () => {
@@ -144,15 +160,15 @@ function FieldButton({
                         </div>
                     )
                 ) : (
-                    count.hold ?
+                    count.autoPreload || count.autoPickup ?
                         <div className = 'bg-gray-400 w-[40em] h-[6.25em]'></div> :
                         <MultiButton
-                            values={['preload', 'floor']}
+                            values={['preload', 'pickup']}
                             onChange={setPickupLocation}
                             value={pickupLocation}
                             labels={[
-                                `Preload: ${count.autoPreload}`,
-                                `Floor: ${count.autoPickupFloor}`,
+                                'Preload',
+                                'Picked Up',
                             ]}
                             className='h-[100px] flex-grow basis-0 text-2xl'
                         />
