@@ -1,2 +1,3 @@
 client/
 static/
+.env.local
