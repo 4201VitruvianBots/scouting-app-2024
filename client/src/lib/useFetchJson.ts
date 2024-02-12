@@ -9,8 +9,8 @@ function useFetchJson<T = unknown>(url: string, defaultValue?: T): T | undefined
         const handler = async () => {
             try {
                 const result = await fetch(url);
-                if (!result.ok) return;
-                setValue(await result.json());
+                if (result.ok)
+                    setValue(await result.json());
                 clearInterval(interval);
             } catch (err) {
                 console.debug(`Fetching ${url} did not succeed`);

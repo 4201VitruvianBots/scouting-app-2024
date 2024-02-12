@@ -9,8 +9,8 @@ function useFetchString(url: string, defaultValue?: string): string | undefined 
         const handler = async () => {
             try {
                 const result = await fetch(url);
-                if (!result.ok) return;
-                setValue(await result.text());
+                if (result.ok)
+                    setValue(await result.text());
                 clearInterval(interval);
             } catch (err) {
                 console.debug(`Fetching ${url} did not succeed`);
