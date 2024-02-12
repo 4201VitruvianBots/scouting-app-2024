@@ -42,9 +42,10 @@ const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: numb
         Card: Number,
         Other: Number
      },
-     Break: {
-        Mechanical: Number,
-        Software_Comms: Number
+     Mechanical: {
+        driverChoice: Boolean,
+        batteryFall: Boolean,
+        defense: Boolean
      },
      defense: Boolean,
      wasDefended:Boolean,

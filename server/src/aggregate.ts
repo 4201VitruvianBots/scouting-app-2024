@@ -1,4 +1,4 @@
-import { matchApp } from "./Schema.js";
+import { matchApp, superApp } from "./Schema.js";
 
 interface AverageAndMax{
     _id: {teamNumber: number},
@@ -13,6 +13,12 @@ interface AverageAndMax{
     maxTrapNotes: number
 }
 
+interface AverageAndMaxSuper{
+    _id: {teamNumber: number},
+    avgFouls: number,
+    maxFouls: number
+}
+
 async function averageAndMax():Promise<AverageAndMax[]>{
     return (await matchApp.aggregate([
     { $group:{
@@ -21,13 +27,25 @@ async function averageAndMax():Promise<AverageAndMax[]>{
         avgTeleAmpNotes: { $avg: '$teleAmpNotes'},
         avgAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
         avgAutoAmpNotes: {$avg: '$autoAmpNotes'},
+        avgClimbRate: {$avg: {$toInt:'$climbPosition'}},
         maxTeleSpeakerNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
         maxTeleAmpNotes: {$max: '$teleAmpNotes'},
         maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
         maxAutoAmpNotes: {$max: '$autoAmpNotes'},
-        maxTrapNotes: {$max: '$trapNotes'}
+        maxTrapNotes: {$max: '$trapNotes'},
+        maxClimbRate: {$max: {$toInt:'$climbPosition'}}
     }}
 ]));
 }
 
-export { averageAndMax,} 
+async function averageAndMaxSuper():Promise<AverageAndMaxSuper[]>{
+    return (await superApp.aggregate([
+        {$group:{
+            _id: {teamNumber: '$metadata.robotTeam'},
+            avgFouls: {$avg: {$add: ['$fouls.Reaching', '$fouls.Jumping', '$4fouls.Banging', '$fouls.Card', '$fouls.Other']}},
+            maxFouls: {$max: {$add: ['$fouls.Reaching', '$fouls.Jumping', '$4fouls.Banging', '$fouls.Card', '$fouls.Other']}}
+        }}
+    ]));
+}
+
+export { averageAndMax, averageAndMaxSuper} 

@@ -1,7 +1,7 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp } from './Schema.js';
-import {averageAndMax} from './aggregate.js';
+import {averageAndMax, averageAndMaxSuper} from './aggregate.js';
 
 // import { MatchData } from 'requests';
 
@@ -26,7 +26,15 @@ app.post('/data/match', async(req,res) => {
 
  app.get('/data/retrieve', async(req,res) => {
    
-    res.send(await averageAndMax());
+    const matchData = await averageAndMax();
+    const superData = await averageAndMaxSuper();
+
+    const combineData = {
+        match: matchData,
+        super: superData
+    }
+
+    res.send(combineData);
  })
 
 app.use(express.static('static'));

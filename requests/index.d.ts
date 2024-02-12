@@ -13,9 +13,10 @@ export type Foul =
     | 'Banging'
     | 'Y/R Card'
     | 'Other';
-export type Break =
-    | 'Mechanical'
-    | 'Software_Comms'
+export type Mechanical =
+    | 'Driver Choice'
+    | 'Battery fall'
+    | 'defense'
 
 export interface matchDataAggregations{
     averageTeleSpeakerNotes: number;
@@ -23,11 +24,18 @@ export interface matchDataAggregations{
     averageAutoSpeakerNotes: number;
     averageAutoAmpNotes: number;
     averageTrapNotes:number;
+    averageClimbRate: number;
     maxTeleSpeakerNotes: number;
     maxTeleAmpNotes: number;
     maxAutoSpeakerNotes: number;
     maxAutoAmpNotes: number;
     maxTrapNotes: number;
+    maxClimbRate: number;
+}
+
+export interface superDataAggregation{
+    averageFouls: number;
+    maxFouls: number;
 }
 
 export interface MetaData {
@@ -67,7 +75,8 @@ export interface SuperData {
     wasDefended:boolean;
     spotLitRobots: boolean;
     stationPlayerTeam: boolean; // Team Number
-    Break:Record<Break, number>;
+    Mechanical: Record<Mechanical, boolean>;
+    Software_Comms: unknown;
 };
 
 // - `POST` `/data/pits`
