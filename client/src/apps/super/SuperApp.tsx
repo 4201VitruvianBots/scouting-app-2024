@@ -6,10 +6,13 @@ import Checkbox from '../../components/Checkbox';
 import { useState } from 'react';
 import { SuperPosition } from 'requests';
 import Dialog from '../../components/Dialog';
+import ButtonDropdown from '../../components/ButtonDropdown';
 
 function SuperApp() {
-    const tempOptions = ['one', 'two', 'three'];
-    const defaultOption = tempOptions[0];
+    // const tempOptions = ['one', 'two', 'three'];
+    // const defaultOption = tempOptions[0];
+
+    
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
 
@@ -52,142 +55,25 @@ function SuperApp() {
                         />
                     )}
                 </Dialog>
+            
+            <div className='bg-red-200 grid grid-cols-3 grid-rows-auto gap-10 px-10 p-5'>
+                <div className='bg-orange-300'>
+                    <p>team 1</p>
+                    <ButtonDropdown options={['one', 'two', 'three']}/>
+                </div>
+                <div className='bg-yellow-300'>
+                    <p>team 2</p>
+                </div>
+                <div className='bg-green-300'>
+                    <p>team 3</p>
+                </div>
+
+
+            </div>
 
 
           
-            <table className='text-left'>
-                <tr>
-                    <th>Fouls</th>
-                    <td>
-                        <ReactDropdown
-                            className=''
-                            options={tempOptions}
-                            value={defaultOption}></ReactDropdown>
-                    </td>
-                    <td>
-                        <ReactDropdown
-                            options={tempOptions}
-                            value={defaultOption}></ReactDropdown>
-                    </td>
-                    <td>
-                        <ReactDropdown
-                            options={tempOptions}
-                            value={defaultOption}></ReactDropdown>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Reaching Into Bumpers</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jumping Over Fence</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Banging On Glass</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Got Y/R Card</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Other Fouls</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>Played Defense?</td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Was Defended?</td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                    <td>
-                        <Checkbox />
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>Mechanical Break?</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Comms/Software Break?</td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                    <td>
-                        <input type='number' className='border'></input>
-                    </td>
-                </tr>
-            </table>
+            
         </main>
     );
 }
