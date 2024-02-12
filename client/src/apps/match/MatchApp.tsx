@@ -49,6 +49,7 @@ function MatchApp() {
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
 
+
     const [scouterName, setScouterName] = useState('');
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
@@ -202,19 +203,23 @@ function MatchApp() {
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} 
-                className='px-2 py-1 bg-blue-500 rounded-md'>
-                Submit
-            </button>
-            <div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={handleSubmit} style={{ fontSize: '30px' }} 
+                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                    Submit
+                    </button>
+                </div>
+               
+            
+                <div>
                 {showCheck && (   
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
                 )}
-            </div>
+                </div>
             </div>
         </main>
     );
 }
 
-export type { MatchScores, ClimbPosition };
+export type {MatchScores,ClimbPosition};
 export default MatchApp
