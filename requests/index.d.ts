@@ -1,4 +1,5 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
 
 export type RobotPosition =
     | 'red_1'
@@ -36,7 +37,9 @@ export interface MetaData {
 interface ScoreRanges {
     near: number,
     mid: number,
-    far: number
+    far: number,
+    amp: number,
+    miss: number
 }
 
 // - `POST` `/data/match`
@@ -46,9 +49,7 @@ export interface MatchData {
     // No competition info
     leftStartingZone: boolean;
     autoSpeakerNotes: ScoreRanges;
-    autoAmpNotes: number;
     teleSpeakerNotes: ScoreRanges;
-    teleAmpNotes: number;
     trapNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
