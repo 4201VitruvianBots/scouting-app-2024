@@ -16,11 +16,11 @@ export interface BarGraphData {
     type: "BarGraph";
 }
 
-export interface ScatterPlotData {
+export interface ScatterPlotGraphData {
     title: string;
     xColumn: string;
     yColumn: string;
-    type: "ScatterPlot";
+    type: "ScatterPlotGraph";
 }
 
-export type WindowData = StatTableData | BarGraphData | ScatterPlotData; // | WeightedTableData | BlankTableData | ...
+export type WindowData = StatTableData | BarGraphData | ScatterPlotGraphData; // | WeightedTableData | BlankTableData | ...

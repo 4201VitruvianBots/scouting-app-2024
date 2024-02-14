@@ -5,10 +5,10 @@ import StatTable from './components/StatTable';
 import { useFetchJson } from '../../lib/useFetchJson';
 import Dialog from '../../components/Dialog';
 import StatDialog from './components/StatDialog';
-import BarGraphDialog from './components/BarGraphDialog';
-import { BarChart } from 'reaviz';
+import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
 import ScatterPlotDialog from './components/ScatterPlotDialog';
+import ScatterPlotGraph from './components/ScatterPlotGraph';
 // import ScatterPlot from './components/ScatterPlot';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
@@ -17,8 +17,8 @@ function generateWindow(data: AnalysisEntry[], table: WindowData) {
             return <StatTable data={data} table={table} />;
         case 'BarGraph':
             return <BarGraph data={data} table={table} />;
-        // case 'ScatterPlot':
-        //     return <ScatterPlot data={data} table={table} />;
+        case 'ScatterPlotGraph':
+            return <ScatterPlotGraph data={data} table={table} />;
         default:
             return undefined;
     }

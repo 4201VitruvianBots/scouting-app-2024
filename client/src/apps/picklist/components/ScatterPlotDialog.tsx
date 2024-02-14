@@ -1,5 +1,5 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, ScatterPlotData } from '../data';
+import { AnalysisEntry, ScatterPlotGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
 import SelectSearch from 'react-select-search';
 
@@ -8,7 +8,7 @@ function ScatterPlotDialog({
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<ScatterPlotData>;
+    onSubmit: Dispatch<ScatterPlotGraphData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -28,7 +28,7 @@ function ScatterPlotDialog({
                 title: title || (xColumn || "") + " " + (yColumn || ""),
                 xColumn: xColumn || "",
                 yColumn: yColumn || "",
-                type: 'ScatterPlot'
+                type: 'ScatterPlotGraph'
             });
             onClose?.();
         }
