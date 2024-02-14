@@ -6,6 +6,21 @@ export interface StatTableData {
     title: string;
     column: string;
     ascending: boolean;
+    type: "StatTable";
 }
 
-export type TableData = StatTableData; // | WeightedTableData | BlankTableData | ...
+export interface BarGraphData {
+    title: string;
+    column: string;
+    ascending: boolean;
+    type: "BarGraph";
+}
+
+export interface ScatterPlotData {
+    title: string;
+    xColumn: string;
+    yColumn: string;
+    type: "ScatterPlot";
+}
+
+export type WindowData = StatTableData | BarGraphData | ScatterPlotData; // | WeightedTableData | BlankTableData | ...

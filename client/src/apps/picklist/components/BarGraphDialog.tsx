@@ -1,15 +1,15 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, BarGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 
-function StatDialog({
+function BarGraphDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<BarGraphData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -25,7 +25,7 @@ function StatDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || column, column, ascending, type: 'StatTable'});
+            onSubmit({title: title || column, column, ascending, type: 'BarGraph'});
             onClose?.();
         }
     };
@@ -60,4 +60,4 @@ function StatDialog({
     );
 }
 
-export default StatDialog;
+export default BarGraphDialog;
