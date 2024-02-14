@@ -8,6 +8,7 @@ import StatDialog from './components/StatDialog';
 import BarGraphDialog from './components/BarGraphDialog';
 import { BarChart } from 'reaviz';
 import BarGraph from './components/BarGraph';
+import ScatterPlotDialog from './components/ScatterPlotDialog';
 // import ScatterPlot from './components/ScatterPlot';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
@@ -52,6 +53,18 @@ function PicklistApp() {
                     )}>
                     {close => (
                         <BarGraphDialog
+                            data={analyzedData || []}
+                            onSubmit={addToFocused}
+                            onClose={close}
+                        />
+                    )}
+                </Dialog>
+                <Dialog
+                    trigger={open => (
+                        <button onClick={open}>Add Scatter Plot</button>
+                    )}>
+                    {close => (
+                        <ScatterPlotDialog
                             data={analyzedData || []}
                             onSubmit={addToFocused}
                             onClose={close}
