@@ -49,11 +49,12 @@ function StatDialog({
                         value={title}
                         onChange={setTitle}
                         placeholder={column}
+                        className="p-1"
                     />
                 </label>
             </p>
             <p>
-                <Checkbox onChange={setAscending}>Ascending</Checkbox>
+                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>

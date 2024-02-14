@@ -9,7 +9,6 @@ import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
 import ScatterPlotDialog from './components/ScatterPlotDialog';
 import ScatterPlotGraph from './components/ScatterPlotGraph';
-// import ScatterPlot from './components/ScatterPlot';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
     switch (table.type) {
@@ -37,7 +36,7 @@ function PicklistApp() {
                 
                 <Dialog
                     trigger={open => (
-                        <button onClick={open}>Add Stat Table</button>
+                        <button className="px-4" onClick={open}>Add Stat Table</button>
                     )}>
                     {close => (
                         <StatDialog
@@ -49,7 +48,7 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button onClick={open}>Add Bar Graph</button>
+                        <button className="px-4" onClick={open}>Add Bar Graph</button>
                     )}>
                     {close => (
                         <BarGraphDialog
@@ -61,7 +60,7 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button onClick={open}>Add Scatter Plot</button>
+                        <button className="px-4" onClick={open}>Add Scatter Plot</button>
                     )}>
                     {close => (
                         <ScatterPlotDialog
