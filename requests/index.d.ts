@@ -82,7 +82,12 @@ export interface PitFile {
 // - `WebSocket` `/status/report`
 // client -> server
 
-export type StatusReport = MetaData;
+export interface StatusReport {
+    robotPosition: RobotPosition|SuperPosition|undefined;
+    matchNumber: number|undefined;
+    scouterName: string;
+    battery: number;
+};
 
 // - `WebSocket` `/status/recieve`
 // server -> client

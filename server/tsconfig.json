@@ -9,5 +9,5 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true
     },
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*.ts", "../client/src/lib/useStatus.ts"]
 }
