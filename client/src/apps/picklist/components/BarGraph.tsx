@@ -1,4 +1,4 @@
-import { BarChart } from 'reaviz';
+import { BarChart, ChartDataShape } from 'reaviz';
 import { AnalysisEntry, BarGraphData } from '../data';
 
 function BarGraph({
@@ -8,22 +8,11 @@ function BarGraph({
     table: BarGraphData;
     data: AnalysisEntry[];
 }) {
-    const entries = data.map<[number, number]>(e => [
-        e.teamNumber,
-        e[table.column] as number,
-    ]);
-    const sortedEntries = entries.sort((a, b) => a[1] - b[1]);
+    const entries = data.map<ChartDataShape>(e => {return {key: e.teamNumber.toString(), data: e[table.column] as number}});
+    const sortedEntries = entries.sort((a, b) => (a.data as number) - (b.data as number));
     if (!table.ascending) sortedEntries.reverse();
-    
-    const testData = [
-        {key: "A", data: 10},
-        {key: "B", data: 20},
-        {key: "C", data: 30},
-    ]
 
-    return (
-        <BarChart width={600} height={300} data={testData} />
-    );
+    return <BarChart data={entries} />;
 }
 
 export default BarGraph;
