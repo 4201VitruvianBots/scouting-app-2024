@@ -1,10 +1,16 @@
 import { Application } from 'express';
 import expressWs from 'express-ws'
-import { Ref } from './lib/Ref.js';
 import { StatusRecieve, StatusReport } from 'requests';
 
-const scouters = new Ref<StatusRecieve['scouters']>([]);
-const matches = new Ref<StatusRecieve['matches']>([]);
+const status: StatusRecieve = { matches: [], scouters: [] };
+
+// array of functions to call whenever status changes;
+const statusWatchers: (() => void)[] = [];
+
+// run all watchers, should be called whenever status is updated
+function notifyWatchers() {
+    statusWatchers.forEach(watcher => watcher());
+}
 
 function setUpSocket(expressApp: Application) {
     const { app } = expressWs(expressApp);
@@ -20,43 +26,38 @@ function setUpSocket(expressApp: Application) {
         };
 
         // put the scouter into the list of scouters
-        scouters.value.push(scouter)
-        scouters.triggerUpdate();
+        status.scouters.push(scouter)
+        notifyWatchers();
 
         // When new data is recieved
         ws.on('message', (msg: string) => {
             // Update `scouter` with all the new data
             Object.assign(scouter, JSON.parse(msg));
-            scouters.triggerUpdate();
+            notifyWatchers();
         });
 
         // When the websocket closes
         ws.on('close', () => {
             // Remove this scouter from the list
-            scouters.value.splice(scouters.value.indexOf(scouter));
-            scouters.triggerUpdate();
+            status.scouters.splice(status.scouters.indexOf(scouter));
+            notifyWatchers();
         });
     });
 
     app.ws('/status/admin', (ws, _req) => {
         // Send an update
         const sendUpdate = () => {
-            ws.send(JSON.stringify({
-                matches: matches.value,
-                scouters: scouters.value
-            } satisfies StatusRecieve))
+            ws.send(JSON.stringify(status))
         }
 
         sendUpdate();
 
-        // Send updates whenever one of these changes
-        matches.on('change', sendUpdate);
-        scouters.on('change', sendUpdate);
+        // Send updates whenever it changes
+        statusWatchers.push(sendUpdate);
 
         // When the socket closes remove the listeners
         ws.on('close', () => {
-            matches.off('change', sendUpdate);
-            scouters.off('change', sendUpdate);
+            statusWatchers.splice(statusWatchers.indexOf(sendUpdate), 1);
         });
     })
 };
