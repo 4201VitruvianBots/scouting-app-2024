@@ -86,14 +86,14 @@ export interface StatusReport {
     robotPosition: RobotPosition|SuperPosition|undefined;
     matchNumber: number|undefined;
     scouterName: string;
-    battery: number;
-};
+    battery: number | undefined;
+}
 
 // - `WebSocket` `/status/recieve`
 // server -> client
 
 export interface StatusRecieve {
-    scouters: MetaData[];
+    scouters: StatusReport[];
     matches: Record<RobotPosition | SuperPosition, boolean>[];
 }
 
