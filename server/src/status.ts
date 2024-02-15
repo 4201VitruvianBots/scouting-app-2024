@@ -45,18 +45,20 @@ function setUpSocket(expressApp: Application) {
     });
 
     app.ws('/status/admin', (ws, _req) => {
-        // Send an update
+        // Function to send an update
         const sendUpdate = () => {
             ws.send(JSON.stringify(status))
         }
 
+        // Send immediately
         sendUpdate();
 
         // Send updates whenever it changes
         statusWatchers.push(sendUpdate);
 
-        // When the socket closes remove the listeners
+        // When the socket closes
         ws.on('close', () => {
+            // Remove from the array of watchers
             statusWatchers.splice(statusWatchers.indexOf(sendUpdate), 1);
         });
     })

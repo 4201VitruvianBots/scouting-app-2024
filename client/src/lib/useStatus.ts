@@ -4,16 +4,22 @@ import { RobotPosition, SuperPosition, StatusReport, StatusRecieve } from "reque
 
 function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNumber:number|undefined, scouterName:string) {
     const socket = useRef<WebSocket>();
-    const state = useRef<StatusReport>();
-    state.current = { robotPosition, matchNumber, scouterName, battery: 69 };
+
+    // Store the current status
+    const status = useRef<StatusReport>();
+    status.current = { robotPosition, matchNumber, scouterName, battery: 69 };
 
     useEffect(() => {
+        // Create a new websocket
         socket.current = new WebSocket(`ws://${window.location.host}/status/scouter`)
 
+        // As soon as it opens
         socket.current.onopen = () => {
-            socket.current?.send(JSON.stringify(state.current))
+            // Send the current status
+            socket.current?.send(JSON.stringify(status.current))
         }
 
+        // Close the socket for cleanup
         return () => socket.current?.close();
     }, []);
 
@@ -21,25 +27,32 @@ function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNum
         if (socket.current?.readyState !== WebSocket.OPEN)
             return
         
-        socket.current?.send(JSON.stringify(state.current))
+        socket.current?.send(JSON.stringify(status.current))
     },[matchNumber, robotPosition, scouterName])
         
 };
 
 function useStatusRecieve() {
-    const [state, setState] = useState<StatusRecieve>({ matches: [], scouters: [] });
-
     const socket = useRef<WebSocket>();
 
+    // State to store the status
+    const [state, setState] = useState<StatusRecieve>({ matches: [], scouters: [] });
+
     useEffect(() => {
+        // Create a new websocket
         socket.current = new WebSocket(`ws://${window.location.host}/status/admin`);
+
+        // When data is recieved
         socket.current.onmessage = event => {
+            // Update the state
             setState(JSON.parse(event.data));
         }
 
+        // Close the socket for cleanup
         return () => socket.current?.close();
     }, []);
 
+    // Return the state so it can be used
     return state;
 };
 
