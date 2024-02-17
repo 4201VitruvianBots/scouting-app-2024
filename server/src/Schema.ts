@@ -24,8 +24,8 @@ const scoreRanges = {
 const matchDataSchema = new mongoose.Schema<MatchData>({
     metadata: metaDataSchema,
     leftStartingZone: Boolean,
-    autoSpeakerNotes: scoreRanges,
-    teleSpeakerNotes: scoreRanges,
+    autoNotes: scoreRanges,
+    teleNotes: scoreRanges,
     trapNotes: Number,
     climb: {
         type: String,

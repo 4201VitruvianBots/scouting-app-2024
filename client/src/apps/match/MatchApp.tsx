@@ -84,14 +84,14 @@ function MatchApp() {
                 
             },
             leftStartingZone: leave,
-            autoSpeakerNotes: {
+            autoNotes: {
                 near: count.autoShootNear,
                 mid: count.autoShootMid,
                 far: count.autoShootFar,
                 amp: count.autoAmp,
                 miss: count.autoMiss
             },
-            teleSpeakerNotes: {
+            teleNotes: {
                 near: count.teleShootNear,
                 mid: count.teleShootMid,
                 far: count.teleShootFar,

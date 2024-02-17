@@ -48,8 +48,8 @@ export interface MatchData {
     metadata: MetaData;
     // No competition info
     leftStartingZone: boolean;
-    autoSpeakerNotes: ScoreRanges;
-    teleSpeakerNotes: ScoreRanges;
+    autoNotes: ScoreRanges;
+    teleNotes: ScoreRanges;
     trapNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
