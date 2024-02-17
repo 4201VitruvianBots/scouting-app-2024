@@ -23,10 +23,12 @@ function BarGraphDialog({
     const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
     const [ascending, setAscending] = useState(false);
+    
+    const [top, setTop] = useState('');
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({title: title || column, column, ascending, type: 'BarGraph' });
+            onSubmit({title: title || column, column, ascending, type: 'BarGraph', top: parseInt(top)});
             onClose?.();
         }
     };
@@ -58,6 +60,16 @@ function BarGraphDialog({
                         value={title}
                         onChange={setTitle}
                         placeholder={column}
+                    />
+                </label>
+            </p>
+            <p>
+                <label>
+                    Show Top
+                    <TextInput
+                        value={top}
+                        onChange={setTop}
+                        placeholder={''}
                     />
                 </label>
             </p>
