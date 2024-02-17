@@ -1,7 +1,6 @@
 import { MatchData } from 'requests';
 import { matchApp } from './Schema.js';
 
-
 async function exportAllData() {
     return {
         matchApp: await matchApp.find({}) satisfies MatchData[],
@@ -25,9 +24,14 @@ async function sendExport() {
     });
 }
 
+
+function scheduleExport() {
+    setInterval(sendExport, 60 * 1000 * 5);
+}
+
 async function importAllData(data: { matchApp: MatchData[] }) {
     await matchApp.deleteMany();
     await matchApp.insertMany(data.matchApp);
 }
 
-export { exportAllData, importAllData, sendExport }
+export { exportAllData, importAllData, sendExport, scheduleExport }
