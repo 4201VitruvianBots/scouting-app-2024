@@ -1,7 +1,7 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { useFetchJson } from '../../../lib/useFetchJson';
-import { AnalysisEntry, StatSummaryData, TeamColorEntry } from '../data';
+import { AnalysisEntry, StatSummaryData, TeamInfoEntry } from '../data';
 
 function StatSummary({
     table,
@@ -19,8 +19,8 @@ function StatSummary({
     const sortedEntryTeamNumbers = sortedEntries.map(entry => entry[0].toString());
     const sortedEntryDataPoints = sortedEntries.map(entry => entry[1]);
     
-    // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_colors.json file
-    const teamAvatarsJson = useFetchJson<TeamColorEntry>('/team_colors.json');
+    // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
+    const teamAvatarsJson = useFetchJson<TeamInfoEntry>('/team_info.json');
     const empty1x1Base64: string = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
     
     const lowTeamNumber = sortedEntryTeamNumbers[0];

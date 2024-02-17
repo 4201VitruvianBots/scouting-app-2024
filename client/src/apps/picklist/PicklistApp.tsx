@@ -13,6 +13,7 @@ import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
 import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
+import TeamSummary from './components/TeamSummary';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
     switch (table.type) {
@@ -24,8 +25,8 @@ function generateWindow(data: AnalysisEntry[], table: WindowData) {
             return <ScatterPlotGraph data={data} table={table} />;
         case 'StatSummary':
             return <StatSummary data={data} table={table} />;
-        // case 'TeamSummary':
-        //     return <TeamSummary data={data} table={table} />;
+        case 'TeamSummary':
+            return <TeamSummary data={data} table={table} />;
         default:
             return undefined;
     }

@@ -10,22 +10,26 @@ const apiKey = process.env.API_KEY!;
 const teams = JSON.parse(fs.readFileSync('static/output_analysis.json', 'utf-8')).map((e: any) => e.teamNumber);
 
 // Create a teamColors object to store the color for each team
-const teamColors: any = {};
+const teamInfo: any = {};
+
+console.log("Getting team colors...");
 
 // Get the color for each team. If it returns a 404, default to gray
 for (const team of teams) {
     const color = await fetch(`https://api.frc-colors.com/v1/team/${team}`);
     const colorJson = await color.json();
     if (color.status === 404) {
-        teamColors[team] = {
+        teamInfo[team] = {
             primaryHex: '#7f7f7f',
             secondaryHex: '#7f7f7f',
-            verified: false
+            verified: false,
         };
     } else {
-        teamColors[team] = colorJson;
+        teamInfo[team] = colorJson;
     }
 }
+
+console.log("Getting team avatars...");
 
 // Get the avatar for each team.
 for (const team of teams) {
@@ -36,10 +40,23 @@ for (const team of teams) {
     });
     const avatarJson = await avatar.json();
     if ((avatarJson as any[]).length > 0) {
-        teamColors[team].avatar = (avatarJson as any[])[0].details.base64Image;
+        teamInfo[team].avatar = (avatarJson as any[])[0].details.base64Image;
     }
 }
 
-fs.writeFileSync('static/team_colors.json', JSON.stringify(teamColors));
+console.log("Getting team info...");
 
-console.log("Successfully imported team colors and avatars for " + teams.length + " teams");
+// Get the information for each team
+for (const team of teams) {
+    const info = await fetch(`https://www.thebluealliance.com/api/v3/team/${'frc' + team}`, {
+        headers: {
+            'X-TBA-Auth-Key': apiKey,
+        },
+    });
+    const infoJson = await info.json();
+    teamInfo[team].info = infoJson;
+}
+
+fs.writeFileSync('static/team_info.json', JSON.stringify(teamInfo));
+
+console.log("Successfully downloaded information for " + teams.length + " teams");

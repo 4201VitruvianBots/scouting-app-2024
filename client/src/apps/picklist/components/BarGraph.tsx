@@ -1,5 +1,5 @@
 import { BarChart, BarSeries, ChartDataShape, ColorSchemeType } from 'reaviz';
-import { AnalysisEntry, BarGraphData, TeamColorEntry } from '../data';
+import { AnalysisEntry, BarGraphData, TeamInfoEntry } from '../data';
 import { useFetchJson } from '../../../lib/useFetchJson';
 
 function BarGraph({
@@ -17,8 +17,8 @@ function BarGraph({
         sortedEntries.splice(table.top);
     }
 
-    // Create a list of colors for each team based on the colors stored in team_colors.json
-    const teamColorsJson = useFetchJson<TeamColorEntry>('/team_colors.json');
+    // Create a list of colors for each team based on the colors stored in team_info.json
+    const teamColorsJson = useFetchJson<TeamInfoEntry>('/team_info.json');
     const sortedTeamNumbers = sortedEntries.map(entry => entry.key as string);
     
     let teamColors: ColorSchemeType = sortedTeamNumbers.map(() => '#7f7f7f');

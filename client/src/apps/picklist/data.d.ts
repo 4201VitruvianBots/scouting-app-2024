@@ -4,12 +4,13 @@ export interface AnalysisEntry extends Record<string, string | number | boolean>
     teamNumber: number;
 }
 
-export interface TeamColorEntry {
+export interface TeamInfoEntry {
     [teamNumber: string]: {
         primaryHex: string;
         secondaryHex: string;
         verified: boolean;
         avatar?: string;
+        info?: any;
     };
 }
 

@@ -1,7 +1,6 @@
 import { Dispatch, useState } from 'react';
 import { AnalysisEntry, StatSummaryData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
