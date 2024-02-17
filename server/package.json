@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
+    "start:remote": "cross-env LOCATION=remote node dist/index.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --signal SIGTERM src/index.ts",
+    "dev:remote": "cross-env NODE_ENV=dev LOCATION=remote nodemon --signal SIGTERM src/index.ts",
     "gen-fake-data": "node --loader ts-node/esm scripts/addFakeData.ts",
     "gen-fake-json": "node --loader ts-node/esm scripts/genFakeJson.ts",
     "download-schedule": "node --loader ts-node/esm scripts/downloadSchedule.ts"
