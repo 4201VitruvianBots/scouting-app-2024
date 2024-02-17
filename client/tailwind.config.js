@@ -15,6 +15,12 @@ export default {
                 lightblue: 'cfe5ff',
                 medblue: '252f9c'
             },
+            fontFamily: {
+                sans: 'Poppins'
+            },
+            rotate: {
+                '60': '60deg', 
+            }
         },
 
         plugins: [],

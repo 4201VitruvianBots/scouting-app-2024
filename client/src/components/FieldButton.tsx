@@ -1,218 +1,279 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { styled } from '@mui/material';
-import MuiToggleButton from '@mui/material/ToggleButton';
 import { MatchScores } from '../apps/match/MatchApp';
+import Checkbox from './Checkbox';
+import { PickupLocation } from 'requests';
+import MultiButton from './MultiButton';
+
 type countKeys = keyof MatchScores;
 
 function RegionButton({
-    count,
-    teleop,
-    className,
     handleCount,
-    autokey,
-    telekey,
-    akey,
+    className,
+    teleKey,
+    autoKey,
+    teleOp,
+    count,
+    label,
 }: {
-    count: MatchScores;
-    teleop: boolean;
-    className: string;
     handleCount: (
         autokey: countKeys,
         telekey: countKeys,
         aKey?: countKeys
     ) => void;
-    autokey: countKeys;
-    telekey: countKeys;
-    akey: countKeys;
+    className?: string;
+    teleKey: countKeys;
+    autoKey: countKeys;
+    teleOp: boolean;
+    count: MatchScores;
+    label?: string;
 }) {
     return (
         <button
-            className={`${className} overflow-hidden text-7xl font-semibold  text-white first-letter:font-sans md:bg-opacity-55 `}
-            onClick={() => handleCount(autokey, telekey, akey)}
+            className={` ${className} absolute text-5xl`}
+            onClick={() => handleCount(autoKey, teleKey)}
             id='one'>
-            <p>{count[teleop ? telekey : autokey]}</p>
-            {teleop && (
-                <p className='m-[10px] text-[20px]'>AMP: {count[akey]}</p>
-            )}
+            <p>
+                {label && `${label}: `}
+                {count[teleOp ? teleKey : autoKey]}
+            </p>
         </button>
     );
 }
 
 function FieldButton({
-    count,
-    setCount,
-    leave,
     setLeave,
-    teleop,
+    setCount,
+    teleOp,
+    leave,
+    count,
+    alliance,
 }: {
-    count: MatchScores;
-    setCount: Dispatch<SetStateAction<MatchScores>>;
-    leave?: boolean;
     setLeave?: Dispatch<boolean>;
-    teleop: boolean;
+    setCount: Dispatch<SetStateAction<MatchScores>>;
+    teleOp: boolean;
+    leave?: boolean;
+    count: MatchScores;
+    alliance: boolean | undefined;
 }) {
-    const [allianceBlue, setAllianceBlue] = useState(false); //false=blue, true=red
+    const [pickupLocation, setPickupLocation] = useState<
+        PickupLocation | undefined
+    >();
 
-    const [amplified, setAmplified] = useState(false); //false=off, true=on
-
-    const handleCount = (
-        autokey: countKeys,
-        telekey: countKeys,
-        aKey?: countKeys
-    ) => {
-        const finalKey = teleop
-            ? aKey && amplified
-                ? aKey
-                : telekey
-            : autokey;
-        amplified == true && aKey;
-        setCount(prevCount => ({
-            ...prevCount,
-            [finalKey]: prevCount[finalKey] + 1,
-        }));
+    const handleCount = (autoKey: countKeys, teleKey: countKeys) => {
+        if (pickupLocation) {
+            const finalKey = teleOp ? teleKey : autoKey;
+            setCount(prevCount => ({
+                ...prevCount,
+                [finalKey]: prevCount[finalKey] + 1,
+            }));
+            const pickupKeys = {
+                preload: 'autoPreload',
+                pickup: 'autoPickup',
+                speaker: 'telePickupSpeaker',
+                middle: 'telePickupMiddle',
+                source: 'telePickupSource',
+            } as const;
+            setCount(prevCount => ({
+                ...prevCount,
+                [pickupKeys[pickupLocation]]:
+                    prevCount[pickupKeys[pickupLocation]] + 1,
+            }));
+        }
+        else if (
+            !(count.teleShootNear ||
+            count.teleShootMid ||
+            count.teleShootFar ||
+            count.teleAmp ||
+            count.teleMiss) &&
+            count.hold &&
+            teleOp
+        ) {
+            const finalKey = teleOp ? teleKey : autoKey;
+            setCount(prevCount => ({
+                ...prevCount,
+                [finalKey]: prevCount[finalKey] + 1,
+            }));
+        }
+        else if (
+            count.autoPreload ||
+            count.autoPickup &&
+            !count.hold &&
+            !teleOp
+        ) {
+            const finalKey = teleOp ? teleKey : autoKey;
+            const finalPickupLocation = (pickupLocation == 'autoPreload') ? 'autoPreload' : 'autoPickup';
+            setCount(prevCount => ({
+                ...prevCount,
+                [finalKey]: prevCount[finalKey] + 1,
+                [finalPickupLocation]: prevCount[finalPickupLocation] + 1,
+            }));
+        }
+        setPickupLocation(undefined);
     };
 
-    const handleImage = () => {
-        setAllianceBlue(!allianceBlue);
-    };
-
-    const handleAmplified = () => {
-        setAmplified(!amplified);
-    };
+    // const handleImage = () => {
+    //     setAlliance(!alliance);
+    // };
 
     const handleLeave = () => {
         setLeave?.(!leave);
     };
 
-    const ToggleButton1 = styled(MuiToggleButton)({
-        '&.Mui-selected, &.Mui-selected:hover': {
-            color: 'white',
-            backgroundColor: '#3268a8',
-        },
-    });
-
-    const ToggleButton2 = styled(MuiToggleButton)({
-        '&.Mui-selected, &.Mui-selected:hover': {
-            color: 'white',
-            backgroundColor: '#f0cf00',
-        },
-    });
-
-    const ToggleButton3 = styled(MuiToggleButton)({
-        '&.Mui-selected, &.Mui-selected:hover': {
-            color: 'white',
-            backgroundColor: '#00cf00',
-        },
-    });
-
     return (
-        <div>
-            <ToggleButton1
-                value='check'
-                selected={allianceBlue}
-                onChange={handleImage}
-                className='bg-red-400 font-serif'>
-                Toggle Map Color
-            </ToggleButton1>
+        <>
+            <div className='flex items-center justify-center '>
+                {/* <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton> */}
+                {!teleOp && (
+                    <Checkbox
+                        checked={leave}
+                        onChange={handleLeave}
+                        className='p-4 text-2xl'
+                        boxClassName='w-6 h-6'>
+                        {' '}
+                        Robot has {leave ? 'left' : 'not left'}
+                    </Checkbox>
+                )}
+            </div>
 
-            {!teleop && (
-                <ToggleButton3
-                    value='check'
-                    selected={leave}
-                    onChange={handleLeave}
-                    className={`${leave ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
-                    Robot has {leave ? 'left' : 'not left'}
-                </ToggleButton3>
-            )}
-            {teleop && (
-                <ToggleButton2
-                    value='check'
-                    onChange={handleAmplified}
-                    selected={amplified}
-                    className={`${amplified ? 'bg-yellow-300' : 'bg-slate-500'} font-serif`}>
-                    Amp {amplified ? 'On' : 'Off'}
-                    {/* {amplified ? <>Amp <span>On</span></> : 'Amp Off'} */}
-                </ToggleButton2>
-            )}
+            <div className='flex w-[40em] flex-row gap-2 py-2'>
+                {teleOp ? (
+                    count.teleShootNear ||
+                    count.teleShootMid ||
+                    count.teleShootFar ||
+                    count.teleAmp ||
+                    count.teleMiss ||
+                    !count.hold ? (
+                        <MultiButton
+                            values={['speaker', 'middle', 'source']}
+                            onChange={setPickupLocation}
+                            value={pickupLocation}
+                            labels={[
+                                `Speaker: ${count.telePickupSpeaker}`,
+                                `Middle: ${count.telePickupMiddle}`,
+                                `Source: ${count.telePickupSource}`,
+                            ]}
+                            className='h-[100px] flex-grow basis-0 text-2xl'
+                        />
+                    ) : (
+                        <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-2xl'>
+                            Note held from auto
+                        </div>
+                    )
+                ) : (
+                    count.autoPreload || count.autoPickup ?
+                        <div className = 'bg-gray-400 w-[40em] h-[6.25em]'></div> :
+                        <MultiButton
+                            values={['preload', 'pickup']}
+                            onChange={setPickupLocation}
+                            value={pickupLocation}
+                            labels={[
+                                'Preload',
+                                'Picked Up',
+                            ]}
+                            className='h-[100px] flex-grow basis-0 text-2xl'
+                        />
+                )}
+            </div>
 
             <div
-                className={`${allianceBlue ? 'bg-field-blue' : 'bg-field-red'} h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
-                {allianceBlue ? (
+                className={`${alliance ? 'bg-field-red' : 'bg-field-blue'} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                {alliance ? (
                     <>
                         <RegionButton
+                            teleOp={teleOp}
                             count={count}
-                            teleop={teleop}
-                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-left  '
                             handleCount={handleCount}
-                            autokey='autoNear'
-                            telekey='teleNear'
-                            akey='aNear'
+                            autoKey='autoShootFar'
+                            teleKey='teleShootFar'
+                            className='bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[6em] text-right '
                         />
-
                         <RegionButton
+                            teleOp={teleOp}
                             count={count}
-                            teleop={teleop}
-                            className='absolute left-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-left '
                             handleCount={handleCount}
-                            autokey='autoMid'
-                            telekey='teleMid'
-                            akey='aMid'
+                            autoKey='autoShootMid'
+                            teleKey='teleShootMid'
+                            className='right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[9em] text-right '
                         />
-
                         <RegionButton
+                            teleOp={teleOp}
                             count={count}
-                            teleop={teleop}
-                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-left '
                             handleCount={handleCount}
-                            autokey='autoFar'
-                            telekey='teleFar'
-                            akey='aFar'
+                            autoKey='autoShootNear'
+                            teleKey='teleShootNear'
+                            className='bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[1.25em] text-right '
                         />
                     </>
                 ) : (
                     <>
                         <RegionButton
+                            teleOp={teleOp}
                             count={count}
-                            teleop={teleop}
-                            className='absolute bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-right '
                             handleCount={handleCount}
-                            autokey='autoNear'
-                            telekey='teleNear'
-                            akey='aNear'
-                        />
-
-                        <RegionButton
-                            count={count}
-                            teleop={teleop}
-                            className='absolute right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-right '
-                            handleCount={handleCount}
-                            autokey='autoMid'
-                            telekey='teleMid'
-                            akey='aMid'
+                            autoKey='autoShootNear'
+                            teleKey='teleShootNear'
+                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-left'
                         />
                         <RegionButton
+                            teleOp={teleOp}
                             count={count}
-                            teleop={teleop}
-                            className=' absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-right '
                             handleCount={handleCount}
-                            autokey='autoFar'
-                            telekey='teleFar'
-                            akey='aFar'
+                            autoKey='autoShootMid'
+                            teleKey='teleShootMid'
+                            className='absolute left-[30%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-left '
+                        />
+                        <RegionButton
+                            teleOp={teleOp}
+                            count={count}
+                            handleCount={handleCount}
+                            autoKey='autoShootFar'
+                            teleKey='teleShootFar'
+                            className='absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-left '
                         />
                     </>
                 )}
-
-                <br />
             </div>
-            <button
 
-                    className='border-1 h-24 w-48 rounded-lg border border-gray-700 px-4 my-5 shadow-xl text-xl'
-                    onClick={() => handleCount('autoAmp','teleAmp' )}>
-                   
-                    AMP Note: {count[teleop ? 'teleAmp' : 'autoAmp']}
-
-            </button>
-        </div>
+            <div className='flex w-[40em] flex-row gap-2 py-2'>
+                {count.hold === 0 || teleOp ? (
+                    <>
+                        <RegionButton
+                            teleOp={teleOp}
+                            count={count}
+                            handleCount={handleCount}
+                            autoKey='autoAmp'
+                            teleKey='teleAmp'
+                            className='!static h-[100px] flex-grow basis-0 bg-orange-200'
+                            label='Amp'
+                        />
+                        <RegionButton
+                            teleOp={teleOp}
+                            count={count}
+                            handleCount={handleCount}
+                            autoKey='autoMiss'
+                            teleKey='teleMiss'
+                            className='!static h-[100px] flex-grow basis-0 bg-red-200'
+                            label='Miss'
+                        />
+                        {!teleOp && (
+                            <RegionButton
+                                teleOp={teleOp}
+                                count={count}
+                                handleCount={handleCount}
+                                autoKey='hold'
+                                teleKey='hold'
+                                className='!static h-[100px] flex-grow basis-0 bg-gray-300'
+                                label='Held'
+                            />
+                        )}
+                    </>
+                ) : (
+                    <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-5xl'>
+                        Held: 1
+                    </div>
+                )}
+            </div>
+        </>
     );
 }
 

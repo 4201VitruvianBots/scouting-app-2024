@@ -1,53 +1,36 @@
 import LinkButton from './components/LinkButton';
-import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
-import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function RootMenu() {
     return (
-        <main className='box-border grid h-screen auto-rows-fr grid-cols-2 grid-rows-[auto] items-stretch gap-5 p-5'>
-            <p className='col-span-2 text-center font-mono text-3xl text-green-700'>
-                Welcome to Vitruvian Scouting
-            </p>
-
-            <LinkButton
-                link='/public'
-                icon={<PersonSearchIcon style={{ fontSize: '50px' }} />}>
-                Public
-            </LinkButton>
-
-            <LinkButton
-                link='/match'
-                icon={<ContentPasteSearchIcon style={{ fontSize: '50px' }} />}>
-                Match
-            </LinkButton>
-
-            <LinkButton
-                link='/super'
-                icon={<ScreenSearchDesktopIcon style={{ fontSize: '50px' }} />}>
-                Super
-            </LinkButton>
-
-            <LinkButton
-                link='/pit'
-                icon={<SettingsIcon style={{ fontSize: '50px' }} />}>
-                Pit
-            </LinkButton>
-
-            <LinkButton
-                link='/recon'
-                icon={<QueryStatsIcon style={{ fontSize: '50px' }} />}>
-                Recon
-            </LinkButton>
-
-            <LinkButton
-                link='/recon'
-                icon={<SportsEsportsIcon style={{ fontSize: '50px' }} />}>
-                Cone Stacker
-            </LinkButton>
+        <main className='min-h-screen bg-[#171c26] text-white text-center 
+        grid grid-cols-2 grid-rows-[auto] auto-rows-fr gap-10 pb-10 px-10 select-none'>
+            <h1 className='bg-[#2f3646] col-span-2 text-4xl text-green-700 font-bold p-5'>
+                Vitruvian Scouting
+            </h1>
+                <LinkButton link='/match'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Match
+                </LinkButton>
+                <LinkButton link='/super'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Super
+                </LinkButton>
+                <LinkButton link='/pit'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Pit
+                </LinkButton>
+                <LinkButton link='/recon'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Recon
+                </LinkButton>
+                <LinkButton link='/public'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Public
+                </LinkButton>
+                <LinkButton link='/games'
+                className='text-5xl bg-[#2f3646] rounded-3xl'>
+                    Games
+                </LinkButton>
         </main>
     );
 }

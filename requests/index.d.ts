@@ -1,4 +1,5 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
 
 export type RobotPosition =
     | 'red_1'
@@ -8,10 +9,27 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 'A' | 'B';
+export type SuperPosition = 
+    | 'red_ss'
+    | 'blue_ss'
 // export type ScoringLocation = 'A' | 'B';
+
+export interface matchDataAggregations{
+    averageTeleSpeakerNotes: number;
+    averageTeleAmpNotes: number;
+    averageAutoSpeakerNotes: number;
+    averageAutoAmpNotes: number;
+    averageTrapNotes:number;
+    maxTeleSpeakerNotes: number;
+    maxTeleAmpNotes: number;
+    maxAutoSpeakerNotes: number;
+    maxAutoAmpNotes: number;
+    maxTrapNotes: number;
+}
 
 export interface MetaData {
     scouterName: string;
+    matchNumber: number;
     robotTeam: number;
     robotPosition: RobotPosition;
 }
@@ -19,7 +37,9 @@ export interface MetaData {
 interface ScoreRanges {
     near: number,
     mid: number,
-    far: number
+    far: number,
+    amp: number,
+    miss: number
 }
 
 // - `POST` `/data/match`
@@ -29,12 +49,8 @@ export interface MatchData {
     // No competition info
     leftStartingZone: boolean;
     autoSpeakerNotes: ScoreRanges;
-    autoAmpNotes: number;
-    teleNonAmpedSpeakerNotes: ScoreRanges;
-    teleAmpedSpeakerNotes: ScoreRanges;
-    teleAmpNotes: number;
+    teleSpeakerNotes: ScoreRanges;
     trapNotes: number;
-    highNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
 }
@@ -47,7 +63,7 @@ export type SuperData = {
     defense: unknown;
     driverSKill: unknown; // Similar to defense
     spotlitRobots: number;
-    coOp: boolean;
+    highNotes: number;
     stationPlayerTeam: number; // Team Number
 }[];
 
@@ -73,11 +89,9 @@ export type StatusReport = MetaData;
 
 export interface StatusRecieve {
     scouters: MetaData[];
-    matches: Record<RobotPosition | 'red_ss' | 'blue_ss', boolean>[];
+    matches: Record<RobotPosition | SuperPosition, boolean>[];
 }
 
 // - `GET` `/data/schedule.json`
 
-export interface MatchSchedule {
-    matches: Record<RobotPosition, number>;
-}
+export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
