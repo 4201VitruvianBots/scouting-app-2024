@@ -51,6 +51,7 @@ function PitApp() {
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
   
   
+  
   const handleAdditionalNotes = (event) => {
     setAdditionalNotes(event.target.value);
   };
@@ -104,7 +105,7 @@ function PitApp() {
 
     return (
         <>
-            <div className='bg-gray-700'>
+            <div className='bg-[#171c26]'>
             <div className="border border-neutral-900 bg-gray-800 mb-7">
               <br/>
               <h1 className="text-center text-white text-3xl mb-4">Pit App</h1>
@@ -113,8 +114,8 @@ function PitApp() {
 
 
             <div className="flex justify-center items-center mb-8">
-            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-24 w-2/4 justify-center rounded-lg">
-            <h1 className="text-center">Team Number</h1>
+            <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg">
+            <h1 className="text-center text-white">Team Number</h1>
             <input min={0} onChange={handleTeamNumber} value={teamNumber} style={inputTeamNum} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder='Team#'></input>
             </div>
             </div>
@@ -169,17 +170,17 @@ function PitApp() {
               </div>
 
             <div className="flex justify-center items-center mb-8 mt-7">
-            <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-24 w-2/4 justify-center rounded-lg ">
-            <h1 className="text-center">Number of Batteries?</h1>
+            <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg ">
+            <h1 className="text-center text-white">Number of Batteries?</h1>
             <input min={0} onChange={handleBatteryNumber} value={batteryNumber} style={inputBattery} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder="0"></input>
             </div>
             </div>
             
-            <div className="ml-8 flex flex-col items-center justify-center">
+            <div className="ml-1 flex flex-col items-center justify-center">
               <h1 className="text-center text-white mb-4">Auto Capability?</h1>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center justify-center space-y-4">
                 {autoInputValues.map((value, index) => (
-                <div key={index} className="flex items-center space-x-2">
+                <div key={index} className="flex items-center justify-center space-x-2">
                   <input
                   className='w-2/3 border-1 rounded-lg border border-gray-700 text-3xl text-center'
                   type="text"
@@ -194,51 +195,51 @@ function PitApp() {
                   </div>
                ))}
             </div>
-            <button className="bg-green-500 font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad mt-4 mb-5 " onClick={addAnotherAuto}>Add input</button>
+            <button className="bg-[#48c55c] font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad mt-4 mb-5" onClick={addAnotherAuto}>Add input</button>
             </div>
 
         
 
 
             <div className="flex justify-center items-center mb-8">
-              <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-48 w-3/4 justify-center rounded-lg ">
-                <h1 className="text-center font-semibold mb-3">Team role?</h1>
+              <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-48 w-3/4 justify-center rounded-lg ">
+                <h1 className="text-center text-white font-semibold mb-3">Team role?</h1>
                 <div className='grid grid-cols-2 gap-4 justify-center'>
       <MultiButton
         onChange={setRole}
         value={role}
         labels={['Scoring', 'Defense']}
         values={['scoring','defense']}
-        className={['place-content-center mx-auto w-min !flex']}
+        className={['px-8 place-content-center mx-auto w-min !flex']}
       />
       <MultiButton
         onChange={setRole}
         value={role}
         labels={['Support', 'All-Round']}
         values={['support', 'all-round']}
-        className={["place-content-center mx-auto w-min !flex"]}
+        className={['px-8 place-content-center mx-auto w-min !flex']}
       />
     </div>
   </div>
 </div>        
            
             <div className="flex justify-center items-center mb-8">
-              <div className="flex flex-col items-center bg-emerald-200 border-emerald-700 border-4 h-48 w-3/4 justify-center rounded-lg ">
-                <h1 className="text-center font-semibold mb-3">Drivetrain type?</h1>
+              <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-48 w-3/4 justify-center rounded-lg ">
+                <h1 className="text-center text-white font-semibold mb-3">Drivetrain type?</h1>
                 <div className='grid grid-cols-2 gap-4 justify-center'>
       <MultiButton
         onChange={setDrivetrain}
         value={drivetrain}
         labels={['Tank', 'Swerve']}
         values={['tank','swerve']}
-        className={['place-content-center mx-auto w-min !flex']}
+        className={['px-12 place-content-center mx-auto w-min !flex']}
       />
       <MultiButton
         onChange={setDrivetrain}
         value={drivetrain}
         labels={['Mecanum', 'Other']}
         values={['MECANUM', 'other']}
-        className={["place-content-center mx-auto w-min !flex"]}
+        className={['px-7 place-content-center mx-auto w-min !flex', 'px-10 place-content-center mx-auto w-min !flex']}
       />
     </div>
   </div>
@@ -247,7 +248,7 @@ function PitApp() {
             <h1 className="text-center text-white">Additional Notes?</h1>
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={handleAdditionalNotes} value={additionalNotes} type="text"></input>
 
-            <button className='bg-green-500 font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
+            <button className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
             </div>
         </>
     );
