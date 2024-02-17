@@ -3,6 +3,7 @@ import { AnalysisEntry, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
+import { MaterialSymbol } from 'react-material-symbols';
 
 function StatDialog({
     onSubmit,
@@ -32,6 +33,14 @@ function StatDialog({
 
     return (
         <>
+            <div className='flex justify-end'>
+                <button
+                    onClick={onClose}
+                    className='grid aspect-square h-3/4 rounded-full hover:bg-gray-500/50'>
+                    <MaterialSymbol icon='close' />
+                </button>
+            </div>
+            
             <label>
                 Column
                 <SelectSearch

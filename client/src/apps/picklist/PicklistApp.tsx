@@ -9,6 +9,8 @@ import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
 import ScatterPlotDialog from './components/ScatterPlotDialog';
 import ScatterPlotGraph from './components/ScatterPlotGraph';
+import { MaterialSymbol } from 'react-material-symbols';
+import LinkButton from '../../components/LinkButton';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
     switch (table.type) {
@@ -32,7 +34,17 @@ function PicklistApp() {
     
     return (
         <main className='grid h-screen grid-rows-[auto_1fr]'>
-            <div className='border-b border-black'>
+            <div className='border-b border-black flex items-center'>
+                <LinkButton link='/' className='flex items-center justify-center snap-none px-5'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={30}
+                        fill
+                        grade={200}
+                        color='black'
+                        className='snap-none'
+                    />
+                </LinkButton>
                 
                 <Dialog
                     trigger={open => (
