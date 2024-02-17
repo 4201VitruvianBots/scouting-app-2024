@@ -1,14 +1,15 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
-import { useFetchJson } from '../../../lib/useFetchJson';
 import { AnalysisEntry, StatSummaryData, TeamInfoEntry } from '../data';
 
 function StatSummary({
     table,
     data,
+    teamInfoJson,
 }: {
     table: StatSummaryData;
     data: AnalysisEntry[];
+    teamInfoJson: TeamInfoEntry;
 }) {
     const entries = data.map<[number, number]>(e => [
         e.teamNumber,
@@ -20,19 +21,18 @@ function StatSummary({
     const sortedEntryDataPoints = sortedEntries.map(entry => entry[1]);
     
     // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
-    const teamAvatarsJson = useFetchJson<TeamInfoEntry>('/team_info.json');
     const empty1x1Base64: string = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
     
     const lowTeamNumber = sortedEntryTeamNumbers[0];
-    const lowTeamAvatar = base64toImage(teamAvatarsJson ? (teamAvatarsJson[lowTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
+    const lowTeamAvatar = base64toImage(teamInfoJson ? (teamInfoJson[lowTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
     const lowDataPoint = sortedEntryDataPoints[0];
     
     const medianTeamNumber = sortedEntryTeamNumbers[Math.floor(sortedEntryTeamNumbers.length / 2)];
-    const medianTeamAvatar = base64toImage(teamAvatarsJson ? (teamAvatarsJson[medianTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
+    const medianTeamAvatar = base64toImage(teamInfoJson ? (teamInfoJson[medianTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
     const medainDataPoint = sortedEntryDataPoints[Math.floor(sortedEntryDataPoints.length / 2)];
     
     const highTeamNumber = sortedEntryTeamNumbers[sortedEntryTeamNumbers.length - 1];
-    const highTeamAvatar = base64toImage(teamAvatarsJson ? (teamAvatarsJson[highTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
+    const highTeamAvatar = base64toImage(teamInfoJson ? (teamInfoJson[highTeamNumber]?.avatar ?? empty1x1Base64) : empty1x1Base64);
     const highDataPoint = sortedEntryDataPoints[sortedEntryDataPoints.length - 1];
     
     return (

@@ -1,13 +1,14 @@
 import base64toImage from '../../../lib/base64toImage';
-import { useFetchJson } from '../../../lib/useFetchJson';
 import { AnalysisEntry, StatTableData, TeamInfoEntry } from '../data';
 
 function StatTable({
     table,
     data,
+    teamInfoJson,
 }: {
     table: StatTableData;
     data: AnalysisEntry[];
+    teamInfoJson: TeamInfoEntry;
 }) {
     const entries = data.map<[number, number]>(e => [
         e.teamNumber,
@@ -17,16 +18,15 @@ function StatTable({
     if (!table.ascending) sortedEntries.reverse();
     
     // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
-    const teamAvatarsJson = useFetchJson<TeamInfoEntry>('/team_info.json');
     const sortedTeamNumbers = sortedEntries.map(entry => entry[0].toString());
     let sortedTeamAvatars = sortedTeamNumbers.map(() => '');
     
     const empty64x64Base64: string = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAOUlEQVR42u3OIQEAAAACIP1/2hkWWEBzVgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAYF3YDicAEE8VTiYAAAAAElFTkSuQmCC";
     
-    if (teamAvatarsJson !== undefined) {
+    if (teamInfoJson !== undefined) {
         sortedTeamAvatars = sortedTeamNumbers.map(teamNumber => {
-            if (teamAvatarsJson[teamNumber]?.avatar !== undefined) {
-                return teamAvatarsJson[teamNumber]?.avatar;
+            if (teamInfoJson[teamNumber]?.avatar !== undefined) {
+                return teamInfoJson[teamNumber]?.avatar;
             } else {
                 return empty64x64Base64;
             }

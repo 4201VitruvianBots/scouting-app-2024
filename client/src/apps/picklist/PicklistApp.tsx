@@ -1,4 +1,4 @@
-import { AnalysisEntry, WindowData } from './data';
+import { AnalysisEntry, WindowData, TeamInfoEntry } from './data';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
@@ -13,20 +13,20 @@ import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
 import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
-import TeamSummary from './components/TeamSummary';
+// import TeamSummary from './components/TeamSummary';
 
-function generateWindow(data: AnalysisEntry[], table: WindowData) {
+function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: TeamInfoEntry) {
     switch (table.type) {
         case 'StatTable':
-            return <StatTable data={data} table={table} />;
+            return <StatTable data={data} table={table} teamInfoJson={teamInfoJson}/>;
         case 'BarGraph':
-            return <BarGraph data={data} table={table} />;
+            return <BarGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
         case 'ScatterPlotGraph':
-            return <ScatterPlotGraph data={data} table={table} />;
+            return <ScatterPlotGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
         case 'StatSummary':
-            return <StatSummary data={data} table={table} />;
-        case 'TeamSummary':
-            return <TeamSummary data={data} table={table} />;
+            return <StatSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+        // case 'TeamSummary':
+        //     return <TeamSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
         default:
             return undefined;
     }
@@ -35,7 +35,8 @@ function generateWindow(data: AnalysisEntry[], table: WindowData) {
 
 function PicklistApp() {
     const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
-
+    const teamInfo = useFetchJson<TeamInfoEntry>('/team_info.json');
+    
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
     
@@ -126,7 +127,7 @@ function PicklistApp() {
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {value => {
-                    return analyzedData && generateWindow(analyzedData, value);
+                    return analyzedData && generateWindow(analyzedData, value, teamInfo || {});
                 }}
             </Workspace>
         </main>

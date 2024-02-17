@@ -1,12 +1,14 @@
 import { ChartShallowDataShape, ScatterPlot } from 'reaviz';
-import { AnalysisEntry, ScatterPlotGraphData } from '../data';
+import { AnalysisEntry, ScatterPlotGraphData, TeamInfoEntry } from '../data';
 
 function ScatterPlotGraph({
     table,
     data,
+    teamInfoJson,
 }: {
     table: ScatterPlotGraphData;
     data: AnalysisEntry[];
+    teamInfoJson: TeamInfoEntry;
 }) {
     const plotData: ChartShallowDataShape[] = data.map(e => {
         return {
