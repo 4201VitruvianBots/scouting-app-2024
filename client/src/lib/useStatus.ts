@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { RobotPosition, SuperPosition, StatusReport, StatusRecieve } from "requests";
+import { useBattery } from "./useBattery";
 
 
 function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNumber:number|undefined, scouterName:string) {
     const socket = useRef<WebSocket>();
 
     // Store the current status
+    const battery = useBattery()
     const status = useRef<StatusReport>();
-    status.current = { robotPosition, matchNumber, scouterName, battery: 69 };
+    status.current = { robotPosition, matchNumber, scouterName, battery };
 
     useEffect(() => {
         // Create a new websocket
@@ -28,7 +30,7 @@ function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNum
             return
         
         socket.current?.send(JSON.stringify(status.current))
-    },[matchNumber, robotPosition, scouterName])
+    },[matchNumber, robotPosition, scouterName, battery])
         
 };
 

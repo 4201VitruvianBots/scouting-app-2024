@@ -13,7 +13,6 @@ import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 
 
-
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
