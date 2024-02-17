@@ -9,6 +9,7 @@
     "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
     "gen-fake-data": "node --loader ts-node/esm scripts/addFakeData.ts",
     "gen-fake-json": "node --loader ts-node/esm scripts/genFakeJson.ts",
+    "gen-team-colors": "node --loader ts-node/esm scripts/genTeamColors.ts",
     "download-schedule": "node --loader ts-node/esm scripts/downloadSchedule.ts"
   },
   "keywords": [],

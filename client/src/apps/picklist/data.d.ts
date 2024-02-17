@@ -4,6 +4,15 @@ export interface AnalysisEntry extends Record<string, string | number | boolean>
     teamNumber: number;
 }
 
+export interface TeamColorEntry {
+    [teamNumber: string]: {
+        primaryHex: string;
+        secondaryHex: string;
+        verified: boolean;
+        avatar?: string;
+    };
+}
+
 export interface StatTableData extends TabBase {
     column: string;
     ascending: boolean;

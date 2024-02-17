@@ -72,7 +72,7 @@ function ScatterPlotDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={camelToSpaced(xColumn || "") + "/" + camelToSpaced(yColumn || "")}
+                        placeholder={xColumn && yColumn ? camelToSpaced(xColumn) + "/" + camelToSpaced(yColumn) : ""}
                     />
                 </label>
             </p>
