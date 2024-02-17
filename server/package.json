@@ -6,10 +6,10 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
-    "gen-fake-data": "node --loader ts-node/esm scripts/addFakeData.ts",
-    "gen-fake-json": "node --loader ts-node/esm scripts/genFakeJson.ts",
-    "download-schedule": "node --loader ts-node/esm scripts/downloadSchedule.ts"
+    "dev": "cross-env NODE_ENV=dev tsx watch src/index.ts",
+    "gen-fake-data": "tsx scripts/addFakeData.ts",
+    "gen-fake-json": "tsx scripts/genFakeJson.ts",
+    "download-schedule": "tsx scripts/downloadSchedule.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,15 +21,14 @@
     "cross-env": "^7.0.3",
     "csv-stringify": "^6.4.5",
     "node-fetch": "^3.3.2",
-    "nodemon": "^3.0.2",
     "requests": "^1.0.0",
-    "ts-node": "^10.9.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "database": "^1.0.0",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
-    "mongoose": "^8.1.0"
+    "mongoose": "^8.1.0",
+    "tsx": "^4.7.1"
   }
 }
