@@ -14,8 +14,55 @@ function SuperApp() {
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
 
     return (
-        <main className='flex select-none flex-col items-center text-center'>
-            <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
+        <main className='grid columns-3 text-center'>
+            <h1 className='col-span-3 my-8 text-3xl'>Super Scouting App</h1>
+            <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
+                <LinkButton link='/' className='snap-none'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={80}
+                        fill
+                        grade={200}
+                        color='green'
+                        className='snap-none'
+                    />
+                </LinkButton>
+            </div>
+            <Dialog
+                    trigger={open => (
+                        <button onClick={open} className='col-span-3'>
+                            <MaterialSymbol
+                                icon='account_circle'
+                                size={60}
+                                fill
+                                grade={200}
+                                className={` ${scouterName && superPosition ? 'text-green-400' 
+                                : 'text-gray-400'} snap-none`}
+                            />
+                        </button>
+                    )}>
+                    {close => (
+                        <SignIn
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={superPosition}
+                            onChangeRobotPosition={setSuperPosition}
+                            onSubmit={close}
+                            superScouting
+                        />
+                    )}
+            </Dialog>
+            <ButtonDropdown options={foulTypes}>
+                Add Foul
+            </ButtonDropdown>
+            <ButtonDropdown options={foulTypes}>
+                Add Foul
+            </ButtonDropdown>
+            <ButtonDropdown options={foulTypes}>
+                Add Foul
+            </ButtonDropdown>
+        </main>
+            /* <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
@@ -64,14 +111,8 @@ function SuperApp() {
                 <div className='bg-green-300'>
                     <p>team 3</p>
                 </div>
-
-
             </div>
-
-
-          
-            
-        </main>
+             */
     );
 }
 
