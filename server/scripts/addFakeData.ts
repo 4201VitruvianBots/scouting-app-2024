@@ -19,7 +19,7 @@ const teams = new Array(10).fill(0).map(() => Math.floor(10000 * Math.random()))
 for (let i = 0; i < 60; i++) {
     console.log(i);
     await new matchApp({
-        autoSpeakerNotes: {
+        autoNotes: {
             near: randint(5),
             mid: randint(5),
             far: randint(5),
@@ -34,7 +34,7 @@ for (let i = 0; i < 60; i++) {
             scouterName: 'Jim',
             matchNumber: randint(40),
         },
-        teleSpeakerNotes: {
+        teleNotes: {
             far: randint(5),
             mid: randint(5),
             near: randint(5),
