@@ -94,7 +94,7 @@ export interface StatusReport {
 
 export interface StatusRecieve {
     scouters: StatusReport[];
-    matches: Record<RobotPosition | SuperPosition, boolean>[];
+    matches: Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
 }
 
 // - `GET` `/data/schedule.json`

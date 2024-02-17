@@ -1,8 +1,12 @@
 import { Application } from 'express';
 import expressWs from 'express-ws'
-import { StatusRecieve, StatusReport } from 'requests';
+import { MatchSchedule, StatusRecieve, StatusReport, RobotPosition } from 'requests';
+import { matchApp } from './Schema.js';
+import fs from 'fs';
 
-const status: StatusRecieve = { matches: [], scouters: [] };
+const schedule = fs.existsSync('static/matchSchedule.json') ? JSON.parse(fs.readFileSync('static/matchSchedule.json', {encoding:"utf8"})) as MatchSchedule : undefined
+
+const status: StatusRecieve = { matches: {}, scouters: [] };
 
 // array of functions to call whenever status changes;
 const statusWatchers: (() => void)[] = [];
@@ -11,6 +15,25 @@ const statusWatchers: (() => void)[] = [];
 function notifyWatchers() {
     statusWatchers.forEach(watcher => watcher());
 }
+
+async function updateMatchStatus() { 
+    const matchEntries = await matchApp.find()
+    .select('metadata.matchNumber metadata.robotTeam metadata.robotPosition')
+
+    const matchNumbers = [...[...Object.keys(schedule??{})].map(number => parseInt(number)), ...matchEntries.map(match => match.metadata.matchNumber)].filter ((value, index, self) => self.indexOf(value) === index)
+
+    const matchOutput = Object.fromEntries(matchNumbers.map (matchNumber => [matchNumber, {
+        ...Object.fromEntries((['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']satisfies RobotPosition[]).map (robotPosition => [robotPosition, {
+            schedule: schedule?.[matchNumber][robotPosition], 
+            real: matchEntries.filter(matchEntry => matchEntry.metadata.matchNumber === matchNumber && matchEntry.metadata.robotPosition === robotPosition).map (matchEntry => matchEntry.metadata.robotTeam)
+        }]))
+    }]))
+
+    status.matches = matchOutput as unknown as StatusRecieve['matches']
+    notifyWatchers()
+ }
+
+updateMatchStatus()
 
 function setUpSocket(expressApp: Application) {
     const { app } = expressWs(expressApp);
@@ -64,4 +87,4 @@ function setUpSocket(expressApp: Application) {
     })
 };
 
-export {setUpSocket};
+export {setUpSocket, updateMatchStatus};
