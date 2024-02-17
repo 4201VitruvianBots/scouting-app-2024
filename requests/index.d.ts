@@ -7,7 +7,7 @@ export type RobotPosition =
     | 'red_3'
     | 'blue_1'
     | 'blue_2'
-    | 'blue_3';
+    | 'blue_3'
 export type Foul = 'A' | 'B';
 export type SuperPosition = 
     | 'red_ss'
@@ -94,9 +94,10 @@ export interface StatusReport {
 
 export interface StatusRecieve {
     scouters: StatusReport[];
-    matches: Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
+    matches: MatchStatus
 }
 
+export type MatchStatus = Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
 // - `GET` `/data/schedule.json`
 
 export type MatchSchedule = Record<number, Record<RobotPosition,number>> 

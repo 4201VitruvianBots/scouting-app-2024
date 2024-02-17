@@ -1,5 +1,6 @@
 import LinkButton from "../../components/LinkButton";
 import { useStatusRecieve } from '../../lib/useStatus';
+import { ScouterTable } from "./components/ScouterTable";
 
 function AdminApp() {
     const status = useStatusRecieve();
@@ -8,7 +9,7 @@ function AdminApp() {
         <>
             <h1>Admin App</h1>
             <LinkButton link='/'>Home</LinkButton>
-            <>{JSON.stringify(status)}</>
+            <ScouterTable scouters={status.scouters}/>
         </>
     );
 }
