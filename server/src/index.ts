@@ -7,7 +7,7 @@ import { app } from './server.js';
 dotenv.load({ path: '.env' });
 dotenv.load({ path: '.env.local' });
 
-const remote = process.env.LOCATION === 'remote';
+const REMOTE = process.env.LOCATION === 'remote';
 
 const container = await startDockerContainer(process.env.CONTAINER_NAME);
 
@@ -17,7 +17,7 @@ const server = app.listen(8080, () => {
     console.log('Server running at http://localhost:8080');
 });
 
-if (remote) {
+if (REMOTE) {
     const url = await ngrok.connect({ authtoken: process.env.NGROK_TOKEN, addr: 8080 });
     console.log(`Server is accessible at ${url}`);
 }
