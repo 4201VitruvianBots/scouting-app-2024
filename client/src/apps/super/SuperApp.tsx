@@ -1,8 +1,6 @@
 import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
-import ReactDropdown from 'react-dropdown';
-import Checkbox from '../../components/Checkbox';
 import { useState } from 'react';
 import { SuperPosition } from 'requests';
 import Dialog from '../../components/Dialog';

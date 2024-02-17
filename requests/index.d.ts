@@ -1,4 +1,4 @@
-export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed';
 
 export type RobotPosition =
     | 'red_1'
@@ -7,10 +7,19 @@ export type RobotPosition =
     | 'blue_1'
     | 'blue_2'
     | 'blue_3';
-export type Foul = 'A' | 'B';
+export type Foul = 
+    |'inBot' 
+    | 'damageBot' 
+    | 'tipEntangBot' 
+    | 'pinBot' 
+    | 'podiumFoul' 
+    | 'zoneFoul' 
+    | 'stageFoul' 
+    | 'overExtChute';
+
 export type SuperPosition = 
     | 'red_ss'
-    | 'blue_ss'
+    | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
 
 export interface matchDataAggregations{
