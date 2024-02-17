@@ -10,6 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Node.js
 - npm
+- Docker (server only)
 
 ### Installation
 
@@ -49,4 +50,12 @@ npm run dev --workspace server
 
 ```
 npm run dev
+```
+
+### Generate Fake Data
+
+If you don't have real scouting data to use to test the picklist interface/other interfaces, run the following to generate some fake data:
+
+```
+npm run --workspace server gen-fake-json
 ```
