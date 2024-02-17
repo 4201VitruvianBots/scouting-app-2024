@@ -1,5 +1,6 @@
 import {
     Dispatch,
+    Fragment,
     SetStateAction,
     useCallback,
     useContext,
@@ -10,12 +11,12 @@ import {
     PaneData,
     SplitData,
     StateProps,
+    TabBase,
     TabsData,
     TabsSplice,
 } from './workspaceData';
 import {
     SetAddToFocusedContext,
-    CreateTitleContext,
     DragContext,
     TabContentContext,
     NestingContext,
@@ -25,7 +26,7 @@ import { useArrayState } from '../../lib/useArrayState';
 import Tab from './Tab';
 import DropTarget from './DropTarget';
 
-function Tabs<T>({
+function Tabs<T extends TabBase>({
     value,
     onChange,
     onRemove,
@@ -43,7 +44,6 @@ function Tabs<T>({
     const nesting = useContext(NestingContext);
 
     const tabContext = useContext(TabContentContext) as TabContentContext<T>;
-    const createTitle = useContext(CreateTitleContext) as CreateTitleContext<T>;
     const setAddToFocused = useContext(
         SetAddToFocusedContext
     ) as SetAddToFocusedContext<T>;
@@ -98,7 +98,7 @@ function Tabs<T>({
                         key={i}
                         onClick={() => setSelected(i)}
                         selected={selected === i}
-                        title={createTitle(tab, i)}
+                        title={tab.title}
                         value={tab}
                         onInsertBefore={value => {
                             tabsA.insert(i, value);
@@ -125,10 +125,12 @@ function Tabs<T>({
             </div>
             <div className='relative flex-grow basis-0'>
                 <div className='absolute inset-0 overflow-auto p-2'>
-                    {tabs[selected] &&
-                        tabContext(tabs[selected], tab =>
-                            tabsA.set(selected, tab as SetStateAction<T>)
-                        )}
+                    <Fragment key={selected}>
+                        {tabs[selected] &&
+                            tabContext(tabs[selected], tab =>
+                                tabsA.set(selected, tab as SetStateAction<T>)
+                            )}
+                    </Fragment>
                 </div>
                 {nesting < 6 &&
                     dragging &&

@@ -48,7 +48,9 @@ function PicklistApp() {
                 
                 <Dialog
                     trigger={open => (
-                        <button className="px-4" onClick={open}>Add Stat Table</button>
+                        <button className='px-4' onClick={open}>
+                            Add Stat Table
+                        </button>
                     )}>
                     {close => (
                         <StatDialog
@@ -60,7 +62,9 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className="px-4" onClick={open}>Add Bar Graph</button>
+                        <button className='px-4' onClick={open}>
+                            Add Bar Graph
+                        </button>
                     )}>
                     {close => (
                         <BarGraphDialog
@@ -72,7 +76,9 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className="px-4" onClick={open}>Add Scatter Plot</button>
+                        <button className='px-4' onClick={open}>
+                            Add Scatter Plot
+                        </button>
                     )}>
                     {close => (
                         <ScatterPlotDialog
@@ -83,15 +89,9 @@ function PicklistApp() {
                     )}
                 </Dialog>
             </div>
-            <Workspace
-                value={views}
-                onChange={setViews}
-                controls={controls}
-                title={table => table.title}>
+            <Workspace value={views} onChange={setViews} controls={controls}>
                 {value => {
-                    return (
-                        analyzedData && generateWindow(analyzedData, value)
-                    );
+                    return analyzedData && generateWindow(analyzedData, value);
                 }}
             </Workspace>
         </main>

@@ -26,7 +26,7 @@ function BarGraphDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({title: title || column, column, ascending, type: 'BarGraph'});
+            onSubmit({title: title || column, column, ascending, type: 'BarGraph' });
             onClose?.();
         }
     };

@@ -26,10 +26,10 @@ function ScatterPlotDialog({
     const handleSubmit = () => {
         if (xColumn && yColumn) {
             onSubmit({
-                title: title || (xColumn || "") + " " + (yColumn || ""),
-                xColumn: xColumn || "",
-                yColumn: yColumn || "",
-                type: 'ScatterPlotGraph'
+                title: title || (xColumn || '') + ' ' + (yColumn || ''),
+                xColumn: xColumn || '',
+                yColumn: yColumn || '',
+                type: 'ScatterPlotGraph',
             });
             onClose?.();
         }

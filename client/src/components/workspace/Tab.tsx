@@ -2,8 +2,9 @@ import { DragEventHandler, useContext, useState } from 'react';
 import { DragContext } from './workspaceContexts';
 import DropTarget from './DropTarget';
 import { MaterialSymbol } from 'react-material-symbols';
+import { TabBase } from './workspaceData';
 
-function Tab<T>({
+function Tab<T extends TabBase>({
     value,
     onRemove,
     onInsertBefore,

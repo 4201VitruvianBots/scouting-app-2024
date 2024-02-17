@@ -6,8 +6,9 @@ import {
     useState,
 } from 'react';
 import { DragContext } from './workspaceContexts';
+import { TabBase } from './workspaceData';
 
-function DropTarget<T>({
+function DropTarget<T extends TabBase>({
     disabled = false,
     onDrop,
     className = '',
