@@ -1,6 +1,5 @@
 import { BarChart, BarSeries, ChartDataShape, ColorSchemeType } from 'reaviz';
 import { AnalysisEntry, BarGraphData, TeamColorEntry } from '../data';
-import fs from 'fs';
 import { useFetchJson } from '../../../lib/useFetchJson';
 
 function BarGraph({
