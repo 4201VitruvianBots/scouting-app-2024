@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "start:remote": "cross-env LOCATION=remote node dist/index.js",
-    "dev": "cross-env NODE_ENV=dev tsx watch --signal SIGTERM src/index.ts",
+    "dev": "cross-env NODE_ENV=dev tsx watch src/index.ts",
     "dev:remote": "cross-env NODE_ENV=dev LOCATION=remote tsx watch src/index.ts",
     "gen-fake-data": "tsx scripts/addFakeData.ts",
     "gen-fake-json": "tsx scripts/genFakeJson.ts",

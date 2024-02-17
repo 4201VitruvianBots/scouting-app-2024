@@ -11,8 +11,10 @@ await mongoose.connect('mongodb://0.0.0.0:27107/');
 
 console.log('Sending to remote server...')
 
-await sendExport();
+const result = await sendExport();
 
-console.log('Finished')
+if (!result?.ok) {
+    console.error(result ? `Request failed: ${result.status} ${result.statusText}` : 'Request failed');
+}
 
 await mongoose.disconnect();
