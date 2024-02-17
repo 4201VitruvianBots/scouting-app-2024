@@ -1,3 +1,4 @@
+import base64toImage from '../../../lib/base64toImage';
 import { useFetchJson } from '../../../lib/useFetchJson';
 import { AnalysisEntry, StatTableData, TeamColorEntry } from '../data';
 
@@ -20,32 +21,20 @@ function StatTable({
     const sortedTeamNumbers = sortedEntries.map(entry => entry[0].toString());
     let sortedTeamAvatars = sortedTeamNumbers.map(() => '');
     
-    const emptyBase64: string =  "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAOUlEQVR42u3OIQEAAAACIP1/2hkWWEBzVgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAYF3YDicAEE8VTiYAAAAAElFTkSuQmCC";
+    const empty64x64Base64: string = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAOUlEQVR42u3OIQEAAAACIP1/2hkWWEBzVgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAYF3YDicAEE8VTiYAAAAAElFTkSuQmCC";
     
     if (teamAvatarsJson !== undefined) {
         sortedTeamAvatars = sortedTeamNumbers.map(teamNumber => {
             if (teamAvatarsJson[teamNumber]?.avatar !== undefined) {
                 return teamAvatarsJson[teamNumber]?.avatar;
             } else {
-                return emptyBase64;
+                return empty64x64Base64;
             }
         }).filter(Boolean) as string[];
     }
     
     // Convert the base64 images to an array of Image objects
-    let avatarImages: HTMLImageElement[] = [];
-    sortedTeamAvatars.forEach((avatar, i) => {
-        avatarImages[i] = new Image();
-        // Convert base64 to blob
-        const byteCharacters = atob(avatar);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let j = 0; j < byteCharacters.length; j++) {
-            byteNumbers[j] = byteCharacters.charCodeAt(j);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], {type: 'image/png'});
-        avatarImages[i].src = URL.createObjectURL(blob);
-    });
+    const avatarImages = sortedTeamAvatars.map(base64toImage);
     
     return (
         <table>
@@ -57,7 +46,7 @@ function StatTable({
             <tbody>
                 {sortedEntries.map(([team, datapoint], i) => (
                     <tr key={i}>
-                        <td><img src={avatarImages[i].src} width='32' height='32' /></td>
+                        {avatarImages[i].src ? <td><img src={avatarImages[i].src} width='32' height='32' /></td> : <td></td>}
                         <td>{team}</td>
                         <td>{datapoint}</td>
                     </tr>

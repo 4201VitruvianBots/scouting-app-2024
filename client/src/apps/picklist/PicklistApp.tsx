@@ -11,6 +11,8 @@ import ScatterPlotDialog from './components/ScatterPlotDialog';
 import ScatterPlotGraph from './components/ScatterPlotGraph';
 import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
+import StatSummaryDialog from './components/StatSummaryDialog';
+import StatSummary from './components/StatSummary';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData) {
     switch (table.type) {
@@ -20,6 +22,10 @@ function generateWindow(data: AnalysisEntry[], table: WindowData) {
             return <BarGraph data={data} table={table} />;
         case 'ScatterPlotGraph':
             return <ScatterPlotGraph data={data} table={table} />;
+        case 'StatSummary':
+            return <StatSummary data={data} table={table} />;
+        // case 'TeamSummary':
+        //     return <TeamSummary data={data} table={table} />;
         default:
             return undefined;
     }
@@ -63,6 +69,20 @@ function PicklistApp() {
                 <Dialog
                     trigger={open => (
                         <button className='px-4' onClick={open}>
+                            Add Stat Summary
+                        </button>
+                    )}>
+                    {close => (
+                        <StatSummaryDialog
+                            data={analyzedData || []}
+                            onSubmit={addToFocused}
+                            onClose={close}
+                        />
+                    )}
+                </Dialog>
+                <Dialog
+                    trigger={open => (
+                        <button className='px-4' onClick={open}>
                             Add Bar Graph
                         </button>
                     )}>
@@ -88,6 +108,20 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
+                {/* <Dialog
+                    trigger={open => (
+                        <button className='px-4' onClick={open}>
+                            Add Team Summary
+                        </button>
+                    )}>
+                    {close => (
+                        <TeamSummaryDialog
+                            data={analyzedData || []}
+                            onSubmit={addToFocused}
+                            onClose={close}
+                        />
+                    )}
+                </Dialog> */}
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {value => {

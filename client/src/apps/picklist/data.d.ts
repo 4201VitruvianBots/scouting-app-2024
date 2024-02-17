@@ -32,4 +32,14 @@ export interface ScatterPlotGraphData extends TabBase {
     type: "ScatterPlotGraph";
 }
 
-export type WindowData = StatTableData | BarGraphData | ScatterPlotGraphData; // | WeightedTableData | BlankTableData | ...
+export interface StatSummaryData extends TabBase {
+    column: string;
+    type: "StatSummary";
+}
+
+export interface TeamSummaryData extends TabBase {
+    teamNumber: number;
+    type: "TeamSummary";
+}
+
+export type WindowData = StatTableData | BarGraphData | ScatterPlotGraphData | StatSummaryData | TeamSummaryData; // | WeightedTableData | BlankTableData | ...
