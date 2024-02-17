@@ -3,6 +3,7 @@ import { AnalysisEntry, BarGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
+import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
 function BarGraphDialog({
@@ -24,11 +25,12 @@ function BarGraphDialog({
     const [column, setColumn] = useState<string>();
     const [ascending, setAscending] = useState(false);
     
+    const [showAll, setShowAll] = useState(true);
     const [top, setTop] = useState('');
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({title: title || column, column, ascending, type: 'BarGraph', top: parseInt(top)});
+            onSubmit({title: title || camelToSpaced(column || ''), column, ascending, type: 'BarGraph', top: parseInt(top)});
             onClose?.();
         }
     };
@@ -46,7 +48,7 @@ function BarGraphDialog({
             <label>
                 Column
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: e }))}
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
                     value={column}
                     placeholder='Select Stat'
                     onChange={value => setColumn(value as string)}
@@ -59,17 +61,21 @@ function BarGraphDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={column}
+                        placeholder={camelToSpaced(column || '')}
                     />
                 </label>
             </p>
             <p>
+                <Checkbox checked={showAll} onChange={setShowAll}>Show All?</Checkbox>
+            </p>
+            <p>
                 <label>
-                    Show Top
+                    Show Top 
                     <TextInput
                         value={top}
                         onChange={setTop}
                         placeholder={''}
+                        disabled={showAll}
                     />
                 </label>
             </p>

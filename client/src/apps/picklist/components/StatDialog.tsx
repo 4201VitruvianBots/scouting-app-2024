@@ -3,6 +3,7 @@ import { AnalysisEntry, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
+import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
 function StatDialog({
@@ -26,7 +27,7 @@ function StatDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || column, column, ascending, type: 'StatTable' });
+            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
             onClose?.();
         }
     };
@@ -44,7 +45,7 @@ function StatDialog({
             <label>
                 Column
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: e }))}
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
                     value={column}
                     placeholder='Select Stat'
                     onChange={value => setColumn(value as string)}
@@ -57,7 +58,7 @@ function StatDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={column}
+                        placeholder={camelToSpaced(column || '')}
                         className="p-1"
                     />
                 </label>

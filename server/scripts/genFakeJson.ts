@@ -26,7 +26,7 @@ function getTeamNum() {
 const data = new Array(40).fill(0).map(() => (
     {
         teamNumber: getTeamNum(),
-        scouterName: 'Jim',
+        scouterName: 'Nate',
         autoAmpNotes: randint(5),
         autoSpeakerNear: randint(5),
         autoSpeakerMid: randint(5),

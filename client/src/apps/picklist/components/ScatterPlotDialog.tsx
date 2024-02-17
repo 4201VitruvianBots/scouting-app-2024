@@ -2,6 +2,7 @@ import { Dispatch, useState } from 'react';
 import { AnalysisEntry, ScatterPlotGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
 import SelectSearch from 'react-select-search';
+import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
 function ScatterPlotDialog({
@@ -26,7 +27,7 @@ function ScatterPlotDialog({
     const handleSubmit = () => {
         if (xColumn && yColumn) {
             onSubmit({
-                title: title || (xColumn || '') + ' ' + (yColumn || ''),
+                title: title || camelToSpaced((xColumn || "")) + "/" + camelToSpaced(yColumn || ""),
                 xColumn: xColumn || '',
                 yColumn: yColumn || '',
                 type: 'ScatterPlotGraph',
@@ -48,7 +49,7 @@ function ScatterPlotDialog({
             <label>
                 X axis
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: e }))}
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
                     value={xColumn}
                     placeholder='Select X axis'
                     onChange={value => setXColumn(value as string)}
@@ -58,7 +59,7 @@ function ScatterPlotDialog({
             <label>
                 Y axis
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: e }))}
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
                     value={yColumn}
                     placeholder='Select Y axis'
                     onChange={value => setYColumn(value as string)}
@@ -71,7 +72,7 @@ function ScatterPlotDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={(xColumn || "") + " " + (yColumn || "")}
+                        placeholder={camelToSpaced(xColumn || "") + "/" + camelToSpaced(yColumn || "")}
                     />
                 </label>
             </p>
