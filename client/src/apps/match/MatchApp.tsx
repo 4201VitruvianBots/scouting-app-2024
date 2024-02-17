@@ -10,7 +10,7 @@ import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
 import { useFetchJson } from '../../lib/useFetchJson';
 import NumberInput from '../../components/NumberInput';
-
+import { useStatus } from '../../lib/useStatus';
 
 
 type countKeys = keyof MatchScores;
@@ -134,6 +134,8 @@ function MatchApp() {
     useEffect( () => {
         setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
     },[matchNumber, robotPosition, schedule])
+
+    useStatus(robotPosition, matchNumber, scouterName);
 
     return (
         <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>

@@ -2,6 +2,7 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp } from './Schema.js';
 import {averageAndMax} from './aggregate.js';
+import { setUpSocket, updateMatchStatus } from './status.js';
 
 // import { MatchData } from 'requests';
 
@@ -12,10 +13,13 @@ const app = express();
 
 app.use(express.json());
 
+setUpSocket(app);
+
 app.post('/data/match', async(req,res) => {
     
     const matchapp = new matchApp(req.body);
     const aMatchApp = await matchapp.save();
+    updateMatchStatus()
 
     // Debugging, remove later
     console.log(aMatchApp);
