@@ -1,23 +1,22 @@
+import { TabBase } from '../../components/workspace/workspaceData';
+
 export interface AnalysisEntry extends Record<string, string | number | boolean> {
     teamNumber: number;
 }
 
-export interface StatTableData {
-    title: string;
+export interface StatTableData extends TabBase {
     column: string;
     ascending: boolean;
     type: "StatTable";
 }
 
-export interface BarGraphData {
-    title: string;
+export interface BarGraphData extends TabBase {
     column: string;
     ascending: boolean;
     type: "BarGraph";
 }
 
-export interface ScatterPlotGraphData {
-    title: string;
+export interface ScatterPlotGraphData extends TabBase {
     xColumn: string;
     yColumn: string;
     type: "ScatterPlotGraph";

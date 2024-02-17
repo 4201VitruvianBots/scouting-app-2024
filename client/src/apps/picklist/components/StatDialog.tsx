@@ -25,7 +25,7 @@ function StatDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || column, column, ascending, type: 'StatTable'});
+            onSubmit({ title: title || column, column, ascending, type: 'StatTable' });
             onClose?.();
         }
     };

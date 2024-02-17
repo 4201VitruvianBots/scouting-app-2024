@@ -12,12 +12,20 @@ function randfloat(max: number, min = 0) {
     return (max - min) * Math.random() + min;
 }
 
-const teams = new Array(40).fill(0).map(() => Math.floor(10000 * Math.random()));
+const teams: number[] = [];
+
+function getTeamNum() {
+    let num: number;
+    do {
+        num = randint(10000);
+    } while (num in teams);
+    teams.push(num);
+    return num;
+}
 
 const data = new Array(40).fill(0).map(() => (
     {
-        robotPosition: choose(['blue_1', 'blue_2', 'blue_3', 'red_1', 'red_2', 'red_3']),
-        teamNumber: choose(teams),
+        teamNumber: getTeamNum(),
         scouterName: 'Jim',
         autoAmpNotes: randint(5),
         autoSpeakerNear: randint(5),
