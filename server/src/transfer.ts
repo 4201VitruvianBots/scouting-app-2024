@@ -1,10 +1,10 @@
-import { matchApp, matchDataSchema } from './Schema.js';
-import { InferSchemaType } from 'mongoose';
+import { MatchData } from 'requests';
+import { matchApp } from './Schema.js';
 
 
 async function exportAllData() {
     return {
-        matchApp: await matchApp.find({}),
+        matchApp: await matchApp.find({}) satisfies MatchData[],
     }
 }
 
@@ -18,15 +18,16 @@ async function sendExport() {
 
     return await fetch(`${REMOTE_SERVER}/data/sync`, {
         method: 'POST',
-        body: JSON.stringify(exportAllData()),
+        body: JSON.stringify(await exportAllData()),
         headers: {
             'Content-Type': 'application/json'
         }
     });
 }
 
-async function importAllData(data: { matchApp: InferSchemaType<typeof matchDataSchema>[] }) {
-    await matchApp.create(data.matchApp)
+async function importAllData(data: { matchApp: MatchData[] }) {
+    await matchApp.deleteMany();
+    await matchApp.insertMany(data.matchApp);
 }
 
 export { exportAllData, importAllData, sendExport }
