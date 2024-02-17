@@ -5,15 +5,13 @@ import { useState } from 'react';
 import { SuperPosition } from 'requests';
 import Dialog from '../../components/Dialog';
 import ButtonDropdown from '../../components/ButtonDropdown';
+import { Foul } from 'requests';
+const foulTypes : Foul[] = ['inBot', 'damageBot', 'overExtChute', 'pinBot', 'podiumFoul', 
+'stageFoul', 'tipEntangBot', 'zoneFoul']
 
 function SuperApp() {
-    // const tempOptions = ['one', 'two', 'three'];
-    // const defaultOption = tempOptions[0];
-
-    
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
-
 
     return (
         <main className='flex select-none flex-col items-center text-center'>
@@ -38,7 +36,8 @@ function SuperApp() {
                                 size={60}
                                 fill
                                 grade={200}
-                                className={` ${scouterName && superPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                                className={` ${scouterName && superPosition ? 'text-green-400' 
+                                : 'text-gray-400'} snap-none`}
                             />
                         </button>
                     )}>
@@ -57,7 +56,7 @@ function SuperApp() {
             <div className='bg-red-200 grid grid-cols-3 grid-rows-auto gap-10 px-10 p-5'>
                 <div className='bg-orange-300'>
                     <p>team 1</p>
-                    <ButtonDropdown options={['one', 'two', 'three']}/>
+                    <ButtonDropdown options={foulTypes}>Add Foul</ButtonDropdown>
                 </div>
                 <div className='bg-yellow-300'>
                     <p>team 2</p>

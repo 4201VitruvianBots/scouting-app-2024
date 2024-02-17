@@ -4,10 +4,11 @@ import 'react-dropdown/style.css'
 
 
 function ButtonDropdown({
-    options
+    options,
+    children
 } : {
-    options: Array<string>,
-
+    options: Array<string>;
+    children: string
 }) {
 
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
@@ -26,9 +27,9 @@ function ButtonDropdown({
     return (
         <main>
             <button
-                className={`${showDropdown ? 'bg-blue-400' : 'bg-red-400'} rounded-md bg-blue-100 p-5`}
+                className={`${showDropdown ? 'bg-green-700' : 'bg-gray-400'} rounded-md bg-blue-100 p-5`}
                 onClick={handleDropdown}>
-                hey there
+                {children}
             </button>
           
             {showDropdown && 

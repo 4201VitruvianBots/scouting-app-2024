@@ -8,7 +8,7 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 
-    |'inBot' 
+    | 'inBot' 
     | 'damageBot' 
     | 'tipEntangBot' 
     | 'pinBot' 
