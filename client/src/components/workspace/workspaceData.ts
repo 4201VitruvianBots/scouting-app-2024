@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-class SplitData<T> {
+class SplitData<T extends TabBase> {
     readonly type = 'split';
     readonly vertical: boolean;
     panes: PaneData<T>[];
@@ -12,16 +12,16 @@ class SplitData<T> {
         this.sizes = new Array(panes.length).fill(0);
     }
 
-    static Vertical<T>(...panes: PaneData<T>[]) {
+    static Vertical<T extends TabBase>(...panes: PaneData<T>[]) {
         return new SplitData(true, ...panes);
     }
 
-    static Horizontal<T>(...panes: PaneData<T>[]) {
+    static Horizontal<T extends TabBase>(...panes: PaneData<T>[]) {
         return new SplitData(false, ...panes);
     }
 }
 
-class TabsData<T> {
+class TabsData<T extends TabBase> {
     readonly type = 'tabs'
     tabs: T[];
     selected = 0;
@@ -31,13 +31,17 @@ class TabsData<T> {
     }
 }
 
-type PaneData<T> = SplitData<T> | TabsData<T>;
+type PaneData<T extends TabBase> = SplitData<T> | TabsData<T>;
 
 interface StateProps<T> {
     value: T;
     onChange: Dispatch<SetStateAction<T>>;
 }
 
-type TabsSplice<T> = (values: (value: TabsData<T>) => TabsData<T>[]) => void;
+type TabsSplice<T extends TabBase> = (values: (value: TabsData<T>) => TabsData<T>[]) => void;
 
-export { SplitData, TabsData, type PaneData, type StateProps, type TabsSplice };
+interface TabBase {
+    title: string;
+}
+
+export { SplitData, TabsData, type PaneData, type StateProps, type TabsSplice, type TabBase };

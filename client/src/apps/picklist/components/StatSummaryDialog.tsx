@@ -1,17 +1,16 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, StatSummaryData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
-function StatDialog({
+function StatSummaryDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<StatSummaryData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -23,11 +22,10 @@ function StatDialog({
 
     const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
-    const [ascending, setAscending] = useState(false);
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
+            onSubmit({ title: title || camelToSpaced(column || ''), column, type: 'StatSummary' });
             onClose?.();
         }
     };
@@ -63,12 +61,9 @@ function StatDialog({
                     />
                 </label>
             </p>
-            <p>
-                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
-            </p>
             <button onClick={handleSubmit}>Create</button>
         </>
     );
 }
 
-export default StatDialog;
+export default StatSummaryDialog;

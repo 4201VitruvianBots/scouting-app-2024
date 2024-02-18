@@ -26,9 +26,6 @@ const SetAddToFocusedContext = createContext<SetAddToFocusedContext<unknown>>(
     () => { }
 );
 
-type CreateTitleContext<T> = (value: T, index: number) => string
-const CreateTitleContext = createContext<CreateTitleContext<unknown>>((_, index) => `Tab ${index}`);
-
 const NestingContext = createContext(0);
 
-export { TabContentContext, ResizeContext, DragContext, SetAddToFocusedContext, CreateTitleContext, NestingContext }
+export { TabContentContext, ResizeContext, DragContext, SetAddToFocusedContext, NestingContext }
