@@ -28,8 +28,7 @@ const result = await fetch(
 );
 
 const data = (await result.json()) as SimpleTeam[];
-const teams = data.map(e => e.team_number);
-teams.sort();
+const teams = data.map(e => e.team_number).sort((a, b) => a - b);
 
 console.log(teams);
 
