@@ -13,7 +13,8 @@ import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
 import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
-// import TeamSummary from './components/TeamSummary';
+import TeamSummaryDialog from './components/TeamSummaryDialog';
+import TeamSummary from './components/TeamSummary';
 
 function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: TeamInfoEntry) {
     switch (table.type) {
@@ -25,8 +26,8 @@ function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: 
             return <ScatterPlotGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
         case 'StatSummary':
             return <StatSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
-        // case 'TeamSummary':
-        //     return <TeamSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+        case 'TeamSummary':
+            return <TeamSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
         default:
             return undefined;
     }
@@ -110,7 +111,7 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
-                {/* <Dialog
+                <Dialog
                     trigger={open => (
                         <button className='px-4' onClick={open}>
                             Add Team Summary
@@ -123,7 +124,7 @@ function PicklistApp() {
                             onClose={close}
                         />
                     )}
-                </Dialog> */}
+                </Dialog>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {value => {

@@ -38,7 +38,7 @@ function StatSummary({
     return (
         <>
             <h1 className="text-3xl">{camelToSpaced(table.column)}</h1>
-            <p className="text-0.5xl">{table.column}</p>
+            <p className="text-0.5xl text-gray-500">{table.column}</p>
             
             <br />
             
