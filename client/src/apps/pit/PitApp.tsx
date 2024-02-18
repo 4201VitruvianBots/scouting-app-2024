@@ -40,7 +40,14 @@ function PitApp() {
   const [speakerPrefChecked, setSpeakerPrefChecked] = useState(false);
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
   
-  
+  const handleSubmit = async() => {
+    const data: PitFile = {
+     scouterName: 'bcdsh',
+     teamNumber,
+     
+    }
+    }
+
   
   
   
@@ -202,7 +209,7 @@ function PitApp() {
             <h1 className="text-center text-white">Additional Notes?</h1>
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
-            <button className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
+            <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
             </div>
         </>
     );

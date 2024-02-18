@@ -8,6 +8,17 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 'A' | 'B';
+export type capabilities = 
+    | 'Amp'
+    | 'Speaker'
+    | 'Trap'
+    | 'Climb'
+    | 'Chain_Traversal'
+export type perference = 
+    | 'Amp_Prefer'
+    | 'Speaker_Perfer'
+    | 'Trap_Prefer'
+    | 'Climb_Prefer'
 // export type ScoringLocation = 'A' | 'B';
 
 export interface matchDataAggregations{
@@ -66,8 +77,10 @@ export type SuperData = {
 export interface PitFile {
     scouterName: string;
     teamNumber: number;
-    heightMeters: number;
-    weightKg: number;
+    capabilities: Record<capabilities, string>;
+    perference: Record<perference, string>;
+    autoCapability: string;
+    teamRole: 'Scoring' | 'Defense' | 'Support' | 'All-Round'
     pitBatteryCount: number;
     drivebase: 'tank' | 'swerve' | 'mecanum' | 'other';
 }

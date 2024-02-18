@@ -1,10 +1,10 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
-
 import mongoose  from "mongoose";
-import { MatchData, PitFile } from "requests";
+import { MatchData, PitFile, } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
+    matchNumber: Number,
     robotTeam: Number,
     robotPosition: {
         type: String,
@@ -32,29 +32,21 @@ const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: numb
     }
 });
 
-matchDataSchema.virtual('totalAuto')
-     .get(function(){
-         return this.autoSpeakerNotes.near + this.autoSpeakerNotes.mid + this.autoSpeakerNotes.far + this.autoAmpNotes;
-     }); 
-matchDataSchema.virtual('totalTele')
-     .get(function(){
-        return this.teleAmpNotes + this.teleSpeakerNotes.far + this.teleSpeakerNotes.mid + this.teleSpeakerNotes.near 
-     });
-    
-
-
-
-matchDataSchema.set('toObject', { virtuals: true }); 
-
-/* const superScoutDataSchema = new mongoose.Schema<SuperData>({
+ /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: metaDataSchema,
      fouls: {
-        A: Number,
-        B: Number
+        inBot: Number,
+        damageBot: Number,
+        tipEntangBot: Number,
+        pinBot: Number,
+        podiumFoul: Number,
+        zoneFoul: Number,
+        stageFoul: Number,
+        overExtChute: Number
      },
      defense: Number,
      highNotes: Number,
-     spotLitRobots: Number,
+     spotlitRobots: Number,
      stationPlayerTeam: Number
  });
 */
@@ -74,7 +66,7 @@ matchDataSchema.set('toObject', { virtuals: true });
 // const ssApp = ('ssApp', superScoutDataSchema);
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
-/* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
+// const superApp =  mongoose.model("superApp", superScoutDataSchema); 
 
 
 export {matchApp, pitApp, };
