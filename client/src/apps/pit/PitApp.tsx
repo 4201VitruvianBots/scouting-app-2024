@@ -1,13 +1,13 @@
 import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import Checkbox from '../../components/Checkbox';
 
 
 function PitApp() {
 
   
-  const Input = ({ value, onChange }) => (
+  const Input = ({ value, onChange }: {value: string, onChange: ChangeEventHandler<HTMLInputElement>}) => (
     <input
       className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center'
       type="text"
@@ -16,13 +16,13 @@ function PitApp() {
       onChange={onChange}
     />
   );
-     const handleAutoInputChange = (index, event) => {
+     const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
       const newAutoInputValues = [...autoInputValues];
       newAutoInputValues[index] = event.target.value;
       setAutoInputValues(newAutoInputValues);
     };
 
-    const removeAutoInput = (id) => {
+    const removeAutoInput = (id: number) => {
      const newInputValues = autoInputValues.filter((_, i) => i !== id);
      setAutoInputValues(newInputValues);
   };
@@ -52,46 +52,10 @@ function PitApp() {
   
   
   
-  const handleAdditionalNotes = (event) => {
-    setAdditionalNotes(event.target.value);
-  };
-  const handleBatteryNumber = (event) => {
-    setBatteryNumber(event.target.value);
-  };
-  const handleTeamNumber = (event) => {
-    setTeamNumber(event.target.value);
-  };
-
-  const handleAmpChange = (newAmpStatus) => {
-    setAmpChecked(newAmpStatus);
-  };
-  const handleTrapChange = (newTrapStatus) => {
-    setTrapChecked(newTrapStatus);
-  };
-  const handleSpeakerChange = (newSpeakerStatus) => {
-    setSpeakerChecked(newSpeakerStatus);
-  };
-  const handleChainTraversalChange = (newChainTraversalStatus) => {
-    setChainTraversalChecked (newChainTraversalStatus);
-  };
-  const handleClimbingChange = (newClimbingStatus) => {
-    setClimbingChecked(newClimbingStatus);
-  };
-  const handleAmpPrefChange = (newAmpPrefStatus) => {
-    setAmpPrefChecked(newAmpPrefStatus);
-  };
-  const handleTrapPrefChange = (newTrapPrefStatus) => {
-    setTrapPrefChecked(newTrapPrefStatus);
-  };
-  const handleSpeakerPrefChange = (newSpeakerPrefStatus) => {
-    setSpeakerPrefChecked(newSpeakerPrefStatus);
-  };
-  const handleClimbingPrefChange = (newClimbingPrefStatus) => {
-    setClimbingPrefChecked(newClimbingPrefStatus);
-  };
   
   
-
+  
+ 
   const inputBattery = {
     width: '150px',
     height: '50px',
@@ -116,7 +80,7 @@ function PitApp() {
             <div className="flex justify-center items-center mb-8">
             <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg">
             <h1 className="text-center text-white">Team Number</h1>
-            <input min={0} onChange={handleTeamNumber} value={teamNumber} style={inputTeamNum} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder='Team#'></input>
+            <input min={0} onChange={event => setTeamNumber(parseInt(event.target.value))} value={teamNumber} style={inputTeamNum} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder='Team#'></input>
             </div>
             </div>
             
@@ -125,23 +89,23 @@ function PitApp() {
             <h1 className="text-center text-white mb-7 ">Capabilities? Choose all that apply.</h1>
             <div className="place-content-center mx-auto w-min !flex pad flex-wrap">
             <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={ampChecked} onChange={handleAmpChange} className="form-checkbox h-5 w-10 text-blue-600 mr-2" boxClassName='h-7 w-7'/>
+              <Checkbox checked={ampChecked} onChange={setAmpChecked} className="form-checkbox h-5 w-10 text-blue-600 mr-2" boxClassName='h-7 w-7'/>
               <label htmlFor="ampNotes" className="cursor-pointer text-white select-none mr-4 ml-5">Amp Notes</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={speakerChecked} onChange={handleSpeakerChange} className="form-checkbox h-5 w-10 text-blue-600 ml-5" boxClassName='h-7 w-7'/>
+              <Checkbox checked={speakerChecked} onChange={setSpeakerChecked} className="form-checkbox h-5 w-10 text-blue-600 ml-5" boxClassName='h-7 w-7'/>
               <label htmlFor="speakerNotes" className="cursor-pointer text-white select-none mr-4 ml-5">Speaker Notes</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={trapChecked} onChange={handleTrapChange} className="form-checkbox h-5 w-10 text-blue-600 mr-2" boxClassName='h-7 w-7'/>
+              <Checkbox checked={trapChecked} onChange={setTrapChecked} className="form-checkbox h-5 w-10 text-blue-600 mr-2" boxClassName='h-7 w-7'/>
               <label htmlFor="trapNotes" className="cursor-pointer text-white select-none mr-4 ml-5">Trap Notes</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={climbingChecked} onChange={handleClimbingChange} className="form-checkbox h-5 w-10 text-blue-600 ml-16" boxClassName='h-7 w-7'/>
+              <Checkbox checked={climbingChecked} onChange={setClimbingChecked} className="form-checkbox h-5 w-10 text-blue-600 ml-16" boxClassName='h-7 w-7'/>
               <label htmlFor="climbingCapability" className="cursor-pointer text-white select-none mr-4 ml-5">Climbing Capability</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={chainTraversalChecked} onChange={handleChainTraversalChange} className="form-checkbox h-5 w-10 text-blue-600 ml-20" boxClassName='h-7 w-7'/>
+              <Checkbox checked={chainTraversalChecked} onChange={setChainTraversalChecked} className="form-checkbox h-5 w-10 text-blue-600 ml-20" boxClassName='h-7 w-7'/>
               <label htmlFor="underChainTraversal" className="cursor-pointer text-white select-none mr-4 ml-5">Under Chain Traversal</label>
               </div>
               </div>
@@ -151,19 +115,19 @@ function PitApp() {
             <div className="place-content-center mx-auto w-min !flex pad flex-wrap">
             
             <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={ampPrefChecked} onChange={handleAmpPrefChange} className="form-checkbox h-5 w-5 text-blue-600" boxClassName='h-7 w-7' />
+              <Checkbox checked={ampPrefChecked} onChange={setAmpPrefChecked} className="form-checkbox h-5 w-5 text-blue-600" boxClassName='h-7 w-7' />
               <label htmlFor="ampPreferred" className="cursor-pointer text-white select-none mr-4 ml-5">Amp Preferred?</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={speakerPrefChecked} onChange={handleSpeakerPrefChange} className="form-checkbox h-5 w-5 text-blue-600 ml-7" boxClassName='h-7 w-7' />
+              <Checkbox checked={speakerPrefChecked} onChange={setSpeakerPrefChecked} className="form-checkbox h-5 w-5 text-blue-600 ml-7" boxClassName='h-7 w-7' />
               <label htmlFor="speakerPreferred" className="cursor-pointer text-white select-none mr-4 ml-5">Speaker Preferred?</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={trapPrefChecked} onChange={handleTrapPrefChange} className="form-checkbox h-5 w-5 text-blue-600" boxClassName='h-7 w-7' />
+              <Checkbox checked={trapPrefChecked} onChange={setTrapPrefChecked} className="form-checkbox h-5 w-5 text-blue-600" boxClassName='h-7 w-7' />
               <label htmlFor="trapPreferred" className="cursor-pointer text-white select-none mr-4 ml-5">Trap Preferred?</label>
               </div>
               <div className="flex items-center whitespace-nowrap mb-4">
-              <Checkbox checked={climbingPrefChecked} onChange={handleClimbingPrefChange} className="form-checkbox h-5 w-5 text-blue-600 ml-9" boxClassName='h-7 w-7' />
+              <Checkbox checked={climbingPrefChecked} onChange={setClimbingPrefChecked} className="form-checkbox h-5 w-5 text-blue-600 ml-9" boxClassName='h-7 w-7' />
               <label htmlFor="climbPreferred" className="cursor-pointer text-white select-none mr-4 ml-5">Climbing Preferred?</label>
               </div>
               
@@ -172,7 +136,7 @@ function PitApp() {
             <div className="flex justify-center items-center mb-8 mt-7">
             <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg ">
             <h1 className="text-center text-white">Number of Batteries?</h1>
-            <input min={0} onChange={handleBatteryNumber} value={batteryNumber} style={inputBattery} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder="0"></input>
+            <input min={0} onChange={event => setBatteryNumber(parseInt(event.target.value))} value={batteryNumber} style={inputBattery} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder="0"></input>
             </div>
             </div>
             
@@ -246,7 +210,7 @@ function PitApp() {
 </div>
             
             <h1 className="text-center text-white">Additional Notes?</h1>
-            <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={handleAdditionalNotes} value={additionalNotes} type="text"></input>
+            <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
             <button className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
             </div>
