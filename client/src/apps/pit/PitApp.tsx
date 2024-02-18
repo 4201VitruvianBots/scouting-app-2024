@@ -1,21 +1,13 @@
 import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import Checkbox from '../../components/Checkbox';
 
 
 function PitApp() {
 
   
-  const Input = ({ value, onChange }: {value: string, onChange: ChangeEventHandler<HTMLInputElement>}) => (
-    <input
-      className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-3xl text-center'
-      type="text"
-      placeholder="Type and #"
-      value={value}
-      onChange={onChange}
-    />
-  );
+  
      const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
       const newAutoInputValues = [...autoInputValues];
       newAutoInputValues[index] = event.target.value;
@@ -27,13 +19,11 @@ function PitApp() {
      setAutoInputValues(newInputValues);
   };
     const addAnotherAuto = () => {
-     setAutoList([...autoList, <Input key={autoList.length} value={''} onChange={(event) => handleAutoInputChange(autoList.length, event)} />]);
      setAutoInputValues([...autoInputValues, '']);
   };
 
 
   const [autoInputValues, setAutoInputValues] = useState(['']);
-  const [autoList, setAutoList] = useState([<Input key={0} value={autoInputValues[0]} onChange={(event) => handleAutoInputChange(0, event)} />]);
   const [role, setRole] = useState<'scoring' | 'defense' | 'support' | 'all-round'>();
   const [drivetrain, setDrivetrain] = useState<'tank' | 'swerve' | 'MECANUM' | 'other'>();
   const [additionalNotes, setAdditionalNotes] = useState('');
