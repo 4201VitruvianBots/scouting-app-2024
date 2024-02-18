@@ -1,4 +1,4 @@
-import { matchApp } from "./Schema.js";
+import { matchApp, superApp } from "./Schema.js";
 
 interface AverageAndMax{
     _id: {teamNumber: number},
@@ -30,4 +30,15 @@ async function averageAndMax():Promise<AverageAndMax[]>{
 ]));
 }
 
-export { averageAndMax,} 
+async function superAverageAndMax() {
+    return (await superApp.aggregate([
+        {$group:{
+            _id: null,
+            avgFouls: {$avg: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
+            maxFouls: {$max: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
+            
+        }}
+    ]))
+}
+
+export { averageAndMax, superAverageAndMax} 

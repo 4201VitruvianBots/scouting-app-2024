@@ -65,7 +65,7 @@ export interface MatchData {
 
 // - `POST` `/data/super`
 
-export type SuperData = {
+export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
     defense: unknown;
@@ -73,7 +73,7 @@ export type SuperData = {
     spotlitRobots: number;
     highNotes: number;
     stationPlayerTeam: number; // Team Number
-}[];
+};
 
 // - `POST` `/data/pits`
 // `<form>` files?
