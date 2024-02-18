@@ -7,7 +7,7 @@ export type RobotPosition =
     | 'red_3'
     | 'blue_1'
     | 'blue_2'
-    | 'blue_3';
+    | 'blue_3'
 export type Foul = 'A' | 'B';
 export type SuperPosition = 
     | 'red_ss'
@@ -48,8 +48,8 @@ export interface MatchData {
     metadata: MetaData;
     // No competition info
     leftStartingZone: boolean;
-    autoSpeakerNotes: ScoreRanges;
-    teleSpeakerNotes: ScoreRanges;
+    autoNotes: ScoreRanges;
+    teleNotes: ScoreRanges;
     trapNotes: number;
     climb: ClimbPosition;
     // disabledSeconds: number;
@@ -82,16 +82,22 @@ export interface PitFile {
 // - `WebSocket` `/status/report`
 // client -> server
 
-export type StatusReport = MetaData;
+export interface StatusReport {
+    robotPosition: RobotPosition|SuperPosition|undefined;
+    matchNumber: number|undefined;
+    scouterName: string;
+    battery: number | undefined;
+}
 
 // - `WebSocket` `/status/recieve`
 // server -> client
 
 export interface StatusRecieve {
-    scouters: MetaData[];
-    matches: Record<RobotPosition | SuperPosition, boolean>[];
+    scouters: StatusReport[];
+    matches: MatchStatus
 }
 
+export type MatchStatus = Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
 // - `GET` `/data/schedule.json`
 
 export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
