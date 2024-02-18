@@ -23,9 +23,12 @@ function BarGraph({
     
     let teamColors: ColorSchemeType = sortedTeamNumbers.map(() => '#7f7f7f');
     
-    if (teamInfoJson !== undefined) teamColors = sortedTeamNumbers.map(teamNumber => teamInfoJson[teamNumber].primaryHex);
-    
-    return <BarChart data={entries} series={<BarSeries colorScheme={teamColors} />} />;
+    try {
+        teamColors = sortedTeamNumbers.map(teamNumber => teamInfoJson[teamNumber].primaryHex);
+        return <BarChart data={entries} series={<BarSeries colorScheme={teamColors} />} />;
+    } catch (e) {
+        return <BarChart data={entries} />;
+    }
 }
 
 export default BarGraph;

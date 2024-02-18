@@ -3,8 +3,7 @@ import { AnalysisEntry, ScatterPlotGraphData, TeamInfoEntry } from '../data';
 
 function ScatterPlotGraph({
     table,
-    data,
-    teamInfoJson,
+    data
 }: {
     table: ScatterPlotGraphData;
     data: AnalysisEntry[];
