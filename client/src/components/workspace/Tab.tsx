@@ -2,8 +2,9 @@ import { DragEventHandler, useContext, useState } from 'react';
 import { DragContext } from './workspaceContexts';
 import DropTarget from './DropTarget';
 import { MaterialSymbol } from 'react-material-symbols';
+import { TabBase } from './workspaceData';
 
-function Tab<T>({
+function Tab<T extends TabBase>({
     value,
     onRemove,
     onInsertBefore,
@@ -47,7 +48,7 @@ function Tab<T>({
             onDragEnd={handleDragEnd}
             // drop is triggered before dragEnd
             onClick={onClick}
-            className={`relative -my-px -ml-px min-w-32 cursor-pointer select-none border border-black px-3 py-1 ${selected ? 'bg-neutral-200' : 'text-neutral-500'} flex flex-row items-center justify-between gap-2`}>
+            className={`relative -my-px -ml-px min-w-32 cursor-pointer select-none border border-black px-3 py-1 ${selected ? 'bg-neutral-200' : 'text-neutral-500'} flex flex-row items-center justify-between gap-2 whitespace-nowrap`}>
             {dragging && (
                 <DropTarget
                     disabled={draggingSelf}

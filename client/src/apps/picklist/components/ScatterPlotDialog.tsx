@@ -1,17 +1,16 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, ScatterPlotGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
-function StatDialog({
+function ScatterPlotDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<ScatterPlotGraphData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -22,12 +21,17 @@ function StatDialog({
         : [];
 
     const [title, setTitle] = useState('');
-    const [column, setColumn] = useState<string>();
-    const [ascending, setAscending] = useState(false);
+    const [xColumn, setXColumn] = useState<string>();
+    const [yColumn, setYColumn] = useState<string>();
 
     const handleSubmit = () => {
-        if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
+        if (xColumn && yColumn) {
+            onSubmit({
+                title: title || camelToSpaced((xColumn || "")) + "/" + camelToSpaced(yColumn || ""),
+                xColumn: xColumn || '',
+                yColumn: yColumn || '',
+                type: 'ScatterPlotGraph',
+            });
             onClose?.();
         }
     };
@@ -43,12 +47,22 @@ function StatDialog({
             </div>
             
             <label>
-                Column
+                X axis
                 <SelectSearch
                     options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
-                    value={column}
-                    placeholder='Select Stat'
-                    onChange={value => setColumn(value as string)}
+                    value={xColumn}
+                    placeholder='Select X axis'
+                    onChange={value => setXColumn(value as string)}
+                    search
+                />
+            </label>
+            <label>
+                Y axis
+                <SelectSearch
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    value={yColumn}
+                    placeholder='Select Y axis'
+                    onChange={value => setYColumn(value as string)}
                     search
                 />
             </label>
@@ -58,17 +72,13 @@ function StatDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={camelToSpaced(column || '')}
-                        className="p-1"
+                        placeholder={xColumn && yColumn ? camelToSpaced(xColumn) + "/" + camelToSpaced(yColumn) : ""}
                     />
                 </label>
-            </p>
-            <p>
-                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
     );
 }
 
-export default StatDialog;
+export default ScatterPlotDialog;

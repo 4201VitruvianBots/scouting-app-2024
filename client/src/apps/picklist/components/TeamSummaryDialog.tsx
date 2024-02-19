@@ -1,33 +1,30 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, TeamSummaryData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
-import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
-function StatDialog({
+function TeamSummaryDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<TeamSummaryData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
-    const columns = data
-        ? Object.keys(data[0]).filter(
-              e => e !== 'teamNumber' && typeof data[0][e] === 'number'
-          )
-        : [];
+    // Get all team numbers from the json data
+    const teamNumbers = data?.map(e => e.teamNumber.toString()) ?? [];
+    
+    // Sort the team numbers
+    teamNumbers.sort((a, b) => Number(a) - Number(b));
 
     const [title, setTitle] = useState('');
-    const [column, setColumn] = useState<string>();
-    const [ascending, setAscending] = useState(false);
+    const [teamNumber, setTeamNumber] = useState<string>();
 
     const handleSubmit = () => {
-        if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
+        if (teamNumber) {
+            onSubmit({ title: teamNumber ? title || "Team " + teamNumber + " Summary" : "", teamNumber: Number(teamNumber), type: 'TeamSummary' });
             onClose?.();
         }
     };
@@ -43,12 +40,12 @@ function StatDialog({
             </div>
             
             <label>
-                Column
+                Team
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
-                    value={column}
-                    placeholder='Select Stat'
-                    onChange={value => setColumn(value as string)}
+                    options={teamNumbers.map(e => ({ value: e, name: e }))}
+                    value={teamNumber}
+                    placeholder='Select Team'
+                    onChange={value => setTeamNumber(value as string)}
                     search
                 />
             </label>
@@ -58,17 +55,14 @@ function StatDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={camelToSpaced(column || '')}
+                        placeholder={teamNumber ? title || "Team " + teamNumber + " Summary" : ""}
                         className="p-1"
                     />
                 </label>
-            </p>
-            <p>
-                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
     );
 }
 
-export default StatDialog;
+export default TeamSummaryDialog;
