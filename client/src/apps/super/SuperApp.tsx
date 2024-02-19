@@ -2,16 +2,34 @@ import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useState } from 'react';
-import { SuperPosition } from 'requests';
 import Dialog from '../../components/Dialog';
 import ButtonDropdown from '../../components/ButtonDropdown';
-import { Foul } from 'requests';
+import { Foul, DefenseRank, SuperPosition } from 'requests';
 const foulTypes : Foul[] = ['inBot', 'damageBot', 'overExtChute', 'pinBot', 'podiumFoul', 
 'stageFoul', 'tipEntangBot', 'zoneFoul']
 
-function SuperApp() {
+export interface TeamStates {
+    foulCounts: Record<string, number>;
+    breakCount: number;
+    defenseRank: DefenseRank
+    wasDefended: boolean;
+}
+interface ParentComponentProps {
+    options: string[];
+}
+
+function SuperApp({options} : ParentComponentProps) {
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
+    const [teamOne, setTeamOne] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
+    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
+    const [teamTwo, setTeamTwo] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
+    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
+    const [teamThree, setTeamThree] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
+    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
+    // const [optionCounts, setOptionCounts] = useState<Record<string, number>>(
+    //     options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}
+    // );
 
     return (
         <main className='grid columns-3 text-center'>
@@ -52,13 +70,13 @@ function SuperApp() {
                         />
                     )}
             </Dialog>
-            <ButtonDropdown options={foulTypes}>
+            <ButtonDropdown options={foulTypes} teamStates={teamOne} setTeamStates={setTeamOne}>
                 Add Foul
             </ButtonDropdown>
-            <ButtonDropdown options={foulTypes}>
+            <ButtonDropdown options={foulTypes} teamStates={teamTwo} setTeamStates={setTeamTwo}>
                 Add Foul
             </ButtonDropdown>
-            <ButtonDropdown options={foulTypes}>
+            <ButtonDropdown options={foulTypes} teamStates={teamThree} setTeamStates={setTeamThree}>
                 Add Foul
             </ButtonDropdown>
         </main>

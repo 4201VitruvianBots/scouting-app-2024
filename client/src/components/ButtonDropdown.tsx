@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import 'react-dropdown/style.css'
+import 'react-dropdown/style.css';
+import { TeamStates } from '../apps/super/SuperApp';
 
 interface ButtonDropdownProps {
     options: Array<string>;
     children: string;
+    teamStates: TeamStates;
+    setTeamStates: React.Dispatch<React.SetStateAction<TeamStates>>;
 }
 
-function ButtonDropdown({options, children} : ButtonDropdownProps) {
+function ButtonDropdown({options, children, teamStates, setTeamStates} : ButtonDropdownProps) {
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
-    const [optionCounts, setOptionCounts] = useState<Record<string, number>>(
-        options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {})
-    );
 
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
 
     const handleOption = (option: string) => {
-        setOptionCounts(prevCounts => ({
-            ...prevCounts,
-            [option]: (prevCounts[option] || 0) + 1
+        setTeamStates(prevTeamStates => ({
+            ...prevTeamStates,
+            foulCounts: {[option]: (prevTeamStates.foulCounts[option] || 0) + 1}
         }));
         setShowDropdown(false);
     }
@@ -38,14 +38,14 @@ function ButtonDropdown({options, children} : ButtonDropdownProps) {
                {options.map((option, index) => (
                     <li key={index}>
                         <button onClick={() => handleOption(option)}>
-                            {option} ({optionCounts[option] || 0})
+                            {option} ({teamStates.foulCounts[option] || 0})
                         </button>
                     </li>
                ))}
             </div>
             }
 
-            <p>Selected Options: {Object.entries(optionCounts)
+            <p>Selected Options: {Object.entries(teamStates)
                 .map(([option, count]) => `${option}: ${count}`)
                 .join(', ')}
             </p>    

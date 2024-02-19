@@ -16,6 +16,10 @@ export type Foul =
     | 'zoneFoul' 
     | 'stageFoul' 
     | 'overExtChute';
+export type DefenseRank = 
+    |  'Full Defense' 
+    | 'Some Defense' 
+    | 'No Defense'
 
 export type SuperPosition = 
     | 'red_ss'
