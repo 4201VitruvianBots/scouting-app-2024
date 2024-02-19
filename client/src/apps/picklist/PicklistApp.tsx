@@ -57,6 +57,8 @@ function PicklistApp() {
                     />
                 </LinkButton>
                 
+                <button onClick={reloadData}>Refresh Data</button>
+                
                 <Dialog
                     trigger={open => (
                         <button className='px-4' onClick={open}>
