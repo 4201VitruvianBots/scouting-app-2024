@@ -63,7 +63,6 @@ function PicklistApp() {
                     )}>
                     {close => (
                         <StatDialog
-                            data={analyzedData}
                             onSubmit={addToFocused}
                             onClose={close}
                         />

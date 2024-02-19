@@ -1,24 +1,34 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, StatColumnData, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
-function StatDialog({
+function StatColumnDialog({
     onSubmit,
     onClose,
+    data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<StatColumnData>;
     onClose?: () => void;
+    data: AnalysisEntry[] | undefined;
 }) {
+    const columns = data
+        ? Object.keys(data[0]).filter(
+              e => e !== 'teamNumber' && typeof data[0][e] === 'number'
+          )
+        : [];
 
     const [title, setTitle] = useState('');
+    const [column, setColumn] = useState<string>();
 
     const handleSubmit = () => {
-        onSubmit({ title: title || "Stat Table", type: 'StatTable' });
-        onClose?.();
+        if (column) {
+            onSubmit({ title: title || camelToSpaced(column || ''), column, type: 'StatColumn' });
+            onClose?.();
+        }
     };
 
     return (
@@ -30,13 +40,24 @@ function StatDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
+            
+            <label>
+                Column
+                <SelectSearch
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    value={column}
+                    placeholder='Select Stat'
+                    onChange={value => setColumn(value as string)}
+                    search
+                />
+            </label>
             <p>
                 <label>
                     Title
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={"Stat Table"}
+                        placeholder={camelToSpaced(column || '')}
                         className="p-1"
                     />
                 </label>
@@ -46,4 +67,4 @@ function StatDialog({
     );
 }
 
-export default StatDialog;
+export default StatColumnDialog;

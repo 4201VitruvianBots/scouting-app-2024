@@ -15,10 +15,14 @@ export interface TeamInfoEntry {
 }
 
 export interface StatTableData extends TabBase {
-    column: string;
-    ascending: boolean;
     type: "StatTable";
 }
+
+export interface StatColumnData extends TabBase {
+    column: string;
+    type: "StatColumn";
+}
+
 
 export interface BarGraphData extends TabBase {
     column: string;
