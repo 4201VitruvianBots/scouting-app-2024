@@ -9,7 +9,8 @@
     "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
     "gen-fake-data": "node --loader ts-node/esm scripts/addFakeData.ts",
     "gen-fake-json": "node --loader ts-node/esm scripts/genFakeJson.ts",
-    "download-schedule": "node --loader ts-node/esm scripts/downloadSchedule.ts"
+    "download-schedule": "node --loader ts-node/esm scripts/downloadSchedule.ts",
+    "download-teams": "node --loader ts-node/esm scripts/downloadTeams.ts"
   },
   "keywords": [],
   "author": "",
