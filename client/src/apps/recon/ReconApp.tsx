@@ -2,8 +2,8 @@
 import LinkButton from "../../components/LinkButton";
 //import { useFetchJson } from "../../lib/useFetch";
 
-function ReconApp() {;
-    // const retrieve = useFetchJson<matchDataAggregations>('/data/retrieve')
+function ReconApp() {
+    // const [retrieve, reloadRetrieve] = useFetchJson<matchDataAggregations>('/data/retrieve')
 
     return (
         <>
