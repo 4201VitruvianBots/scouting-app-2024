@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { matchApp } from './Schema.js';
+import { matchApp, pitApp } from './Schema.js';
 import {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
     maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} from './aggregate.js'
 import { matchDataAggregations } from 'requests';
@@ -24,6 +24,16 @@ app.post('/data/match', async(req,res) => {
 
     res.end();
     
+});
+
+app.post('/data/pit', async(req,res) => {
+
+    const PitApp = new pitApp(req.body);
+    const aPitApp = await PitApp.save();
+
+    console.log(aPitApp);
+
+    res.end();
 });
 
  app.get('/data/retrieve', async(req,res) => {

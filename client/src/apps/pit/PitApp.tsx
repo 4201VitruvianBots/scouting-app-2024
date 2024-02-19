@@ -2,6 +2,8 @@ import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
 import React, { useState } from 'react';
 import Checkbox from '../../components/Checkbox';
+import { PitFile, teamRoles, drivebase } from 'requests';
+import { postJson } from '../../lib/postJson';
 
 
 function PitApp() {
@@ -24,8 +26,8 @@ function PitApp() {
 
 
   const [autoInputValues, setAutoInputValues] = useState(['']);
-  const [role, setRole] = useState<'scoring' | 'defense' | 'support' | 'all-round'>();
-  const [drivetrain, setDrivetrain] = useState<'tank' | 'swerve' | 'MECANUM' | 'other'>();
+  const [role, setRole] = useState<teamRoles|undefined>();
+  const [drivetrain, setDrivetrain] = useState<drivebase| undefined>();
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [batteryNumber, setBatteryNumber] = useState(Number);
   const [teamNumber, setTeamNumber] = useState(Number);
@@ -41,18 +43,57 @@ function PitApp() {
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
   
   const handleSubmit = async() => {
+    if (!drivetrain || !role){
+      alert('data is missing :(')
+      return
+    }
+
     const data: PitFile = {
      scouterName: 'bcdsh',
      teamNumber,
-     
+     capabilities: {
+       amp: ampChecked,
+       speaker: speakerChecked,
+       trap: trapChecked,
+       climb: climbingChecked,
+       chainTraversal: chainTraversalChecked
+     },
+     preference: {
+        ampPrefer: ampPrefChecked,
+        speakerPerfer: speakerPrefChecked,
+        trapPrefer: trapPrefChecked,
+        climbPrefer: climbingPrefChecked
+     },
+     autoCapability: autoInputValues,
+     teamRole: role,
+     pitBatteryCount: batteryNumber,
+     drivebase: drivetrain,
+     comments: additionalNotes
+    };
+
+    try {
+      const result = await postJson('/data/pit', data);
+      if (!result.ok) throw new Error('Request Did Not Succeed');
+      setAutoInputValues(['']);
+      setAmpChecked(false);
+      setAmpPrefChecked(false);
+      setBatteryNumber(0);
+      setAdditionalNotes('');
+      setRole(undefined);
+      setTeamNumber(0);
+      setChainTraversalChecked(false);
+      setClimbingChecked(false);
+      setClimbingPrefChecked(false);
+      setDrivetrain(undefined);
+      setTrapChecked(false);
+      setTrapPrefChecked(false);
+      setSpeakerChecked(false);
+      setSpeakerPrefChecked(false);
+      } catch {
+      alert('Sending Data Failed');
     }
     }
 
-  
-  
-  
-  
- 
   const inputBattery = {
     width: '150px',
     height: '50px',
@@ -61,7 +102,6 @@ function PitApp() {
     width: '150px',
     height: '50px',
   };
-
 
 
     return (

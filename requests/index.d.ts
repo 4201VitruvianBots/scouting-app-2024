@@ -1,4 +1,6 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round' 
+export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other' 
 
 export type RobotPosition =
     | 'red_1'
@@ -8,17 +10,20 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3';
 export type Foul = 'A' | 'B';
-export type capabilities = 
-    | 'Amp'
-    | 'Speaker'
-    | 'Trap'
-    | 'Climb'
-    | 'Chain_Traversal'
-export type perference = 
-    | 'Amp_Prefer'
-    | 'Speaker_Perfer'
-    | 'Trap_Prefer'
-    | 'Climb_Prefer'
+interface capabilities { 
+    amp: boolean,
+    speaker: boolean
+    trap: boolean,
+    climb: boolean,
+    chainTraversal: boolean
+}
+interface preference {
+    ampPrefer: boolean,
+    speakerPerfer:boolean,
+    trapPrefer: boolean,
+    climbPrefer: boolean,
+
+}
 // export type ScoringLocation = 'A' | 'B';
 
 export interface matchDataAggregations{
@@ -71,18 +76,19 @@ export type SuperData = {
     stationPlayerTeam: number; // Team Number
 }[];
 
-// - `POST` `/data/pits`
+// - `POST` `/data/pits` 
 // `<form>` files?
 
 export interface PitFile {
     scouterName: string;
     teamNumber: number;
-    capabilities: Record<capabilities, string>;
-    perference: Record<perference, string>;
-    autoCapability: string;
-    teamRole: 'Scoring' | 'Defense' | 'Support' | 'All-Round'
+    capabilities: capabilities;
+    preference: preference;
+    autoCapability: string[];
+    teamRole: teamRoles;
     pitBatteryCount: number;
-    drivebase: 'tank' | 'swerve' | 'mecanum' | 'other';
+    drivebase: drivebase;
+    comments: string;
 }
 
 // - `WebSocket` `/status/report`
