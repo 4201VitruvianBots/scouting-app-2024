@@ -2,9 +2,9 @@ import { AnalysisEntry, WindowData, TeamInfoEntry } from './data';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
-import { useFetchJson } from '../../lib/useFetchJson';
 import Dialog from '../../components/Dialog';
 import StatDialog from './components/StatDialog';
+import { useFetchJson } from '../../lib/useFetch';
 import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
 import ScatterPlotDialog from './components/ScatterPlotDialog';
@@ -35,8 +35,10 @@ function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: 
 }
 
 function PicklistApp() {
-    const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
-    const teamInfo = useFetchJson<TeamInfoEntry>('/team_info.json');
+    const [analyzedData, reloadData] = useFetchJson<AnalysisEntry[]>(
+        '/output_analysis.json'
+    );
+    const [teamInfo] = useFetchJson<TeamInfoEntry>('/team_info.json');
     
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
