@@ -22,7 +22,15 @@ function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNum
         }
 
         // Close the socket for cleanup
-        return () => socket.current?.close();
+        return () => {
+            if (socket.current?.readyState === WebSocket.OPEN) {
+                socket.current?.close();
+            } else if (socket.current) {
+                socket.current.onopen = () => {
+                    socket.current?.close();
+                }
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -51,7 +59,15 @@ function useStatusRecieve() {
         }
 
         // Close the socket for cleanup
-        return () => socket.current?.close();
+        return () => {
+            if (socket.current?.readyState === WebSocket.OPEN) {
+                socket.current?.close();
+            } else if (socket.current) {
+                socket.current.onopen = () => {
+                    socket.current?.close();
+                }
+            }
+        }
     }, []);
 
     // Return the state so it can be used
