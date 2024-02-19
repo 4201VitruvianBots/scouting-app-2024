@@ -14,7 +14,8 @@ export type SuperPosition =
     | 'blue_ss'
 // export type ScoringLocation = 'A' | 'B';
 
-export interface matchDataAggregations{
+export interface MatchDataAggregations{
+    _id: {teamNumber: number}
     averageTeleSpeakerNotes: number;
     averageTeleAmpNotes: number;
     averageAutoSpeakerNotes: number;

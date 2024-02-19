@@ -1,30 +1,20 @@
+import { MatchDataAggregations } from "requests";
 import { matchApp } from "./Schema.js";
 
-interface AverageAndMax{
-    _id: {teamNumber: number},
-    avgTeleSpeakerNotes:number,
-    avgTeleAmpNotes: number,
-    avgAutoSpeakerNotes: number,
-    avgAutoAmpNotes: number,
-    maxTeleSpeakerNotes: number,
-    maxTeleAmpNotes: number,
-    maxAutoSpeakerNotes: number,
-    maxAutoAmpNotes: number,
-    maxTrapNotes: number
-}
 
-async function averageAndMax():Promise<AverageAndMax[]>{
+async function averageAndMax():Promise<MatchDataAggregations[]>{
     return (await matchApp.aggregate([
     { $group:{
         _id: {teamNumber: '$metadata.robotTeam'},
-        avgTeleSpeakerNotes: {$avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
-        avgTeleAmpNotes: { $avg: '$teleAmpNotes'},
-        avgAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
-        avgAutoAmpNotes: {$avg: '$autoAmpNotes'},
-        maxTeleSpeakerNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
-        maxTeleAmpNotes: {$max: '$teleAmpNotes'},
-        maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
-        maxAutoAmpNotes: {$max: '$autoAmpNotes'},
+        averageTeleSpeakerNotes: {$avg: {$add: ['$teleNotes.near', '$teleNotes.mid', '$teleNotes.far']}},
+        averageTeleAmpNotes: { $avg: '$teleNotes.amp'},
+        averageAutoSpeakerNotes: {$avg: {$add:['$autoNotes.near', '$autoNotes.mid', '$autoNotes.far']}},
+        averageAutoAmpNotes: {$avg: '$autoNotes.amp'},
+        averageTrapNotes: {$avg: '$trapNotes'},
+        maxTeleSpeakerNotes: {$max: {$add:['$teleNotes.near', '$teleNotes.mid', '$teleNotes.far']}},
+        maxTeleAmpNotes: {$max: '$teleNotes.amp'},
+        maxAutoSpeakerNotes: {$max: {$add: ['$autoNotes.near', '$autoNotes.mid', '$autoNotes.far']}},
+        maxAutoAmpNotes: {$max: '$autoNotes.amp'},
         maxTrapNotes: {$max: '$trapNotes'}
     }}
 ]));
