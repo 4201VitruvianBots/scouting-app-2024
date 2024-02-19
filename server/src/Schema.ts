@@ -1,7 +1,6 @@
 //import {matchApp, SSApp, pitApp} from './database.ts';
-
 import mongoose  from "mongoose";
-import { MatchData, PitFile } from "requests";
+import { MatchData, PitFile, } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
@@ -33,15 +32,21 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
     }
 });
 
-/* const superScoutDataSchema = new mongoose.Schema<SuperData>({
+ /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: metaDataSchema,
      fouls: {
-        A: Number,
-        B: Number
+        inBot: Number,
+        damageBot: Number,
+        tipEntangBot: Number,
+        pinBot: Number,
+        podiumFoul: Number,
+        zoneFoul: Number,
+        stageFoul: Number,
+        overExtChute: Number
      },
      defense: Number,
      highNotes: Number,
-     spotLitRobots: Number,
+     spotlitRobots: Number,
      stationPlayerTeam: Number
  });
 */
@@ -49,19 +54,36 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
  const pitDataSchema = new mongoose.Schema<PitFile>({
      scouterName: String,
      teamNumber: Number,
-     heightMeters: Number,
-     weightKg: Number,
+     capabilities: {
+        amp: Boolean,
+        speaker: Boolean,
+        trap: Boolean,
+        climb: Boolean,
+        chainTraversal: Boolean
+     },
+    preference: {
+        ampPrefer: Boolean,
+        speakerPerfer:Boolean,
+        trapPrefer: Boolean,
+        climbPrefer: Boolean,
+    },
+    autoCapability: [String],
+    teamRole: {
+        type: String,
+        enum: ['scoring', 'defense', 'support', 'all-round']
+    },
      pitBatteryCount: Number,
      drivebase: {
             type: String,
-            enum: ['Tank', 'swerve', 'other' ]
-     }
+            enum: ['Tank', 'swerve','MECANUM', 'other' ]
+     },
+     comments: String
  });
 
 // const ssApp = ('ssApp', superScoutDataSchema);
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
-/* const superApp =  mongoose.model("superApp", superScoutDataSchema); */ 
+// const superApp =  mongoose.model("superApp", superScoutDataSchema); 
 
 
 export { matchApp, pitApp, matchDataSchema, pitDataSchema };

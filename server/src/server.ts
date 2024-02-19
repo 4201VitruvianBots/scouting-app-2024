@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { matchApp } from './Schema.js';
+import { matchApp, pitApp } from './Schema.js';
 import {averageAndMax} from './aggregate.js';
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
@@ -30,12 +30,33 @@ app.post('/data/match', async(req,res) => {
     
 });
 
+app.post('/data/pit', async(req,res) => {
+
+    const PitApp = new pitApp(req.body);
+    const aPitApp = await PitApp.save();
+
+    console.log(aPitApp);
+
+    res.end();
+});
+
+app.post('/data/pit', async(req,res) => {
+
+    const PitApp = new pitApp(req.body);
+    const aPitApp = await PitApp.save();
+
+    console.log(aPitApp);
+
+    res.end();
+});
+
 if (REMOTE) {
     app.post('/data/sync', async (req, res) => {
         await importAllData(req.body);
         res.end();
     })
 }
+
 
 app.get('/data/retrieve', async (req, res) => {
     res.send(await averageAndMax());
