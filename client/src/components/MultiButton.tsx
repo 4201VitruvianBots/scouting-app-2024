@@ -1,20 +1,25 @@
 function MultiButton<T>({
-    className,
+    className ='',
     onChange,
     values,
     labels,
-    value
+    value, 
+    selectedClassName = 'bg-[#48c55c]', 
+    unSelectedClassName = 'bg-white'
 } : {
-    className?: string[];
+    className?: string | string[];
     onChange: (value : T) => void;
     values: T[];
     labels: string[];
-    value: T;
+    value: T | undefined;
+    selectedClassName?: string | string[];
+    unSelectedClassName?: string | string[];
+
 }) {
     return(
         values.map((v, index) => 
         <button onClick={() => onChange(v)} 
-        className= {`${className?.[index]} ${v === value ? 'bg-[#48c55c]' : 'bg-white'} px-3 py-3 rounded`}>
+        className={`${typeof className === "string" ? className : className[index]} ${v === value ? (typeof selectedClassName === "string" ? selectedClassName : selectedClassName[index]) : (typeof unSelectedClassName === "string" ? unSelectedClassName : unSelectedClassName[index])} px-3 py-3`}>
             {labels[index]}
         </button>)
     );

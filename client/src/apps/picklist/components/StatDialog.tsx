@@ -1,8 +1,10 @@
 import { Dispatch, useState } from 'react';
 import { AnalysisEntry, StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Select from '../../../components/Select';
 import Checkbox from '../../../components/Checkbox';
+import SelectSearch from 'react-select-search';
+import camelToSpaced from '../../../lib/camelCaseConvert';
+import { MaterialSymbol } from 'react-material-symbols';
 
 function StatDialog({
     onSubmit,
@@ -25,36 +27,44 @@ function StatDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || column, column, ascending });
+            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
             onClose?.();
         }
     };
 
     return (
         <>
+            <div className='flex justify-end'>
+                <button
+                    onClick={onClose}
+                    className='grid aspect-square h-3/4 rounded-full hover:bg-gray-500/50'>
+                    <MaterialSymbol icon='close' />
+                </button>
+            </div>
+            
+            <label>
+                Column
+                <SelectSearch
+                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    value={column}
+                    placeholder='Select Stat'
+                    onChange={value => setColumn(value as string)}
+                    search
+                />
+            </label>
             <p>
                 <label>
                     Title
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={column}
+                        placeholder={camelToSpaced(column || '')}
+                        className="p-1"
                     />
                 </label>
             </p>
             <p>
-                <label>
-                    Column
-                    <Select
-                        options={columns}
-                        value={column}
-                        onChange={setColumn}
-                        placeholder='Choose column'
-                    />
-                </label>
-            </p>
-            <p>
-                    <Checkbox onChange={setAscending}>Ascending</Checkbox>
+                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>

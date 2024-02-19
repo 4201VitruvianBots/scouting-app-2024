@@ -15,7 +15,9 @@
     "react-dom": "^18.2.0",
     "react-material-symbols": "^4.3.1",
     "react-router": "^6.17.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "react-select-search": "^4.1.7",
+    "reaviz": "^15.7.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

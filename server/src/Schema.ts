@@ -15,16 +15,16 @@ const metaDataSchema = {
 const scoreRanges = {
     near: Number,
     mid: Number,
-    far: Number
+    far: Number,
+    amp: Number,
+    miss: Number
 }
 
-const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: number, totalTele: number, total: number}>({
+const matchDataSchema = new mongoose.Schema<MatchData>({
     metadata: metaDataSchema,
     leftStartingZone: Boolean,
-    autoSpeakerNotes: scoreRanges,
-    autoAmpNotes: Number,
-    teleSpeakerNotes: scoreRanges,
-    teleAmpNotes: Number,
+    autoNotes: scoreRanges,
+    teleNotes: scoreRanges,
     trapNotes: Number,
     climb: {
         type: String,
@@ -86,4 +86,4 @@ const matchApp =  mongoose.model("matchApp", matchDataSchema);
 // const superApp =  mongoose.model("superApp", superScoutDataSchema); 
 
 
-export {matchApp, pitApp, };
+export { matchApp, pitApp, matchDataSchema, pitDataSchema };

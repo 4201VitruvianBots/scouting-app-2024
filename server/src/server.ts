@@ -1,23 +1,27 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp } from './Schema.js';
-import {averageAutoAmpNotes, averageTeleAmpNotes, averageAutoSpeakerNotes, averageTeleSpeakerNotes, maxTeleSpeakerNotes, 
-    maxTeleAmpNotes, maxAutoAmpNotes, maxAutoSpeakerNotes} from './aggregate.js'
-import { matchDataAggregations } from 'requests';
+import {averageAndMax} from './aggregate.js';
+import { importAllData } from './transfer.js';
+import { setUpSocket, updateMatchStatus } from './status.js';
 
 // import { MatchData } from 'requests';
 
 // If DEV is true then the app should forward requests to localhost:5173 instead of serving from /static
 const DEV = process.env.NODE_ENV === 'dev';
+const REMOTE = process.env.LOCATION === 'remote';
 
 const app = express();
 
 app.use(express.json());
 
+setUpSocket(app);
+
 app.post('/data/match', async(req,res) => {
     
     const matchapp = new matchApp(req.body);
     const aMatchApp = await matchapp.save();
+    updateMatchStatus()
 
     // Debugging, remove later
     console.log(aMatchApp);
@@ -36,12 +40,27 @@ app.post('/data/pit', async(req,res) => {
     res.end();
 });
 
- app.get('/data/retrieve', async(req,res) => {
-    
-    res.send({averageAutoAmpNotes:await averageAutoAmpNotes(), averageAutoSpeakerNotes:await averageAutoSpeakerNotes(),
-        averageTeleAmpNotes: await averageTeleAmpNotes(), averageTeleSpeakerNotes:await averageTeleSpeakerNotes(), 
-        maxAutoAmpNotes:await maxAutoAmpNotes(), maxAutoSpeakerNotes:await maxAutoSpeakerNotes(), maxTeleSpeakerNotes:await maxTeleSpeakerNotes(), maxTeleAmpNotes:await maxTeleAmpNotes()}satisfies matchDataAggregations);
- })
+app.post('/data/pit', async(req,res) => {
+
+    const PitApp = new pitApp(req.body);
+    const aPitApp = await PitApp.save();
+
+    console.log(aPitApp);
+
+    res.end();
+});
+
+if (REMOTE) {
+    app.post('/data/sync', async (req, res) => {
+        await importAllData(req.body);
+        res.end();
+    })
+}
+
+
+app.get('/data/retrieve', async (req, res) => {
+    res.send(await averageAndMax());
+})
 
 app.use(express.static('static'));
 
