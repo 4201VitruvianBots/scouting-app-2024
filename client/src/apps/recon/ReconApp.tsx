@@ -40,10 +40,11 @@ function ReconApp() {;
             </LinkButton>
             </div>
            
-            <table>
+            <table className="border-4 border-slate-700">
                 <thead>
                    <tr>
-                    
+                    <td className="border-4 border-slate-700">Team</td>
+                    {teams.map(teams => <th className="border-4 border-slate-700" key={teams}>{teams}</th>)}
                     </tr>
                 </thead>
                 <tbody>
