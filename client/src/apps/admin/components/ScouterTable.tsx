@@ -9,7 +9,9 @@ function ScouterTable({scouters}:{ scouters: StatusReport[]}) {
 
 
     return(
-        <div className="grid grid-cols-4 gap-4">
+       
+
+<div className="grid grid-cols-4 gap-4">
             <ScouterCard scouter={sortedScouter.red_1} title='Red 1' red/>
             <ScouterCard scouter={sortedScouter.red_2} title='Red 2' red/>
             <ScouterCard scouter={sortedScouter.red_3} title='Red 3' red/>
@@ -19,6 +21,9 @@ function ScouterTable({scouters}:{ scouters: StatusReport[]}) {
             <ScouterCard scouter={sortedScouter.blue_3} title='Blue 3'/>
             <ScouterCard scouter={sortedScouter.blue_ss} title='Blue SS'/>
         </div>
+
+       
+        
     )
 } 
 
