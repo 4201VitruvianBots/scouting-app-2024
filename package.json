@@ -6,6 +6,8 @@
     "build": "npm run build --workspaces",
     "start": "npm run start --workspace server",
     "dev": "concurrently \"npm run dev --workspace client\" \"npm run dev --workspace server\"",
+    "start:remote": "npm run start:remote --workspace server",
+    "dev:remote": "concurrently \"npm run dev --workspace client\" \"npm run dev:remote --workspace server\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint --fix .",
