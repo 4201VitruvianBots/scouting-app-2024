@@ -4,7 +4,7 @@
 
 @layer base {
     .select-search-container {
-        @apply !w-24;
+        @apply !w-32;
     }
 
     html {

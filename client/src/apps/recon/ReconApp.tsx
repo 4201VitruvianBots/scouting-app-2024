@@ -25,7 +25,7 @@ function ReconApp() {;
     const [retrieve, reloadRetrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [matchNumber, setMatchNumber] = useState<number>()
-    const [teams, setTeams] = useState<(number | undefined)[]>([7199, 7292, 9861, 6213])
+    const [teams, setTeams] = useState<(number | undefined)[]>([undefined])
 
     useEffect(() => {
         if (!matchNumber) return
@@ -50,8 +50,8 @@ function ReconApp() {;
                     />
             </LinkButton>
             </div>
-           <NumberInput value={matchNumber} onChange={setMatchNumber}></NumberInput>
-           <button onClick={reloadRetrieve}>Reload Data</button>
+           <NumberInput className='rounded-lg border-2 border-slate-900 text-center text-2xl' placeholder="type match #" value={matchNumber} onChange={setMatchNumber}></NumberInput>
+           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={reloadRetrieve}>Reload Data</button>
             <table className="border-4 border-slate-700">
                 <thead>
                    <tr>
