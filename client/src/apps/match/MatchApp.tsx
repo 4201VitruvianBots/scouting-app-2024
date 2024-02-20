@@ -8,9 +8,10 @@ import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
-import { useFetchJson } from '../../lib/useFetchJson';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
+import { useFetchJson } from '../../lib/useFetch';
+
 
 
 type countKeys = keyof MatchScores;
@@ -56,7 +57,7 @@ const defualtScores: MatchScores = {
 
 function MatchApp() {
 
-    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
