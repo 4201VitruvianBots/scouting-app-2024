@@ -15,16 +15,16 @@ const metaDataSchema = {
 const scoreRanges = {
     near: Number,
     mid: Number,
-    far: Number
+    far: Number,
+    amp: Number,
+    miss: Number
 }
 
-const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: number, totalTele: number, total: number}>({
+const matchDataSchema = new mongoose.Schema<MatchData>({
     metadata: metaDataSchema,
     leftStartingZone: Boolean,
-    autoSpeakerNotes: scoreRanges,
-    autoAmpNotes: Number,
-    teleSpeakerNotes: scoreRanges,
-    teleAmpNotes: Number,
+    autoNotes: scoreRanges,
+    teleNotes: scoreRanges,
     trapNotes: Number,
     climb: {
         type: String,
@@ -54,13 +54,30 @@ const matchDataSchema = new mongoose.Schema<MatchData, unknown, {totalAuto: numb
  const pitDataSchema = new mongoose.Schema<PitFile>({
      scouterName: String,
      teamNumber: Number,
-     heightMeters: Number,
-     weightKg: Number,
+     capabilities: {
+        amp: Boolean,
+        speaker: Boolean,
+        trap: Boolean,
+        climb: Boolean,
+        chainTraversal: Boolean
+     },
+    preference: {
+        ampPrefer: Boolean,
+        speakerPerfer:Boolean,
+        trapPrefer: Boolean,
+        climbPrefer: Boolean,
+    },
+    autoCapability: [String],
+    teamRole: {
+        type: String,
+        enum: ['scoring', 'defense', 'support', 'all-round']
+    },
      pitBatteryCount: Number,
      drivebase: {
             type: String,
-            enum: ['Tank', 'swerve', 'other' ]
-     }
+            enum: ['Tank', 'swerve','MECANUM', 'other' ]
+     },
+     comments: String
  });
 
 // const ssApp = ('ssApp', superScoutDataSchema);
@@ -69,4 +86,4 @@ const matchApp =  mongoose.model("matchApp", matchDataSchema);
 const superApp =  mongoose.model("superApp", superScoutDataSchema); 
 
 
-export {matchApp, pitApp, superApp};
+export { matchApp, pitApp, matchDataSchema, pitDataSchema, superApp};

@@ -10,30 +10,47 @@ import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
 import { useFetchJson } from '../../lib/useFetchJson';
 import NumberInput from '../../components/NumberInput';
+import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
 
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
-    autoNear: number;
-    autoMid: number;
-    autoFar: number;
+    autoShootNear: number;
+    autoShootMid: number;
+    autoShootFar: number;
     autoAmp: number;
-    teleNear: number;
-    teleMid: number;
-    teleFar: number;
+    autoMiss: number;
+    autoPreload: number;
+    autoPickup: number;
+    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
+    teleShootNear: number;
+    teleShootMid: number;
+    teleShootFar: number;
     teleAmp: number;
+    teleMiss: number;
+    telePickupSpeaker: number;
+    telePickupMiddle: number;
+    telePickupSource: number;
     trap: number;
 }
 const defualtScores: MatchScores = {
-    autoNear: 0,
-    autoMid: 0,
-    autoFar: 0,
+    autoShootNear: 0,
+    autoShootMid: 0,
+    autoShootFar: 0,
     autoAmp: 0,
-    teleNear: 0,
-    teleMid: 0,
-    teleFar: 0,
+    autoMiss: 0,
+    autoPreload: 0,
+    autoPickup: 0,
+    hold: 0,
+    teleShootNear: 0,
+    teleShootMid: 0,
+    teleShootFar: 0,
     teleAmp: 0,
+    teleMiss: 0,
+    telePickupSpeaker: 0,
+    telePickupMiddle: 0,
+    telePickupSource: 0,
     trap: 0,
 };
 
@@ -70,18 +87,20 @@ function MatchApp() {
                 robotTeam: teamNumber,
             },
             leftStartingZone: leave,
-            autoSpeakerNotes: {
-                near: count.autoNear,
-                mid: count.autoMid,
-                far: count.autoFar,
+            autoNotes: {
+                near: count.autoShootNear,
+                mid: count.autoShootMid,
+                far: count.autoShootFar,
+                amp: count.autoAmp,
+                miss: count.autoMiss
             },
-            autoAmpNotes: count.autoAmp,
-            teleSpeakerNotes: {
-                near: count.teleNear,
-                mid: count.teleMid,
-                far: count.teleFar,
+            teleNotes: {
+                near: count.teleShootNear,
+                mid: count.teleShootMid,
+                far: count.teleShootFar,
+                amp: count.teleAmp,
+                miss: count.autoMiss
             },
-            teleAmpNotes: count.teleAmp,
             trapNotes: count.trap,
             climb: climbPosition,
         };
@@ -121,6 +140,8 @@ function MatchApp() {
                 : undefined
         );
     }, [matchNumber, robotPosition, schedule]);
+
+    useStatus(robotPosition, matchNumber, scouterName);
 
     return (
         <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
