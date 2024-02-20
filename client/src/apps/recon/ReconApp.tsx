@@ -3,6 +3,7 @@ import LinkButton from "../../components/LinkButton";
 import { useFetchJson } from "../../lib/useFetchJson";
 import { useState } from "react";
 import StatRow from "./components/StatRow";
+import { MaterialSymbol } from "react-material-symbols";
 
 
 const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
@@ -21,12 +22,23 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
 function ReconApp() {;
     const retrieve = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
     
-    const [teams, setTeams] = useState<number[]>([1609, 7220, 4936, 8627])
+    const [teams, setTeams] = useState<number[]>([7199, 7292, 9861, 6213])
     return (
-        <>
+        <main className='mx-auto flex grid-flow-row flex-col content-center  items-center justify-center'>
+            <h1 className='my-8 text-center text-3xl'>Recon Interface</h1>
 
-            <h1>Recon App</h1>
-            <LinkButton link='/'>Home</LinkButton>
+            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md p-2'>
+            <LinkButton link='/' className='snap-none'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='green'
+                        className='snap-none'
+                    />
+            </LinkButton>
+            </div>
            
             <table>
                 <thead>
@@ -38,7 +50,7 @@ function ReconApp() {;
                    {stats.map(stat => <StatRow data={retrieve} teams={teams} stat={stat}/>)}
                 </tbody>
             </table>
-        </>
+        </main>
     );
 }
 
