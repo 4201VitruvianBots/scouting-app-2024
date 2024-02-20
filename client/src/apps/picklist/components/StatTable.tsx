@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import base64toImage from '../../../lib/base64toImage';
 import { AnalysisEntry, StatColumnData, StatTableData, TeamInfoEntry } from '../data';
 import StatColumn from './StatColumn';
@@ -11,33 +12,31 @@ function StatTable({
     data: AnalysisEntry[];
     teamInfoJson: TeamInfoEntry;
 }) {
-    // const entries = data.map<[number, number]>(e => [
-    //     e.teamNumber,
-    //     e[table.column] as number,
-    // ]);
-    // const sortedEntries = entries.sort((a, b) => a[1] - b[1]);
-    // if (!table.ascending) sortedEntries.reverse();
+    // Create an empty list of StatColumn components
+    let statColumns: React.RefObject<typeof StatColumn>[] = [];
     
-    // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
-    // const sortedTeamNumbers = sortedEntries.map(entry => entry[0].toString());
-    // let sortedTeamAvatars = sortedTeamNumbers.map(() => '');
+    // Create a ref for each StatColumn component
+    let statColumnRefs = data.map(() => createRef<typeof StatColumn>());
     
-    // const empty64x64Base64: string = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAOUlEQVR42u3OIQEAAAACIP1/2hkWWEBzVgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAYF3YDicAEE8VTiYAAAAAElFTkSuQmCC";
+    // Create a variable for the sort order
+    let sortOrder: number[] | undefined = undefined;
     
-    // if (teamInfoJson !== undefined) {
-    //     sortedTeamAvatars = sortedTeamNumbers.map(teamNumber => {
-    //         if (teamInfoJson[teamNumber]?.avatar !== undefined) {
-    //             return teamInfoJson[teamNumber]?.avatar;
-    //         } else {
-    //             return empty64x64Base64;
-    //         }
-    //     }).filter(Boolean) as string[];
-    // }
+    // Create the avatar column for each team number
     
-    // // Convert the base64 images to an array of Image objects
-    // const avatarImages = sortedTeamAvatars.map(base64toImage);
+    // Handle when a StatColumn component is clicked
+        // Store the new sort order
+        // Update the sort order of all the StatColumn components
+        // Update the sort order of the avatars and team numbers
     
-    let testTable: StatColumnData = {column: 'test', title: 'test', type: 'StatColumn'};
+    // Handle when the add column button is clicked
+        // Create a new StatColumnDialog
+    
+    // Handle when the new StatColumn is submitted
+        // Create a new StatColumn component with the correct sort order
+        // Add the new StatColumn component to the list of StatColumn components
+    
+    // Handle when a StatColumn component is deleted
+        // Remove the StatColumn component from the list of StatColumn components
     
     return (
         <div className="flex space-x-4">
@@ -48,14 +47,9 @@ function StatTable({
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {sortedEntries.map(([team, datapoint], i) => (
-                        <tr key={i}>
-                            {avatarImages[i].src ? <td><img src={avatarImages[i].src} width='32' height='32' /></td> : <td></td>}
-                            <td>{team}</td>
-                            <td>{datapoint}</td>
-                        </tr>
-                    ))} */}
-                    <StatColumn table={testTable} data={data} onClick={() => {}} onSort={() => {}}/>
+                    {/* Render the avatar column */}
+                    {/* Render the team number column */}
+                    {/* Render each StatColumn component */}
                 </tbody>
             </table>
             <button className="border-black">+ Add Column</button>

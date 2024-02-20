@@ -1,12 +1,13 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import ArrowButton from "../../../components/ArrowButton";
 import { AnalysisEntry, StatColumnData } from "../data";
 import { ArrowComponentRef } from "../../../components/ArrowButton";
+import { MaterialSymbol } from "react-material-symbols";
 
 // Define the type of the ref that will be used in StatTable
 interface StatColumnRef {
     // onOtherClick is called by other components when another arrow button is clicked
-    onOtherClick: (teamNumbers: number[]) => void;
+    onOtherClick: (teamNumbers: number[]) => void
 }
 
 interface StatColumnProps {
@@ -15,7 +16,9 @@ interface StatColumnProps {
     // onClick is called by this component when the sort order is changed
     onClick: (teamNumbers: number[]) => void,
     // If this is the first column, sortOrder is undefined and the stat column sorts by team number
-    sortOrder: number[] | undefined;
+    sortOrder: number[] | undefined,
+    // onDelete is called by this component when the delete button is clicked
+    onDelete: () => void;
 }
 
 const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
@@ -23,6 +26,7 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
     data,
     onClick,
     sortOrder,
+    onDelete,
 }, ref) => {
     // Create a ref for ArrowComponent
     const arrowComponentRef = useRef<ArrowComponentRef>(null);
@@ -76,6 +80,11 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
                 <tr className="bg-gray-300">
                     <ArrowButton ref={arrowComponentRef} onClick={handleOnClick} />
                     <th colSpan={2}>{table.title}</th>
+                    <th>
+                        <button onClick={onDelete} className='grid aspect-square h-3/4 rounded-full hover:bg-gray-500/50'>
+                            <MaterialSymbol icon='close' />
+                        </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
