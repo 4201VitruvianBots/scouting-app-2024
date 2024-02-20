@@ -1,10 +1,11 @@
-import { MatchDataAggregations } from "requests";
+import { MatchDataAggregations, MatchSchedule } from "requests";
 import LinkButton from "../../components/LinkButton";
 import { useFetchJson } from "../../lib/useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StatRow from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
 import TeamDropdown from "../../components/TeamDropdown";
+import NumberInput from "../../components/NumberInput";
 
 
 const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
@@ -21,9 +22,18 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
 ]
 
 function ReconApp() {;
-    const [retrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
-    
+    const [retrieve, reloadRetrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [matchNumber, setMatchNumber] = useState<number>()
     const [teams, setTeams] = useState<(number | undefined)[]>([7199, 7292, 9861, 6213])
+
+    useEffect(() => {
+        if (!matchNumber) return
+        const match = schedule?.[matchNumber];
+        if (!match) return
+        setTeams([match.red_1, match.red_2, match.red_3, match.blue_1, match.blue_2, match.blue_3])
+    },[matchNumber, schedule])
+
     return (
         <main className='mx-auto flex grid-flow-row flex-col content-center  items-center justify-center'>
             <h1 className='my-8 text-center text-3xl'>Recon Interface</h1>
@@ -40,7 +50,8 @@ function ReconApp() {;
                     />
             </LinkButton>
             </div>
-           
+           <NumberInput value={matchNumber} onChange={setMatchNumber}></NumberInput>
+           <button onClick={reloadRetrieve}>Reload Data</button>
             <table className="border-4 border-slate-700">
                 <thead>
                    <tr>
