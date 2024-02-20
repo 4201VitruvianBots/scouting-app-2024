@@ -1,6 +1,6 @@
 import { MatchDataAggregations } from "requests";
 import LinkButton from "../../components/LinkButton";
-import { useFetchJson } from "../../lib/useFetchJson";
+import { useFetchJson } from "../../lib/useFetch";
 import { useState } from "react";
 import StatRow from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
@@ -20,7 +20,7 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
 ]
 
 function ReconApp() {;
-    const retrieve = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [retrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
     
     const [teams, setTeams] = useState<number[]>([7199, 7292, 9861, 6213])
     return (
