@@ -18,10 +18,10 @@ function SuperApp() {
         <main className='flex select-none flex-col items-center text-center'>
             <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
-                <LinkButton link='/' className='snap-none'>
+            <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
-                        size={80}
+                        size={60}
                         fill
                         grade={200}
                         color='green'
