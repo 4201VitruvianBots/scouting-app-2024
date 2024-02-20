@@ -62,7 +62,7 @@ function setUpSocket(expressApp: Application) {
         // When the websocket closes
         ws.on('close', () => {
             // Remove this scouter from the list
-            status.scouters.splice(status.scouters.indexOf(scouter));
+            status.scouters.splice(status.scouters.indexOf(scouter), 1);
             notifyWatchers();
         });
     });
