@@ -5,7 +5,7 @@ import { MatchDataAggregations } from "requests";
 
 
 
-function StatRow({teams, stat, data}:{teams:number[], stat:Exclude<keyof MatchDataAggregations, '_id'>, data:MatchDataAggregations[] | undefined}) {
+function StatRow({teams, stat, data}:{teams:(number | undefined)[], stat:Exclude<keyof MatchDataAggregations, '_id'>, data:MatchDataAggregations[] | undefined}) {
     const datapoints = teams.map(team => data?.find(dataTeam => team===dataTeam._id.teamNumber)?.[stat])
     return(
         <tr>

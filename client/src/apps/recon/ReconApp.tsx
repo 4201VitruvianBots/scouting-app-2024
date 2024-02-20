@@ -4,6 +4,7 @@ import { useFetchJson } from "../../lib/useFetch";
 import { useState } from "react";
 import StatRow from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
+import TeamDropdown from "../../components/TeamDropdown";
 
 
 const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
@@ -22,7 +23,7 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
 function ReconApp() {;
     const [retrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
     
-    const [teams, setTeams] = useState<number[]>([7199, 7292, 9861, 6213])
+    const [teams, setTeams] = useState<(number | undefined)[]>([7199, 7292, 9861, 6213])
     return (
         <main className='mx-auto flex grid-flow-row flex-col content-center  items-center justify-center'>
             <h1 className='my-8 text-center text-3xl'>Recon Interface</h1>
@@ -44,7 +45,11 @@ function ReconApp() {;
                 <thead>
                    <tr>
                     <td className="border-4 border-slate-700">Team</td>
-                    {teams.map(teams => <th className="border-4 border-slate-700" key={teams}>{teams}</th>)}
+                    {teams.map((team, index) => <th className="border-4 border-slate-700">
+                        <TeamDropdown value={team} onChange={value => setTeams(teams.map((team, index2) => index===index2? value : team))}/>
+                        <button onClick={() => setTeams(teams.filter((_, index2) => index!==index2))}>X</button>
+                    </th>)}
+                    <td><button onClick={() => setTeams([...teams, undefined])}>Add</button></td>
                     </tr>
                 </thead>
                 <tbody>
