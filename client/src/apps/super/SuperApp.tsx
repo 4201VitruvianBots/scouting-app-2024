@@ -3,10 +3,11 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useState } from 'react';
 import Dialog from '../../components/Dialog';
-import { Foul, SuperPosition, Break, DefenseRank } from 'requests';
+import { Foul, SuperPosition, Break, DefenseRank, StageLocation } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
 import Checkbox from '../../components/Checkbox';
+import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
 
 const foulTypes: Foul[] = [
     'inBot',
@@ -57,78 +58,39 @@ function SuperApp() {
         setDefended3(!defended3)
     }
 
+    const [highNotes, setHighNotes] = useState<Record<StageLocation, boolean>>({
+        amp: false,
+        center: false,
+        source: false,
+    });
+
     return (
-        <main className='grid columns-3 text-center'>
+        <main className='text-center'>
             <h1 className='col-span-3 my-8 text-3xl'>Super Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
+            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
-                        size={80}
+                        size={60}
                         fill
                         grade={200}
                         color='green'
                         className='snap-none'
                     />
                 </LinkButton>
-            </div>
-            <Dialog
-                trigger={open => (
-                    <button onClick={open} className='col-span-3'>
-                        <MaterialSymbol
-                            icon='account_circle'
-                            size={60}
-                            fill
-                            grade={200}
-                            className={` ${
-                                scouterName && superPosition
-                                    ? 'text-green-400'
-                                    : 'text-gray-400'
-                            } snap-none`}
-                        />
-                    </button>
-                )}>
-                {close => (
-                    <SignIn
-                        scouterName={scouterName}
-                        onChangeScouterName={setScouterName}
-                        robotPosition={superPosition}
-                        onChangeRobotPosition={setSuperPosition}
-                        onSubmit={close}
-                        superScouting
-                    />
-                )}
-            </Dialog>
-            <SuperTeam teamState={team1} setTeamState={setTeam1} defenseRank={defenseRank1} setDefense={setDefenseRank1}/>
-            <SuperTeam teamState={team2} setTeamState={setTeam2} defenseRank={defenseRank2} setDefense={setDefenseRank2}/>
-            <SuperTeam teamState={team3} setTeamState={setTeam3} defenseRank={defenseRank3} setDefense={setDefenseRank3}/>
-            <Checkbox onChange={handleDefended1}>Was Defended?</Checkbox>
-            <Checkbox onChange={handleDefended2}>Was Defended?</Checkbox>
-            <Checkbox onChange={handleDefended3}>Was Defended?</Checkbox>
-        </main>
-        /* <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
-                <LinkButton link='/' className='snap-none'>
-                    <MaterialSymbol
-                        icon='home'
-                        size={80}
-                        fill
-                        grade={200}
-                        color='green'
-                        className='snap-none'
-                    />
-                </LinkButton>
-            </div>
-            <Dialog
+                <Dialog
                     trigger={open => (
-                        <button onClick={open}>
+                        <button onClick={open} className='col-span-3'>
                             <MaterialSymbol
                                 icon='account_circle'
                                 size={60}
                                 fill
                                 grade={200}
-                                className={` ${scouterName && superPosition ? 'text-green-400' 
-                                : 'text-gray-400'} snap-none`}
+                                className={` ${
+                                    scouterName && superPosition
+                                        ? 'text-green-400'
+                                        : 'text-gray-400'
+                                } snap-none`}
                             />
                         </button>
                     )}>
@@ -143,20 +105,30 @@ function SuperApp() {
                         />
                     )}
                 </Dialog>
-            
-            <div className='bg-red-200 grid grid-cols-3 grid-rows-auto gap-10 px-10 p-5'>
-                <div className='bg-orange-300'>
-                    <p>team 1</p>
-                    <ButtonDropdown options={foulTypes}>Add Foul</ButtonDropdown>
-                </div>
-                <div className='bg-yellow-300'>
-                    <p>team 2</p>
-                </div>
-                <div className='bg-green-300'>
-                    <p>team 3</p>
-                </div>
             </div>
-             */
+        
+        <div className='grid grid-cols-3 px-10'>
+        <SuperTeam teamState={team1} setTeamState={setTeam1} defenseRank={defenseRank1} setDefense={setDefenseRank1}/>
+            <SuperTeam teamState={team2} setTeamState={setTeam2} defenseRank={defenseRank2} setDefense={setDefenseRank2}/>
+            <SuperTeam teamState={team3} setTeamState={setTeam3} defenseRank={defenseRank3} setDefense={setDefenseRank3}/>
+            <Checkbox onChange={handleDefended1}>Was Defended?</Checkbox>
+            <Checkbox onChange={handleDefended2}>Was Defended?</Checkbox>
+            <Checkbox onChange={handleDefended3}>Was Defended?</Checkbox>
+
+        </div>
+   
+
+            <MultiSelectFieldButton
+                highNotes={highNotes}
+                setHighNotes={setHighNotes}
+                alliance={(superPosition === 'blue_ss')}
+                className='my-5 justify-items-center  mx-auto relative h-[40em] w-[40em] bg-cover bg-center '
+               
+            />
+        </main>
+            
+                   
+           
     );
 }
 

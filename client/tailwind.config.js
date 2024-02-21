@@ -9,6 +9,8 @@ export default {
                 'field-red': "url('images/redSideCropped.png')",
                 'field-red-endgame': "url('images/fieldmapREDendgame.png')",
                 'field-blue-endgame': "url('images/fieldmapBLUEendgame.png')",
+                'field-blue-super': "url('images/blueSideSuper.png')",
+                'field-red-super': "url('images/redSideSuper.png')",
             },
             colors: {
                 darkred: '#7c1034',

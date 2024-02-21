@@ -1,4 +1,5 @@
-export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed';
+export type ClimbPosition = StageLocation | 'park' | 'none' | 'failed';
+export type StageLocation = 'amp' | 'source' | 'center'
 export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
 export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round' 
 export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other' 
