@@ -1,17 +1,17 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { AnalysisEntry, BarGraphData } from '../data';
 import TextInput from '../../../components/TextInput';
 import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
-function StatDialog({
+function BarGraphDialog({
     onSubmit,
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatTableData>;
+    onSubmit: Dispatch<BarGraphData>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -24,10 +24,13 @@ function StatDialog({
     const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
     const [ascending, setAscending] = useState(false);
+    
+    const [showAll, setShowAll] = useState(true);
+    const [top, setTop] = useState('');
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
+            onSubmit({title: title || camelToSpaced(column || ''), column, ascending, type: 'BarGraph', top: parseInt(top)});
             onClose?.();
         }
     };
@@ -59,16 +62,29 @@ function StatDialog({
                         value={title}
                         onChange={setTitle}
                         placeholder={camelToSpaced(column || '')}
-                        className="p-1"
                     />
                 </label>
             </p>
             <p>
-                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
+                <Checkbox checked={showAll} onChange={setShowAll}>Show All?</Checkbox>
+            </p>
+            <p>
+                <label>
+                    Show Top 
+                    <TextInput
+                        value={top}
+                        onChange={setTop}
+                        placeholder={''}
+                        disabled={showAll}
+                    />
+                </label>
+            </p>
+            <p>
+                <Checkbox onChange={setAscending}>Ascending</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
     );
 }
 
-export default StatDialog;
+export default BarGraphDialog;

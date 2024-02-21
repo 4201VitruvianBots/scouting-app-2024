@@ -5,12 +5,13 @@ import {
     PaneData,
     SplitData,
     StateProps,
+    TabBase,
     TabsData,
     TabsSplice,
 } from './workspaceData';
 import { NestingContext } from './workspaceContexts';
 
-function Pane<T>({
+function Pane<T extends TabBase>({
     value,
     onChange,
     height,

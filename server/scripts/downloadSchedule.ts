@@ -59,4 +59,4 @@ const schedule = Object.fromEntries(
 
 console.log(schedule);
 
-fs.writeFileSync('static/matchSchedule.json', JSON.stringify(schedule))
+fs.writeFileSync('static/matchSchedule.json', JSON.stringify(schedule));

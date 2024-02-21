@@ -1,5 +1,7 @@
 export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
 export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
+export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round' 
+export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other' 
 
 export type RobotPosition =
     | 'red_1'
@@ -7,8 +9,22 @@ export type RobotPosition =
     | 'red_3'
     | 'blue_1'
     | 'blue_2'
-    | 'blue_3';
+    | 'blue_3'
 export type Foul = 'A' | 'B';
+interface capabilities { 
+    amp: boolean,
+    speaker: boolean
+    trap: boolean,
+    climb: boolean,
+    chainTraversal: boolean
+}
+interface preference {
+    ampPrefer: boolean,
+    speakerPerfer:boolean,
+    trapPrefer: boolean,
+    climbPrefer: boolean,
+
+}
 export type SuperPosition = 
     | 'red_ss'
     | 'blue_ss'
@@ -67,31 +83,40 @@ export type SuperData = {
     stationPlayerTeam: number; // Team Number
 }[];
 
-// - `POST` `/data/pits`
+// - `POST` `/data/pits` 
 // `<form>` files?
 
 export interface PitFile {
     scouterName: string;
     teamNumber: number;
-    heightMeters: number;
-    weightKg: number;
+    capabilities: capabilities;
+    preference: preference;
+    autoCapability: string[];
+    teamRole: teamRoles;
     pitBatteryCount: number;
-    drivebase: 'tank' | 'swerve' | 'mecanum' | 'other';
+    drivebase: drivebase;
+    comments: string;
 }
 
 // - `WebSocket` `/status/report`
 // client -> server
 
-export type StatusReport = MetaData;
+export interface StatusReport {
+    robotPosition: RobotPosition|SuperPosition|undefined;
+    matchNumber: number|undefined;
+    scouterName: string;
+    battery: number | undefined;
+}
 
 // - `WebSocket` `/status/recieve`
 // server -> client
 
 export interface StatusRecieve {
-    scouters: MetaData[];
-    matches: Record<RobotPosition | SuperPosition, boolean>[];
+    scouters: StatusReport[];
+    matches: MatchStatus
 }
 
+export type MatchStatus = Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
 // - `GET` `/data/schedule.json`
 
 export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
