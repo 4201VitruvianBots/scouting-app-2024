@@ -44,6 +44,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         stageFoul: Number,
         overExtChute: Number
      },
+<<<<<<< Updated upstream
     defense: {
         type: String,
         enum: ['fullDef', 'someDef', 'noDef']
@@ -55,6 +56,16 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
             source: Boolean,
             center: Boolean
     }}
+=======
+     defense: {
+        type: String,
+        enum: [ 'Full Defense' , 'Some Defense' ,'No Defense']
+     },
+     defended: Boolean,
+     highNotes: Number,
+     spotlitRobots: Number,
+     stationPlayerTeam: Number
+>>>>>>> Stashed changes
  });
 
 
