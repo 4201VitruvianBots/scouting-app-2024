@@ -18,7 +18,8 @@ interface StatColumnProps {
     // If this is the first column, sortOrder is undefined and the stat column sorts by team number
     sortOrder: number[] | undefined,
     // onDelete is called by this component when the delete button is clicked
-    onDelete: () => void;
+    onDelete: (index: number) => void,
+    index: number;
 }
 
 const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
@@ -27,6 +28,7 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
     onClick,
     sortOrder,
     onDelete,
+    index
 }, ref) => {
     // Create a ref for ArrowComponent
     const arrowComponentRef = useRef<ArrowComponentRef>(null);
@@ -69,6 +71,10 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
         arrowComponentRef.current?.onOtherClick();
     }
     
+    const handleOnDelete = () => {
+        onDelete(index);
+    }
+    
     // Expose handleOnOtherClick to the parent component
     useImperativeHandle(ref, () => ({
         onOtherClick: handleOnOtherClick
@@ -81,7 +87,7 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
                     <ArrowButton ref={arrowComponentRef} onClick={handleOnClick} />
                     <th colSpan={2}>{table.title}</th>
                     <th>
-                        <button onClick={onDelete} className='grid aspect-square h-3/4 rounded-full hover:bg-gray-500/50'>
+                        <button onClick={handleOnDelete} className='grid aspect-square h-3/4 rounded-full hover:bg-gray-500/50'>
                             <MaterialSymbol icon='close' />
                         </button>
                     </th>
@@ -99,3 +105,4 @@ const StatColumn = forwardRef<StatColumnRef, StatColumnProps>(({
 });
 
 export default StatColumn;
+export type { StatColumnRef, StatColumnProps };
