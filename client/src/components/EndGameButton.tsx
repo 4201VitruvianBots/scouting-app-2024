@@ -43,7 +43,7 @@ function EndgameButton({
                 values={['amp', 'center', 'source', 'failed', 'none', 'park']}
                 className={alliance
                 
-                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[5em] h-[29em] w-[4em] right-[2em]', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]
+                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60 ', 'absolute top-[5em] h-[29em] w-[4em] right-[2em] bg-orange-600', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]
                 : [/*blue*/ 'absolute top-[14em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[5em] left-[3em] h-[29em] w-[4em]', 'absolute top-[-4em] left-[18em] h-[29em] w-[4em] -rotate-60', '', '', ''] }/>
             </div>
         </> 
