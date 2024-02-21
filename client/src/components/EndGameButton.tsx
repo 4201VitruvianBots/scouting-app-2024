@@ -41,9 +41,9 @@ function EndgameButton({
                 onChange={handleClimb} value={climbPosition} 
                 labels={['', '', '', 'Failed', 'None', 'Parked']}
                 values={['amp', 'center', 'source', 'failed', 'none', 'park']}
-                className={alliance
+                className={
                 
-                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[5em] h-[29em] w-[4em] right-[2em]', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]
+                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[5em] h-[29em] w-[4em] right-[2em]', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ] // try !static h-[100px] flex-grow basis-0 bg-orange-200 as a template to change the button. 
                 : [/*blue*/ 'absolute top-[14em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[5em] left-[3em] h-[29em] w-[4em]', 'absolute top-[-4em] left-[18em] h-[29em] w-[4em] -rotate-60', '', '', ''] }/>
             </div>
         </> 
