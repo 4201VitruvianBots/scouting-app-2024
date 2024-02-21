@@ -10,7 +10,7 @@ function StatRow({teams, stat, data}:{teams:(number | undefined)[], stat:Exclude
     return(
         <tr>
            <th className="border-4 border-slate-700">{stat}</th>
-            {datapoints.map(dataNumbers => <td className={`${dataNumbers===0 ? 'bg-red-600' : ''} border-4 w-16 overflow-auto text-center border-slate-700`}>{dataNumbers}</td>)}
+            {datapoints.map((dataNumbers, columnIndex) => <td className={`${dataNumbers===0 ? 'bg-red-600' : columnIndex % 2 === 0 ? '' : 'bg-gray-300'} border-4 w-16 overflow-auto text-center border-slate-700`}>{dataNumbers}</td>)}
         </tr>
     )
 } 
