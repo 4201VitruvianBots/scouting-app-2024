@@ -44,10 +44,17 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         stageFoul: Number,
         overExtChute: Number
      },
-     defense: Number,
-     highNotes: Number,
-     spotlitRobots: Number,
-     stationPlayerTeam: Number
+    defense: {
+        type: String,
+        enum: ['fullDef', 'someDef', 'noDef']
+    },
+    defended: Boolean,
+    humanShooter:{
+        highNotes: {
+            amp: Boolean,
+            source: Boolean,
+            center: Boolean
+    }}
  });
 
 

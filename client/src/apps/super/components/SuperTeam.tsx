@@ -3,12 +3,14 @@ import { Foul, Break, DefenseRank } from 'requests';
 import ButtonDropdown from '../../../components/ButtonDropdown';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
+import TeamDropdown from '../../../components/TeamDropdown';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
     breakCount: Record<Break, number>;
     defenseRank: DefenseRank;
     wasDefended: boolean;
+    teamNumber: number | undefined;
 }
 
 function SuperTeam({
@@ -30,9 +32,13 @@ function SuperTeam({
     const handleWasDefended = (newDefended: boolean) => {
         setTeamState({ ...teamState, wasDefended: newDefended });
     };
+    const handleChangeTeam = (newChangeTeam: number) => {
+        setTeamState({ ...teamState, teamNumber: newChangeTeam });
+    };
 
     return (
         <div>
+            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
             <ButtonDropdown value={teamState.foulCounts} setValue={handleFoul}>
                 Add Foul
             </ButtonDropdown>

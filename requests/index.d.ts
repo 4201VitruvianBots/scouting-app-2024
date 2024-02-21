@@ -36,6 +36,12 @@ interface capabilities {
     climb: boolean,
     chainTraversal: boolean
 }
+
+interface HighNote { 
+    amp: boolean,
+    source: boolean
+    center: boolean,
+}
 interface preference {
     ampPrefer: boolean,
     speakerPerfer:boolean,
@@ -65,8 +71,9 @@ export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam: number;
-    robotPosition: RobotPosition;
+    robotPosition: RobotPosition | SuperPosition;
 }
+
 
 interface ScoreRanges {
     near: number,
@@ -94,11 +101,14 @@ export interface MatchData {
 export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
-    defense: unknown;
-    driverSKill: unknown; // Similar to defense
-    spotlitRobots: number;
-    highNotes: number;
-    stationPlayerTeam: number; // Team Number
+    defense: DefenseRank;
+    defended: boolean;
+    humanShooter?: {highNotes: HighNote}; // Team Number
+    // I suggest this
+    /* humanShooter?: {
+        highNotes: highNotes;
+    }*/
+    // so that 
 };
 
 // - `POST` `/data/pits` 
