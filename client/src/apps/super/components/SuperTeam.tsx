@@ -1,23 +1,22 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch } from 'react';
 import { Foul, Break, DefenseRank } from 'requests';
 import ButtonDropdown from '../../../components/ButtonDropdown';
 import MultiButton from '../../../components/MultiButton';
+import Checkbox from '../../../components/Checkbox';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
     breakCount: Record<Break, number>;
+    defenseRank: DefenseRank;
+    wasDefended: boolean;
 }
 
 function SuperTeam({
     teamState,
     setTeamState,
-    setDefense,
-    defenseRank
 }: {
     teamState: SuperTeamState;
     setTeamState: Dispatch<SuperTeamState>;
-    setDefense: Dispatch<SetStateAction<DefenseRank>>;
-    defenseRank: DefenseRank
 }) {
     const handleFoul = (fouls: Record<Foul, number>) => {
         setTeamState({ ...teamState, foulCounts: fouls });
@@ -26,8 +25,11 @@ function SuperTeam({
         setTeamState({ ...teamState, breakCount: breaks });
     };
     const handleDefense = (newDefense: DefenseRank) => {
-        setDefense(newDefense);
-    }
+        setTeamState({ ...teamState, defenseRank: newDefense });
+    };
+    const handleWasDefended = (newDefended: boolean) => {
+        setTeamState({ ...teamState, wasDefended: newDefended });
+    };
 
     return (
         <div>
@@ -37,9 +39,19 @@ function SuperTeam({
             <ButtonDropdown value={teamState.breakCount} setValue={handleBreak}>
                 Add Break
             </ButtonDropdown>
-            <MultiButton onChange={handleDefense} value={defenseRank}
-            labels={['Full Defense', 'Some Defense', 'No Defense']}
-            values={['fullDef', 'someDef', 'noDef']}/>
+            <MultiButton
+                onChange={handleDefense}
+                value={teamState.defenseRank}
+                labels={['Full Defense', 'Some Defense', 'No Defense']}
+                values={['fullDef', 'someDef', 'noDef']}
+            />
+            <div>
+                <Checkbox
+                    checked={teamState.wasDefended}
+                    onChange={handleWasDefended}>
+                    Was Defended?
+                </Checkbox>
+            </div>
         </div>
     );
 }

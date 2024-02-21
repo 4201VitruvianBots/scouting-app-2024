@@ -3,10 +3,9 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useState } from 'react';
 import Dialog from '../../components/Dialog';
-import { Foul, SuperPosition, Break, DefenseRank, StageLocation } from 'requests';
+import { Foul, SuperPosition, Break, StageLocation } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
-import Checkbox from '../../components/Checkbox';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
 
 const foulTypes: Foul[] = [
@@ -17,13 +16,9 @@ const foulTypes: Foul[] = [
     'podiumFoul',
     'stageFoul',
     'tipEntangBot',
-    'zoneFoul'
+    'zoneFoul',
 ];
-const breakTypes: Break[] = [
-    'mechanismDmg',
-    'batteryFall',
-    'commsFail'
-];
+const breakTypes: Break[] = ['mechanismDmg', 'batteryFall', 'commsFail'];
 
 const defaultSuperTeamState: SuperTeamState = {
     foulCounts: Object.fromEntries(foulTypes.map(e => [e, 0])) as Record<
@@ -31,32 +26,19 @@ const defaultSuperTeamState: SuperTeamState = {
         number
     >,
     breakCount: Object.fromEntries(breakTypes.map(e => [e, 0])) as Record<
-    Break, number
+        Break,
+        number
     >,
+    defenseRank: 'noDef',
+    wasDefended: false,
 };
 
 function SuperApp() {
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
-    const [defenseRank1, setDefenseRank1] = useState<DefenseRank>('noDef');
-    const [defenseRank2, setDefenseRank2] = useState<DefenseRank>('noDef');
-    const [defenseRank3, setDefenseRank3] = useState<DefenseRank>('noDef');
-    const [defended1, setDefended1] = useState(false);
-    const [defended2, setDefended2] = useState(false);
-    const [defended3, setDefended3] = useState(false);
     const [team1, setTeam1] = useState(defaultSuperTeamState);
     const [team2, setTeam2] = useState(defaultSuperTeamState);
     const [team3, setTeam3] = useState(defaultSuperTeamState);
-
-    const handleDefended1 = () => {
-        setDefended1(!defended1)
-    }
-    const handleDefended2 = () => {
-        setDefended2(!defended2)
-    }
-    const handleDefended3 = () => {
-        setDefended3(!defended3)
-    }
 
     const [highNotes, setHighNotes] = useState<Record<StageLocation, boolean>>({
         amp: false,
@@ -106,29 +88,20 @@ function SuperApp() {
                     )}
                 </Dialog>
             </div>
-        
-        <div className='grid grid-cols-3 px-10'>
-        <SuperTeam teamState={team1} setTeamState={setTeam1} defenseRank={defenseRank1} setDefense={setDefenseRank1}/>
-            <SuperTeam teamState={team2} setTeamState={setTeam2} defenseRank={defenseRank2} setDefense={setDefenseRank2}/>
-            <SuperTeam teamState={team3} setTeamState={setTeam3} defenseRank={defenseRank3} setDefense={setDefenseRank3}/>
-            <Checkbox onChange={handleDefended1}>Was Defended?</Checkbox>
-            <Checkbox onChange={handleDefended2}>Was Defended?</Checkbox>
-            <Checkbox onChange={handleDefended3}>Was Defended?</Checkbox>
 
-        </div>
-   
+            <div className='grid grid-cols-3 px-10'>
+                <SuperTeam teamState={team1} setTeamState={setTeam1} />
+                <SuperTeam teamState={team2} setTeamState={setTeam2} />
+                <SuperTeam teamState={team3} setTeamState={setTeam3} />
+            </div>
 
             <MultiSelectFieldButton
                 highNotes={highNotes}
                 setHighNotes={setHighNotes}
-                alliance={(superPosition === 'blue_ss')}
-                className='my-5 justify-items-center  mx-auto relative h-[40em] w-[40em] bg-cover bg-center '
-               
+                alliance={superPosition === 'blue_ss'}
+                className='relative mx-auto  my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '
             />
         </main>
-            
-                   
-           
     );
 }
 
