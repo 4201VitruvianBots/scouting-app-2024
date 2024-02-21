@@ -11,7 +11,7 @@ function ScouterTable({scouters}:{ scouters: StatusReport[]}) {
     return(
        
 
-<div className="grid grid-cols-4 gap-4">
+<div className="grid grid-cols-4 gap-2">
             <ScouterCard scouter={sortedScouter.red_1} title='Red 1' red/>
             <ScouterCard scouter={sortedScouter.red_2} title='Red 2' red/>
             <ScouterCard scouter={sortedScouter.red_3} title='Red 3' red/>
