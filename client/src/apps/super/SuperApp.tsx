@@ -3,33 +3,36 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useState } from 'react';
 import Dialog from '../../components/Dialog';
-import ButtonDropdown from '../../components/ButtonDropdown';
-import { Foul, DefenseRank, SuperPosition } from 'requests';
-const foulTypes : Foul[] = ['inBot', 'damageBot', 'overExtChute', 'pinBot', 'podiumFoul', 
-'stageFoul', 'tipEntangBot', 'zoneFoul']
+import { Foul, SuperPosition } from 'requests';
+import SuperTeam from './components/SuperTeam';
+import { SuperTeamState } from './components/SuperTeam';
+const foulTypes: Foul[] = [
+    'inBot',
+    'damageBot',
+    'overExtChute',
+    'pinBot',
+    'podiumFoul',
+    'stageFoul',
+    'tipEntangBot',
+    'zoneFoul',
+];
 
-export interface TeamStates {
-    foulCounts: Record<string, number>;
-    breakCount: number;
-    defenseRank: DefenseRank
-    wasDefended: boolean;
-}
-interface ParentComponentProps {
-    options: string[];
-}
+const defaultSuperTeamState: SuperTeamState = {
+    foulCounts: Object.fromEntries(foulTypes.map(e => [e, 0])) as Record<
+        Foul,
+        number
+    >,
+    breakCount: 0,
+    defenseRank: 'No Defense',
+    wasDefended: false,
+};
 
-function SuperApp({options} : ParentComponentProps) {
+function SuperApp() {
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
-    const [teamOne, setTeamOne] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
-    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
-    const [teamTwo, setTeamTwo] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
-    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
-    const [teamThree, setTeamThree] = useState<TeamStates>({foulCounts: options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}, 
-    breakCount: 0, defenseRank: 'No Defense', wasDefended: false})
-    // const [optionCounts, setOptionCounts] = useState<Record<string, number>>(
-    //     options ? options.reduce((acc, option) => ({ ...acc, [option]:  0 }), {}) : {}
-    // );
+    const [team1, setTeam1] = useState(defaultSuperTeamState);
+    const [team2, setTeam2] = useState(defaultSuperTeamState);
+    const [team3, setTeam3] = useState(defaultSuperTeamState);
 
     return (
         <main className='grid columns-3 text-center'>
@@ -47,40 +50,37 @@ function SuperApp({options} : ParentComponentProps) {
                 </LinkButton>
             </div>
             <Dialog
-                    trigger={open => (
-                        <button onClick={open} className='col-span-3'>
-                            <MaterialSymbol
-                                icon='account_circle'
-                                size={60}
-                                fill
-                                grade={200}
-                                className={` ${scouterName && superPosition ? 'text-green-400' 
-                                : 'text-gray-400'} snap-none`}
-                            />
-                        </button>
-                    )}>
-                    {close => (
-                        <SignIn
-                            scouterName={scouterName}
-                            onChangeScouterName={setScouterName}
-                            robotPosition={superPosition}
-                            onChangeRobotPosition={setSuperPosition}
-                            onSubmit={close}
-                            superScouting
+                trigger={open => (
+                    <button onClick={open} className='col-span-3'>
+                        <MaterialSymbol
+                            icon='account_circle'
+                            size={60}
+                            fill
+                            grade={200}
+                            className={` ${
+                                scouterName && superPosition
+                                    ? 'text-green-400'
+                                    : 'text-gray-400'
+                            } snap-none`}
                         />
-                    )}
+                    </button>
+                )}>
+                {close => (
+                    <SignIn
+                        scouterName={scouterName}
+                        onChangeScouterName={setScouterName}
+                        robotPosition={superPosition}
+                        onChangeRobotPosition={setSuperPosition}
+                        onSubmit={close}
+                        superScouting
+                    />
+                )}
             </Dialog>
-            <ButtonDropdown options={foulTypes} teamStates={teamOne} setTeamStates={setTeamOne}>
-                Add Foul
-            </ButtonDropdown>
-            <ButtonDropdown options={foulTypes} teamStates={teamTwo} setTeamStates={setTeamTwo}>
-                Add Foul
-            </ButtonDropdown>
-            <ButtonDropdown options={foulTypes} teamStates={teamThree} setTeamStates={setTeamThree}>
-                Add Foul
-            </ButtonDropdown>
+            <SuperTeam teamState={team1} setTeamState={setTeam1} />
+            <SuperTeam teamState={team2} setTeamState={setTeam2} />
+            <SuperTeam teamState={team3} setTeamState={setTeam3} />
         </main>
-            /* <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
+        /* <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol

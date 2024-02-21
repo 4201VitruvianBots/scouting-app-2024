@@ -1,55 +1,54 @@
-import { useState } from 'react';
+import { Dispatch, ReactNode, useState } from 'react';
 import 'react-dropdown/style.css';
-import { TeamStates } from '../apps/super/SuperApp';
 
-interface ButtonDropdownProps {
-    options: Array<string>;
-    children: string;
-    teamStates: TeamStates;
-    setTeamStates: React.Dispatch<React.SetStateAction<TeamStates>>;
-}
-
-function ButtonDropdown({options, children, teamStates, setTeamStates} : ButtonDropdownProps) {
+function ButtonDropdown<T extends string>({
+    value,
+    setValue,
+    children,
+}: {
+    value: Record<T, number>;
+    setValue: Dispatch<Record<T, number>>;
+    children?: ReactNode;
+}) {
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
 
-    const handleOption = (option: string) => {
-        setTeamStates(prevTeamStates => ({
-            ...prevTeamStates,
-            foulCounts: {[option]: (prevTeamStates.foulCounts[option] || 0) + 1}
-        }));
+    const handleOption = (option: T) => {
+        setValue({ ...value, [option]: value[option] + 1 });
         setShowDropdown(false);
-    }
+    };
 
     return (
-        <main>
+        <div>
             <button
                 className={`${showDropdown ? 'bg-green-700' : 'bg-gray-400'} 
                 rounded-md bg-blue-100 p-5`}
                 onClick={handleDropdown}>
                 {children}
             </button>
-          
-            {showDropdown && 
-            <div className=''>
-               {options.map((option, index) => (
-                    <li key={index}>
-                        <button onClick={() => handleOption(option)}>
-                            {option} ({teamStates.foulCounts[option] || 0})
-                        </button>
-                    </li>
-               ))}
-            </div>
-            }
 
-            <p>Selected Options: {Object.entries(teamStates)
-                .map(([option, count]) => `${option}: ${count}`)
-                .join(', ')}
-            </p>    
-        </main>
+            {showDropdown && (
+                <div className=''>
+                    {(Object.keys(value) as T[]).map((option, index) => (
+                        <li key={index}>
+                            <button onClick={() => handleOption(option)}>
+                                {option} ({value[option] || 0})
+                            </button>
+                        </li>
+                    ))}
+                </div>
+            )}
+
+            <p>
+                Selected Options:{' '}
+                {Object.entries(value)
+                    .map(([option, count]) => `${option}: ${count}`)
+                    .join(', ')}
+            </p>
+        </div>
     );
 }
 
