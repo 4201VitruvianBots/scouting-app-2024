@@ -65,14 +65,11 @@ function MatchApp() {
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
-
     const [scouterName, setScouterName] = useState('');
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
-
     const redAlliance = (
         ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
     ).includes(robotPosition);
-    
     const handleSubmit = async () => {
         if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
 
@@ -152,7 +149,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-
+                
                 <Dialog
                     trigger={open => (
                         <button onClick={open}>
@@ -223,19 +220,25 @@ function MatchApp() {
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} 
-                className='px-2 py-1 bg-blue-500 rounded-md'>
-                Submit
-            </button>
-            <div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={handleSubmit}  style={{ fontSize: '30px' }} 
+                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                    Submit 
+                    </button>
+
+
+                </div>
+               
+            
+                <div>
                 {showCheck && (   
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
                 )}
-            </div>
+                </div>
             </div>
         </main>
     );
-}
+} 
 
-export type { MatchScores, ClimbPosition };
+export type {MatchScores,ClimbPosition};
 export default MatchApp
