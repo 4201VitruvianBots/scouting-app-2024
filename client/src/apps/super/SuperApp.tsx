@@ -3,9 +3,11 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useState } from 'react';
 import Dialog from '../../components/Dialog';
-import { Foul, SuperPosition } from 'requests';
+import { Foul, SuperPosition, Break, DefenseRank } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
+import Checkbox from '../../components/Checkbox';
+
 const foulTypes: Foul[] = [
     'inBot',
     'damageBot',
@@ -14,7 +16,12 @@ const foulTypes: Foul[] = [
     'podiumFoul',
     'stageFoul',
     'tipEntangBot',
-    'zoneFoul',
+    'zoneFoul'
+];
+const breakTypes: Break[] = [
+    'mechanismDmg',
+    'batteryFall',
+    'commsFail'
 ];
 
 const defaultSuperTeamState: SuperTeamState = {
@@ -22,17 +29,33 @@ const defaultSuperTeamState: SuperTeamState = {
         Foul,
         number
     >,
-    breakCount: 0,
-    defenseRank: 'No Defense',
-    wasDefended: false,
+    breakCount: Object.fromEntries(breakTypes.map(e => [e, 0])) as Record<
+    Break, number
+    >,
 };
 
 function SuperApp() {
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
+    const [defenseRank1, setDefenseRank1] = useState<DefenseRank>('noDef');
+    const [defenseRank2, setDefenseRank2] = useState<DefenseRank>('noDef');
+    const [defenseRank3, setDefenseRank3] = useState<DefenseRank>('noDef');
+    const [defended1, setDefended1] = useState(false);
+    const [defended2, setDefended2] = useState(false);
+    const [defended3, setDefended3] = useState(false);
     const [team1, setTeam1] = useState(defaultSuperTeamState);
     const [team2, setTeam2] = useState(defaultSuperTeamState);
     const [team3, setTeam3] = useState(defaultSuperTeamState);
+
+    const handleDefended1 = () => {
+        setDefended1(!defended1)
+    }
+    const handleDefended2 = () => {
+        setDefended2(!defended2)
+    }
+    const handleDefended3 = () => {
+        setDefended3(!defended3)
+    }
 
     return (
         <main className='grid columns-3 text-center'>
@@ -76,9 +99,12 @@ function SuperApp() {
                     />
                 )}
             </Dialog>
-            <SuperTeam teamState={team1} setTeamState={setTeam1} />
-            <SuperTeam teamState={team2} setTeamState={setTeam2} />
-            <SuperTeam teamState={team3} setTeamState={setTeam3} />
+            <SuperTeam teamState={team1} setTeamState={setTeam1} defenseRank={defenseRank1} setDefense={setDefenseRank1}/>
+            <SuperTeam teamState={team2} setTeamState={setTeam2} defenseRank={defenseRank2} setDefense={setDefenseRank2}/>
+            <SuperTeam teamState={team3} setTeamState={setTeam3} defenseRank={defenseRank3} setDefense={setDefenseRank3}/>
+            <Checkbox onChange={handleDefended1}>Was Defended?</Checkbox>
+            <Checkbox onChange={handleDefended2}>Was Defended?</Checkbox>
+            <Checkbox onChange={handleDefended3}>Was Defended?</Checkbox>
         </main>
         /* <h1 className='col-span-4 my-8 text-3xl'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20 flex gap-2 rounded-md p-2'>

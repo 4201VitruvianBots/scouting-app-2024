@@ -19,10 +19,14 @@ export type Foul =
     | 'zoneFoul' 
     | 'stageFoul' 
     | 'overExtChute';
+export type Break =
+    | 'mechanismDmg'
+    | 'batteryFall'
+    | 'commsFail'
 export type DefenseRank = 
-    |  'Full Defense' 
-    | 'Some Defense' 
-    | 'No Defense'
+    | 'fullDef' 
+    | 'someDef' 
+    | 'noDef'
 
 interface capabilities { 
     amp: boolean,
