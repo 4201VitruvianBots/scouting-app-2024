@@ -80,6 +80,12 @@ function StatTable({
         statColumnRefs.splice(index, 1);
     }
     
+    const testData: StatColumnData = {
+        column: 'autoSpeakerMid',
+        type: 'StatColumn',
+        title: 'Auto Speaker Mid'
+    };
+    
     return (
         <div className="flex space-x-4">
             <table>
@@ -129,6 +135,8 @@ function StatTable({
                         />
                     )}
             </Dialog>
+            
+            <StatColumn table={testData} data={data} onClick={() => {}} onDelete={() => {}} index={0} sortOrder={undefined}/>
         </div>
     );
 }
