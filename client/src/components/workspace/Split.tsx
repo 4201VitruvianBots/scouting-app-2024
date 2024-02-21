@@ -7,11 +7,15 @@ import {
     PaneData,
     SplitData,
     StateProps,
+    TabBase,
     TabsData,
     TabsSplice,
 } from './workspaceData';
 
-function Split<T>({ value, onChange }: StateProps<SplitData<T>>) {
+function Split<T extends TabBase>({
+    value,
+    onChange,
+}: StateProps<SplitData<T>>) {
     const divRef = useRef<HTMLDivElement>(null);
 
     const [sizes, setSizes] = usePropState(value, onChange, 'sizes');

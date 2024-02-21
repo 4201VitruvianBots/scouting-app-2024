@@ -1,32 +1,29 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
-import { PaneData, StateProps, TabsData } from './workspaceData';
+import { PaneData, StateProps, TabBase, TabsData } from './workspaceData';
 import Pane from './Pane';
-import { WorkspaceControls } from './useWorkspaceState';
+import { ResizeType, WorkspaceControls } from './useWorkspaceState';
 import { DragContext } from './workspaceContexts';
 import MultiContext from '../../lib/MultiContext';
 import {
     TabContentContext,
     ResizeContext,
     SetAddToFocusedContext,
-    CreateTitleContext,
 } from './workspaceContexts';
 
-function Workspace<T>({
+function Workspace<T extends TabBase>({
     value,
     onChange,
     controls,
     children,
-    title,
     className = '',
 }: StateProps<PaneData<T> | undefined> & {
     controls: WorkspaceControls<T>;
     children: (value: T, onChange: Dispatch<SetStateAction<T>>) => ReactNode;
-    title: (value: T) => string;
     className?: string;
 }) {
     const { setAddToFocused } = controls;
 
-    const [resizeType, setResizeType] = useState<T>();
+    const [resizeType, setResizeType] = useState<ResizeType>();
     const [dragging, setDragging] = useState<
         [T, () => void] | [undefined, undefined]
     >([undefined, undefined]);
@@ -39,7 +36,6 @@ function Workspace<T>({
                 [ResizeContext, setResizeType],
                 [DragContext, [dragging, setDragging]],
                 [SetAddToFocusedContext, setAddToFocused],
-                [CreateTitleContext, title],
             ]}>
             {value && (
                 <Pane
