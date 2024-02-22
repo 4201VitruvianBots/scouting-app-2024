@@ -19,8 +19,6 @@ function StatColumnDialog({
               e => e !== 'teamNumber' && typeof data[0][e] === 'number'
           )
         : [];
-
-    const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
 
     const handleSubmit = () => {
@@ -40,7 +38,7 @@ function StatColumnDialog({
                 </button>
             </div>
 
-            <label>
+            <label className='font-normal'>
                 Column
                 <SelectSearch
                     options={columns.map(e => ({
@@ -53,18 +51,7 @@ function StatColumnDialog({
                     search
                 />
             </label>
-            <p>
-                <label>
-                    Title
-                    <TextInput
-                        value={title}
-                        onChange={setTitle}
-                        placeholder={camelToSpaced(column || '')}
-                        className='p-1'
-                    />
-                </label>
-            </p>
-            <button onClick={handleSubmit}>Create</button>
+            <button className='font-normal' onClick={handleSubmit}>Create</button>
         </>
     );
 }

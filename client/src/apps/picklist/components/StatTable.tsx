@@ -4,6 +4,7 @@ import Dialog from '../../../components/Dialog';
 import StatColumnDialog from './StatColumnDialog';
 import blankImage from '../../../images/blank.png';
 import { MaterialSymbol } from 'react-material-symbols';
+import camelToSpaced from '../../../lib/camelCaseConvert';
 
 function StatTable({
     table,
@@ -48,15 +49,15 @@ function StatTable({
     }
 
     return (
-        <table>
-            <thead className='sticky top-0'>
-                <tr>
-                    <th colSpan={2} className='bg-white'>
-                        {table.title}
+        <table className='border border-black'>
+            <thead className='sticky top-0 border border-black'>
+                <tr className='border border-black'>
+                    <th colSpan={2} className='border border-black'>
+                        Team
                     </th>
                     {table.columns.map((column, i) => (
-                        <th>
-                            {column}
+                        <th className='border border-black'>
+                            {camelToSpaced(column)}
                             <button onClick={() => handleClickColumn(column)}>
                                 {column === table.sortColumn ? (
                                     table.ascending ? (
@@ -92,9 +93,9 @@ function StatTable({
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className='border border-black'>
                 {sortedData.map(entry => (
-                    <tr>
+                    <tr className='border border-black'>
                         <td>
                             <img
                                 src={
@@ -106,7 +107,7 @@ function StatTable({
                         </td>
                         <td>{entry.teamNumber}</td>
                         {table.columns.map(column => (
-                            <td>{entry[column]}</td>
+                            <td className='border border-black'>{entry[column]}</td>
                         ))}
                     </tr>
                 ))}
