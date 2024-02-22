@@ -1,7 +1,6 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatColumnData, StatTableData } from '../data';
+import { AnalysisEntry } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
 import SelectSearch from 'react-select-search';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -11,7 +10,7 @@ function StatColumnDialog({
     onClose,
     data,
 }: {
-    onSubmit: Dispatch<StatColumnData>;
+    onSubmit: Dispatch<string>;
     onClose?: () => void;
     data: AnalysisEntry[] | undefined;
 }) {
@@ -26,7 +25,7 @@ function StatColumnDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, type: 'StatColumn' });
+            onSubmit(column);
             onClose?.();
         }
     };
@@ -40,11 +39,14 @@ function StatColumnDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
+
             <label>
                 Column
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    options={columns.map(e => ({
+                        value: e,
+                        name: camelToSpaced(e),
+                    }))}
                     value={column}
                     placeholder='Select Stat'
                     onChange={value => setColumn(value as string)}
@@ -58,7 +60,7 @@ function StatColumnDialog({
                         value={title}
                         onChange={setTitle}
                         placeholder={camelToSpaced(column || '')}
-                        className="p-1"
+                        className='p-1'
                     />
                 </label>
             </p>

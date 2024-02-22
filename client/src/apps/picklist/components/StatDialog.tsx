@@ -1,9 +1,6 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
-import SelectSearch from 'react-select-search';
-import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
 
 function StatDialog({
@@ -13,11 +10,15 @@ function StatDialog({
     onSubmit: Dispatch<StatTableData>;
     onClose?: () => void;
 }) {
-
     const [title, setTitle] = useState('');
 
     const handleSubmit = () => {
-        onSubmit({ title: title || "Stat Table", type: 'StatTable' });
+        onSubmit({
+            title: title || 'Stat Table',
+            type: 'StatTable',
+            columns: [],
+            ascending: false,
+        });
         onClose?.();
     };
 
@@ -36,8 +37,8 @@ function StatDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={"Stat Table"}
-                        className="p-1"
+                        placeholder={'Stat Table'}
+                        className='p-1'
                     />
                 </label>
             </p>

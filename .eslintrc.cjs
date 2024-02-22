@@ -14,7 +14,7 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['@typescript-eslint'],
-    ignorePatterns: ['dist/', '.eslintrc.cjs'],
+    ignorePatterns: ['dist/', '.eslintrc.cjs', 'client/public/**/*.js'],
     env: {
         node: true,
     },

@@ -1,4 +1,4 @@
-import { AnalysisEntry, WindowData, TeamInfoEntry } from './data';
+import { AnalysisEntry, WindowData, TeamInfo } from './data';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
@@ -15,36 +15,74 @@ import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
 import TeamSummaryDialog from './components/TeamSummaryDialog';
 import TeamSummary from './components/TeamSummary';
+import { Dispatch } from 'react';
 
-function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: TeamInfoEntry) {
+function generateWindow(
+    data: AnalysisEntry[],
+    table: WindowData,
+    setTable: Dispatch<WindowData>,
+    teamInfoJson: TeamInfo
+) {
     switch (table.type) {
         case 'StatTable':
-            return <StatTable data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <StatTable
+                    data={data}
+                    setTable={setTable}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'BarGraph':
-            return <BarGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <BarGraph
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'ScatterPlotGraph':
-            return <ScatterPlotGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <ScatterPlotGraph
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'StatSummary':
-            return <StatSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <StatSummary
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'TeamSummary':
-            return <TeamSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <TeamSummary
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         default:
             return undefined;
     }
-
 }
 
 function PicklistApp() {
     const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
-    const teamInfo = useFetchJson<TeamInfoEntry>('/team_info.json');
-    
+    const teamInfo = useFetchJson<TeamInfo>('/team_info.json');
+
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
-    
+
     return (
         <main className='grid h-screen grid-rows-[auto_1fr]'>
-            <div className='border-b border-black flex items-center'>
-                <LinkButton link='/' className='flex items-center justify-center snap-none px-5'>
+            <div className='flex items-center border-b border-black'>
+                <LinkButton
+                    link='/'
+                    className='flex snap-none items-center justify-center px-5'>
                     <MaterialSymbol
                         icon='home'
                         size={30}
@@ -54,7 +92,7 @@ function PicklistApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
+
                 <Dialog
                     trigger={open => (
                         <button className='px-4' onClick={open}>
@@ -62,10 +100,7 @@ function PicklistApp() {
                         </button>
                     )}>
                     {close => (
-                        <StatDialog
-                            onSubmit={addToFocused}
-                            onClose={close}
-                        />
+                        <StatDialog onSubmit={addToFocused} onClose={close} />
                     )}
                 </Dialog>
                 <Dialog
@@ -126,8 +161,16 @@ function PicklistApp() {
                 </Dialog>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
-                {value => {
-                    return analyzedData && generateWindow(analyzedData, value, teamInfo || {});
+                {(value, onChange) => {
+                    return (
+                        analyzedData &&
+                        generateWindow(
+                            analyzedData,
+                            value,
+                            onChange,
+                            teamInfo || {}
+                        )
+                    );
                 }}
             </Workspace>
         </main>
