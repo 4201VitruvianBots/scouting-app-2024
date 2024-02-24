@@ -7,7 +7,7 @@ import { Foul, SuperPosition, Break, MatchSchedule, SuperData, HighNote, RobotPo
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
-import { useFetchJson } from '../../lib/useFetchJson';
+import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
 import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
@@ -51,7 +51,9 @@ function SuperApp() {
     const [team1, setTeam1] = useState(defaultSuperTeamState);
     const [team2, setTeam2] = useState(defaultSuperTeamState);
     const [team3, setTeam3] = useState(defaultSuperTeamState);
-    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+
+    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
+
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
@@ -115,12 +117,10 @@ function SuperApp() {
     }, [matchNumber, superPosition, schedule]);
 
     return (
-
-        <main className='text-center bg-[#171c26] text-white'>
-            <h1 className='font-bold col-span-3 text-3xl py-5 text-[#48c55c]'>Super Scouting App</h1>
+        <main className='text-center'>
+            <h1 className='col-span-3 my-8 text-3xl'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
-
                     <MaterialSymbol
                         icon='home'
                         size={60}
@@ -159,16 +159,16 @@ function SuperApp() {
                 </Dialog>
             </div>
             <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} className='m-2 p-2 text-black'/>
+            <NumberInput onChange={setMatchNumber} value={matchNumber} />
 
-            <div className='grid grid-cols-3'>
+            <div className='grid grid-cols-3 px-10'>
                 <SuperTeam teamState={team1} setTeamState={setTeam1} />
                 <SuperTeam teamState={team2} setTeamState={setTeam2} />
                 <SuperTeam teamState={team3} setTeamState={setTeam3} />
             </div>
             
             <MultiButton 
-                className='text-black'
+                className='outline-black'
                 onChange={setShooterPlayerTeam}
                 values={[team1.teamNumber ?? -1, team2.teamNumber ?? -2,team3.teamNumber ?? -3]} // ugly hack hehe
                 labels={[team1.teamNumber ?? 'Team 1', team2.teamNumber ?? 'Team 2',team3.teamNumber ?? 'Team 3'].map(e => e.toString())}

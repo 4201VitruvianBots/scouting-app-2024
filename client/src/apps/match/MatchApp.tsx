@@ -192,10 +192,11 @@ function MatchApp() {
                     />
                 </button>
             </div>
-            <p>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
+           
             <p>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <p>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
 
             <div>
                 <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
