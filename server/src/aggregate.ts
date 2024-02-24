@@ -76,13 +76,30 @@ async function averageAndMax():Promise<AverageAndMax[]>{
 }
 
 async function superAverageAndMax() {
+ await superApp.aggregate([
 
-const spotLitRobot = await superApp.aggregate([
-    {$group: {
-        _id: null,
-        
-    }}
-])
+
+        {$lookup: {
+            from: 'matchApp',
+            localField: 'humanShooter',
+            foreignField: 'climb',
+            as: 'spotLitRobot',
+            let: {
+
+
+
+                _id: {
+                    matchNumber: '$metadata.matchNumber',
+                    alliance: {
+                        $cond:  [
+                            {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
+                            'red',
+                            'blue'
+                        ]
+                    },
+            }
+        }}}])
+
 
     
     return (await superApp.aggregate([
@@ -90,8 +107,9 @@ const spotLitRobot = await superApp.aggregate([
             _id: null,
             avgFouls: {$avg: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
             maxFouls: {$max: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
+        }},
+        
 
-        }}
     ]))
 }
 
