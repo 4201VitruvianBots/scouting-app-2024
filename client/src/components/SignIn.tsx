@@ -13,6 +13,7 @@ function SignIn({
     robotPosition,
     onChangeRobotPosition,
     superScouting,
+    pitScouting,
     scouterPosition,
     onChangeScouterPosition,
     onSubmit,
@@ -25,14 +26,22 @@ function SignIn({
 } & (
     | {
           superScouting: true;
-          robotPosition: SuperPosition | undefined;
+          pitScouting?: false,
+        robotPosition: SuperPosition | undefined;
           onChangeRobotPosition: Dispatch<SuperPosition>;
       }
     | {
           superScouting?: false;
-          robotPosition: RobotPosition | undefined;
+          pitScouting?: false,
+        robotPosition: RobotPosition | undefined;
           onChangeRobotPosition: Dispatch<RobotPosition>;
-      }
+      }    | {
+        superScouting?: false,
+        pitScouting: true
+        robotPosition?: undefined,
+        onChangeRobotPosition?: undefined
+    }
+
 )) {
     const [showCheck, setShowCheck] = useState<boolean>(false);
 

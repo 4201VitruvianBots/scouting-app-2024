@@ -8,10 +8,11 @@ function NumberInput({
     value?: number | undefined;
     onChange?: Dispatch<number | undefined> ;
     ref?: RefObject<HTMLInputElement>;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'>) {
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'type'>) {
     return (
         <input
             value={value?? ''}
+            type='number'
             onChange={
                 onChange ? event => onChange(event.target.value?parseFloat(event.target.value): undefined) : undefined
             }
