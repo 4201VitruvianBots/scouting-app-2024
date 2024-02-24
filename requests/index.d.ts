@@ -103,10 +103,10 @@ export interface SuperData {
     fouls: Record<Foul, number>;
     defense: DefenseRank;
     defended: boolean;
-    humanShooter?: {highNotes: HighNote}; 
+    humanShooter?: {highNotes: HighNote};
 
     
-};
+}
 
 // - `POST` `/data/pits` 
 // `<form>` files?
