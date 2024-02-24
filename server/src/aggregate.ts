@@ -67,12 +67,6 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
 
 async function superAverageAndMax() {
 
-const spotLitRobot = await superApp.aggregate([
-    {$group: {
-        _id: null,
-        
-    }}
-])
 
     
     return (await superApp.aggregate([

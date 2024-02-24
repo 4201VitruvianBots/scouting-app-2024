@@ -66,6 +66,7 @@ export interface MatchDataAggregations{
     maxAutoSpeakerNotes: number;
     maxAutoAmpNotes: number;
     maxTrapNotes: number;
+    avgClimbRate: number;
 }
 
 export interface MetaData {
