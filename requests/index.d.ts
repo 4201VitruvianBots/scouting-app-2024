@@ -71,7 +71,7 @@ export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam: number;
-    robotPosition: RobotPosition | SuperPosition;
+    robotPosition: RobotPosition 
 }
 
 
