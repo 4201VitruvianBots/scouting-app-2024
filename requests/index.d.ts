@@ -1,4 +1,5 @@
-export type ClimbPosition = 'amp' | 'source' | 'center' | 'park' | 'none' | 'failed'
+export type ClimbPosition = StageLocation | 'park' | 'none' | 'failed';
+export type StageLocation = 'amp' | 'source' | 'center'
 export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
 export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round' 
 export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other' 
@@ -10,13 +11,36 @@ export type RobotPosition =
     | 'blue_1'
     | 'blue_2'
     | 'blue_3'
-export type Foul = 'A' | 'B';
+export type Foul = 
+    | 'inBot' 
+    | 'damageBot' 
+    | 'tipEntangBot' 
+    | 'pinBot' 
+    | 'podiumFoul' 
+    | 'zoneFoul' 
+    | 'stageFoul' 
+    | 'overExtChute';
+export type Break =
+    | 'mechanismDmg'
+    | 'batteryFall'
+    | 'commsFail'
+export type DefenseRank = 
+    | 'fullDef' 
+    | 'someDef' 
+    | 'noDef'
+
 interface capabilities { 
     amp: boolean,
     speaker: boolean
     trap: boolean,
     climb: boolean,
     chainTraversal: boolean
+}
+
+interface HighNote { 
+    amp: boolean,
+    source: boolean
+    center: boolean,
 }
 interface preference {
     ampPrefer: boolean,
@@ -27,7 +51,7 @@ interface preference {
 }
 export type SuperPosition = 
     | 'red_ss'
-    | 'blue_ss'
+    | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
 
 export interface MatchDataAggregations{
@@ -48,8 +72,9 @@ export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam: number;
-    robotPosition: RobotPosition;
+    robotPosition: RobotPosition 
 }
+
 
 interface ScoreRanges {
     near: number,
@@ -74,15 +99,15 @@ export interface MatchData {
 
 // - `POST` `/data/super`
 
-export type SuperData = {
+export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
-    defense: unknown;
-    driverSKill: unknown; // Similar to defense
-    spotlitRobots: number;
-    highNotes: number;
-    stationPlayerTeam: number; // Team Number
-}[];
+    defense: DefenseRank;
+    defended: boolean;
+    humanShooter?: {highNotes: HighNote};
+
+    
+}
 
 // - `POST` `/data/pits` 
 // `<form>` files?

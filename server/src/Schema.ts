@@ -1,6 +1,5 @@
-//import {matchApp, SSApp, pitApp} from './database.ts';
 import mongoose  from "mongoose";
-import { MatchData, PitFile, } from "requests";
+import { MatchData, PitFile, SuperData } from "requests";
 
 const metaDataSchema = {
     scouterName: String,
@@ -32,7 +31,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
     }
 });
 
- /* const superScoutDataSchema = new mongoose.Schema<SuperData>({
+ const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: metaDataSchema,
      fouls: {
         inBot: Number,
@@ -44,12 +43,19 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         stageFoul: Number,
         overExtChute: Number
      },
-     defense: Number,
-     highNotes: Number,
-     spotlitRobots: Number,
-     stationPlayerTeam: Number
+    defense: {
+        type: String,
+        enum: ['fullDef', 'someDef', 'noDef']
+    },
+    defended: Boolean,
+    humanShooter:{
+        highNotes: {
+            amp: Boolean,
+            source: Boolean,
+            center: Boolean
+    }}
  });
-*/
+
 
  const pitDataSchema = new mongoose.Schema<PitFile>({
      scouterName: String,
@@ -83,7 +89,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 // const ssApp = ('ssApp', superScoutDataSchema);
 const pitApp = mongoose.model('pitApp', pitDataSchema);
 const matchApp =  mongoose.model("matchApp", matchDataSchema); 
-// const superApp =  mongoose.model("superApp", superScoutDataSchema); 
+const superApp =  mongoose.model("superApp", superScoutDataSchema); 
 
 
-export { matchApp, pitApp, matchDataSchema, pitDataSchema };
+export { matchApp, pitApp, matchDataSchema, pitDataSchema, superApp};
