@@ -103,12 +103,9 @@ export interface SuperData {
     fouls: Record<Foul, number>;
     defense: DefenseRank;
     defended: boolean;
-    humanShooter?: {highNotes: HighNote}; // Team Number
-    // I suggest this
-    /* humanShooter?: {
-        highNotes: highNotes;
-    }*/
-    // so that 
+    humanShooter?: {highNotes: HighNote}; 
+
+    
 };
 
 // - `POST` `/data/pits` 
