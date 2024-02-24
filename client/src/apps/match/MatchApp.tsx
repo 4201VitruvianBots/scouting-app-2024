@@ -68,10 +68,10 @@ function MatchApp() {
 
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
-    const [scouterPosition, setScouterPosition] = useState<boolean>();
+    const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
 
-    const redAlliance = (
-        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
+    const blueAlliance = (
+        ['blue_1', 'blue_2', 'blue_3'] as (string | undefined)[]
     ).includes(robotPosition);
     const handleSubmit = async () => {
         if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
@@ -206,7 +206,7 @@ function MatchApp() {
                     teleOp={false}
                     count={count}
                     leave={leave}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
                 <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
@@ -214,13 +214,14 @@ function MatchApp() {
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
                 <h2 className='text-2xl text-center my-2'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
                 />
                 <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
                     Trap Note: {count.trap}

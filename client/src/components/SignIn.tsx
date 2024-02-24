@@ -19,7 +19,7 @@ function SignIn({
 }: {
     scouterName: string;
     onChangeScouterName: Dispatch<string>;
-    scouterPosition: ScouterPosition | undefined;
+    scouterPosition: ScouterPosition | undefined
     onChangeScouterPosition: Dispatch<ScouterPosition>;
     onSubmit: () => void;
 } & (
