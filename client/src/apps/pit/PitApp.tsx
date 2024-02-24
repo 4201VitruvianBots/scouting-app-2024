@@ -2,8 +2,12 @@ import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
 import React, { useState } from 'react';
 import Checkbox from '../../components/Checkbox';
-import { PitFile, teamRoles, drivebase } from 'requests';
+import { PitFile, teamRoles, drivebase, RobotPosition } from 'requests';
 import { postJson } from '../../lib/postJson';
+import LinkButton from '../../components/LinkButton';
+import { MaterialSymbol } from 'react-material-symbols';
+import Dialog from '../../components/Dialog';
+import SignIn from '../../components/SignIn';
 
 
 function PitApp() {
@@ -41,6 +45,9 @@ function PitApp() {
   const [trapPrefChecked, setTrapPrefChecked] = useState(false);
   const [speakerPrefChecked, setSpeakerPrefChecked] = useState(false);
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
+
+  const [scouterName, setScouterName] = useState('');
+    const [robotPosition, setRobotPosition] = useState<RobotPosition>();
   
   const handleSubmit = async() => {
     if (!drivetrain || !role){
@@ -106,11 +113,51 @@ function PitApp() {
 
     return (
         <>
+
             <div className='bg-[#171c26]'>
             <div className="border border-neutral-900 bg-gray-800 mb-7">
               <br/>
               <h1 className="text-center text-white text-3xl mb-4">Pit App</h1>
             
+            </div>
+
+            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+                <LinkButton link='/' className='snap-none'>
+                    <MaterialSymbol
+                        icon='home'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='green'
+                        className='snap-none'
+                    />
+                </LinkButton>
+
+                <Dialog
+                    trigger={open => (
+                        <button onClick={open}>
+                            <MaterialSymbol
+                                icon='account_circle'
+                                size={60}
+                                fill
+                                grade={200}
+                                className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                            />
+                        </button>
+                    )}>
+                    {close => (
+                        <SignIn
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={robotPosition}
+                            onChangeRobotPosition={setRobotPosition}
+                            onSubmit={close}
+                            
+                        />
+                    )}
+                </Dialog>
+                
+               
             </div>
 
 

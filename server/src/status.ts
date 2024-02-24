@@ -29,7 +29,7 @@ async function updateMatchStatus() {
     const matchOutput = Object.fromEntries(matchNumbers.map (matchNumber => [matchNumber, {
         // Normal scouters
         ...Object.fromEntries((['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']satisfies RobotPosition[]).map (robotPosition => [robotPosition, {
-            schedule: schedule?.[matchNumber][robotPosition], 
+            schedule: schedule?.[matchNumber]?.[robotPosition], 
             real: matchEntries.filter(matchEntry => matchEntry.metadata.matchNumber === matchNumber && matchEntry.metadata.robotPosition === robotPosition).map (matchEntry => matchEntry.metadata.robotTeam)
         }])),
         // Super scouters
@@ -72,7 +72,7 @@ function setUpSocket(expressApp: Application) {
         // When the websocket closes
         ws.on('close', () => {
             // Remove this scouter from the list
-            status.scouters.splice(status.scouters.indexOf(scouter));
+            status.scouters.splice(status.scouters.indexOf(scouter), 1);
             notifyWatchers();
         });
     });

@@ -115,10 +115,12 @@ function SuperApp() {
     }, [matchNumber, superPosition, schedule]);
 
     return (
+
         <main className='text-center bg-[#171c26] text-white'>
             <h1 className='font-bold col-span-3 text-3xl py-5 text-[#48c55c]'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
+
                     <MaterialSymbol
                         icon='home'
                         size={60}
@@ -157,7 +159,7 @@ function SuperApp() {
                 </Dialog>
             </div>
             <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <NumberInput onChange={setMatchNumber} value={matchNumber} className='m-2 p-2 text-black'/>
 
             <div className='grid grid-cols-3'>
                 <SuperTeam teamState={team1} setTeamState={setTeam1} />
@@ -166,7 +168,7 @@ function SuperApp() {
             </div>
             
             <MultiButton 
-                className='outline-black'
+                className='text-black'
                 onChange={setShooterPlayerTeam}
                 values={[team1.teamNumber ?? -1, team2.teamNumber ?? -2,team3.teamNumber ?? -3]} // ugly hack hehe
                 labels={[team1.teamNumber ?? 'Team 1', team2.teamNumber ?? 'Team 2',team3.teamNumber ?? 'Team 3'].map(e => e.toString())}
