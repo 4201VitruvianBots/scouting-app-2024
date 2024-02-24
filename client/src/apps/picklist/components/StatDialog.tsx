@@ -2,6 +2,7 @@ import { Dispatch, useState } from 'react';
 import { StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
 import { MaterialSymbol } from 'react-material-symbols';
+import Checkbox from '../../../components/Checkbox';
 
 function StatDialog({
     onSubmit,
@@ -11,13 +12,16 @@ function StatDialog({
     onClose?: () => void;
 }) {
     const [title, setTitle] = useState('');
-
+    
+    const [weighted, setWeighted] = useState(false);
+    
     const handleSubmit = () => {
         onSubmit({
             title: title || 'Stat Table',
             type: 'StatTable',
             columns: [],
             ascending: false,
+            weighted: weighted,
         });
         onClose?.();
     };
@@ -41,6 +45,9 @@ function StatDialog({
                         className='p-1'
                     />
                 </label>
+            </p>
+            <p>
+                <Checkbox onChange={setWeighted}>Weighted</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
