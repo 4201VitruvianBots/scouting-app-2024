@@ -71,11 +71,12 @@ function MatchApp() {
 
     const handleSubmit = async () => {
         if (
-            robotPosition === undefined ||
-            matchNumber === undefined ||
-            teamNumber === undefined
-        )
-            return;
+            robotPosition == undefined ||
+            matchNumber == undefined ||
+            teamNumber == undefined
+        ) {
+            alert('data is missing! :(')
+            return; }
 
         const data: MatchData = {
             metadata: {
