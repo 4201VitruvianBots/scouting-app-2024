@@ -12,7 +12,6 @@ import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
 import { useFetchJson } from '../../lib/useFetch';
-import TeamDropdown from '../../components/TeamDropdown';
 
 type countKeys = keyof MatchScores;
 
