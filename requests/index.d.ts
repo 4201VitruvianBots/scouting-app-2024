@@ -71,7 +71,7 @@ export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam: number;
-    robotPosition: RobotPosition | SuperPosition;
+    robotPosition: RobotPosition;
 }
 
 
@@ -109,7 +109,7 @@ export interface SuperData {
         highNotes: highNotes;
     }*/
     // so that 
-};
+}
 
 // - `POST` `/data/pits` 
 // `<form>` files?
