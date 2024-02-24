@@ -1,4 +1,3 @@
-//import {matchApp, SSApp, pitApp} from './database.ts';
 import mongoose  from "mongoose";
 import { MatchData, PitFile, SuperData } from "requests";
 

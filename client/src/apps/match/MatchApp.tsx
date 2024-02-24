@@ -13,7 +13,6 @@ import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
 import { useFetchJson } from '../../lib/useFetch';
 
-
 type countKeys = keyof MatchScores;
 
 interface MatchScores {

@@ -1,19 +1,8 @@
+import { MatchDataAggregations } from "requests";
 import { matchApp, superApp } from "./Schema.js";
 
-interface AverageAndMax{
-    _id: {teamNumber: number},
-    avgTeleSpeakerNotes:number,
-    avgTeleAmpNotes: number,
-    avgAutoSpeakerNotes: number,
-    avgAutoAmpNotes: number,
-    maxTeleSpeakerNotes: number,
-    maxTeleAmpNotes: number,
-    maxAutoSpeakerNotes: number,
-    maxAutoAmpNotes: number,
-    maxTrapNotes: number,
-}
 
-async function averageAndMax():Promise<AverageAndMax[]>{
+async function averageAndMax():Promise<MatchDataAggregations[]>{
     const climbCounts = await matchApp.aggregate([{
         $group: {
             _id: {
@@ -48,17 +37,18 @@ async function averageAndMax():Promise<AverageAndMax[]>{
     const result = (await matchApp.aggregate([
     { $group:{
         _id: {teamNumber: '$metadata.robotTeam'},
-        avgTeleSpeakerNotes: {$avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
-        avgTeleAmpNotes: { $avg: '$teleAmpNotes'},
-        avgAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
-        avgAutoAmpNotes: {$avg: '$autoAmpNotes'},
+        averageTeleSpeakerNotes: {$avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
+        averageTeleAmpNotes: { $avg: '$teleNotes.amp' },
+        averageAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
+        averageAutoAmpNotes: { $avg: '$autoNotes.amp' },
+        averageTrapNotes: { $avg: '$trapNotes' },
         maxTeleSpeakerNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
-        maxTeleAmpNotes: {$max: '$teleAmpNotes'},
+        maxTeleAmpNotes: { $max: '$teleNotes.amp' },
         maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
-        maxAutoAmpNotes: {$max: '$autoAmpNotes'},
+        maxAutoAmpNotes: { $max: '$autoNotes.amp' },
         maxTrapNotes: {$max: '$trapNotes'},
         avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1, 0]}}
-    }}
+    } satisfies { [K in keyof MatchDataAggregations]: unknown }}
 ]));
 
     result.forEach(result => {
@@ -77,12 +67,6 @@ async function averageAndMax():Promise<AverageAndMax[]>{
 
 async function superAverageAndMax() {
 
-const spotLitRobot = await superApp.aggregate([
-    {$group: {
-        _id: null,
-        
-    }}
-])
 
     
     return (await superApp.aggregate([
