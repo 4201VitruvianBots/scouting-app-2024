@@ -115,8 +115,8 @@ function SuperApp() {
     }, [matchNumber, superPosition, schedule]);
 
     return (
-        <main className='text-center'>
-            <h1 className='col-span-3 my-8 text-3xl'>Super Scouting App</h1>
+        <main className='text-center bg-[#171c26] text-white'>
+            <h1 className='font-bold col-span-3 text-3xl py-5 text-[#48c55c]'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
@@ -159,7 +159,7 @@ function SuperApp() {
             <p>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
 
-            <div className='grid grid-cols-3 px-10'>
+            <div className='grid grid-cols-3'>
                 <SuperTeam teamState={team1} setTeamState={setTeam1} />
                 <SuperTeam teamState={team2} setTeamState={setTeam2} />
                 <SuperTeam teamState={team3} setTeamState={setTeam3} />

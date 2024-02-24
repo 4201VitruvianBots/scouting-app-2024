@@ -24,8 +24,8 @@ function ButtonDropdown<T extends string>({
     return (
         <div>
             <button
-                className={`${showDropdown ? 'bg-green-700' : 'bg-gray-400'} 
-                rounded-md bg-blue-100 p-5`}
+                className={`${showDropdown ? 'bg-green-700' : 'bg-[#2f3646]'} 
+                rounded-md bg-[#171c26] p-5`}
                 onClick={handleDropdown}>
                 {children}
             </button>
