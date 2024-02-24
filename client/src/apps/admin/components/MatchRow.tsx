@@ -8,14 +8,14 @@ function MatchRow ({matchNumber, scouters} : {matchNumber:string, scouters:Recor
             <th>
                 {matchNumber}
             </th>
-            <PositionCell scouter={scouters.red_1}/>
+            <PositionCell scouter={scouters.red_1} real={[0]}/>
             <PositionCell scouter={scouters.red_2}/>
             <PositionCell scouter={scouters.red_3}/>
-            {/* /*<PositionCell scouter={scouters.red_ss}/> */}
+            <PositionCell scouter={scouters.red_ss}/>
             <PositionCell scouter={scouters.blue_1}/>
             <PositionCell scouter={scouters.blue_2}/>
             <PositionCell scouter={scouters.blue_3}/>
-            {/* <PositionCell scouter={scouters.blue_ss}/> */}
+            <PositionCell scouter={scouters.blue_ss}/>
         </tr>
     )
 }

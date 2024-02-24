@@ -34,35 +34,17 @@ function AdminApp() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 items-center justify-center">
-                    <div>
+                <div>
                     <ScouterTable scouters={status.scouters} />
                     <p className="my-6">phrog :3</p>
+                </div>
+                <div>
+                    <p>Match Display</p>
+                    <div className="table-container">
+                        <MatchTable matches={status.matches}></MatchTable>
                     </div>
-
-            <div>
-            <p>Match Display</p>
-            <div className="table-container">
-                
+                </div>
             </div>
-            </div>
-            </div>
-           <MatchTable matches={status.matches}></MatchTable>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th> </th>
-                        <td>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </main>
     );
 }
