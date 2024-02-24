@@ -157,7 +157,7 @@ function SuperApp() {
                 </Dialog>
             </div>
             <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <NumberInput onChange={setMatchNumber} value={matchNumber} className='m-2 p-2 text-black'/>
 
             <div className='grid grid-cols-3'>
                 <SuperTeam teamState={team1} setTeamState={setTeam1} />
@@ -166,7 +166,7 @@ function SuperApp() {
             </div>
             
             <MultiButton 
-                className='outline-black'
+                className='text-black'
                 onChange={setShooterPlayerTeam}
                 values={[team1.teamNumber ?? -1, team2.teamNumber ?? -2,team3.teamNumber ?? -3]} // ugly hack hehe
                 labels={[team1.teamNumber ?? 'Team 1', team2.teamNumber ?? 'Team 2',team3.teamNumber ?? 'Team 3'].map(e => e.toString())}

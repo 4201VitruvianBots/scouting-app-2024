@@ -31,23 +31,23 @@ function ButtonDropdown<T extends string>({
             </button>
 
             {showDropdown && (
-                <div className=''>
+                <div className='grid justify-center text-left border border-white'>
                     {(Object.keys(value) as T[]).map((option, index) => (
                         <li key={index}>
                             <button onClick={() => handleOption(option)}>
-                                {option} ({value[option] || 0})
+                                Add {option} ({value[option] || 0})
                             </button>
                         </li>
                     ))}
                 </div>
             )}
 
-            <p>
-                Selected Options:{' '}
+            <pre className='grid justify-center text-left font-bold text-gray-400'>
+                Selected Options:{' '} <br/>
                 {Object.entries(value)
                     .map(([option, count]) => `${option}: ${count}`)
-                    .join(', ')}
-            </p>
+                    .join(', \n') }
+            </pre>
         </div>
     );
 }
