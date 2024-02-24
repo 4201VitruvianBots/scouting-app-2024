@@ -69,8 +69,10 @@ function SuperApp() {
             team1.teamNumber === undefined ||
             team2.teamNumber === undefined || 
             team3.teamNumber === undefined
-        )
-            return;
+        ){
+            alert('data is missing! :(')
+            return; }
+
         const data = [team1, team2, team3].map((team, index) => 
         ({
             metadata: {
