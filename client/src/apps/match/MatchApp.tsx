@@ -1,7 +1,7 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -11,7 +11,6 @@ import Dialog from '../../components/Dialog';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 import { useFetchJson } from '../../lib/useFetch';
-
 
 
 type countKeys = keyof MatchScores;
@@ -66,7 +65,11 @@ function MatchApp() {
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
     const [scouterName, setScouterName] = useState('');
+
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
+
+    const [scouterPosition, setScouterPosition] = useState<boolean>();
+
     const redAlliance = (
         ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
     ).includes(robotPosition);
@@ -168,8 +171,9 @@ function MatchApp() {
                             onChangeScouterName={setScouterName}
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
+                            scouterPosition={scouterPosition}
+                            onChangeScouterPosition={setScouterPosition}
                             onSubmit={close}
-                            
                         />
                     )}
                 </Dialog>
@@ -203,6 +207,7 @@ function MatchApp() {
                     count={count}
                     leave={leave}
                     alliance={redAlliance}
+                    scouterPosition={scouterPosition}
                 />
                 <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
                 <FieldButton

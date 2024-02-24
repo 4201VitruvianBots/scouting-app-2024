@@ -47,6 +47,7 @@ function FieldButton({
     leave,
     count,
     alliance,
+    scouterPosition
 }: {
     setLeave?: Dispatch<boolean>;
     setCount: Dispatch<SetStateAction<MatchScores>>;
@@ -54,6 +55,7 @@ function FieldButton({
     leave?: boolean;
     count: MatchScores;
     alliance: boolean | undefined;
+    scouterPosition: boolean;
 }) {
     const [pickupLocation, setPickupLocation] = useState<
         PickupLocation | undefined
@@ -119,6 +121,10 @@ function FieldButton({
         setLeave?.(!leave);
     };
 
+    
+
+    
+
     return (
         <>
             <div className='flex items-center justify-center '>
@@ -175,8 +181,28 @@ function FieldButton({
                 )}
             </div>
 
+         {/*
+         a + s = blue field on left
+         a + !s = blue field on right
+         !a + s = red field on right
+         !a + !s = red field on left
+
+
+         souterPosition && alliance: Red on Right, Blue alliance (blue, on left)
+         souterPosition && !alliance: Red on Right, red alliance (red, on right)
+         !souterPosition && alliance: Red on left, Blue alliance (blue, on right)
+         !souterPosition && !alliance: Red on left, red alliance (red, on left)
+
+         'field-blue-on-left': "url('images/fieldBlueOnLeft.png')",
+        'field-blue-on-right': "url('images/fieldBlueOnRight.png')",
+                'field-red-on-left': "url('images/fieldRedOnLeft.png')",
+                'field-red-on-right': "url('images/fieldRedOnRight.png')",
+         */ }
+
             <div
-                className={`${alliance ? 'bg-field-red' : 'bg-field-blue'} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                className={`${alliance ? (scouterPosition ? 'bg-field-blue-on-left' : 'bg-field-blue-on-right') :
+                (scouterPosition ? 'bg-field-red-on-right' : 'bg-field-red-on-left')} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                
                 {alliance ? (
                     <>
                         <RegionButton

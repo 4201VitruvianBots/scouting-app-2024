@@ -27,8 +27,12 @@ interface preference {
 }
 export type SuperPosition = 
     | 'red_ss'
-    | 'blue_ss'
+    | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
+
+export type ScouterPosition = 
+    | 'red_right'
+    | 'blue_right';
 
 export interface matchDataAggregations{
     averageTeleSpeakerNotes: number;
