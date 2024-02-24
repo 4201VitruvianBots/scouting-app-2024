@@ -1,8 +1,11 @@
 import { Application } from 'express';
 import expressWs from 'express-ws'
-import { MatchSchedule, StatusRecieve, StatusReport, RobotPosition } from 'requests';
-import { matchApp } from './Schema.js';
+import { MatchSchedule, StatusRecieve, StatusReport, RobotPosition, SuperPosition } from 'requests';
+import { matchApp, superApp } from './Schema.js';
 import fs from 'fs';
+
+const bluePositions: RobotPosition[] = ['blue_1', 'blue_2', 'blue_3'];
+const redPositions: RobotPosition[] = ['red_1', 'red_2', 'red_3'];
 
 const schedule = fs.existsSync('static/matchSchedule.json') ? JSON.parse(fs.readFileSync('static/matchSchedule.json', {encoding:"utf8"})) as MatchSchedule : undefined
 
@@ -19,14 +22,21 @@ function notifyWatchers() {
 async function updateMatchStatus() { 
     const matchEntries = await matchApp.find()
     .select('metadata.matchNumber metadata.robotTeam metadata.robotPosition')
+    const superEntries = await superApp.find().select('metadata.matchNumber metadata.robotPosition')
 
     const matchNumbers = [...[...Object.keys(schedule??{})].map(number => parseInt(number)), ...matchEntries.map(match => match.metadata.matchNumber)].filter ((value, index, self) => self.indexOf(value) === index)
 
     const matchOutput = Object.fromEntries(matchNumbers.map (matchNumber => [matchNumber, {
+        // Normal scouters
         ...Object.fromEntries((['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']satisfies RobotPosition[]).map (robotPosition => [robotPosition, {
             schedule: schedule?.[matchNumber][robotPosition], 
             real: matchEntries.filter(matchEntry => matchEntry.metadata.matchNumber === matchNumber && matchEntry.metadata.robotPosition === robotPosition).map (matchEntry => matchEntry.metadata.robotTeam)
-        }]))
+        }])),
+        // Super scouters
+        ...Object.fromEntries((['red_ss', 'blue_ss'] satisfies SuperPosition[]).map(superPosition => [superPosition,
+            superEntries.some(entry =>
+                entry.metadata.matchNumber === matchNumber
+                && (superPosition === 'blue_ss' ? bluePositions : redPositions).includes(entry.metadata.robotPosition))]))
     }]))
 
     status.matches = matchOutput as unknown as StatusRecieve['matches']
