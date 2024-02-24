@@ -14,6 +14,7 @@ function SignIn({
     robotPosition,
     onChangeRobotPosition,
     superScouting,
+    pitScouting,
     onSubmit
 
 }:{
@@ -23,12 +24,20 @@ function SignIn({
 } & ( 
     {
         superScouting: true,
+        pitScouting?: false,
         robotPosition: SuperPosition | undefined, 
         onChangeRobotPosition: Dispatch<SuperPosition>
     } | {
         superScouting?: false,
+        pitScouting?: false,
         robotPosition: RobotPosition | undefined,
         onChangeRobotPosition: Dispatch<RobotPosition>
+    }
+    | {
+        superScouting?: false,
+        pitScouting: true
+        robotPosition?: undefined,
+        onChangeRobotPosition?: undefined
     }
 
 )){
@@ -45,11 +54,12 @@ function SignIn({
   
     return (
     <>
-        < div className={`w-[400px] selection:box-border grid-cols-2 grid auto-rows-fr ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_1fr]' } gap-3 grid-flow-col justify-center`}>
+        < div className={`w-[400px] selection:box-border grid-cols-2 grid auto-rows-fr ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr]' : pitScouting ? 'grid-rows-[auto_auto]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_1fr]' } gap-3 grid-flow-col justify-center`}>
             <p className='text-green-600 col-span-2 justify-self-center text-2xl font-medium p-1'>Sign-In</p>
             <TextInput className=" text-black col-span-2 outline-double h-[40px] text-xl outline-sky-300 required justify-center " value={scouterName} onChange={onChangeScouterName} placeholder="Name"></TextInput>
-            
-            {superScouting ?
+
+
+         {superScouting ?
             <MultiButton
                  onChange={onChangeRobotPosition} value={robotPosition} 
                 labels={['Red', 'Blue']}
@@ -58,7 +68,7 @@ function SignIn({
                 unSelectedClassName={['text-red-500 bg-gray-300 ', 'text-blue-500 bg-gray-300']}
                 selectedClassName={['bg-red-500 text-white', 'bg-blue-500 text-white',]}/>
             
-             : 
+             : pitScouting ? undefined : 
 
             <MultiButton 
                 onChange={onChangeRobotPosition} value={robotPosition} 
@@ -69,10 +79,9 @@ function SignIn({
                 unSelectedClassName= {['text-red-500 bg-gray-300 ', 'text-red-500 bg-gray-300', 'text-red-500 bg-gray-300', 'text-blue-500 bg-gray-300', 'text-blue-500 bg-gray-300', 'text-blue-500 bg-gray-300'] }
                 selectedClassName={['bg-red-500 text-white', 'bg-red-500 text-white', 'bg-red-500 text-white', 'bg-blue-500 text-white',  'bg-blue-500 text-white',  'bg-blue-500 text-white']}/>
     }
-               
+            
 
-
-               <div className={`flex flex-row  col-span-2 justify-self-center ${superScouting ? 'row-start-4' : 'row-start-6'} col-start-1 `}>
+               <div className={`flex flex-row  col-span-2 justify-self-center ${superScouting ? 'row-start-4' : pitScouting ? 'row-start-3 ': 'row-start-6'} col-start-1 `}>
 
                 <button onClick={handleSubmit} className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 px-5 bg-gray-300 rounded-md  hover:bg-green-500  justify-center text-xl py-3`}>Submit</button>
                  {/* {showCheck && (   
