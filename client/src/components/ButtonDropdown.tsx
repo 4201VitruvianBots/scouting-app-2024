@@ -42,8 +42,7 @@ function ButtonDropdown<T extends string>({
                     ))}
                 </div>
             )}
-
-            <pre className='font-bold text-gray-400'>
+            <pre className='font-bold text-gray-400 pl-5'>
                 Selected Options:{' '} <br/>
                 {Object.entries(value)
                     .map(([option, count]) => `${option}: ${count}`)
