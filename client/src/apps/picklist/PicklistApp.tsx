@@ -79,13 +79,13 @@ function PicklistApp() {
 
     return (
         <main className='grid h-screen grid-rows-[auto_1fr]'>
-            <div className='flex items-center border-b border-black'>
+            <div className='flex items-center border-b border-black py-3 bg-gray-100'>
                 <LinkButton
                     link='/'
-                    className='flex snap-none items-center justify-center px-5'>
+                    className='flex snap-none items-center justify-center px-2'>
                     <MaterialSymbol
                         icon='home'
-                        size={30}
+                        size={50}
                         fill
                         grade={200}
                         color='black'
@@ -95,8 +95,10 @@ function PicklistApp() {
 
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Stat Table
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Table">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="table" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -105,8 +107,10 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Stat Summary
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Summary">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="graphic_eq" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -119,8 +123,10 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Bar Graph
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Bar Graph">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="bar_chart_4_bars" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -133,8 +139,10 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Scatter Plot
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Scatter Plot">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="scatter_plot" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -147,8 +155,10 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Team Summary
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Team Summary">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="robot" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -159,6 +169,7 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
+                <h1 className='text-3xl font-bold fixed left-1/2 transform -translate-x-1/2'>Statistical Analysis</h1>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {(value, onChange) => {
