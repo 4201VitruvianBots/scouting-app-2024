@@ -150,13 +150,14 @@ function SuperApp() {
                     )}>
                     {close => (
                         <SignIn
-                            scouterName={scouterName}
-                            onChangeScouterName={setScouterName}
-                            robotPosition={superPosition}
-                            onChangeRobotPosition={setSuperPosition}
-                            onSubmit={close}
-                            superScouting
-                        />
+                        scouterName={scouterName}
+                        onChangeScouterName={setScouterName}
+                        robotPosition={superPosition}
+                        onChangeRobotPosition={setSuperPosition}
+                        superScouting
+                        onSubmit={close}
+                        
+                    />
                     )}
                 </Dialog>
             </div>

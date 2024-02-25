@@ -36,7 +36,7 @@ function EndgameButton({
             Toggle Map Button 
             </ToggleButton> */}
            
-            <div className={`${alliance ? 'bg-field-red-endgame' : 'bg-field-blue-endgame'} h-[40em] w-[40em] bg-cover bg-center relative`}>
+            <div className={`${alliance ? 'bg-field-red-endgame' : 'bg-field-blue-endgame'} h-[40em] w-[40em] bg-cover bg-center relative `}>
                 <MultiButton 
                 onChange={handleClimb} value={climbPosition} 
                 labels={['', '', '', 'Failed', 'None', 'Parked']}
