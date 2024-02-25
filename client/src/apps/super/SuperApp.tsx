@@ -57,9 +57,8 @@ function SuperApp() {
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
-
-       
     const [highNotes, setHighNotes] = useState(defaultHighNote);
+    
 
     const handleSubmit = async () => {
         if (
@@ -150,13 +149,15 @@ function SuperApp() {
                     )}>
                     {close => (
                         <SignIn
-                            scouterName={scouterName}
-                            onChangeScouterName={setScouterName}
-                            robotPosition={superPosition}
-                            onChangeRobotPosition={setSuperPosition}
-                            onSubmit={close}
-                            superScouting
-                        />
+                        scouterName={scouterName}
+                        onChangeScouterName={setScouterName}
+                        robotPosition={superPosition}
+                        onChangeRobotPosition={setSuperPosition}
+                        superScouting
+
+                        onSubmit={close}
+                        
+                    />
                     )}
                 </Dialog>
             </div>

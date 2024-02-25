@@ -54,6 +54,10 @@ export type SuperPosition =
     | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
 
+export type ScouterPosition = 
+    | 'red_right'
+    | 'blue_right';
+
 export interface MatchDataAggregations{
     _id: {teamNumber: number}
     averageTeleSpeakerNotes: number;

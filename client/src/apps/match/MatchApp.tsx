@@ -1,7 +1,7 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -64,9 +64,13 @@ function MatchApp() {
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
     const [scouterName, setScouterName] = useState('');
+
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
-    const redAlliance = (
-        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
+
+    const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
+
+    const blueAlliance = (
+        ['blue_1', 'blue_2', 'blue_3'] as (string | undefined)[]
     ).includes(robotPosition);
 
     const handleSubmit = async () => {
@@ -175,6 +179,8 @@ function MatchApp() {
                             onChangeScouterName={setScouterName}
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
+                            scouterPosition={scouterPosition}
+                            onChangeScouterPosition={setScouterPosition}
                             onSubmit={close}
                         />
                     )}
@@ -206,20 +212,22 @@ function MatchApp() {
                     teleOp={false}
                     count={count}
                     leave={leave}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
                 <h2 className='my-2 text-center text-2xl'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
                 <h2 className='my-2 text-center text-2xl'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
                 />
                 <button
                     onClick={() => {
