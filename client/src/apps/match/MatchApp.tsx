@@ -224,7 +224,7 @@ function MatchApp() {
                     Trap Note: {count.trap}
                 </button>
             <button onClick={handleSubmit} 
-                className='px-2 py-1 bg-blue-500 rounded-md'>
+                className='px-1 py-1 mt-20 bg-blue-500 rounded-md'>
                 Submit
             </button>
             <div>
