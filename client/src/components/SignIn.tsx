@@ -18,6 +18,9 @@ function SignIn({
     scouterName: string;
     onChangeScouterName: Dispatch<string>;
     onSubmit: () => void;
+    scouterPosition?: ScouterPosition | undefined
+    onChangeScouterPosition?: Dispatch<ScouterPosition>;
+    
 } & (
     | {
           superScouting: true;
@@ -26,8 +29,7 @@ function SignIn({
           robotPosition: SuperPosition | undefined;
           onChangeRobotPosition: Dispatch<SuperPosition>;
 
-          scouterPosition?: undefined;
-          onChangeScouterPosition?: undefined;
+         
       }
     | {
           superScouting?: false;
@@ -36,8 +38,7 @@ function SignIn({
           robotPosition: RobotPosition | undefined;
           onChangeRobotPosition: Dispatch<RobotPosition>;
 
-          scouterPosition?: ScouterPosition;
-          onChangeScouterPosition: Dispatch<ScouterPosition>;
+         
          
       }
     | {
@@ -47,8 +48,7 @@ function SignIn({
           robotPosition?: undefined;
           onChangeRobotPosition?: undefined;
 
-          scouterPosition?: undefined;
-          onChangeScouterPosition?: undefined;
+          
       }
 )) {
     const [showCheck, setShowCheck] = useState<boolean>(false);
@@ -131,7 +131,8 @@ function SignIn({
                     />
                 )}
 
-                <div className='col-span-2 col-start-1 row-start-6 grid  grid-cols-2 gap-4'>
+                {onChangeScouterPosition && (
+                    <div className='col-span-2 col-start-1 row-start-6 grid  grid-cols-2 gap-4'>
                     <MultiButton
                         onChange={onChangeScouterPosition}
                         value={scouterPosition}
@@ -144,6 +145,9 @@ function SignIn({
                             'bg-red-300 text-black border-red-800',
                         ]}></MultiButton>
                 </div>
+
+                )}
+                
 
                 <div
                     className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-4' : 'row-start-7'} col-start-1 `}>
