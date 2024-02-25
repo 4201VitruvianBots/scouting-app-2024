@@ -183,7 +183,7 @@ function SuperApp() {
 
             <button
                     onClick={handleSubmit}
-                    className='rounded-md bg-blue-500 px-2 py-1'>
+                    className='rounded-md bg-[#48c55c] px-4 py-2 text-lg'>
                     Submit
             </button>
                 <div>

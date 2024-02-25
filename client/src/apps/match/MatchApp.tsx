@@ -198,7 +198,7 @@ function MatchApp() {
             <p>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
 
-            <div>
+            <div className='grid justify-center'>
                 <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
@@ -221,27 +221,31 @@ function MatchApp() {
                     setClimb={setClimbPosition}
                     alliance={redAlliance}
                 />
-                <button
+                <button 
+                    className='text-5xl h-[100px] bg-sky-200 my-5 px-7'
                     onClick={() => {
                         if (count.trap < 3) handleCount('trap');
                     }}>
                     Trap Note: {count.trap}
                 </button>
-                <button
-                    onClick={handleSubmit}
-                    className='rounded-md bg-blue-500 px-2 py-1'>
-                    Submit
-                </button>
-                <div>
-                    {showCheck && (
-                        <MaterialSymbol
-                            icon='check'
-                            size={100}
-                            fill
-                            grade={200}
-                            color='green'
-                        />
-                    )}
+                <div className='flex flex-container justify-center place-content-center'>
+                        <button
+                        onClick={handleSubmit}
+                        className='rounded-md bg-[#48c55c] px-4 py-2 my-5 text-lg flex content-center justify-center'>
+                        Submit
+                        </button>
+                    <div>
+                        {showCheck && (
+                            <MaterialSymbol
+                                icon='check'
+                                size={100}
+                                fill
+                                grade={200}
+                                color='green'
+                                className=''
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
         </main>
