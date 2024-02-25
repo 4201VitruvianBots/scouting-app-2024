@@ -71,7 +71,7 @@ if (DEV) {
     app.use(express.static('../client/dist'));
 
     app.get('/', (_, res) => {
-        res.sendFile('static/index.html');
+        res.sendFile('../client/dist/index.html');
     });
 }
 
