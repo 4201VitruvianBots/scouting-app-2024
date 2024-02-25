@@ -142,7 +142,7 @@ function MatchApp() {
     useStatus(robotPosition, matchNumber, scouterName);
 
     return (
-        <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
+        <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center'>
             <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
