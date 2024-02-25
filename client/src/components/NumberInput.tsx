@@ -3,7 +3,7 @@ import { Dispatch, InputHTMLAttributes, RefObject } from 'react';
 function NumberInput({
     value,
     onChange,
-    className,
+    className = '',
     ...otherProps
 }: {
     value?: number | undefined;
