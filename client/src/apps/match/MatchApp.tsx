@@ -115,6 +115,7 @@ function MatchApp() {
             setClimbPosition('none');
             setLeave(false);
             setMatchNumber(matchNumber + 1);
+            setCountHistory([]);
         } catch {
             alert('Sending Data Failed');
         }
