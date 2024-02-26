@@ -175,7 +175,7 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
-                <h1 className='text-3xl font-bold fixed left-1/2 transform -translate-x-1/2'>Statistical Analysis</h1>
+                <h1 className='text-3xl font-bold flex-grow text-center xl:absolute xl:p-6 left-1/2 xl:-translate-x-1/2'>Statistical Analysis</h1>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {(value, onChange) => {

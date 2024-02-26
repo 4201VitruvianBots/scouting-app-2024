@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    .select-search-container {
+    .team-search .select-search-container {
         @apply !w-32;
     }
 

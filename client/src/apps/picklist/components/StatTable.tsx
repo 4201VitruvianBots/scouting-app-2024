@@ -87,9 +87,11 @@ function StatTable({
                     </th>
                     {table.columns.map((column, i) => (
                         <th className='space-x-2'>
-                            <p>{camelToSpaced(column)}</p>
-                            {table.weighted ?
-                                <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
+                            {camelToSpaced(column)}
+                            {table.weighted ? <>
+                                    <br />
+                                    <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
+                                </>
                                 :
                                 <button onClick={() => handleClickColumn(column)}>
                                     {column === table.sortColumn ? (
