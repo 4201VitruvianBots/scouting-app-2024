@@ -1,0 +1,32 @@
+import { Dispatch } from 'react';
+import teamsString from '../assets/teams.txt?raw';
+import SelectSearch, { SelectSearchOption } from 'react-select-search';
+
+'select-search-container';
+
+const teamOptions: SelectSearchOption[] = teamsString
+    .split(/\r?\n/g)
+    .filter(e => e !== '')
+    .map(e => ({ name: e, value: e }));
+
+console.log(teamOptions);
+
+function TeamDropdown({
+    value,
+    onChange,
+}: {
+    value?: number | undefined;
+    onChange?: Dispatch<number>;
+}) {
+    return (
+        <SelectSearch
+            options={teamOptions}
+            value={value?.toString()}
+            onChange={value => onChange?.(parseInt(value as string))}
+            search
+            placeholder='Select Team Number...'
+        />
+    );
+}
+
+export default TeamDropdown;
