@@ -70,8 +70,8 @@ if (DEV) {
 } else {
     app.use(express.static('../client/dist'));
 
-    app.get('/', (_, res) => {
-        res.sendFile('../client/dist/index.html');
+    app.get('*', (_, res) => {
+        res.sendFile('../client/dist/index.html', {root: process.cwd()});
     });
 }
 
