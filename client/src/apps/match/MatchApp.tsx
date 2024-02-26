@@ -163,6 +163,7 @@ function MatchApp() {
                 </LinkButton>
 
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open}>
                             <MaterialSymbol

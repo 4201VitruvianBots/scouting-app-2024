@@ -134,6 +134,7 @@ function PitApp() {
                 </LinkButton>
 
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open}>
                             <MaterialSymbol

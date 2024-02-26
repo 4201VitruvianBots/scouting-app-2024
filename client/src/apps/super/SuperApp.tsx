@@ -11,6 +11,7 @@ import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
 import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
+import { useStatus } from '../../lib/useStatus';
 
 const foulTypes: Foul[] = [
     'inBot',
@@ -57,6 +58,7 @@ function SuperApp() {
     const [showCheck, setShowCheck] = useState(false);
     const [highNotes, setHighNotes] = useState(defaultHighNote); 
     const [history, setHistory] = useState<{1: SuperTeamState, 2: SuperTeamState, 3: SuperTeamState}[]>([]);
+    useStatus(superPosition, matchNumber, scouterName);
 
     const saveHistory = () => {
         setHistory([
@@ -119,6 +121,7 @@ function SuperApp() {
             setTeam2(defaultSuperTeamState);
             setTeam3(defaultSuperTeamState);
             setHistory([]);
+            setMatchNumber(matchNumber + 1);
         } catch {
             alert('Sending Data Failed');
         }
@@ -164,6 +167,7 @@ function SuperApp() {
                     />
                 </LinkButton>
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open} className='col-span-3'>
                             <MaterialSymbol
