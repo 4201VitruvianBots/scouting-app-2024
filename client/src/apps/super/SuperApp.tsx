@@ -100,6 +100,7 @@ function SuperApp() {
             setTeam1(defaultSuperTeamState);
             setTeam2(defaultSuperTeamState);
             setTeam3(defaultSuperTeamState);
+            setMatchNumber(matchNumber + 1);
         } catch {
             alert('Sending Data Failed');
         }
