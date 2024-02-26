@@ -51,14 +51,35 @@ function SuperApp() {
     const [team1, setTeam1] = useState(defaultSuperTeamState);
     const [team2, setTeam2] = useState(defaultSuperTeamState);
     const [team3, setTeam3] = useState(defaultSuperTeamState);
-
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
-
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
-    const [highNotes, setHighNotes] = useState(defaultHighNote);
-    
+    const [highNotes, setHighNotes] = useState(defaultHighNote); 
+    const [history, setHistory] = useState<{1: SuperTeamState, 2: SuperTeamState, 3: SuperTeamState}[]>([]);
+
+    const saveHistory = () => {
+        setHistory([
+            ...history,
+            {
+                1: team1,
+                2: team2,
+                3: team3
+            }
+        ])
+    }
+    const handleTeam1 = (teamValue: SuperTeamState) => {
+        setTeam1(teamValue);
+        saveHistory()
+    }
+    const handleTeam2 = (teamValue: SuperTeamState) => {
+        setTeam2(teamValue);
+        saveHistory()
+    }
+    const handleTeam3 = (teamValue: SuperTeamState) => {
+        setTeam3(teamValue);
+        saveHistory()
+    }
 
     const handleSubmit = async () => {
         if (
@@ -97,6 +118,7 @@ function SuperApp() {
             setTeam1(defaultSuperTeamState);
             setTeam2(defaultSuperTeamState);
             setTeam3(defaultSuperTeamState);
+            setHistory([]);
         } catch {
             alert('Sending Data Failed');
         }
@@ -116,6 +138,16 @@ function SuperApp() {
         setTeam2(team2 => ({...team2, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_2' : 'red_2']}));
         setTeam3(team3 => ({...team3, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_3' : 'red_3']}));
     }, [matchNumber, superPosition, schedule]);
+
+    const undoHistoryCount = () => {
+        if (history.length > 0) {
+            setHistory(prevHistory => prevHistory.slice(0, -1));
+            const last = history.at(-1)!;
+            setTeam1(last[1]);
+            setTeam2(last[2]);
+            setTeam3(last[3]);
+        }
+    };
 
     return (
         <main className='text-center bg-[#171c26]'>
@@ -160,15 +192,27 @@ function SuperApp() {
                     />
                     )}
                 </Dialog>
+
+                <button onClick={undoHistoryCount}
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                    <MaterialSymbol
+                        icon='undo'
+                        size={60}
+                        fill
+                        grade={200}
+                        color='black'
+                        className='snap-none'
+                    />
+                </button>
             </div>
             <p className='text-xl text-white'>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} 
             className='m-2 p-2 text-black text-xl'/>
 
             <div className='grid justify-items-center grid-cols-3 px-10'>
-                <SuperTeam teamState={team1} setTeamState={setTeam1} />
-                <SuperTeam teamState={team2} setTeamState={setTeam2} />
-                <SuperTeam teamState={team3} setTeamState={setTeam3} />
+                <SuperTeam teamState={team1} setTeamState={handleTeam1} />
+                <SuperTeam teamState={team2} setTeamState={handleTeam2} />
+                <SuperTeam teamState={team3} setTeamState={handleTeam3} />
             </div>
             
             <MultiButton 
