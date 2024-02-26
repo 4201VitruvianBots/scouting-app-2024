@@ -42,10 +42,10 @@ function EndgameButton({
                 <MultiButton 
                 onChange={handleClimb} value={climbPosition} 
                 labels={['', '', '', 'Failed', 'None', 'Parked']} 
-                values={['amp', 'center', 'source', 'failed', 'none', 'park']} //TODO: fix the submit button after merged into main, use m-"Number for right spacing"
+                values={['amp', 'center', 'source', 'failed', 'none', 'park']} 
                 className={alliance
                     ? [/*red*/  'absolute top-[20em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[10em] h-[29em] w-[4em] right-[1em]', 'absolute top-[1em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', 'h-[60px] w-[210px] text-4xl ', 'h-[60px] w-[210px] text-4xl ', 'h-[60px] w-[210px] text-4xl' ] 
-                    : [/*blue*/ 'absolute top-[20em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[10em] left-[3em] h-[29em] w-[4em]', 'absolute top-[1em] left-[18em] h-[29em] w-[4em] -rotate-60', 'h-[60px] w-[217px] text-4xl ', 'h-[60px] w-[217px] text-4xl ', 'h-[60px] w-[217px] text-4xl flex-column gap-4  '] }/>
+                    : [/*blue*/ 'absolute top-[20em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[10em] left-[2em] h-[29em] w-[4em]', 'absolute top-[1em] left-[18em] h-[29em] w-[4em] -rotate-60', 'h-[60px] w-[217px] text-4xl ', 'h-[60px] w-[217px] text-4xl ', 'h-[60px] w-[217px] text-4xl flex-column gap-4  '] }/>
                 
                 
             </div>

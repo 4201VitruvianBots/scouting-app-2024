@@ -79,7 +79,7 @@ function MatchApp() {
                 robotPosition,
                 matchNumber,
                 robotTeam: teamNumber,
-                
+
             },
             leftStartingZone: leave,
             autoNotes: {
@@ -106,7 +106,7 @@ function MatchApp() {
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
-            setMatchNumber(matchNumber +1);
+            setMatchNumber(matchNumber + 1);
         } catch {
             alert('Sending Data Failed');
         }
@@ -129,9 +129,9 @@ function MatchApp() {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
 
-    useEffect( () => {
-        setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
-    },[matchNumber, robotPosition, schedule])
+    useEffect(() => {
+        setTeamNumber(schedule && robotPosition && matchNumber ? schedule[matchNumber]?.[robotPosition] : undefined)
+    }, [matchNumber, robotPosition, schedule])
 
     useStatus(robotPosition, matchNumber, scouterName);
 
@@ -149,7 +149,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
+
                 <Dialog
                     trigger={open => (
                         <button onClick={open}>
@@ -169,7 +169,7 @@ function MatchApp() {
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
                             onSubmit={close}
-                            
+
                         />
                     )}
                 </Dialog>
@@ -185,14 +185,14 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
-               
+
             </div>
             <p>Team Number</p>
-            <NumberInput onChange={setTeamNumber} value={teamNumber}/> 
+            <NumberInput onChange={setTeamNumber} value={teamNumber} />
             <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber}/>
+            <NumberInput onChange={setMatchNumber} value={matchNumber} />
 
-           
+
 
             <div>
                 <h2 className='text-2xl text-center my-4'>Autonomous</h2>
@@ -217,28 +217,29 @@ function MatchApp() {
                     setClimb={setClimbPosition}
                     alliance={redAlliance}
                 />
-                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
-                    Trap Note: {count.trap}
-                </button>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={handleSubmit}  style={{ fontSize: '30px' }} 
-                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                    Submit 
+                <div className='mt-20' style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }}
+                        className='px-2 py-1 text-center bg-green-500 rounded-md mr-2 block absolute left-96'>
+                        Trap Note: {count.trap}
                     </button>
-
-
+                    <button onClick={handleSubmit} style={{ fontSize: '30px' }}
+                        className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                        Submit
+                    </button>
                 </div>
-               
-            
-                <div>
-                {showCheck && (   
-                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
-                )}
-                </div>
+
             </div>
-        </main>
-    );
-} 
 
-export type {MatchScores,ClimbPosition};
+
+
+            <div>
+                {showCheck && (
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />
+                )}
+            </div>
+        </main >
+    );
+}
+
+export type { MatchScores, ClimbPosition };
 export default MatchApp
