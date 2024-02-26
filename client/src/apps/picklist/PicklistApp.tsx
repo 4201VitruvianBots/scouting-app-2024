@@ -2,9 +2,9 @@ import { AnalysisEntry, WindowData, TeamInfo } from './data';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
-import { useFetchJson } from '../../lib/useFetchJson';
 import Dialog from '../../components/Dialog';
 import StatDialog from './components/StatDialog';
+import { useFetchJson } from '../../lib/useFetch';
 import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
 import ScatterPlotDialog from './components/ScatterPlotDialog';
@@ -71,9 +71,11 @@ function generateWindow(
 }
 
 function PicklistApp() {
-    const analyzedData = useFetchJson<AnalysisEntry[]>('/output_analysis.json');
-    const teamInfo = useFetchJson<TeamInfo>('/team_info.json');
-
+    const [analyzedData, reloadData] = useFetchJson<AnalysisEntry[]>(
+        '/output_analysis.json'
+    );
+    const [teamInfo] = useFetchJson<TeamInfo>('/team_info.json');
+    
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
 
@@ -92,7 +94,11 @@ function PicklistApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-
+                
+                <button className='flex snap-none items-center justify-center px-2' onClick={reloadData} title="Refresh Data">
+                    <MaterialSymbol icon="refresh" size={50} grade={200} color='black' className='snap-none'/>
+                </button>
+                
                 <Dialog
                     trigger={open => (
                         <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Table">

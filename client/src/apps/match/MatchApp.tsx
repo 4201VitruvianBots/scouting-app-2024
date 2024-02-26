@@ -1,17 +1,17 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
-import { useFetchJson } from '../../lib/useFetchJson';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
-
+import TeamDropdown from '../../components/TeamDropdown';
+import { useFetchJson } from '../../lib/useFetch';
 
 type countKeys = keyof MatchScores;
 
@@ -33,7 +33,7 @@ interface MatchScores {
     telePickupMiddle: number;
     telePickupSource: number;
     trap: number;
-};
+}
 const defualtScores: MatchScores = {
     autoShootNear: 0,
     autoShootMid: 0,
@@ -55,8 +55,7 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
-
-    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
@@ -64,16 +63,24 @@ function MatchApp() {
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
-
     const [scouterName, setScouterName] = useState('');
+
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
-    const redAlliance = (
-        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
+    const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
+
+    const blueAlliance = (
+        ['blue_1', 'blue_2', 'blue_3'] as (string | undefined)[]
     ).includes(robotPosition);
-    
+
     const handleSubmit = async () => {
-        if (robotPosition === undefined || matchNumber === undefined || teamNumber === undefined) return;
+        if (
+            robotPosition == undefined ||
+            matchNumber == undefined ||
+            teamNumber == undefined
+        ) {
+            alert('data is missing! :(')
+            return; }
 
         const data: MatchData = {
             metadata: {
@@ -81,7 +88,6 @@ function MatchApp() {
                 robotPosition,
                 matchNumber,
                 robotTeam: teamNumber,
-                
             },
             leftStartingZone: leave,
             autoNotes: {
@@ -108,13 +114,12 @@ function MatchApp() {
             setCount(defualtScores);
             setClimbPosition('none');
             setLeave(false);
-            setMatchNumber(matchNumber +1);
+            setMatchNumber(matchNumber + 1);
         } catch {
             alert('Sending Data Failed');
         }
 
         setShowCheck(true);
-
     };
 
     const undoCount = () => {
@@ -131,9 +136,13 @@ function MatchApp() {
         handleSetCount({ ...count, [key]: count[key] + 1 });
     };
 
-    useEffect( () => {
-        setTeamNumber(schedule && robotPosition && matchNumber?schedule[matchNumber]?.[robotPosition]: undefined)
-    },[matchNumber, robotPosition, schedule])
+    useEffect(() => {
+        setTeamNumber(
+            schedule && robotPosition && matchNumber
+                ? schedule[matchNumber]?.[robotPosition]
+                : undefined
+        );
+    }, [matchNumber, robotPosition, schedule]);
 
     useStatus(robotPosition, matchNumber, scouterName);
 
@@ -151,7 +160,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-
+                
                 <Dialog
                     trigger={open => (
                         <button onClick={open}>
@@ -170,8 +179,9 @@ function MatchApp() {
                             onChangeScouterName={setScouterName}
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
+                            scouterPosition={scouterPosition}
+                            onChangeScouterPosition={setScouterPosition}
                             onSubmit={close}
-                            
                         />
                     )}
                 </Dialog>
@@ -187,54 +197,66 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
-               
             </div>
-            <p>Team Number</p>
-            <NumberInput onChange={setTeamNumber} value={teamNumber}/> 
-            <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber}/>
-
            
+            <p>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <p>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
 
             <div>
-                <h2 className='text-2xl text-center my-4'>Autonomous</h2>
+                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
                     teleOp={false}
                     count={count}
                     leave={leave}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
-                <h2 className='text-2xl text-center my-2'>Tele-Op</h2>
+                <h2 className='my-2 text-center text-2xl'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
-                <h2 className='text-2xl text-center my-2'>Endgame</h2>
+                <h2 className='my-2 text-center text-2xl'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
-                    alliance={redAlliance}
+                    alliance={blueAlliance}
                 />
-                <button onClick={() => {if (count.trap < 3) handleCount('trap')}}>
+                <button
+                    onClick={() => {
+                        if (count.trap < 3) handleCount('trap');
+                    }}>
                     Trap Note: {count.trap}
                 </button>
-            <button onClick={handleSubmit} 
-                className='px-2 py-1 bg-blue-500 rounded-md'>
-                Submit
-            </button>
-            <div>
+
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={handleSubmit}  style={{ fontSize: '30px' }} 
+                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                    Submit 
+                    </button>
+
+
+                </div>
+               
+            
+                <div>
                 {showCheck && (   
                     <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
                 )}
-            </div>
+                </div>
             </div>
         </main>
     );
-}
+} 
+
 
 export type { MatchScores, ClimbPosition };
+
 export default MatchApp

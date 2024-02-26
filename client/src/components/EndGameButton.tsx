@@ -36,20 +36,19 @@ function EndgameButton({
             Toggle Map Button 
             </ToggleButton> */}
            
-            <div className={`${alliance ? 'bg-field-red-endgame' : 'bg-field-blue-endgame'} h-[40em] w-[40em] bg-cover bg-center relative`}>
+            <div className={`${alliance ? 'bg-field-red-endgame' : 'bg-field-blue-endgame'} h-[40em] w-[40em] bg-cover bg-center relative `}>
                 <MultiButton 
                 onChange={handleClimb} value={climbPosition} 
                 labels={['', '', '', 'Failed', 'None', 'Parked']}
                 values={['amp', 'center', 'source', 'failed', 'none', 'park']}
                 className={alliance
                 
-                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60', 'absolute top-[5em] h-[29em] w-[4em] right-[2em]', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]
+                ? [/*red*/  'absolute top-[15em] left-[18em] h-[29em] w-[4em] -rotate-60 ', 'absolute top-[5em] h-[29em] w-[4em] right-[2em] ', 'absolute top-[-5em] left-[18em] bottom-4 h-[29em] w-[4em] rotate-60', '', '', '' ]
                 : [/*blue*/ 'absolute top-[14em] left-[18em] h-[29em] w-[4em] rotate-60', 'absolute top-[5em] left-[3em] h-[29em] w-[4em]', 'absolute top-[-4em] left-[18em] h-[29em] w-[4em] -rotate-60', '', '', ''] }/>
             </div>
         </> 
     );
 }
-
 /*
 blue
     "amp"

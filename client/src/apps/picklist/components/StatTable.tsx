@@ -86,7 +86,7 @@ function StatTable({
                         Team
                     </th>
                     {table.columns.map((column, i) => (
-                        <th className={table.weighted ? 'space-x-2' : 'space-x-2 flex'}>
+                        <th className='space-x-2'>
                             <p>{camelToSpaced(column)}</p>
                             {table.weighted ?
                                 <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
