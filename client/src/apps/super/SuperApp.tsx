@@ -132,6 +132,7 @@ function SuperApp() {
                     />
                 </LinkButton>
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open} className='col-span-3'>
                             <MaterialSymbol
