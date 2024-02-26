@@ -217,9 +217,9 @@ function MatchApp() {
                     setClimb={setClimbPosition}
                     alliance={redAlliance}
                 />
-                <div className='mt-20' style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }}
-                        className='px-2 py-1 text-center bg-green-500 rounded-md mr-2 block absolute left-96'>
+                <div className='mt-20 mb-5' style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '24px'}}
+                        className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
                         Trap Note: {count.trap}
                     </button>
                     <button onClick={handleSubmit} style={{ fontSize: '30px' }}
