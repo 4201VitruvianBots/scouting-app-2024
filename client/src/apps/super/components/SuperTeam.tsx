@@ -37,7 +37,7 @@ function SuperTeam({
     };
 
     return (
-        <div className='grid justify-center'>
+        <div className='grid justify-items-center'>
             <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
             <ButtonDropdown value={teamState.foulCounts} setValue={handleFoul}>
                 Add Foul
@@ -50,11 +50,11 @@ function SuperTeam({
                 value={teamState.defenseRank}
                 labels={['Full Defense', 'Some Defense', 'No Defense']}
                 values={['fullDef', 'someDef', 'noDef']}
-                className='text-black'
+                className='text-black w-full'
             />
             <div>
                 <Checkbox
-                    className='text-3xl'
+                    className='text-3xl text-white'
                     boxClassName='size-5'
                     checked={teamState.wasDefended}
                     onChange={handleWasDefended}>

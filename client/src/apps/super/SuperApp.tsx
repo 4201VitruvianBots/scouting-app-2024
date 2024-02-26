@@ -118,8 +118,8 @@ function SuperApp() {
     }, [matchNumber, superPosition, schedule]);
 
     return (
-        <main className='text-center'>
-            <h1 className='col-span-3 my-8 text-3xl'>Super Scouting App</h1>
+        <main className='text-center bg-[#171c26]'>
+            <h1 className='col-span-3 text-3xl text-[#48c55c] font-bold p-5'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
@@ -161,17 +161,18 @@ function SuperApp() {
                     )}
                 </Dialog>
             </div>
-            <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <p className='text-xl text-white'>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber} 
+            className='m-2 p-2 text-black text-xl'/>
 
-            <div className='grid grid-cols-3 px-10'>
+            <div className='grid justify-items-center grid-cols-3 px-10'>
                 <SuperTeam teamState={team1} setTeamState={setTeam1} />
                 <SuperTeam teamState={team2} setTeamState={setTeam2} />
                 <SuperTeam teamState={team3} setTeamState={setTeam3} />
             </div>
             
             <MultiButton 
-                className='outline-black'
+                className='outline-black max-w-40 w-full mx-5 mt-10'
                 onChange={setShooterPlayerTeam}
                 values={[team1.teamNumber ?? -1, team2.teamNumber ?? -2,team3.teamNumber ?? -3]} // ugly hack hehe
                 labels={[team1.teamNumber ?? 'Team 1', team2.teamNumber ?? 'Team 2',team3.teamNumber ?? 'Team 3'].map(e => e.toString())}
@@ -184,11 +185,11 @@ function SuperApp() {
                 highNotes={highNotes}
                 setHighNotes={setHighNotes}
                 alliance={superPosition === 'blue_ss'}
-                className='relative mx-auto  my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
+                className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
             <button
                     onClick={handleSubmit}
-                    className='rounded-md bg-blue-500 px-2 py-1'>
+                    className='rounded-md bg-blue-500 px-2 py-5 m-5 max-w-80 w-full'>
                     Submit
             </button>
                 <div>
