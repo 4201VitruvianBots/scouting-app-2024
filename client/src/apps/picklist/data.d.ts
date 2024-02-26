@@ -20,7 +20,7 @@ export interface StatTableData extends TabBase {
     sortColumn?: string;
     ascending: boolean;
     weighted: boolean;
-    weights?: number[];
+    weights: number[];
 }
 
 export interface BarGraphData extends TabBase {

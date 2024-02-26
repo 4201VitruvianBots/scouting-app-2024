@@ -55,8 +55,7 @@ function StatTable({
 
     // Handle when the new StatColumn is submitted
     function handleAddColumn(column: string) {
-        setTable({ ...table, columns: [...table.columns, column] });
-        if (table.weights) table.weights.push(0);
+        setTable({ ...table, columns: [...table.columns, column], weights: [...table.weights, 0] });
     }
 
     // Handle when a StatColumn component is deleted
@@ -64,18 +63,15 @@ function StatTable({
         setTable({
             ...table,
             columns: table.columns.filter((_, i) => i !== index),
+            weights: table.weights.filter((_, i) => i !== index),
         });
-        if (table.weights) table.weights.splice(index, 1);
     }
     
     // Handle when the weights of the stat column are changed
     function handleWeightChange(index: number, event: React.ChangeEvent<HTMLInputElement>) {
         const value = parseFloat(event.target.value);
         
-        if (table.weights) {
-            table.weights[index] = value;
-            setTable({ ...table, weights: table.weights });
-        }
+        setTable({...table, weights: table.weights.map((e, i) => index === i ? value : e)});
     }
 
     return (

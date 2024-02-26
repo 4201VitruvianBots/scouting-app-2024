@@ -22,6 +22,7 @@ function StatDialog({
             columns: [],
             ascending: false,
             weighted: weighted,
+            weights: [],
         });
         onClose?.();
     };
