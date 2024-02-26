@@ -11,6 +11,7 @@ import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
 import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
+import { useStatus } from '../../lib/useStatus';
 
 const foulTypes: Foul[] = [
     'inBot',
@@ -58,6 +59,8 @@ function SuperApp() {
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
     const [highNotes, setHighNotes] = useState(defaultHighNote);
+    
+    useStatus(superPosition, matchNumber, scouterName);
     
 
     const handleSubmit = async () => {
