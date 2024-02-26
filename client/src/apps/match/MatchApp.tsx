@@ -160,7 +160,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
+
                 <Dialog
                     trigger={open => (
                         <button onClick={open}>
@@ -229,34 +229,29 @@ function MatchApp() {
                     setClimb={setClimbPosition}
                     alliance={blueAlliance}
                 />
-                <button
-                    onClick={() => {
-                        if (count.trap < 3) handleCount('trap');
-                    }}>
-                    Trap Note: {count.trap}
-                </button>
-
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={handleSubmit}  style={{ fontSize: '30px' }} 
-                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                    Submit 
+                <div className='mt-20 mb-5' style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '24px'}}
+                        className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
+                        Trap Note: {count.trap}
                     </button>
-
-
+                    <button onClick={handleSubmit} style={{ fontSize: '30px' }}
+                        className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                        Submit
+                    </button>
                 </div>
-               
-            
-                <div>
-                {showCheck && (   
-                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />               
-                )}
-                </div>
+
             </div>
-        </main>
-    );
-} 
 
+
+
+            <div>
+                {showCheck && (
+                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />
+                )}
+            </div>
+        </main >
+    );
+}
 
 export type { MatchScores, ClimbPosition };
-
 export default MatchApp
