@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { MatchScores } from '../apps/match/MatchApp';
 import Checkbox from './Checkbox';
-import { PickupLocation } from 'requests';
+import { PickupLocation, ScouterPosition } from 'requests';
 import MultiButton from './MultiButton';
 
 type countKeys = keyof MatchScores;
@@ -14,6 +14,9 @@ function RegionButton({
     teleOp,
     count,
     label,
+    scouterPosition,
+    textClassName = '',
+
 }: {
     handleCount: (
         autokey: countKeys,
@@ -26,13 +29,16 @@ function RegionButton({
     teleOp: boolean;
     count: MatchScores;
     label?: string;
+    scouterPosition?: ScouterPosition | undefined;
+    textClassName?: string;
 }) {
     return (
         <button
-            className={` ${className} absolute text-5xl`}
+            className={` ${className} absolute text-5xl `}
             onClick={() => handleCount(autoKey, teleKey)}
             id='one'>
-            <p>
+            <p
+                className={`${scouterPosition === 'blue_right' ? 'rotate-180' : ''} ${textClassName}  `}>
                 {label && `${label}: `}
                 {count[teleOp ? teleKey : autoKey]}
             </p>
@@ -47,6 +53,7 @@ function FieldButton({
     leave,
     count,
     alliance,
+    scouterPosition,
 }: {
     setLeave?: Dispatch<boolean>;
     setCount: Dispatch<SetStateAction<MatchScores>>;
@@ -54,6 +61,7 @@ function FieldButton({
     leave?: boolean;
     count: MatchScores;
     alliance: boolean | undefined;
+    scouterPosition: ScouterPosition | undefined;
 }) {
     const [pickupLocation, setPickupLocation] = useState<
         PickupLocation | undefined
@@ -78,13 +86,14 @@ function FieldButton({
                 [pickupKeys[pickupLocation]]:
                     prevCount[pickupKeys[pickupLocation]] + 1,
             }));
-        }
-        else if (
-            !(count.teleShootNear ||
-            count.teleShootMid ||
-            count.teleShootFar ||
-            count.teleAmp ||
-            count.teleMiss) &&
+        } else if (
+            !(
+                count.teleShootNear ||
+                count.teleShootMid ||
+                count.teleShootFar ||
+                count.teleAmp ||
+                count.teleMiss
+            ) &&
             count.hold &&
             teleOp
         ) {
@@ -93,15 +102,13 @@ function FieldButton({
                 ...prevCount,
                 [finalKey]: prevCount[finalKey] + 1,
             }));
-        }
-        else if (
+        } else if (
             count.autoPreload ||
-            count.autoPickup &&
-            !count.hold &&
-            !teleOp
+            (count.autoPickup && !count.hold && !teleOp)
         ) {
             const finalKey = teleOp ? teleKey : autoKey;
-            const finalPickupLocation = (pickupLocation == 'autoPreload') ? 'autoPreload' : 'autoPickup';
+            const finalPickupLocation =
+                pickupLocation == 'autoPreload' ? 'autoPreload' : 'autoPickup';
             setCount(prevCount => ({
                 ...prevCount,
                 [finalKey]: prevCount[finalKey] + 1,
@@ -111,10 +118,6 @@ function FieldButton({
         setPickupLocation(undefined);
     };
 
-    // const handleImage = () => {
-    //     setAlliance(!alliance);
-    // };
-
     const handleLeave = () => {
         setLeave?.(!leave);
     };
@@ -122,7 +125,6 @@ function FieldButton({
     return (
         <>
             <div className='flex items-center justify-center '>
-                {/* <ToggleButton value={alliance} onChange={handleImage} className={`${alliance ? 'bg-blue-500' : 'bg-red-500'} px-2 py-1  rounded-md`}>Toggle Map Color</ToggleButton> */}
                 {!teleOp && (
                     <Checkbox
                         checked={leave}
@@ -159,33 +161,32 @@ function FieldButton({
                             Note held from auto
                         </div>
                     )
+                ) : count.autoPreload || count.autoPickup ? (
+                    <div className='h-[6.25em] w-[40em] bg-gray-400'></div>
                 ) : (
-                    count.autoPreload || count.autoPickup ?
-                        <div className = 'bg-gray-400 w-[40em] h-[6.25em]'></div> :
-                        <MultiButton
-                            values={['preload', 'pickup']}
-                            onChange={setPickupLocation}
-                            value={pickupLocation}
-                            labels={[
-                                'Preload',
-                                'Picked Up',
-                            ]}
-                            className='h-[100px] flex-grow basis-0 text-2xl'
-                        />
+                    <MultiButton
+                        values={['preload', 'pickup']}
+                        onChange={setPickupLocation}
+                        value={pickupLocation}
+                        labels={['Preload', 'Picked Up']}
+                        className='h-[100px] flex-grow basis-0 text-2xl'
+                    />
                 )}
             </div>
 
             <div
-                className={`${alliance ? 'bg-field-red' : 'bg-field-blue'} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'blue_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
                 {alliance ? (
                     <>
                         <RegionButton
                             teleOp={teleOp}
                             count={count}
                             handleCount={handleCount}
-                            autoKey='autoShootFar'
-                            teleKey='teleShootFar'
-                            className='bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[6em] text-right '
+                            autoKey='autoShootNear'
+                            teleKey='teleShootNear'
+                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 text-left'
+                            textClassName='top-[2.2em] left-[1.5em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                         <RegionButton
                             teleOp={teleOp}
@@ -193,15 +194,19 @@ function FieldButton({
                             handleCount={handleCount}
                             autoKey='autoShootMid'
                             teleKey='teleShootMid'
-                            className='right-[40%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[9em] text-right '
+                            className='absolute left-[30%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70   text-left '
+                            textClassName='top-[3.5em] left-[3.5em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                         <RegionButton
                             teleOp={teleOp}
                             count={count}
                             handleCount={handleCount}
-                            autoKey='autoShootNear'
-                            teleKey='teleShootNear'
-                            className='bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[1.25em] text-right '
+                            autoKey='autoShootFar'
+                            teleKey='teleShootFar'
+                            className='absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 text-left '
+                            textClassName='top-[3.5em] left-[3em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                     </>
                 ) : (
@@ -210,9 +215,11 @@ function FieldButton({
                             teleOp={teleOp}
                             count={count}
                             handleCount={handleCount}
-                            autoKey='autoShootNear'
-                            teleKey='teleShootNear'
-                            className='absolute bottom-[40px] right-[-120px] z-20 h-2/5 w-2/5 overflow-hidden rounded-full bg-green-400/70 p-[0.5em] text-left'
+                            autoKey='autoShootFar'
+                            teleKey='teleShootFar'
+                            className='bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] text-right '
+                            textClassName='top-[3.5em] right-[3em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                         <RegionButton
                             teleOp={teleOp}
@@ -220,15 +227,19 @@ function FieldButton({
                             handleCount={handleCount}
                             autoKey='autoShootMid'
                             teleKey='teleShootMid'
-                            className='absolute left-[30%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70  p-[2em] pb-[8em] text-left '
+                            className='right-[30%] top-[25%] z-10 h-[130%] w-[130%] overflow-hidden rounded-full bg-blue-400/70 text-right '
+                            textClassName='top-[3.25em] right-[3.5em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                         <RegionButton
                             teleOp={teleOp}
                             count={count}
                             handleCount={handleCount}
-                            autoKey='autoShootFar'
-                            teleKey='teleShootFar'
-                            className='absolute bottom-0 right-0 z-0 h-full w-full bg-red-400/70 p-[2.5em] pb-[7em] text-left '
+                            autoKey='autoShootNear'
+                            teleKey='teleShootNear'
+                            className='bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 rounded-full bg-green-400/70 text-right '
+                            textClassName='top-[2.2em] right-[1.5em] absolute'
+                            scouterPosition={scouterPosition}
                         />
                     </>
                 )}
@@ -237,6 +248,10 @@ function FieldButton({
             <div className='flex w-[40em] flex-row gap-2 py-2'>
                 {count.hold === 0 || teleOp ? (
                     <>
+                    
+
+
+
                         <RegionButton
                             teleOp={teleOp}
                             count={count}
@@ -244,6 +259,7 @@ function FieldButton({
                             autoKey='autoAmp'
                             teleKey='teleAmp'
                             className='!static h-[100px] flex-grow basis-0 bg-orange-200'
+                    
                             label='Amp'
                         />
                         <RegionButton

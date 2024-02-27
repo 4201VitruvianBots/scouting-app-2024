@@ -117,7 +117,7 @@ function PitApp() {
             <div className='bg-[#171c26]'>
             <div className="border border-neutral-900 bg-gray-800 mb-7">
               <br/>
-              <h1 className="text-center text-white text-3xl mb-4">Pit App</h1>
+              <h1 className="text-center text-[#48c55c] text-3xl mb-4 font-bold">Pit App</h1>
             
             </div>
 
@@ -134,6 +134,7 @@ function PitApp() {
                 </LinkButton>
 
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open}>
                             <MaterialSymbol
