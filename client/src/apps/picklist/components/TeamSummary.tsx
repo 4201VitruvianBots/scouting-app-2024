@@ -13,19 +13,57 @@ function TeamSummary({
 }) {
     // Get the data for the team specified
     const teamData = data.filter(e => e.teamNumber === table.teamNumber);
-
+    
+    let teamInfo;
+    let teamAvatar = undefined;
+    
     try {
         // Get the team info for the team specified
-        const teamInfo = teamInfoJson[table.teamNumber.toString()].info;
-
-        let teamAvatar = undefined;
-
+        teamInfo = teamInfoJson[table.teamNumber.toString()].info;
         if (teamInfoJson[table.teamNumber.toString()].avatar) {
             teamAvatar = base64toImage(
                 teamInfoJson[table.teamNumber.toString()].avatar || ''
             );
         }
+    } catch (e) {
+        teamInfo = {Error: "Team info not found"};
+    }
+    
+    if ('Error' in teamInfo) {
+        return (
+            <div className='flex space-x-10'>
+                <div>
+                    <h1 className='text-3xl'>Team {table.teamNumber}</h1>
+                </div>
 
+                <div>
+                    <h2 className='text-2xl'>Stats</h2>
+                    <p>Matches Played: {teamData.length}</p>
+                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
+                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
+
+                    <br />
+
+                    {Object.keys(teamData[0]).map(e => {
+                        if (
+                            e !== 'teamNumber' &&
+                            e !== 'scouterName' &&
+                            e !== 'climb'
+                        ) {
+                            return (
+                                <p key={e}>
+                                    {camelToSpaced(e)}:{' '}
+                                    {teamData
+                                        .map(e2 => Number(e2[e]))
+                                        .reduce((a, b) => a + b)}
+                                </p>
+                            );
+                        }
+                    })}
+                </div>
+            </div>
+        );
+    } else {
         return (
             <div className='flex space-x-10'>
                 <div>
@@ -77,41 +115,7 @@ function TeamSummary({
                 </div>
             </div>
         );
-    } catch (e) {
-        return (
-            <div className='flex space-x-10'>
-                <div>
-                    <h1 className='text-3xl'>Team {table.teamNumber}</h1>
-                </div>
-
-                <div>
-                    <h2 className='text-2xl'>Stats</h2>
-                    <p>Matches Played: {teamData.length}</p>
-                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
-                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
-
-                    <br />
-
-                    {Object.keys(teamData[0]).map(e => {
-                        if (
-                            e !== 'teamNumber' &&
-                            e !== 'scouterName' &&
-                            e !== 'climb'
-                        ) {
-                            return (
-                                <p key={e}>
-                                    {camelToSpaced(e)}:{' '}
-                                    {teamData
-                                        .map(e2 => Number(e2[e]))
-                                        .reduce((a, b) => a + b)}
-                                </p>
-                            );
-                        }
-                    })}
-                </div>
-            </div>
-        );
-    }
+    };
 }
 
 export default TeamSummary;

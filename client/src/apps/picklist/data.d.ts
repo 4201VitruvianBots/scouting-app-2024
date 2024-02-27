@@ -10,9 +10,31 @@ export interface TeamInfo {
         secondaryHex: string;
         verified: boolean;
         avatar?: string;
-        info?: unknown;
+        info: {
+            address: null;
+            city: string | null;
+            country: string | null;
+            gmaps_place_id: null;
+            gmaps_url: null;
+            home_championship: Record<string, string> | null;
+            key: string;
+            lat: null;
+            lng: null;
+            location_name: null;
+            motto: null;
+            name: string;
+            nickname: string;
+            postal_code: string;
+            rookie_year: number;
+            school_name: string;
+            state_prov: string;
+            team_number: number;
+            website: string | null;
+        } | {
+            Error: string;
+        };
     };
-}
+};
 
 export interface StatTableData extends TabBase {
     type: "StatTable";
