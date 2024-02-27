@@ -237,6 +237,7 @@ function SuperApp() {
                 highNotes={highNotes}
                 setHighNotes={setHighNotes}
                 alliance={superPosition === 'blue_ss'}
+                scouterPosition={scouterPosition}
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
             <button

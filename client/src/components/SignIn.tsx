@@ -132,7 +132,7 @@ function SignIn({
                 )}
 
                 {onChangeScouterPosition && (
-                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-6' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
+                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-4' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
                     <MultiButton
                         onChange={onChangeScouterPosition}
                         value={scouterPosition}
@@ -150,7 +150,7 @@ function SignIn({
                 
 
                 <div
-                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-7' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
+                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-5' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
                     <button
                         onClick={handleSubmit}
                         className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 justify-center rounded-md bg-gray-300  px-5  py-3 text-xl hover:bg-green-500`}>
