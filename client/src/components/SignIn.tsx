@@ -65,7 +65,7 @@ function SignIn({
     return (
         <>
             <div
-                className={`grid w-[400px] auto-rows-fr grid-cols-2 selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'} grid-flow-col justify-center gap-3`}>
+                className={`grid w-[400px] auto-rows-fr grid-cols-2 selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr]' : pitScouting ? 'grid-rows-[auto_auto_auto]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'} grid-flow-col justify-center gap-3`}>
                 <p className='col-span-2 justify-self-center p-1 text-2xl font-medium text-green-600'>
                     Sign-In
                 </p>
@@ -150,7 +150,7 @@ function SignIn({
                 
 
                 <div
-                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-4' : 'row-start-7'} col-start-1 `}>
+                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-4' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
                     <button
                         onClick={handleSubmit}
                         className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 justify-center rounded-md bg-gray-300  px-5  py-3 text-xl hover:bg-green-500`}>
