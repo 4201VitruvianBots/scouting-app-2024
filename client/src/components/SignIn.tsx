@@ -25,11 +25,9 @@ function SignIn({
     | {
           superScouting: true;
           pitScouting?: false;
-
           robotPosition: SuperPosition | undefined;
           onChangeRobotPosition: Dispatch<SuperPosition>;
 
-         
       }
     | {
           superScouting?: false;
@@ -65,7 +63,7 @@ function SignIn({
     return (
         <>
             <div
-                className={`grid w-[400px] auto-rows-fr grid-cols-2 selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr]' : pitScouting ? 'grid-rows-[auto_auto_auto]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'} grid-flow-col justify-center gap-3`}>
+                className={`grid w-[400px] auto-rows-fr grid-cols-2 selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr_auto]' : pitScouting ? 'grid-rows-[auto_auto_auto]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'} grid-flow-col justify-center gap-3`}>
                 <p className='col-span-2 justify-self-center p-1 text-2xl font-medium text-green-600'>
                     Sign-In
                 </p>
@@ -91,6 +89,8 @@ function SignIn({
                             'bg-blue-500 text-white',
                         ]}
                     />
+
+                    
                 ) : pitScouting ? undefined : (
                     <MultiButton
                         onChange={onChangeRobotPosition}
@@ -132,7 +132,7 @@ function SignIn({
                 )}
 
                 {onChangeScouterPosition && (
-                    <div className='col-span-2 col-start-1 row-start-6 grid  grid-cols-2 gap-4'>
+                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-6' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
                     <MultiButton
                         onChange={onChangeScouterPosition}
                         value={scouterPosition}
@@ -150,7 +150,7 @@ function SignIn({
                 
 
                 <div
-                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-4' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
+                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-7' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
                     <button
                         onClick={handleSubmit}
                         className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 justify-center rounded-md bg-gray-300  px-5  py-3 text-xl hover:bg-green-500`}>

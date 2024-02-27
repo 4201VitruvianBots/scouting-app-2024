@@ -230,6 +230,7 @@ function MatchApp() {
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
                     alliance={blueAlliance}
+                    scouterPosition={scouterPosition}
                 />
                 <div className='mt-20 mb-5' style={{ display: 'flex', justifyContent: 'center' }}>
                     <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '24px'}}
