@@ -175,7 +175,7 @@ function FieldButton({
             </div>
 
             <div
-                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'blue_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
                 {alliance ? (
                     <>
                         <RegionButton
