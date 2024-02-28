@@ -38,7 +38,7 @@ function RegionButton({
             onClick={() => handleCount(autoKey, teleKey)}
             id='one'>
             <p
-                className={`${scouterPosition === 'blue_right' ? 'rotate-180' : ''} ${textClassName}  `}>
+                className={`${scouterPosition === 'red_right' ? 'rotate-180' : ''} ${textClassName}  `}>
                 {label && `${label}: `}
                 {count[teleOp ? teleKey : autoKey]}
             </p>
