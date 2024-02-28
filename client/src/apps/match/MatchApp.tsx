@@ -143,7 +143,7 @@ function MatchApp() {
 
     return (
         <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
-            <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
+            <h1 className='my-8 text-center text-3xl font-semibold'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
@@ -192,13 +192,13 @@ function MatchApp() {
                 </button>
             </div>
            
-            <p>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
-            <p>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
-
+            <p className='text-2xl'>Match Number</p>
+            <NumberInput onChange={setMatchNumber} value={matchNumber} className='border-2 rounded border-black mb-5'/>
+            <p className='text-2xl'>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber}/>
+            
             <div>
-                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
+                <h2 className='text-center text-3xl mt-16 font-bold'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
@@ -207,14 +207,14 @@ function MatchApp() {
                     leave={leave}
                     alliance={redAlliance}
                 />
-                <h2 className='my-2 text-center text-2xl'>Tele-Op</h2>
+                <h2 className='mt-16 text-center text-3xl font-bold'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
                     alliance={redAlliance}
                 />
-                <h2 className='my-2 text-center text-2xl'>Endgame</h2>
+                <h2 className='mt-16 text-center text-3xl font-bold'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
@@ -227,9 +227,9 @@ function MatchApp() {
                     Trap Note: {count.trap}
                 </button>
 
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={handleSubmit}  style={{ fontSize: '30px' }} 
-                    className='px-2 py-1 text-center bg-green-500 rounded-md'>
+                <div className='fixed bottom-0'>
+                    <button onClick={handleSubmit} 
+                    className='text-xl w-32 h-20 px-2 py-1 text-center bg-green-500 border-2 border-green-700 rounded-md'>
                     Submit 
                     </button>
 

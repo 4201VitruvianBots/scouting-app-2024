@@ -127,7 +127,7 @@ function FieldButton({
                     <Checkbox
                         checked={leave}
                         onChange={handleLeave}
-                        className='p-4 text-2xl'
+                        className='p-4 text-2xl border border-gray-200 rounded-lg'
                         boxClassName='w-6 h-6'>
                         {' '}
                         Robot has {leave ? 'left' : 'not left'}
