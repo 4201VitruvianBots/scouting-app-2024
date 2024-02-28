@@ -29,6 +29,7 @@ function EndgameButton({
                         value={climbPosition}
                         labels={['', '', '']}
                         values={['amp', 'center', 'source']}
+                        onChange={handleClimb}
                         className={
                             alliance
                                 ? [
