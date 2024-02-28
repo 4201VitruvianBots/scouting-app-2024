@@ -26,10 +26,10 @@ function EndgameButton({
                 <div
                     className={`${alliance ? 'bg-field-blue-endgame' : 'bg-field-red-endgame'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} absolute top-20 flex h-[40em] w-[40em] bg-cover bg-center`}>
                     <MultiButton
+                        onChange={handleClimb}
                         value={climbPosition}
                         labels={['', '', '']}
                         values={['amp', 'center', 'source']}
-                        onChange={handleClimb}
                         className={
                             alliance
                                 ? [
