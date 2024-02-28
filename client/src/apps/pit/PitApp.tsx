@@ -2,7 +2,7 @@ import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
 import React, { useState } from 'react';
 import Checkbox from '../../components/Checkbox';
-import { PitFile, teamRoles, drivebase, RobotPosition } from 'requests';
+import { PitFile, teamRoles, drivebase } from 'requests';
 import { postJson } from '../../lib/postJson';
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -47,7 +47,7 @@ function PitApp() {
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
 
   const [scouterName, setScouterName] = useState('');
-    const [robotPosition, setRobotPosition] = useState<RobotPosition>();
+
   
   const handleSubmit = async() => {
     if (!drivetrain || !role){
@@ -117,7 +117,7 @@ function PitApp() {
             <div className='bg-[#171c26]'>
             <div className="border border-neutral-900 bg-gray-800 mb-7">
               <br/>
-              <h1 className="text-center text-white text-3xl mb-4">Pit App</h1>
+              <h1 className="text-center text-[#48c55c] text-3xl mb-4 font-bold">Pit App</h1>
             
             </div>
 
@@ -134,6 +134,7 @@ function PitApp() {
                 </LinkButton>
 
                 <Dialog
+                    open
                     trigger={open => (
                         <button onClick={open}>
                             <MaterialSymbol
@@ -141,7 +142,7 @@ function PitApp() {
                                 size={60}
                                 fill
                                 grade={200}
-                                className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                                className={` ${scouterName ? 'text-green-400' : 'text-gray-400'} snap-none`}
                             />
                         </button>
                     )}>
@@ -149,8 +150,7 @@ function PitApp() {
                         <SignIn
                             scouterName={scouterName}
                             onChangeScouterName={setScouterName}
-                            robotPosition={robotPosition}
-                            onChangeRobotPosition={setRobotPosition}
+                            pitScouting
                             onSubmit={close}
                             
                         />
