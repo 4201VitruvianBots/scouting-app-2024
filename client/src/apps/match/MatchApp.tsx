@@ -161,7 +161,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-
+                
                 <Dialog
                     open
                     trigger={open => (
@@ -175,6 +175,7 @@ function MatchApp() {
                             />
                         </button>
                     )}>
+                        
                     {close => (
                         <SignIn
                             scouterName={scouterName}
@@ -254,7 +255,9 @@ function MatchApp() {
             </div>
         </main >
     );
-}
+} 
+
 
 export type { MatchScores, ClimbPosition };
+
 export default MatchApp
