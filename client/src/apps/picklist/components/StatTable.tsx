@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { AnalysisEntry, StatTableData, TeamInfo } from '../data';
+import { AnalysisEntry, StatTableData, TeamInfo, WindowData } from '../data';
 import Dialog from '../../../components/Dialog';
 import StatColumnDialog from './StatColumnDialog';
 import blankImage from '../../../images/blank.png';
@@ -11,11 +11,13 @@ function StatTable({
     setTable,
     data,
     teamInfoJson,
+    onSubmit,
 }: {
     table: StatTableData;
     data: AnalysisEntry[];
     setTable: Dispatch<StatTableData>;
     teamInfoJson: TeamInfo;
+    onSubmit: Dispatch<WindowData>;
 }) {
     let sortedData: AnalysisEntry[];
     
@@ -73,6 +75,16 @@ function StatTable({
         
         setTable({...table, weights: table.weights.map((e, i) => index === i ? value : e)});
     }
+    
+    // Handle when a team on the stat table is clicked
+    function handleTeamSummaryClick(teamNumber: number) {
+        onSubmit({title: "Team " + teamNumber + " Summary", type: 'TeamSummary', teamNumber: teamNumber});
+    }
+    
+    // Handle when a stat on the stat table is clicked
+    function handleStatSummaryClick(column: string) {
+        onSubmit({title: camelToSpaced(column), type: 'StatSummary', column: column});
+    }
 
     return (
         <table className='border border-black'>
@@ -101,6 +113,9 @@ function StatTable({
                                     )}
                                 </button>
                             }
+                            <button onClick={() => handleStatSummaryClick(column)}>
+                                <MaterialSymbol icon='info' />
+                            </button>
                             <button onClick={() => handleDeleteColumn(i)}>
                                 <MaterialSymbol icon='close' />
                             </button>
@@ -137,7 +152,12 @@ function StatTable({
                                 }
                             />
                         </td>
-                        <td>{entry.teamNumber}</td>
+                        <td>
+                            {entry.teamNumber}
+                            <button onClick={() => handleTeamSummaryClick(entry.teamNumber)}>
+                                    <MaterialSymbol icon='info' />
+                            </button>
+                        </td>
                         {table.columns.map(column => (
                             <td className='border border-black'>{entry[column]}</td>
                         ))}

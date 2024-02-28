@@ -21,7 +21,8 @@ function generateWindow(
     data: AnalysisEntry[],
     table: WindowData,
     setTable: Dispatch<WindowData>,
-    teamInfoJson: TeamInfo
+    teamInfoJson: TeamInfo,
+    addToFocused: Dispatch<WindowData>
 ) {
     switch (table.type) {
         case 'StatTable':
@@ -31,6 +32,7 @@ function generateWindow(
                     setTable={setTable}
                     table={table}
                     teamInfoJson={teamInfoJson}
+                    onSubmit={addToFocused}
                 />
             );
         case 'BarGraph':
@@ -185,7 +187,8 @@ function PicklistApp() {
                             analyzedData,
                             value,
                             onChange,
-                            teamInfo || {}
+                            teamInfo || {},
+                            addToFocused
                         )
                     );
                 }}
