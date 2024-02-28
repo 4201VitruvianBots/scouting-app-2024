@@ -50,7 +50,7 @@ function SuperTeam({
                 value={teamState.defenseRank}
                 labels={['Full Defense', 'Some Defense', 'No Defense']}
                 values={['fullDef', 'someDef', 'noDef']}
-                className='text-black w-full'
+                className='text-black w-full my-2'
             />
             <div>
                 <Checkbox
