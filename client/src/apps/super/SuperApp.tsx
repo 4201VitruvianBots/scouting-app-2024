@@ -3,7 +3,7 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useEffect, useState } from 'react';
 import Dialog from '../../components/Dialog';
-import { Foul, SuperPosition, Break, MatchSchedule, SuperData, HighNote, RobotPosition } from 'requests';
+import { Foul, SuperPosition, Break, MatchSchedule, SuperData, HighNote, RobotPosition, ScouterPosition } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
@@ -58,6 +58,8 @@ function SuperApp() {
     const [showCheck, setShowCheck] = useState(false);
     const [highNotes, setHighNotes] = useState(defaultHighNote); 
     const [history, setHistory] = useState<{1: SuperTeamState, 2: SuperTeamState, 3: SuperTeamState}[]>([]);
+    const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
+
     useStatus(superPosition, matchNumber, scouterName);
 
     const saveHistory = () => {
@@ -190,6 +192,8 @@ function SuperApp() {
                         robotPosition={superPosition}
                         onChangeRobotPosition={setSuperPosition}
                         superScouting
+                        scouterPosition={scouterPosition}
+                            onChangeScouterPosition={setScouterPosition}
 
                         onSubmit={close}
                         
@@ -233,6 +237,7 @@ function SuperApp() {
                 highNotes={highNotes}
                 setHighNotes={setHighNotes}
                 alliance={superPosition === 'blue_ss'}
+                scouterPosition={scouterPosition}
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
             <button
