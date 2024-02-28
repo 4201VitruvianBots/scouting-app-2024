@@ -26,7 +26,6 @@ function BatteryLevelIcon (batteryLevel:number){
 function ScouterCard({scouter, title, red=false}: {scouter: StatusReport[], title: string, red?:boolean}) {
 
     
-
     return(
         <div className={`${red?'bg-red-500 border-red-900': 'bg-blue-500 border-blue-900'} px-4 border-2 content-center text-center text-white items-center text-lg rounded-md`}>
             <div className="mt-4 mb-2 font-semibold">

@@ -7,6 +7,7 @@ dotenvLoad({ path: '.env.local' });
 
 const apiKey = process.env.API_KEY!;
 const eventKey = process.env.EVENT_KEY!;
+console.log(apiKey)
 
 interface SimpleTeam {
     key: string;
@@ -27,7 +28,10 @@ const result = await fetch(
     }
 );
 
+console.log(result.status)
+
 const data = (await result.json()) as SimpleTeam[];
+console.log(data);
 const teams = data.map(e => e.team_number).sort((a, b) => a - b);
 
 console.log(teams);
