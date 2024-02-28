@@ -201,13 +201,13 @@ function MatchApp() {
                 </button>
             </div>
            
-            <p>Match Number</p>
+            <p className='text-2xl mt-2 mb-2'>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
-            <p>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
+            <p className='text-2xl mt-2 mb-2'>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
 
             <div>
-                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
+                <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
@@ -217,7 +217,7 @@ function MatchApp() {
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
-                <h2 className='my-2 text-center text-2xl'>Tele-Op</h2>
+                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
@@ -225,7 +225,7 @@ function MatchApp() {
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
-                <h2 className='my-2 text-center text-2xl'>Endgame</h2>
+                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
