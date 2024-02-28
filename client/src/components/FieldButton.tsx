@@ -174,7 +174,7 @@ function FieldButton({
             </div>
 
             <div
-                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75
+                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75 transition-[filter] duration-200
                     ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {alliance ? (
                     <>
@@ -245,7 +245,7 @@ function FieldButton({
                 )}
             </div>
 
-            <div className={`flex w-[40em] flex-row gap-2 py-2
+            <div className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200
                 ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {count.hold === 0 || teleOp ? (
                     <>
