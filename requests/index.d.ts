@@ -73,6 +73,13 @@ export interface MatchDataAggregations{
     avgClimbRate: number;
 }
 
+export interface SuperDataAggregations{
+    _id: {teamNumber: number}
+    avgFouls: number;
+    maxFouls: number;
+    harmonyRate: number;
+}
+
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
