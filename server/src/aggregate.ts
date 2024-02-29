@@ -34,17 +34,70 @@ async function averageAndMax():Promise<AverageAndMax[]>{
             },
             amp: {
                 $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
-            },
+            }, 
             teams: {
                 $push: '$metadata.robotTeam'
             }
         }
-    }]);
+    }])
+
+
+  /*  const spotLightCounts = await matchApp.aggregate([
+       { $group: {
+            _id: {
+                matchNumber: '$metadata.matchNumber',
+                alliance: {
+                    $cond:  [
+                        {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
+                        'red',
+                        'blue'
+                    ]
+                }
+            },
+            climbSource: {
+                $sum: { $cond: [{$eq: ['$climb', 'source']}, 1, 0]}
+            },
+            climbCenter: {
+                $sum: { $cond: [{$eq: ['$climb', 'center']}, 1, 0]}
+            },
+            climbAmp: {
+                $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
+            }, 
+        }},
+        {$lookup: {
+            from: 'superapps',
+            foreignField: 'matchNumber',
+            localField: 'matchNumber',
+            as: 'test'
+        }},
+        {$group: {
+           _id: {
+             // humanShooter: '$humanShooter.highNotes',
+             climb: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
+            }
+            }
+            
+        }   
+    //    { $lookup: {
+    //         from: 'superapps',
+    //         foreignField: 'humanShooter.highNotes.amp',
+    //         localField: 'climb',
+    //         as:'spotlight'
+    //     }},
+    //    { $addFields: {
+    //         spotlight: {
+    //            $add: { $cond: [{ $eq: ['$humanShooter', '$climb']},1,0] }
+    //         }
+    //     }}
+    ]) */
 
     const matches = await matchApp.find().select('metadata.matchNumber metadata.robotTeam climb');
-
-    console.log(climbCounts, matches)
-
+    
+    // console.log('climb counts',climbCounts)
+    // console.log('matches', matches)
+    // console.log("spotLightCounts", spotLightCounts)
+    // console.log('dig into spotlight: ', spotLightCounts[0])
+    
     const result = (await matchApp.aggregate([
     { $group:{
         _id: {teamNumber: '$metadata.robotTeam'},
@@ -59,7 +112,7 @@ async function averageAndMax():Promise<AverageAndMax[]>{
         maxTrapNotes: {$max: '$trapNotes'},
         avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1, 0]}}
     }}
-]));
+]))
 
     result.forEach(result => {
         const matchingMatches = matches.filter(match => match.metadata.robotTeam === result._id.teamNumber);
@@ -76,32 +129,6 @@ async function averageAndMax():Promise<AverageAndMax[]>{
 }
 
 async function superAverageAndMax() {
- await superApp.aggregate([
-
-
-        {$lookup: {
-            from: 'matchApp',
-            localField: 'humanShooter',
-            foreignField: 'climb',
-            as: 'spotLitRobot',
-            let: {
-
-
-
-                _id: {
-                    matchNumber: '$metadata.matchNumber',
-                    alliance: {
-                        $cond:  [
-                            {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
-                            'red',
-                            'blue'
-                        ]
-                    },
-            }
-        }}}])
-
-
-    
     return (await superApp.aggregate([
         {$group:{
             _id: null,
