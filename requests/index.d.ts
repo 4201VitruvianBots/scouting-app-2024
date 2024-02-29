@@ -77,7 +77,7 @@ export interface SuperDataAggregations{
     _id: {teamNumber: number}
     avgFouls: number;
     maxFouls: number;
-    harmonyRate: number;
+    // harmonyRate: number;
 }
 
 export interface MetaData {

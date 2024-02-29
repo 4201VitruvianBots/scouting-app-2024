@@ -22,7 +22,7 @@ const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
 const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
     'avgFouls',
     'maxFouls',
-    'harmonyRate'
+    // 'harmonyRate'
 ]
 
 function ReconApp() {;
