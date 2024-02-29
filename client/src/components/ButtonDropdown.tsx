@@ -24,30 +24,30 @@ function ButtonDropdown<T extends string>({
     return (
         <div>
             <button
-                className={`${showDropdown ? 'bg-green-700' : 'bg-gray-400'} 
-                rounded-md bg-blue-100 p-5`}
+                className={`${showDropdown ? 'bg-green-700' : 'bg-[#2f3646] text-white'} 
+                rounded-md bg-[#171c26] p-5 mt-5`}
                 onClick={handleDropdown}>
                 {children}
             </button>
 
             {showDropdown && (
-                <div className=''>
+                <div className='grid justify-center text-left border 
+                border-white bg-[#2f3646] text-white p-5 z-50 gap-9 absolute'>
                     {(Object.keys(value) as T[]).map((option, index) => (
                         <li key={index}>
                             <button onClick={() => handleOption(option)}>
-                                {option} ({value[option] || 0})
+                                Add {option} ({value[option] || 0})
                             </button>
                         </li>
                     ))}
                 </div>
             )}
-
-            <p>
-                Selected Options:{' '}
+            <pre className='font-bold text-gray-400 pl-5 pb-5'>
+                Selected Options:{' '} <br/>
                 {Object.entries(value)
                     .map(([option, count]) => `${option}: ${count}`)
-                    .join(', ')}
-            </p>
+                    .join(', \n') }
+            </pre>
         </div>
     );
 }
