@@ -7,7 +7,7 @@ import StatDialog from './components/StatDialog';
 import { useFetchJson } from '../../lib/useFetch';
 import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
-import ScatterPlotDialog from './components/ScatterPlotDialog';
+// import ScatterPlotDialog from './components/ScatterPlotDialog';
 import ScatterPlotGraph from './components/ScatterPlotGraph';
 import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
@@ -145,7 +145,7 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
-                <Dialog
+                {/* <Dialog
                     trigger={open => (
                         <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Scatter Plot">
                             <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
@@ -160,7 +160,7 @@ function PicklistApp() {
                             onClose={close}
                         />
                     )}
-                </Dialog>
+                </Dialog> */}
                 <Dialog
                     trigger={open => (
                         <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Team Summary">
