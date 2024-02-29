@@ -7,7 +7,6 @@ export default {
             backgroundImage: {
                 'field-blue': "url('images/blueSideCropped.png')",
                 'field-red': "url('images/redSideCropped.png')",
-                
                 'field-red-endgame': "url('images/fieldmapREDendgame.png')",
                 'field-blue-endgame': "url('images/fieldmapBLUEendgame.png')",
                 'field-blue-super': "url('images/blueSideSuper.png')",

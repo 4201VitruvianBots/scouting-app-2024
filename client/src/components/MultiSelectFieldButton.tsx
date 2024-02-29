@@ -1,27 +1,24 @@
 import { Dispatch } from 'react';
-import { ScouterPosition, StageLocation } from 'requests';
+import { StageLocation } from 'requests';
 
 function MultiSelectFieldButton({
     highNotes,
     setHighNotes,
     alliance,
     className,
-    scouterPosition,
 
 }: {
     highNotes: Record<StageLocation, boolean>;
     setHighNotes: Dispatch<Record<StageLocation, boolean>>;
     alliance: boolean | undefined;
     className: string | undefined
-    scouterPosition?: ScouterPosition | undefined;
-
 
 }) {
    
 
     return (
             <div
-                className={`${alliance ? 'bg-field-blue-super' : 'bg-field-red-super'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} ${className} p-10`}>
+                className={`${alliance ? 'bg-field-blue-super' : 'bg-field-red-super'} ${className} p-10`}>
                 {alliance ? (
                     <>
                         <button

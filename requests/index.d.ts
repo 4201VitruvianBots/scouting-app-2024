@@ -54,12 +54,7 @@ export type SuperPosition =
     | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
 
-export type ScouterPosition = 
-    | 'red_right'
-    | 'blue_right';
-
-export interface MatchDataAggregations{
-    _id: {teamNumber: number}
+export interface matchDataAggregations{
     averageTeleSpeakerNotes: number;
     averageTeleAmpNotes: number;
     averageAutoSpeakerNotes: number;
@@ -70,14 +65,13 @@ export interface MatchDataAggregations{
     maxAutoSpeakerNotes: number;
     maxAutoAmpNotes: number;
     maxTrapNotes: number;
-    avgClimbRate: number;
 }
 
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam: number;
-    robotPosition: RobotPosition 
+    robotPosition: RobotPosition;
 }
 
 
@@ -109,9 +103,12 @@ export interface SuperData {
     fouls: Record<Foul, number>;
     defense: DefenseRank;
     defended: boolean;
-    humanShooter?: {highNotes: HighNote};
-
-    
+    humanShooter?: {highNotes: HighNote}; // Team Number
+    // I suggest this
+    /* humanShooter?: {
+        highNotes: highNotes;
+    }*/
+    // so that 
 }
 
 // - `POST` `/data/pits` 

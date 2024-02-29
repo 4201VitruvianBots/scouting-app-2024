@@ -13,8 +13,8 @@
     "gen-fake-json": "tsx scripts/genFakeJson.ts",
     "gen-team-info": "tsx scripts/genTeamInfo.ts",
     "download-schedule": "tsx scripts/downloadSchedule.ts",
-    "backup": "tsx scripts/saveBackup.ts",
-    "download-teams": "tsx scripts/downloadTeams.ts"
+    "download-teams": "tsx scripts/downloadTeams.ts",
+    "backup": "tsx scripts/saveBackup.ts"
   },
   "keywords": [],
   "author": "",

@@ -2,14 +2,10 @@ import { Dispatch } from 'react';
 import teamsString from '../assets/teams.txt?raw';
 import SelectSearch, { SelectSearchOption } from 'react-select-search';
 
-'select-search-container';
-
 const teamOptions: SelectSearchOption[] = teamsString
-    .split(/\r?\n/g)
+    .split('\n')
     .filter(e => e !== '')
     .map(e => ({ name: e, value: e }));
-
-console.log(teamOptions);
 
 function TeamDropdown({
     value,

@@ -30,7 +30,7 @@ async function startDockerContainer(containerName) {
             name: containerName, // Set Name to undefined for an unnamed container
             HostConfig: {
                 PortBindings: {
-                    '27017/tcp': [{ HostPort: '27017' }],
+                    '27017/tcp': [{ HostPort: '27107' }],
                 },
             },
         });

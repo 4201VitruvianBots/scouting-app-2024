@@ -12,14 +12,14 @@ function choose<T>(array: T[]) {
 }
 
 await startDockerContainer(process.env.CONTAINER_NAME);
-await mongoose.connect('mongodb://0.0.0.0:27017/');
+await mongoose.connect('mongodb://0.0.0.0:27107/');
 
 const teams = new Array(40).fill(0).map(() => Math.floor(10000 * Math.random()));
 
 for (let i = 0; i < 40; i++) {
     console.log(i);
     await new matchApp({
-        autoNotes: {
+        autoSpeakerNotes: {
             near: randint(5),
             mid: randint(5),
             far: randint(5),
@@ -34,7 +34,7 @@ for (let i = 0; i < 40; i++) {
             scouterName: 'Nate',
             matchNumber: randint(40),
         },
-        teleNotes: {
+        teleSpeakerNotes: {
             far: randint(5),
             mid: randint(5),
             near: randint(5),

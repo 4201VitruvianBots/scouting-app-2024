@@ -7,23 +7,18 @@ function ScouterTable({scouters}:{ scouters: StatusReport[]}) {
         scouters.filter(scouter => scouter.robotPosition === robotPosition)
     )])) as Record<RobotPosition|SuperPosition, StatusReport[]> 
 
-
+    
     return(
-       
-
-<div className="grid grid-cols-4 gap-2">
-            <ScouterCard scouter={sortedScouter.red_1} title='Red 1' red/>
-            <ScouterCard scouter={sortedScouter.red_2} title='Red 2' red/>
-            <ScouterCard scouter={sortedScouter.red_3} title='Red 3' red/>
-            <ScouterCard scouter={sortedScouter.red_ss} title="Red SS" red/>
+        <div>
+            <ScouterCard scouter={sortedScouter.red_1} title='Red 1'/>
+            <ScouterCard scouter={sortedScouter.red_2} title='Red 2'/>
+            <ScouterCard scouter={sortedScouter.red_3} title='Red 3'/>
+            <ScouterCard scouter={sortedScouter.red_ss} title="Red SS" />
             <ScouterCard scouter={sortedScouter.blue_1} title='Blue 1'/>
             <ScouterCard scouter={sortedScouter.blue_2} title='Blue 2'/>
             <ScouterCard scouter={sortedScouter.blue_3} title='Blue 3'/>
             <ScouterCard scouter={sortedScouter.blue_ss} title='Blue SS'/>
         </div>
-
-       
-        
     )
 } 
 

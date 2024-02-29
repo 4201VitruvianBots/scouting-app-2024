@@ -1,17 +1,17 @@
 import EndgameButton from '../../components/EndGameButton';
 import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
+import { ClimbPosition, MatchData, MatchSchedule, RobotPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
 import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
 import Dialog from '../../components/Dialog';
+import { useFetchJson } from '../../lib/useFetchJson';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
-import { useFetchJson } from '../../lib/useFetch';
 
 type countKeys = keyof MatchScores;
 
@@ -55,7 +55,7 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
-    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const schedule = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
@@ -63,24 +63,21 @@ function MatchApp() {
     const [countHistory, setCountHistory] = useState<MatchScores[]>([]);
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
-    const [scouterName, setScouterName] = useState('');
 
+    const [scouterName, setScouterName] = useState('');
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
-    const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
-
-    const blueAlliance = (
-        ['blue_1', 'blue_2', 'blue_3'] as (string | undefined)[]
+    const redAlliance = (
+        ['red_1', 'red_2', 'red_3'] as (string | undefined)[]
     ).includes(robotPosition);
 
     const handleSubmit = async () => {
         if (
-            robotPosition == undefined ||
-            matchNumber == undefined ||
-            teamNumber == undefined
-        ) {
-            alert('data is missing! :(')
-            return; }
+            robotPosition === undefined ||
+            matchNumber === undefined ||
+            teamNumber === undefined
+        )
+            return;
 
         const data: MatchData = {
             metadata: {
@@ -115,7 +112,6 @@ function MatchApp() {
             setClimbPosition('none');
             setLeave(false);
             setMatchNumber(matchNumber + 1);
-            setCountHistory([]);
         } catch {
             alert('Sending Data Failed');
         }
@@ -148,7 +144,7 @@ function MatchApp() {
     useStatus(robotPosition, matchNumber, scouterName);
 
     return (
-        <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center'>
+        <main className='mx-auto flex w-min grid-flow-row flex-col content-center  items-center justify-center'>
             <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
@@ -161,9 +157,8 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
+
                 <Dialog
-                    open
                     trigger={open => (
                         <button onClick={open}>
                             <MaterialSymbol
@@ -175,15 +170,12 @@ function MatchApp() {
                             />
                         </button>
                     )}>
-                        
                     {close => (
                         <SignIn
                             scouterName={scouterName}
                             onChangeScouterName={setScouterName}
                             robotPosition={robotPosition}
                             onChangeRobotPosition={setRobotPosition}
-                            scouterPosition={scouterPosition}
-                            onChangeScouterPosition={setScouterPosition}
                             onSubmit={close}
                         />
                     )}
@@ -201,63 +193,60 @@ function MatchApp() {
                     />
                 </button>
             </div>
-           
-            <p className='text-2xl mt-2 mb-2'>Match Number</p>
+            <p>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
+            <p>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
-            <p className='text-2xl mt-2 mb-2'>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
 
             <div>
-                <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
+                <h2 className='my-4 text-center text-2xl'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
                     teleOp={false}
                     count={count}
                     leave={leave}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
+                    alliance={redAlliance}
                 />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Tele-Op</h2>
+                <h2 className='my-2 text-center text-2xl'>Tele-Op</h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
                     count={count}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
+                    alliance={redAlliance}
                 />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
+                <h2 className='my-2 text-center text-2xl'>Endgame</h2>
                 <EndgameButton
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
+                    alliance={redAlliance}
                 />
-                <div className='mt-20 mb-5' style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '24px'}}
-                        className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
-                        Trap Note: {count.trap}
-                    </button>
-                    <button onClick={handleSubmit} style={{ fontSize: '30px' }}
-                        className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                        Submit
-                    </button>
+                <button
+                    onClick={() => {
+                        if (count.trap < 3) handleCount('trap');
+                    }}>
+                    Trap Note: {count.trap}
+                </button>
+                <button
+                    onClick={handleSubmit}
+                    className='rounded-md bg-blue-500 px-2 py-1'>
+                    Submit
+                </button>
+                <div>
+                    {showCheck && (
+                        <MaterialSymbol
+                            icon='check'
+                            size={100}
+                            fill
+                            grade={200}
+                            color='green'
+                        />
+                    )}
                 </div>
-
             </div>
-
-
-
-            <div>
-                {showCheck && (
-                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />
-                )}
-            </div>
-        </main >
+        </main>
     );
-} 
-
+}
 
 export type { MatchScores, ClimbPosition };
-
 export default MatchApp
