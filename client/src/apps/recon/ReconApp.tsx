@@ -17,12 +17,13 @@ const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'maxTeleAmpNotes',
     'maxAutoSpeakerNotes',
     'maxAutoAmpNotes',
-    'maxTrapNotes'
+    'maxTrapNotes',
+    'avgClimbRate',
+    "harmonyRate"
 ]
 const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
     'avgFouls',
     'maxFouls',
-    'harmonyRate'
 ]
 
 function ReconApp() {;

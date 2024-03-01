@@ -106,9 +106,9 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
         maxAutoAmpNotes: { $max: '$autoNotes.amp' },
         maxTrapNotes: {$max: '$trapNotes'},
-        avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1, 0]}},
+        avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1,{$cond: [{$eq:['$climb', 'failed']},0,null]}]}},
         
-    } satisfies { [K in keyof MatchDataAggregations]: unknown }}
+    } satisfies { [K in keyof Omit<MatchDataAggregations, 'harmonyRate'>]: unknown }}
 ]))
 
     result.forEach(result => {
@@ -116,8 +116,7 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         const matchingClimbCounts = matchingMatches.map(match => climbCounts.find(climbCount => climbCount._id.matchNumber === match.metadata.matchNumber && climbCount.teams.includes(result._id.teamNumber))[match.climb])
         const harmonyCount = matchingClimbCounts.filter(e => e > 1).length;
         console.log('Team:', result._id.teamNumber, harmonyCount, matchingMatches)
-        const harmonyResult =  result.harmonyRate = harmonyCount / matchingMatches.length;
-       superAverageAndMax(harmonyResult)
+        result.harmonyRate = harmonyCount / matchingMatches.length;
     })
 
     
@@ -127,11 +126,11 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     return result;
 }
 
-async function superAverageAndMax(harmony: number):Promise<SuperDataAggregations[]> {
+async function superAverageAndMax():Promise<SuperDataAggregations[]> {
     
     return (await superApp.aggregate([
         {$group:{
-             _id: null,
+             _id: {teamNumber: '$metadata.robotTeam'},
              avgFouls: {$avg: {$add: [
                 {$convert: {input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
                 {$convert: {input: '$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
@@ -150,7 +149,6 @@ async function superAverageAndMax(harmony: number):Promise<SuperDataAggregations
                 {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
-            harmonyRate: {$push: {harmony}}
          } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))
 

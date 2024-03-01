@@ -64,7 +64,7 @@ app.get('/data/retrieve', async (req, res) => {
 })
 
 app.get('/data/retrieve/super', async (req, res) => {
-    res.send(await superAverageAndMax(0));
+    res.send(await superAverageAndMax());
 })
 
 app.use(express.static('static'));
