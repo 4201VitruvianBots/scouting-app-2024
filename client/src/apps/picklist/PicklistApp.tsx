@@ -1,4 +1,4 @@
-import { AnalysisEntry, WindowData, TeamInfoEntry } from './data';
+import { AnalysisEntry, WindowData, TeamInfo } from './data';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
@@ -7,7 +7,7 @@ import StatDialog from './components/StatDialog';
 import { useFetchJson } from '../../lib/useFetch';
 import BarGraphDialog from './components/BarDialog';
 import BarGraph from './components/BarGraph';
-import ScatterPlotDialog from './components/ScatterPlotDialog';
+// import ScatterPlotDialog from './components/ScatterPlotDialog';
 import ScatterPlotGraph from './components/ScatterPlotGraph';
 import { MaterialSymbol } from 'react-material-symbols';
 import LinkButton from '../../components/LinkButton';
@@ -15,41 +15,81 @@ import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
 import TeamSummaryDialog from './components/TeamSummaryDialog';
 import TeamSummary from './components/TeamSummary';
+import { Dispatch } from 'react';
 
-function generateWindow(data: AnalysisEntry[], table: WindowData, teamInfoJson: TeamInfoEntry) {
+function generateWindow(
+    data: AnalysisEntry[],
+    table: WindowData,
+    setTable: Dispatch<WindowData>,
+    teamInfoJson: TeamInfo,
+    addToFocused: Dispatch<WindowData>
+) {
     switch (table.type) {
         case 'StatTable':
-            return <StatTable data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <StatTable
+                    data={data}
+                    setTable={setTable}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                    onSubmit={addToFocused}
+                />
+            );
         case 'BarGraph':
-            return <BarGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <BarGraph
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'ScatterPlotGraph':
-            return <ScatterPlotGraph data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <ScatterPlotGraph
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'StatSummary':
-            return <StatSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <StatSummary
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         case 'TeamSummary':
-            return <TeamSummary data={data} table={table} teamInfoJson={teamInfoJson}/>;
+            return (
+                <TeamSummary
+                    data={data}
+                    table={table}
+                    teamInfoJson={teamInfoJson}
+                />
+            );
         default:
             return undefined;
     }
-
 }
 
 function PicklistApp() {
     const [analyzedData, reloadData] = useFetchJson<AnalysisEntry[]>(
         '/output_analysis.json'
     );
-    const [teamInfo] = useFetchJson<TeamInfoEntry>('/team_info.json');
+    const [teamInfo] = useFetchJson<TeamInfo>('/team_info.json');
     
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
-    
+
     return (
         <main className='grid h-screen grid-rows-[auto_1fr]'>
-            <div className='border-b border-black flex items-center'>
-                <LinkButton link='/' className='flex items-center justify-center snap-none px-5'>
+            <div className='flex items-center border-b border-black py-3 bg-gray-100'>
+                <LinkButton
+                    link='/'
+                    className='flex snap-none items-center justify-center px-2'>
                     <MaterialSymbol
                         icon='home'
-                        size={30}
+                        size={50}
                         fill
                         grade={200}
                         color='black'
@@ -57,26 +97,28 @@ function PicklistApp() {
                     />
                 </LinkButton>
                 
-                <button onClick={reloadData}>Refresh Data</button>
+                <button className='flex snap-none items-center justify-center px-2' onClick={reloadData} title="Refresh Data">
+                    <MaterialSymbol icon="refresh" size={50} grade={200} color='black' className='snap-none'/>
+                </button>
                 
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Stat Table
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Table">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="table" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
-                        <StatDialog
-                            data={analyzedData}
-                            onSubmit={addToFocused}
-                            onClose={close}
-                        />
+                        <StatDialog onSubmit={addToFocused} onClose={close} />
                     )}
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Stat Summary
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Summary">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="graphic_eq" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -89,8 +131,10 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Bar Graph
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Bar Graph">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="bar_chart_4_bars" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -101,10 +145,12 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
-                <Dialog
+                {/* <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Scatter Plot
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Scatter Plot">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="scatter_plot" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -114,11 +160,13 @@ function PicklistApp() {
                             onClose={close}
                         />
                     )}
-                </Dialog>
+                </Dialog> */}
                 <Dialog
                     trigger={open => (
-                        <button className='px-4' onClick={open}>
-                            Add Team Summary
+                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Team Summary">
+                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
+                                <MaterialSymbol icon="robot" size={50} grade={200} color='black' className='snap-none'/>
+                            </div>
                         </button>
                     )}>
                     {close => (
@@ -129,10 +177,20 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
+                <h1 className='text-3xl font-bold flex-grow text-center xl:absolute xl:p-6 left-1/2 xl:-translate-x-1/2'>Statistical Analysis</h1>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
-                {value => {
-                    return analyzedData && generateWindow(analyzedData, value, teamInfo || {});
+                {(value, onChange) => {
+                    return (
+                        analyzedData &&
+                        generateWindow(
+                            analyzedData,
+                            value,
+                            onChange,
+                            teamInfo || {},
+                            addToFocused
+                        )
+                    );
                 }}
             </Workspace>
         </main>

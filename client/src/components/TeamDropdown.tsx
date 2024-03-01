@@ -18,14 +18,15 @@ function TeamDropdown({
     value?: number | undefined;
     onChange?: Dispatch<number>;
 }) {
-    return (
+    return (<div className='contents team-search'>
         <SelectSearch
             options={teamOptions}
             value={value?.toString()}
             onChange={value => onChange?.(parseInt(value as string))}
             search
             placeholder='Select Team Number...'
-        />
+       />
+       </div>
     );
 }
 

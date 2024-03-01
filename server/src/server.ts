@@ -1,7 +1,7 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp, superApp } from './Schema.js';
-import {averageAndMax} from './aggregate.js';
+import {averageAndMax, superAverageAndMax} from './aggregate.js'
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
 
@@ -60,6 +60,11 @@ if (REMOTE) {
 
 app.get('/data/retrieve', async (req, res) => {
     res.send(await averageAndMax());
+
+})
+
+app.get('/data/retrieve/super', async (req, res) => {
+    res.send(await superAverageAndMax());
 })
 
 app.use(express.static('static'));
@@ -70,8 +75,8 @@ if (DEV) {
 } else {
     app.use(express.static('../client/dist'));
 
-    app.get('/', (_, res) => {
-        res.sendFile('static/index.html');
+    app.get('*', (_, res) => {
+        res.sendFile('../client/dist/index.html', {root: process.cwd()});
     });
 }
 
