@@ -7,6 +7,7 @@ import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
+import ConeStacker from '../../components/ConeStacker';
 import Dialog from '../../components/Dialog';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
@@ -200,6 +201,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
+                <ConeStacker />
             </div>
            
             <p className='text-2xl mt-2 mb-2'>Match Number</p>

@@ -11,6 +11,7 @@ import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
 import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
+import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
 
 const foulTypes: Foul[] = [
@@ -212,6 +213,8 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </button>
+
+                <ConeStacker />
             </div>
             <p className='text-xl text-white'>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} 
