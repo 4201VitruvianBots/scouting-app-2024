@@ -60,7 +60,11 @@ if (REMOTE) {
 
 app.get('/data/retrieve', async (req, res) => {
     res.send(await averageAndMax());
-    res.send(await superAverageAndMax());
+
+})
+
+app.get('/data/retrieve/super', async (req, res) => {
+    res.send(await superAverageAndMax(0));
 })
 
 app.use(express.static('static'));

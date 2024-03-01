@@ -33,35 +33,34 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
             }
         }
     }]);
-    const spotLightCounts = await matchApp.aggregate([
-       { $group: {
-            _id: {
-                matchNumber: '$metadata.matchNumber',
-                alliance: {
-                    $cond:  [
-                        {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
-                        'red',
-                        'blue'
-                    ]
-                }
-            },
-            climbSource: {
-                $sum: { $cond: [{$eq: ['$climb', 'source']}, 1, 0]}
-            },
-            climbCenter: {
-                $sum: { $cond: [{$eq: ['$climb', 'center']}, 1, 0]}
-            },
-            climbAmp: {
-                $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
-            }, 
-        }},
-        {$lookup: {
-            from: 'superapps',
-            foreignField: 'matchNumber',
-            localField: 'matchNumber',
-            as: 'test'
-        }},
-        {$unwind:"$HumanShooter"},
+    // const spotLightCounts = await matchApp.aggregate([
+    //    { $group: {
+    //         _id: {
+    //             matchNumber: '$metadata.matchNumber',
+    //             alliance: {
+    //                 $cond:  [
+    //                     {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
+    //                     'red',
+    //                     'blue'
+    //                 ]
+    //             }
+    //         },
+    //         climbSource: {
+    //             $sum: { $cond: [{$eq: ['$climb', 'source']}, 1, 0]}
+    //         },
+    //         climbCenter: {
+    //             $sum: { $cond: [{$eq: ['$climb', 'center']}, 1, 0]}
+    //         },
+    //         climbAmp: {
+    //             $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
+    //         }, 
+    //     }},
+    //     {$lookup: {
+    //         from: 'superapps',
+    //         foreignField: 'metadata.matchNumber',
+    //         localField: '_id.matchNumber',
+    //         as: 'test'
+    //     }}
         // {$addFields: {
         //       "humanShooter.highNotes.amp":"$amp"
         // }},
@@ -75,7 +74,7 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         //      }
             
         //  }   
-    ])
+   // ])
     //    { $lookup: {
     //         from: 'superapps',
     //         foreignField: 'humanShooter.highNotes.amp',
@@ -90,12 +89,9 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     
     const matches = await matchApp.find().select('metadata.matchNumber metadata.robotTeam climb');
 
-   const collection = await superApp.find({},{'humanShooter.highNotes.amp': 1})
-
     console.log(climbCounts, matches)
-    console.log("spotLightCounts", spotLightCounts)
-  console.log('dig into spotlight: ', spotLightCounts[0])
-  console.log(collection)
+//     console.log("spotLightCounts", spotLightCounts)
+//   console.log('dig into spotlight: ', spotLightCounts[0].test.humanShooter)
 
     const result = (await matchApp.aggregate([
     { $group:{
@@ -120,8 +116,8 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         const matchingClimbCounts = matchingMatches.map(match => climbCounts.find(climbCount => climbCount._id.matchNumber === match.metadata.matchNumber && climbCount.teams.includes(result._id.teamNumber))[match.climb])
         const harmonyCount = matchingClimbCounts.filter(e => e > 1).length;
         console.log('Team:', result._id.teamNumber, harmonyCount, matchingMatches)
-        /*const harmonyResult = */ result.harmonyRate = harmonyCount / matchingMatches.length;
-       // superAverageAndMax(harmonyResult)
+        const harmonyResult =  result.harmonyRate = harmonyCount / matchingMatches.length;
+       superAverageAndMax(harmonyResult)
     })
 
     
@@ -131,15 +127,31 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     return result;
 }
 
-async function superAverageAndMax(/*harmony: number*/):Promise<SuperDataAggregations[]> {
+async function superAverageAndMax(harmony: number):Promise<SuperDataAggregations[]> {
     
     return (await superApp.aggregate([
         {$group:{
-            _id: null,
-            // avgFouls: {$avg: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
-            // maxFouls: {$max: {$add:['$fouls.inBot', '$fouls.damageBot', '$fouls.tipEntangBot', '$fouls.pinBot', '$fouls.podiumFoul', '$fouls.zoneFoul', '$fouls.stageFoul', 'fouls.overExtChute']}},
-            // harmonyRate: {$push: {harmony}}
-         } /*satisfies { [K in keyof SuperDataAggregations]: unknown }*/}
+             _id: null,
+             avgFouls: {$avg: {$add: [
+                {$convert: {input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert: {input: '$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert:{ input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
+            maxFouls: {$max: {$add: [
+                {$convert:{input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert: {input:'$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
+            harmonyRate: {$push: {harmony}}
+         } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))
 
 }
