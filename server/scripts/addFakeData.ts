@@ -1,7 +1,7 @@
 import { startDockerContainer } from 'database';
 import mongoose from 'mongoose';
-import { matchApp } from '../src/Schema.js';
-import { MatchData } from 'requests';
+import { matchApp, superApp } from '../src/Schema.js';
+import { MatchData, SuperData } from 'requests';
 
 function randint(max: number, min = 0) {
     return Math.floor((max - min) * Math.random()) + min;
@@ -45,6 +45,39 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
         
             trapNotes: randint(2),
         } satisfies MatchData).save()
+    }
+}
+
+for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
+    for (const robotPosition of ['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3'] as const) {
+        console.log(matchNumber);
+        await new superApp({
+            metadata: {
+                robotPosition,
+                robotTeam: choose(teams),
+                scouterName: 'Jim',
+                matchNumber: matchNumber,
+            },
+            fouls: {
+                inBot: randint(10),
+                damageBot: randint(10),
+                tipEntangBot: randint(10),
+                pinBot: randint(10),
+                podiumFoul: randint(10),
+                zoneFoul: randint(10),
+                stageFoul: randint(10),
+                overExtChute: randint(10)
+            },
+            defense: choose(['fullDef', 'someDef', 'noDef']),
+            defended: Math.random() > 0.5,
+            humanShooter: {
+                highNotes: {
+                    amp: Math.random() > 0.5,
+                    source: Math.random() > 0.5,
+                    center: Math.random() > 0.5
+                }
+            }
+        } satisfies SuperData).save()
     }
 }
 
