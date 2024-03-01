@@ -36,7 +36,7 @@ function AdminApp() {
             <div className="grid grid-cols-2 gap-4 items-center justify-center">
                 <div>
                     <ScouterTable scouters={status.scouters} />
-                    <p className="my-6">phrog :3</p>
+                    <p className="my-6">Connected Tablets</p>
                 </div>
                 <div>
                     <p>Match Display</p>
