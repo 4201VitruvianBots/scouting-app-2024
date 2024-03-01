@@ -8,6 +8,7 @@ import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
 import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
+import ConeStacker from '../../components/ConeStacker';
 
 
 function PitApp() {
@@ -156,7 +157,7 @@ function PitApp() {
                         />
                     )}
                 </Dialog>
-                
+                <ConeStacker />
                
             </div>
 
