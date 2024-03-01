@@ -121,7 +121,13 @@ function MatchApp() {
             alert('Sending Data Failed');
         }
 
-        setShowCheck(true);
+        setShowCheck(true)
+
+        setTimeout(() => {
+            setShowCheck(false);
+          }, 3000);
+
+        
     };
 
     const undoCount = () => {
@@ -149,7 +155,10 @@ function MatchApp() {
     useStatus(robotPosition, matchNumber, scouterName);
 
     return (
-        <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center'>
+        <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center '>
+                {showCheck && (
+                    <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
+                )}
             <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
@@ -235,25 +244,19 @@ function MatchApp() {
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
-                <div className='mt-20 mb-5' style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '24px'}}
+                <div className='flex justify-center mt-20 mb-5'>
+                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '30px'}}
                         className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
                         Trap Note: {count.trap}
                     </button>
                     <button onClick={handleSubmit} style={{ fontSize: '30px' }}
                         className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                        Submit
+                            <a href='#'>
+                                Submit
+                            </a>
                     </button>
+
                 </div>
-
-            </div>
-
-
-
-            <div>
-                {showCheck && (
-                    <MaterialSymbol icon="check" size={100} fill grade={200} color='green' />
-                )}
             </div>
         </main >
     );
