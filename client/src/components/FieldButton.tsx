@@ -38,7 +38,7 @@ function RegionButton({
             onClick={() => handleCount(autoKey, teleKey)}
             id='one'>
             <p
-                className={`${scouterPosition === 'blue_right' ? 'rotate-180' : ''} ${textClassName}  `}>
+                className={`${scouterPosition === 'red_right' ? 'rotate-180' : ''} ${textClassName}  `}>
                 {label && `${label}: `}
                 {count[teleOp ? teleKey : autoKey]}
             </p>
@@ -67,6 +67,14 @@ function FieldButton({
         PickupLocation | undefined
     >();
 
+    const heldFromAuto = count.hold && !(
+        count.teleShootNear ||
+        count.teleShootMid ||
+        count.teleShootFar ||
+        count.teleAmp ||
+        count.teleMiss
+    );
+
     const handleCount = (autoKey: countKeys, teleKey: countKeys) => {
         if (pickupLocation) {
             const finalKey = teleOp ? teleKey : autoKey;
@@ -86,16 +94,8 @@ function FieldButton({
                 [pickupKeys[pickupLocation]]:
                     prevCount[pickupKeys[pickupLocation]] + 1,
             }));
-        } else if (
-            !(
-                count.teleShootNear ||
-                count.teleShootMid ||
-                count.teleShootFar ||
-                count.teleAmp ||
-                count.teleMiss
-            ) &&
-            count.hold &&
-            teleOp
+        } else if ( 
+            heldFromAuto && teleOp
         ) {
             const finalKey = teleOp ? teleKey : autoKey;
             setCount(prevCount => ({
@@ -132,19 +132,14 @@ function FieldButton({
                         className='p-4 text-2xl'
                         boxClassName='w-6 h-6'>
                         {' '}
-                        Robot has {leave ? 'left' : 'not left'}
+                        Did the robot leave?
                     </Checkbox>
                 )}
             </div>
 
             <div className='flex w-[40em] flex-row gap-2 py-2'>
                 {teleOp ? (
-                    count.teleShootNear ||
-                    count.teleShootMid ||
-                    count.teleShootFar ||
-                    count.teleAmp ||
-                    count.teleMiss ||
-                    !count.hold ? (
+                    !heldFromAuto ? (
                         <MultiButton
                             values={['speaker', 'middle', 'source']}
                             onChange={setPickupLocation}
@@ -154,28 +149,33 @@ function FieldButton({
                                 `Middle: ${count.telePickupMiddle}`,
                                 `Source: ${count.telePickupSource}`,
                             ]}
-                            className='h-[100px] flex-grow basis-0 text-2xl'
+                            className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                            unSelectedClassName={pickupLocation == undefined ? '' : 'bg-gray-300'}
+                            selectedClassName = 'bg-yellow-300'
                         />
                     ) : (
-                        <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-2xl'>
+                        <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-yellow-300 text-2xl'>
                             Note held from auto
                         </div>
                     )
                 ) : count.autoPreload || count.autoPickup ? (
-                    <div className='h-[6.25em] w-[40em] bg-gray-400'></div>
+                    <div className='h-[6.25em] w-[40em] bg-gray-300'></div>
                 ) : (
                     <MultiButton
                         values={['preload', 'pickup']}
                         onChange={setPickupLocation}
                         value={pickupLocation}
                         labels={['Preload', 'Picked Up']}
-                        className='h-[100px] flex-grow basis-0 text-2xl'
+                        className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                        unSelectedClassName={pickupLocation == undefined ? '' : 'bg-gray-300'}
+                        selectedClassName = 'bg-yellow-300'
                     />
                 )}
             </div>
 
             <div
-                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'blue_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75`}>
+                className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75 transition-[filter] duration-200
+                    ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {alliance ? (
                     <>
                         <RegionButton
@@ -237,7 +237,7 @@ function FieldButton({
                             handleCount={handleCount}
                             autoKey='autoShootNear'
                             teleKey='teleShootNear'
-                            className='bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 rounded-full bg-green-400/70 text-right '
+                            className='bottom-[40px] left-[-120px] z-20 h-2/5 w-2/5 rounded-full bg-green-400/70 text-right'
                             textClassName='top-[2.2em] right-[1.5em] absolute'
                             scouterPosition={scouterPosition}
                         />
@@ -245,13 +245,10 @@ function FieldButton({
                 )}
             </div>
 
-            <div className='flex w-[40em] flex-row gap-2 py-2'>
+            <div className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200
+                ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {count.hold === 0 || teleOp ? (
                     <>
-                    
-
-
-
                         <RegionButton
                             teleOp={teleOp}
                             count={count}
@@ -278,13 +275,13 @@ function FieldButton({
                                 handleCount={handleCount}
                                 autoKey='hold'
                                 teleKey='hold'
-                                className='!static h-[100px] flex-grow basis-0 bg-gray-300'
+                                className='!static h-[100px] flex-grow basis-0 bg-green-300'
                                 label='Held'
                             />
                         )}
                     </>
                 ) : (
-                    <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-gray-300 text-5xl'>
+                    <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-green-300 text-5xl grayscale-0'>
                         Held: 1
                     </div>
                 )}

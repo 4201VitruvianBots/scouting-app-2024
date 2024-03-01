@@ -1,35 +1,30 @@
 import { Dispatch, useState } from 'react';
-import { AnalysisEntry, StatTableData } from '../data';
+import { StatTableData } from '../data';
 import TextInput from '../../../components/TextInput';
-import Checkbox from '../../../components/Checkbox';
-import SelectSearch from 'react-select-search';
-import camelToSpaced from '../../../lib/camelCaseConvert';
 import { MaterialSymbol } from 'react-material-symbols';
+import Checkbox from '../../../components/Checkbox';
 
 function StatDialog({
     onSubmit,
     onClose,
-    data,
 }: {
     onSubmit: Dispatch<StatTableData>;
     onClose?: () => void;
-    data: AnalysisEntry[] | undefined;
 }) {
-    const columns = data
-        ? Object.keys(data[0]).filter(
-              e => e !== 'teamNumber' && typeof data[0][e] === 'number'
-          )
-        : [];
-
     const [title, setTitle] = useState('');
-    const [column, setColumn] = useState<string>();
-    const [ascending, setAscending] = useState(false);
-
+    
+    const [weighted, setWeighted] = useState(false);
+    
     const handleSubmit = () => {
-        if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, ascending, type: 'StatTable' });
-            onClose?.();
-        }
+        onSubmit({
+            title: title || 'Stat Table',
+            type: 'StatTable',
+            columns: [],
+            ascending: false,
+            weighted: weighted,
+            weights: [],
+        });
+        onClose?.();
     };
 
     return (
@@ -41,30 +36,19 @@ function StatDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
-            <label>
-                Column
-                <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
-                    value={column}
-                    placeholder='Select Stat'
-                    onChange={value => setColumn(value as string)}
-                    search
-                />
-            </label>
             <p>
                 <label>
                     Title
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={camelToSpaced(column || '')}
-                        className="p-1"
+                        placeholder={'Stat Table'}
+                        className='p-1'
                     />
                 </label>
             </p>
             <p>
-                <Checkbox onChange={setAscending} className="p-1"> Ascending</Checkbox>
+                <Checkbox onChange={setWeighted}>Weighted</Checkbox>
             </p>
             <button onClick={handleSubmit}>Create</button>
         </>
