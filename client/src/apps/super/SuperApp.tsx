@@ -22,6 +22,7 @@ const foulTypes: Foul[] = [
     'stageFoul',
     'tipEntangBot',
     'zoneFoul',
+    'multiplePieces'
 ];
 
 const defaultHighNote: HighNote = {

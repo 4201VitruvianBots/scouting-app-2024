@@ -19,7 +19,8 @@ export type Foul =
     | 'podiumFoul' 
     | 'zoneFoul' 
     | 'stageFoul' 
-    | 'overExtChute';
+    | 'overExtChute'
+    | 'multiplePieces'
 export type Break =
     | 'mechanismDmg'
     | 'batteryFall'

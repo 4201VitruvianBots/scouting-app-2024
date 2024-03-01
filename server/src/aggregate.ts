@@ -139,6 +139,7 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
                 {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
             maxFouls: {$max: {$add: [
                 {$convert:{input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
@@ -148,6 +149,7 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
                 {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
          } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))
