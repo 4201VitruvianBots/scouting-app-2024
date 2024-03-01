@@ -1,14 +1,13 @@
-import { MatchDataAggregations, MatchSchedule } from "requests";
+import { MatchDataAggregations, MatchSchedule, SuperDataAggregations } from "requests";
 import LinkButton from "../../components/LinkButton";
 import { useFetchJson } from "../../lib/useFetch";
 import { useEffect, useState } from "react";
-import StatRow from "./components/StatRow";
+import {StatRow,SuperStatRow} from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
 import TeamDropdown from "../../components/TeamDropdown";
 import NumberInput from "../../components/NumberInput";
 
-
-const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
+const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'averageTeleSpeakerNotes',
     'averageTeleAmpNotes',
     'averageAutoSpeakerNotes',
@@ -19,10 +18,17 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'maxAutoSpeakerNotes',
     'maxAutoAmpNotes',
     'maxTrapNotes',
+    'avgClimbRate',
+    "harmonyRate"
+]
+const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
+    'avgFouls',
+    'maxFouls',
 ]
 
 function ReconApp() {;
-    const [retrieve, reloadRetrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [retrieveMatch, reloadRetrieveMatch] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [retrieveSuper, reloadRetrieveSuper] = useFetchJson<SuperDataAggregations[]>('/data/retrieve/super')
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [matchNumber, setMatchNumber] = useState<number>()
     const [teams, setTeams] = useState<(number | undefined)[]>([undefined])
@@ -51,7 +57,7 @@ function ReconApp() {;
             </LinkButton>
             </div>
            <NumberInput className='rounded-lg border-2 border-slate-900 text-center text-2xl text-black' placeholder="type match #" value={matchNumber} onChange={setMatchNumber}></NumberInput>
-           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={reloadRetrieve}>Reload Data</button>
+           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={() => {reloadRetrieveMatch(); reloadRetrieveSuper()}}>Reload Data</button>
             <table className="border-4 border-slate-700 bg-[#171c26]">
                 <thead>
                    <tr>
@@ -64,7 +70,8 @@ function ReconApp() {;
                     </tr>
                 </thead>
                 <tbody>
-                   {stats.map(stat => <StatRow data={retrieve} teams={teams} stat={stat}/>)}
+                   {matchStats.map(stat => <StatRow data={retrieveMatch} teams={teams} stat={stat}/>)}
+                   {superStats.map(superStat => <SuperStatRow data={retrieveSuper} teams={teams} stat={superStat}/>)}
                 </tbody>
             </table>
         </main>
