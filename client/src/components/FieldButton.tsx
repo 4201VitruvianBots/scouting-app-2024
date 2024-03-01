@@ -102,10 +102,7 @@ function FieldButton({
                 ...prevCount,
                 [finalKey]: prevCount[finalKey] + 1,
             }));
-        } else if (
-            count.autoPreload ||
-            (count.autoPickup && !count.hold && !teleOp)
-        ) {
+        } else if ((count.autoPreload || count.autoPickup) && !count.hold && !teleOp) {
             const finalKey = teleOp ? teleKey : autoKey;
             const finalPickupLocation =
                 pickupLocation == 'autoPreload' ? 'autoPreload' : 'autoPickup';
