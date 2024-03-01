@@ -70,13 +70,13 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
             },
             defense: choose(['fullDef', 'someDef', 'noDef']),
             defended: Math.random() > 0.5,
-            humanShooter: {
+            humanShooter: randint(3) === 0 ? {
                 highNotes: {
                     amp: Math.random() > 0.5,
                     source: Math.random() > 0.5,
                     center: Math.random() > 0.5
                 }
-            }
+            } : undefined
         } satisfies SuperData).save()
     }
 }
