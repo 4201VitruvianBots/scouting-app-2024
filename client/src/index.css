@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    .team-search .select-search-container {
+        @apply !w-32;
+    }
+
     html {
         @apply snap-y;
     }
