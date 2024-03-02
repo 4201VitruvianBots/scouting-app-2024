@@ -3,7 +3,6 @@ import FieldButton from '../../components/FieldButton';
 import LinkButton from '../../components/LinkButton';
 import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
-import { postJson } from '../../lib/postJson';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
@@ -13,6 +12,7 @@ import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
 import { useFetchJson } from '../../lib/useFetch';
+import { useQueue } from '../../lib/useQueue';
 
 type countKeys = keyof MatchScores;
 
@@ -57,6 +57,7 @@ const defualtScores: MatchScores = {
 
 function MatchApp() {
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
+    const [sendQueue, sendAll, queue] = useQueue();
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
@@ -109,17 +110,12 @@ function MatchApp() {
             climb: climbPosition,
         };
 
-        try {
-            const result = await postJson('/data/match', data);
-            if (!result.ok) throw new Error('Request Did Not Succeed');
-            setCount(defualtScores);
-            setClimbPosition('none');
-            setLeave(false);
-            setMatchNumber(matchNumber + 1);
-            setCountHistory([]);
-        } catch {
-            alert('Sending Data Failed');
-        }
+        sendQueue('/data/match', data);
+        setCount(defualtScores);
+        setClimbPosition('none');
+        setLeave(false);
+        setMatchNumber(matchNumber + 1);
+        setCountHistory([]);
 
         setShowCheck(true);
 
@@ -255,6 +251,11 @@ function MatchApp() {
                     </button>
 
                 </div>
+            </div>
+
+            <div>
+                Queue: {queue.length}
+                <button onClick={sendAll}>Resend All</button>
             </div>
         </main >
     );

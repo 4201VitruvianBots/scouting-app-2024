@@ -9,10 +9,10 @@ import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
 import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
-import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
 import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
+import { useQueue } from '../../lib/useQueue';
 
 const foulTypes: Foul[] = [
     'inBot',
@@ -56,6 +56,7 @@ function SuperApp() {
     const [team3, setTeam3] = useState(defaultSuperTeamState);
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
+    const [sendQueue, sendAll, queue] = useQueue();
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
     const [highNotes, setHighNotes] = useState(defaultHighNote); 
@@ -117,18 +118,13 @@ function SuperApp() {
         } satisfies SuperData
         ));
 
-        try {
-            const results = await Promise.all(data.map(e => postJson('/data/super', e)));
-            if (!results.every(e => e.ok)) throw new Error('Request Did Not Succeed');
-            setHighNotes(defaultHighNote);
-            setTeam1(defaultSuperTeamState);
-            setTeam2(defaultSuperTeamState);
-            setTeam3(defaultSuperTeamState);
-            setHistory([]);
-            setMatchNumber(matchNumber + 1);
-        } catch {
-            alert('Sending Data Failed');
-        }
+        data.map(e => sendQueue('/data/super', e))
+        setHighNotes(defaultHighNote);
+        setTeam1(defaultSuperTeamState);
+        setTeam2(defaultSuperTeamState);
+        setTeam3(defaultSuperTeamState);
+        setHistory([]);
+        setMatchNumber(matchNumber + 1);
 
         setShowCheck(true);
         setTimeout(() => {
@@ -255,6 +251,12 @@ function SuperApp() {
                     className='rounded-md bg-[#48c55c] px-4 py-2 m-5 text-lg max-w-80 w-full'>
                     Submit
             </button>
+            
+            <div>
+                Queue: {queue.length}
+                <button onClick={sendAll}>Resend All</button>
+            </div>
+
         </main>
     );
 }
