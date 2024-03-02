@@ -94,7 +94,7 @@ function StatTable({
                         Team
                     </th>
                     {table.columns.map((column, i) => (
-                        <th className='space-x-2'>
+                        <th className='space-x-2 text-wrap max-w-20'>
                             {camelToSpaced(column)}
                             {table.weighted ? <>
                                     <br />
