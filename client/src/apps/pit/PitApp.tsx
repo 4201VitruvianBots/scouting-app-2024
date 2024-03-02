@@ -6,6 +6,7 @@ import { PitFile, teamRoles, drivebase } from 'requests';
 import { postJson } from '../../lib/postJson';
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
+import TeamDropdown from '../../components/TeamDropdown';
 import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
@@ -106,11 +107,6 @@ function PitApp() {
     width: '150px',
     height: '50px',
   };
-  const inputTeamNum = {
-    width: '150px',
-    height: '50px',
-  };
-
 
     return (
         <>
@@ -165,7 +161,7 @@ function PitApp() {
             <div className="flex justify-center items-center mb-8">
             <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg">
             <h1 className="text-center text-white">Team Number</h1>
-            <input min={0} onChange={event => setTeamNumber(parseInt(event.target.value))} value={teamNumber} style={inputTeamNum} className='place-content-center mx-auto w-min !flex border-1 rounded-lg border border-gray-700 text-4xl text-center' type="number" placeholder='Team#'></input>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
             </div>
             </div>
             
