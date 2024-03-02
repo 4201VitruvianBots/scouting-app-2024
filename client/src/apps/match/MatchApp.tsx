@@ -11,8 +11,10 @@ import Dialog from '../../components/Dialog';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
-import { useFetchJson } from '../../lib/useFetch';
 import { useQueue } from '../../lib/useQueue';
+import scheduleFile from '../../assets/matchSchedule.json';
+
+const schedule = scheduleFile as MatchSchedule
 
 type countKeys = keyof MatchScores;
 
@@ -56,8 +58,7 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
-    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
-    const [sendQueue, sendAll, queue] = useQueue();
+    const [sendQueue, sendAll, queue, sending] = useQueue();
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
     const [count, setCount] = useState<MatchScores>(defualtScores);
@@ -146,7 +147,7 @@ function MatchApp() {
                 ? schedule[matchNumber]?.[robotPosition]
                 : undefined
         );
-    }, [matchNumber, robotPosition, schedule]);
+    }, [matchNumber, robotPosition]);
 
     useStatus(robotPosition, matchNumber, scouterName);
 
@@ -254,8 +255,10 @@ function MatchApp() {
             </div>
 
             <div>
-                Queue: {queue.length}
-                <button onClick={sendAll}>Resend All</button>
+                <div>Queue: {queue.length}</div>
+                <button onClick={sendAll}
+                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
+                >{sending ? 'Sending...': 'Resend All'}</button>
             </div>
         </main >
     );
