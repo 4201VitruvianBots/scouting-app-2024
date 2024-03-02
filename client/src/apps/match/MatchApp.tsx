@@ -121,7 +121,7 @@ function MatchApp() {
             alert('Sending Data Failed');
         }
 
-        setShowCheck(true)
+        setShowCheck(true);
 
         setTimeout(() => {
             setShowCheck(false);
@@ -249,11 +249,9 @@ function MatchApp() {
                         className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
                         Trap Note: {count.trap}
                     </button>
-                    <button onClick={handleSubmit} style={{ fontSize: '30px' }}
+                    <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
                         className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                            <a href='#'>
                                 Submit
-                            </a>
                     </button>
 
                 </div>

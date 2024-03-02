@@ -131,6 +131,9 @@ function SuperApp() {
         }
 
         setShowCheck(true);
+        setTimeout(() => {
+            setShowCheck(false);
+        }, 3000);
     };
 
     useEffect(() => {
@@ -158,6 +161,9 @@ function SuperApp() {
 
     return (
         <main className='text-center bg-[#171c26]'>
+            {showCheck && (
+                <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
+            )}
             <h1 className='col-span-3 text-3xl text-[#48c55c] font-bold p-5'>Super Scouting App</h1>
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
                 <LinkButton link='/' className='snap-none'>
@@ -245,23 +251,10 @@ function SuperApp() {
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
             <button
-                    onClick={handleSubmit}
+                    onClick={() => {handleSubmit(); scrollTo(0, 0);}}
                     className='rounded-md bg-[#48c55c] px-4 py-2 m-5 text-lg max-w-80 w-full'>
                     Submit
             </button>
-                <div>
-                    {showCheck && (
-                        <MaterialSymbol
-                            icon='check'
-                            size={100}
-                            fill
-                            grade={200}
-                            color='green'
-                        />
-                    )}
-                </div>
-            
-
         </main>
     );
 }
