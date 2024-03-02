@@ -16,7 +16,6 @@ function RegionButton({
     label,
     scouterPosition,
     textClassName = '',
-
 }: {
     handleCount: (
         autokey: countKeys,
@@ -67,13 +66,15 @@ function FieldButton({
         PickupLocation | undefined
     >();
 
-    const heldFromAuto = count.hold && !(
-        count.teleShootNear ||
-        count.teleShootMid ||
-        count.teleShootFar ||
-        count.teleAmp ||
-        count.teleMiss
-    );
+    const heldFromAuto =
+        count.hold &&
+        !(
+            count.teleShootNear ||
+            count.teleShootMid ||
+            count.teleShootFar ||
+            count.teleAmp ||
+            count.teleMiss
+        );
 
     const handleCount = (autoKey: countKeys, teleKey: countKeys) => {
         if (pickupLocation) {
@@ -94,15 +95,17 @@ function FieldButton({
                 [pickupKeys[pickupLocation]]:
                     prevCount[pickupKeys[pickupLocation]] + 1,
             }));
-        } else if ( 
-            heldFromAuto && teleOp
-        ) {
+        } else if (heldFromAuto && teleOp) {
             const finalKey = teleOp ? teleKey : autoKey;
             setCount(prevCount => ({
                 ...prevCount,
                 [finalKey]: prevCount[finalKey] + 1,
             }));
-        } else if ((count.autoPreload || count.autoPickup) && !count.hold && !teleOp) {
+        } else if (
+            (count.autoPreload || count.autoPickup) &&
+            !count.hold &&
+            !teleOp
+        ) {
             const finalKey = teleOp ? teleKey : autoKey;
             const finalPickupLocation =
                 pickupLocation == 'autoPreload' ? 'autoPreload' : 'autoPickup';
@@ -134,22 +137,93 @@ function FieldButton({
                 )}
             </div>
 
+            {/*
+
+            red on right, blue alliance - red is source, blue is speaker
+            red on right, red alliance - red is speaker, blue is source
+            blue on right, blue alliance - red is source, blue is speaker
+            blue on right, red alliance - red is speaker, blue is source
+            
+            */}
+
             <div className='flex w-[40em] flex-row gap-2 py-2'>
                 {teleOp ? (
                     !heldFromAuto ? (
-                        <MultiButton
-                            values={['speaker', 'middle', 'source']}
-                            onChange={setPickupLocation}
-                            value={pickupLocation}
-                            labels={[
-                                `Speaker: ${count.telePickupSpeaker}`,
-                                `Middle: ${count.telePickupMiddle}`,
-                                `Source: ${count.telePickupSource}`,
-                            ]}
-                            className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
-                            unSelectedClassName={pickupLocation == undefined ? '' : 'bg-gray-300'}
-                            selectedClassName = 'bg-yellow-300'
-                        />
+                        scouterPosition === 'red_right' ? (
+                            alliance ? (
+                                <MultiButton
+                                    values={['speaker', 'middle', 'source']}
+                                    onChange={setPickupLocation}
+                                    value={pickupLocation}
+                                    labels={[
+                                        `Blue Side: ${count.telePickupSpeaker}`,
+                                        `Middle: ${count.telePickupMiddle}`,
+                                        `Red Side: ${count.telePickupSource}`,
+                                    ]}
+                                    className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                                    unSelectedClassName={
+                                        pickupLocation == undefined
+                                            ? ''
+                                            : 'bg-gray-300'
+                                    }
+                                    selectedClassName='bg-yellow-300'
+                                />
+                            ) : (
+                                <MultiButton
+                                    values={['speaker', 'middle', 'source']}
+                                    onChange={setPickupLocation}
+                                    value={pickupLocation}
+                                    labels={[
+                                        `Blue Side: ${count.telePickupSource}`,
+                                        `Middle: ${count.telePickupMiddle}`,
+                                        `Red Side: ${count.telePickupSpeaker}`,
+                                    ]}
+                                    className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                                    unSelectedClassName={
+                                        pickupLocation == undefined
+                                            ? ''
+                                            : 'bg-gray-300'
+                                    }
+                                    selectedClassName='bg-yellow-300'
+                                />
+                            )
+                        ) : alliance ? (
+                            <MultiButton
+                                values={['speaker', 'middle', 'source']}
+                                onChange={setPickupLocation}
+                                value={pickupLocation}
+                                labels={[
+                                    `Red Side: ${count.telePickupSource}`,
+                                    `Middle: ${count.telePickupMiddle}`,
+                                    `Blue Side: ${count.telePickupSpeaker}`,
+                                ]}
+                                className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                                unSelectedClassName={
+                                    pickupLocation == undefined
+                                        ? ''
+                                        : 'bg-gray-300'
+                                }
+                                selectedClassName='bg-yellow-300'
+                            />
+                        ) : (
+                            <MultiButton
+                                values={['speaker', 'middle', 'source']}
+                                onChange={setPickupLocation}
+                                value={pickupLocation}
+                                labels={[
+                                    `Red Side: ${count.telePickupSpeaker}`,
+                                    `Middle: ${count.telePickupMiddle}`,
+                                    `Blue Side: ${count.telePickupSource}`,
+                                ]}
+                                className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
+                                unSelectedClassName={
+                                    pickupLocation == undefined
+                                        ? ''
+                                        : 'bg-gray-300'
+                                }
+                                selectedClassName='bg-yellow-300'
+                            />
+                        )
                     ) : (
                         <div className='grid h-[100px] flex-grow basis-0 place-items-center bg-yellow-300 text-2xl'>
                             Note held from auto
@@ -164,15 +238,17 @@ function FieldButton({
                         value={pickupLocation}
                         labels={['Preload', 'Picked Up']}
                         className={`h-[100px] flex-grow basis-0 text-2xl ${pickupLocation == undefined ? 'bg-yellow-100' : ''}`}
-                        unSelectedClassName={pickupLocation == undefined ? '' : 'bg-gray-300'}
-                        selectedClassName = 'bg-yellow-300'
+                        unSelectedClassName={
+                            pickupLocation == undefined ? '' : 'bg-gray-300'
+                        }
+                        selectedClassName='bg-yellow-300'
                     />
                 )}
             </div>
 
             <div
                 className={`${alliance ? 'bg-field-blue' : 'bg-field-red'} ${scouterPosition === 'red_right' ? 'rotate-180' : ''} mx-auto h-[40em] w-[40em] overflow-hidden bg-cover bg-center object-contain brightness-75 transition-[filter] duration-200
-                    ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
+                    ${pickupLocation == undefined && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {alliance ? (
                     <>
                         <RegionButton
@@ -242,8 +318,9 @@ function FieldButton({
                 )}
             </div>
 
-            <div className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200
-                ${(pickupLocation == undefined) && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
+            <div
+                className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200
+                ${pickupLocation == undefined && ((!teleOp && ((!count.autoPreload && !count.autoPickup) || count.hold)) || (teleOp && !heldFromAuto)) ? 'grayscale' : ''}`}>
                 {count.hold === 0 || teleOp ? (
                     <>
                         <RegionButton
@@ -253,7 +330,6 @@ function FieldButton({
                             autoKey='autoAmp'
                             teleKey='teleAmp'
                             className='!static h-[100px] flex-grow basis-0 bg-orange-200'
-                    
                             label='Amp'
                         />
                         <RegionButton
