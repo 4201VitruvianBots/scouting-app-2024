@@ -7,12 +7,14 @@ import { Foul, SuperPosition, Break, MatchSchedule, SuperData, HighNote, RobotPo
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
-import { useFetchJson } from '../../lib/useFetch';
 import NumberInput from '../../components/NumberInput';
-import { postJson } from '../../lib/postJson';
 import MultiButton from '../../components/MultiButton';
 import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
+import { useQueue } from '../../lib/useQueue';
+import scheduleFile from '../../assets/matchSchedule.json';
+
+const schedule = scheduleFile as MatchSchedule
 
 const foulTypes: Foul[] = [
     'inBot',
@@ -54,8 +56,8 @@ function SuperApp() {
     const [team1, setTeam1] = useState(defaultSuperTeamState);
     const [team2, setTeam2] = useState(defaultSuperTeamState);
     const [team3, setTeam3] = useState(defaultSuperTeamState);
-    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
+    const [sendQueue, sendAll, queue, sending] = useQueue();
     const [matchNumber, setMatchNumber] = useState<number>(); 
     const [showCheck, setShowCheck] = useState(false);
     const [highNotes, setHighNotes] = useState(defaultHighNote); 
@@ -117,18 +119,13 @@ function SuperApp() {
         } satisfies SuperData
         ));
 
-        try {
-            const results = await Promise.all(data.map(e => postJson('/data/super', e)));
-            if (!results.every(e => e.ok)) throw new Error('Request Did Not Succeed');
-            setHighNotes(defaultHighNote);
-            setTeam1(defaultSuperTeamState);
-            setTeam2(defaultSuperTeamState);
-            setTeam3(defaultSuperTeamState);
-            setHistory([]);
-            setMatchNumber(matchNumber + 1);
-        } catch {
-            alert('Sending Data Failed');
-        }
+        data.map(e => sendQueue('/data/super', e))
+        setHighNotes(defaultHighNote);
+        setTeam1(defaultSuperTeamState);
+        setTeam2(defaultSuperTeamState);
+        setTeam3(defaultSuperTeamState);
+        setHistory([]);
+        setMatchNumber(matchNumber + 1);
 
         setShowCheck(true);
         setTimeout(() => {
@@ -147,7 +144,7 @@ function SuperApp() {
         setTeam1(team1 => ({...team1, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_1' : 'red_1']}));
         setTeam2(team2 => ({...team2, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_2' : 'red_2']}));
         setTeam3(team3 => ({...team3, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_3' : 'red_3']}));
-    }, [matchNumber, superPosition, schedule]);
+    }, [matchNumber, superPosition]);
 
     const undoHistoryCount = () => {
         if (history.length > 0) {
@@ -255,6 +252,19 @@ function SuperApp() {
                     className='rounded-md bg-[#48c55c] px-4 py-2 m-5 text-lg max-w-80 w-full'>
                     Submit
             </button>
+            
+            <div>
+                Queue: {queue.length}
+                <button onClick={sendAll}>Resend All</button>
+            </div>
+
+            <div>
+                <div>Queue: {queue.length}</div>
+                <button onClick={sendAll}
+                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
+                >{sending ? 'Sending...': 'Resend All'}</button>
+            </div>
+
         </main>
     );
 }

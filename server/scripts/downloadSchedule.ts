@@ -38,11 +38,13 @@ const result = await fetch(
     }
 );
 
+
 function teamNumber(teamString: string) {
     return parseInt(teamString.slice(3));
 }
 
 const data = (await result.json()) as SimpleMatch[];
+console.log(JSON.stringify(data));
 const schedule = Object.fromEntries(
     data.map(match => [
         match.match_number,
@@ -50,9 +52,9 @@ const schedule = Object.fromEntries(
             red_1: teamNumber(match.alliances.red.team_keys[0]),
             red_2: teamNumber(match.alliances.red.team_keys[1]),
             red_3: teamNumber(match.alliances.red.team_keys[2]),
-            blue_1: teamNumber(match.alliances.red.team_keys[0]),
-            blue_2: teamNumber(match.alliances.red.team_keys[1]),
-            blue_3: teamNumber(match.alliances.red.team_keys[2]),
+            blue_1: teamNumber(match.alliances.blue.team_keys[0]),
+            blue_2: teamNumber(match.alliances.blue.team_keys[1]),
+            blue_3: teamNumber(match.alliances.blue.team_keys[2]),
         },
     ])
 );
