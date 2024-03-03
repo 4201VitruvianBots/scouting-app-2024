@@ -96,14 +96,14 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     const result = (await matchApp.aggregate([
     { $group:{
         _id: {teamNumber: '$metadata.robotTeam'},
-        averageTeleSpeakerNotes: {$avg: {$add: ['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
+        averageTeleSpeakerNotes: {$avg: {$add: ['$teleNotes.near', '$teleNotes.mid', '$teleNotes.far']}},
         averageTeleAmpNotes: { $avg: '$teleNotes.amp' },
-        averageAutoSpeakerNotes: {$avg: {$add:['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
+        averageAutoSpeakerNotes: {$avg: {$add:['$autoNotes.near', '$autoNotes.mid', '$autoNotes.far']}},
         averageAutoAmpNotes: { $avg: '$autoNotes.amp' },
         averageTrapNotes: { $avg: '$trapNotes' },
-        maxTeleSpeakerNotes: {$max: {$add:['$teleSpeakerNotes.near', '$teleSpeakerNotes.mid', '$teleSpeakerNotes.far']}},
+        maxTeleSpeakerNotes: {$max: {$add:['$teleNotes.near', '$teleNotes.mid', '$teleNotes.far']}},
         maxTeleAmpNotes: { $max: '$teleNotes.amp' },
-        maxAutoSpeakerNotes: {$max: {$add: ['$autoSpeakerNotes.near', '$autoSpeakerNotes.mid', '$autoSpeakerNotes.far']}},
+        maxAutoSpeakerNotes: {$max: {$add: ['$autoNotes.near', '$autoNotes.mid', '$autoNotes.far']}},
         maxAutoAmpNotes: { $max: '$autoNotes.amp' },
         maxTrapNotes: {$max: '$trapNotes'},
         avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1,{$cond: [{$eq:['$climb', 'failed']},0,null]}]}},
@@ -139,6 +139,7 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
                 {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
             maxFouls: {$max: {$add: [
                 {$convert:{input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
@@ -148,6 +149,7 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
                 {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
+                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
                 {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
          } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))

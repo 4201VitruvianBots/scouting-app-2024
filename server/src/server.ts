@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp, superApp } from './Schema.js';
 import {averageAndMax, superAverageAndMax} from './aggregate.js'
@@ -76,7 +77,7 @@ if (DEV) {
     app.use(express.static('../client/dist'));
 
     app.get('*', (_, res) => {
-        res.sendFile('../client/dist/index.html', {root: process.cwd()});
+        res.sendFile(path.resolve('../client/dist/index.html'));
     });
 }
 
