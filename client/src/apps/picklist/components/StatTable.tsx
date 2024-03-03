@@ -35,7 +35,7 @@ function StatTable({
         );
     } else {
         sortedData = table.sortColumn
-            ? data.sort(
+            ? [...data].sort(
                 (a, b) =>
                     ((a[table.sortColumn!] as number) -
                         (b[table.sortColumn!] as number)) *
