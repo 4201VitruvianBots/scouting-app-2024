@@ -13,6 +13,7 @@ import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
+import { usePreventUnload } from '../../lib/usePreventUnload';
 
 const schedule = scheduleFile as MatchSchedule
 
@@ -51,6 +52,7 @@ const defaultSuperTeamState: SuperTeamState = {
 
 
 function SuperApp() {
+    usePreventUnload();
     const [scouterName, setScouterName] = useState('');
     const [superPosition, setSuperPosition] = useState<SuperPosition>();
     const [team1, setTeam1] = useState(defaultSuperTeamState);

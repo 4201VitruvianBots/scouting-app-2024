@@ -13,6 +13,7 @@ import { useStatus } from '../../lib/useStatus';
 import TeamDropdown from '../../components/TeamDropdown';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
+import { usePreventUnload } from '../../lib/usePreventUnload';
 
 const schedule = scheduleFile as MatchSchedule
 
@@ -58,6 +59,7 @@ const defualtScores: MatchScores = {
 };
 
 function MatchApp() {
+    usePreventUnload();
     const [sendQueue, sendAll, queue, sending] = useQueue();
     const [teamNumber, setTeamNumber] = useState<number>();
     const [matchNumber, setMatchNumber] = useState<number>();
