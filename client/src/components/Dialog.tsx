@@ -18,6 +18,8 @@ function Dialog({
     }, [openProp]);
 
     useEffect(() => {
+        if (open === dialogRef.current?.open) return;
+
         if (open) {
             dialogRef.current?.showModal();
         } else {
