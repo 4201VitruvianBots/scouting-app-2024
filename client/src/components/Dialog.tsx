@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
 
 function Dialog({
     open: openProp,
@@ -25,11 +25,20 @@ function Dialog({
         }
     }, [open]);
 
+    const handleClick: MouseEventHandler<HTMLDialogElement> = ({currentTarget, clientX, clientY}) => {
+        const { left, right, top, bottom } = currentTarget.getBoundingClientRect();
+        
+        if (clientX > left && clientX < right && clientY > top && clientY < bottom) return;
+
+        setOpen(false);
+    }
+
     return (
         <>
             <dialog
                 ref={dialogRef}
                 onClose={() => setOpen(false)}
+                onClick={handleClick}
                 className='overflow-visible rounded-md bg-gray-100 p-5'>
                 {open &&
                     (typeof children === 'function'
