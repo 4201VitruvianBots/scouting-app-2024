@@ -1,6 +1,7 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
-import { AnalysisEntry, TeamSummaryData, TeamInfo } from '../data';
+import { AnalysisEntry, TeamSummaryData } from '../data';
+import { TeamData } from 'requests';
 
 function TeamSummary({
     table,
@@ -9,7 +10,7 @@ function TeamSummary({
 }: {
     table: TeamSummaryData;
     data: AnalysisEntry[];
-    teamInfoJson: TeamInfo;
+    teamInfoJson: TeamData;
 }) {
     // Get the data for the team specified
     const teamData = data.filter(e => e.teamNumber === table.teamNumber);

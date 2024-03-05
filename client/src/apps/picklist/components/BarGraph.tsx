@@ -1,5 +1,6 @@
 import { BarChart, BarSeries, ChartDataShape, ColorSchemeType } from 'reaviz';
-import { AnalysisEntry, BarGraphData, TeamInfo } from '../data';
+import { AnalysisEntry, BarGraphData } from '../data';
+import { TeamData } from 'requests';
 
 function BarGraph({
     table,
@@ -8,7 +9,7 @@ function BarGraph({
 }: {
     table: BarGraphData;
     data: AnalysisEntry[];
-    teamInfoJson: TeamInfo;
+    teamInfoJson: TeamData;
 }) {
     const entries = data.map<ChartDataShape>(e => {
         return {

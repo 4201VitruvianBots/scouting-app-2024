@@ -1,6 +1,7 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
-import { AnalysisEntry, StatSummaryData, TeamInfo } from '../data';
+import { AnalysisEntry, StatSummaryData } from '../data';
+import { TeamData } from 'requests';
 
 function StatSummary({
     table,
@@ -9,7 +10,7 @@ function StatSummary({
 }: {
     table: StatSummaryData;
     data: AnalysisEntry[];
-    teamInfoJson: TeamInfo;
+    teamInfoJson: TeamData;
 }) {
     const entries = data.map<[number, number]>(e => [
         e.teamNumber,
