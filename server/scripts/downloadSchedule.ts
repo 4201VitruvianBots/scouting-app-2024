@@ -44,7 +44,6 @@ function teamNumber(teamString: string) {
 }
 
 const data = (await result.json()) as SimpleMatch[];
-console.log(JSON.stringify(data));
 const schedule = Object.fromEntries(
     data.map(match => [
         match.match_number,
@@ -61,4 +60,6 @@ const schedule = Object.fromEntries(
 
 console.log(schedule);
 
-fs.writeFileSync('static/matchSchedule.json', JSON.stringify(schedule));
+fs.writeFileSync('../client/src/assets/matchSchedule.json', JSON.stringify(schedule));
+
+console.log('Don\'t forget to run npm run build!');
