@@ -12,25 +12,29 @@ function useStatus(robotPosition:RobotPosition|SuperPosition|undefined, matchNum
     status.current = { robotPosition, matchNumber, scouterName, battery };
 
     useEffect(() => {
-        // Create a new websocket
-        const socket = new WebSocket(`ws://${window.location.host}/status/scouter`)
-        socketRef.current = socket;
+        try {
+            // Create a new websocket
+            const socket = new WebSocket(`ws://${window.location.host}/status/scouter`)
+            socketRef.current = socket;
 
-        // As soon as it opens
-        socket.onopen = () => {
-            // Send the current status
-            socket.send(JSON.stringify(status.current))
-        }
+            // As soon as it opens
+            socket.onopen = () => {
+                // Send the current status
+                socket.send(JSON.stringify(status.current))
+            }
 
-        // Close the socket for cleanup
-        return () => {
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.close();
-            } else if (socket) {
-                socket.onopen = () => {
+            // Close the socket for cleanup
+            return () => {
+                if (socket.readyState === WebSocket.OPEN) {
                     socket.close();
+                } else if (socket) {
+                    socket.onopen = () => {
+                        socket.close();
+                    }
                 }
             }
+        } catch (err) {
+            console.error(err);
         }
     }, []);
 

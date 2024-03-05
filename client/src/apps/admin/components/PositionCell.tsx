@@ -1,9 +1,10 @@
 import { MaterialSymbol } from "react-material-symbols"
 
 function PositionCell ({scouter}:{scouter:{schedule: number, real:number[]} | boolean }){
+    const isBoolean =  typeof scouter==='boolean'
     return (
-        <td className="border-2 border-slate-700 text-center w-auto">{
-            typeof scouter==='boolean'
+        <td className={`border-2 border-slate-700 text-center w-auto ${(isBoolean? scouter: scouter.real.length > 0)? 'bg-amber-400': ''}`}>{
+                isBoolean
                 ?scouter&&<MaterialSymbol icon='check'/>
                 :scouter.real.length===0?scouter.schedule
                 :scouter.real.length===1?scouter.real[0]

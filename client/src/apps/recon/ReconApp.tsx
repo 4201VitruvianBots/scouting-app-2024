@@ -1,14 +1,13 @@
-import { MatchDataAggregations, MatchSchedule } from "requests";
+import { MatchDataAggregations, MatchSchedule, SuperDataAggregations } from "requests";
 import LinkButton from "../../components/LinkButton";
 import { useFetchJson } from "../../lib/useFetch";
 import { useEffect, useState } from "react";
-import StatRow from "./components/StatRow";
+import {StatRow,SuperStatRow} from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
 import TeamDropdown from "../../components/TeamDropdown";
 import NumberInput from "../../components/NumberInput";
 
-
-const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
+const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'averageTeleSpeakerNotes',
     'averageTeleAmpNotes',
     'averageAutoSpeakerNotes',
@@ -19,10 +18,17 @@ const stats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'maxAutoSpeakerNotes',
     'maxAutoAmpNotes',
     'maxTrapNotes',
+    'avgClimbRate',
+    "harmonyRate"
+]
+const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
+    'avgFouls',
+    'maxFouls',
 ]
 
 function ReconApp() {;
-    const [retrieve, reloadRetrieve] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [retrieveMatch, reloadRetrieveMatch] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
+    const [retrieveSuper, reloadRetrieveSuper] = useFetchJson<SuperDataAggregations[]>('/data/retrieve/super')
     const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [matchNumber, setMatchNumber] = useState<number>()
     const [teams, setTeams] = useState<(number | undefined)[]>([undefined])
@@ -35,8 +41,8 @@ function ReconApp() {;
     },[matchNumber, schedule])
 
     return (
-        <main className='mx-auto flex grid-flow-row flex-col content-center  items-center justify-center'>
-            <h1 className='my-8 text-center text-3xl'>Recon Interface</h1>
+        <main className='mx-auto flex grid-flow-row flex-col content-center items-center justify-center bg-[#171c26] h-screen text-white'>
+            <h1 className='my-8 text-center text-3xl text-[#48c55c] font-bold'>Recon Interface</h1>
 
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md p-2'>
             <LinkButton link='/' className='snap-none'>
@@ -50,9 +56,9 @@ function ReconApp() {;
                     />
             </LinkButton>
             </div>
-           <NumberInput className='rounded-lg border-2 border-slate-900 text-center text-2xl' placeholder="type match #" value={matchNumber} onChange={setMatchNumber}></NumberInput>
-           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={reloadRetrieve}>Reload Data</button>
-            <table className="border-4 border-slate-700">
+           <NumberInput className='rounded-lg border-2 border-slate-900 text-center text-2xl text-black' placeholder="type match #" value={matchNumber} onChange={setMatchNumber}></NumberInput>
+           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={() => {reloadRetrieveMatch(); reloadRetrieveSuper()}}>Reload Data</button>
+            <table className="border-4 border-slate-700 bg-[#171c26]">
                 <thead>
                    <tr>
                     <td className="border-4 border-slate-700">Team</td>
@@ -64,7 +70,8 @@ function ReconApp() {;
                     </tr>
                 </thead>
                 <tbody>
-                   {stats.map(stat => <StatRow data={retrieve} teams={teams} stat={stat}/>)}
+                   {matchStats.map(stat => <StatRow data={retrieveMatch} teams={teams} stat={stat}/>)}
+                   {superStats.map(superStat => <SuperStatRow data={retrieveSuper} teams={teams} stat={superStat}/>)}
                 </tbody>
             </table>
         </main>

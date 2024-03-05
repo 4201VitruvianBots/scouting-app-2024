@@ -5,7 +5,7 @@ function MultiButton<T>({
     labels,
     value, 
     selectedClassName = 'bg-[#48c55c]', 
-    unSelectedClassName = 'bg-[#92918C]'
+    unSelectedClassName = 'bg-[#d4d4d4]'
 } : {
     className?: string | string[];
     onChange: (value : T) => void;

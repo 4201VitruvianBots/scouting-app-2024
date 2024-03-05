@@ -1,9 +1,10 @@
-import { MatchData } from 'requests';
-import { matchApp } from './Schema.js';
+import { MatchData, SuperData } from 'requests';
+import { matchApp, superApp } from './Schema.js';
 
 async function exportAllData() {
     return {
         matchApp: await matchApp.find({}) satisfies MatchData[],
+        superApp: await superApp.find({}) satisfies SuperData[],
     }
 }
 
@@ -29,9 +30,16 @@ function scheduleExport() {
     setInterval(sendExport, 60 * 1000 * 5);
 }
 
-async function importAllData(data: { matchApp: MatchData[] }) {
-    await matchApp.deleteMany();
-    await matchApp.insertMany(data.matchApp);
+async function importAllData(data: { matchApp: MatchData[], superApp: SuperData[] }) {
+    await Promise.all([
+        matchApp.deleteMany(),
+        superApp.deleteMany()
+    ]);
+    await Promise.all([
+        matchApp.insertMany(data.matchApp),
+        superApp.insertMany(data.superApp),
+    ])
+
 }
 
 export { exportAllData, importAllData, sendExport, scheduleExport }

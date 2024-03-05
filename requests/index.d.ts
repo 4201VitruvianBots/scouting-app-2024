@@ -19,7 +19,8 @@ export type Foul =
     | 'podiumFoul' 
     | 'zoneFoul' 
     | 'stageFoul' 
-    | 'overExtChute';
+    | 'overExtChute'
+    | 'multiplePieces'
 export type Break =
     | 'mechanismDmg'
     | 'batteryFall'
@@ -71,6 +72,14 @@ export interface MatchDataAggregations{
     maxAutoAmpNotes: number;
     maxTrapNotes: number;
     avgClimbRate: number;
+    harmonyRate: number;
+}
+
+export interface SuperDataAggregations{
+    _id: {teamNumber: number}
+    avgFouls: number;
+    maxFouls: number;
+
 }
 
 export interface MetaData {

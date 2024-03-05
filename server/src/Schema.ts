@@ -41,7 +41,8 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         podiumFoul: Number,
         zoneFoul: Number,
         stageFoul: Number,
-        overExtChute: Number
+        overExtChute: Number,
+        multiplePieces: Number
      },
     defense: {
         type: String,
@@ -81,7 +82,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
      pitBatteryCount: Number,
      drivebase: {
             type: String,
-            enum: ['Tank', 'swerve','MECANUM', 'other' ]
+            enum: ['tank', 'swerve','MECANUM', 'other' ]
      },
      comments: String
  });
