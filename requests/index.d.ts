@@ -181,7 +181,7 @@ export interface TeamInfo {
     state_prov: string;
     team_number: number;
     website: string | null;
-};
+}
 
 export interface TeamData {
     [teamNumber: string]: {
