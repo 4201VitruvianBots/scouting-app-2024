@@ -15,8 +15,10 @@ import PublicApp from './apps/public/PublicApp';
 import PicklistApp from './apps/picklist/PicklistApp';
 import 'react-material-symbols/rounded';
 import Games from './apps/games/Games';
+import { registerSW } from 'virtual:pwa-register';
 
-
+// Automatically reloads the page a second time to update the SW
+registerSW();
 
 const router = createBrowserRouter([
     {
