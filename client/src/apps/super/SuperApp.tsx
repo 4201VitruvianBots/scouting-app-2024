@@ -256,12 +256,7 @@ function SuperApp() {
             </button>
             
             <div>
-                Queue: {queue.length}
-                <button onClick={sendAll}>Resend All</button>
-            </div>
-
-            <div>
-                <div>Queue: {queue.length}</div>
+                <div className="text-white">Queue: {queue.length}</div>
                 <button onClick={sendAll}
                         className='px-2 py-1 text-center bg-amber-500 rounded-md'
                 >{sending ? 'Sending...': 'Resend All'}</button>
