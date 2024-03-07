@@ -170,7 +170,7 @@ function FieldButton({
                                 />
                             ) : (
                                 <MultiButton
-                                    values={['speaker', 'middle', 'source']}
+                                    values={['source', 'middle', 'speaker']}
                                     onChange={setPickupLocation}
                                     value={pickupLocation}
                                     labels={[
@@ -189,7 +189,7 @@ function FieldButton({
                             )
                         ) : alliance ? (
                             <MultiButton
-                                values={['speaker', 'middle', 'source']}
+                                values={['source', 'middle', 'speaker']}
                                 onChange={setPickupLocation}
                                 value={pickupLocation}
                                 labels={[

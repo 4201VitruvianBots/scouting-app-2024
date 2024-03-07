@@ -10,10 +10,11 @@ import TeamDropdown from '../../components/TeamDropdown';
 import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
+import { usePreventUnload } from '../../lib/usePreventUnload';
 
 
 function PitApp() {
-
+    usePreventUnload();
   
   
      const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
