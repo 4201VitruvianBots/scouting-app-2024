@@ -159,4 +159,38 @@ export interface StatusRecieve {
 export type MatchStatus = Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
 // - `GET` `/data/schedule.json`
 
-export type MatchSchedule = Record<number, Record<RobotPosition,number>> 
+export type MatchSchedule = Record<number, Record<RobotPosition,number>>;
+
+export interface TeamInfo {
+    address: null;
+    city: string | null;
+    country: string | null;
+    gmaps_place_id: null;
+    gmaps_url: null;
+    home_championship: Record<string, string> | null;
+    key: string;
+    lat: null;
+    lng: null;
+    location_name: null;
+    motto: null;
+    name: string;
+    nickname: string;
+    postal_code: string;
+    rookie_year: number;
+    school_name: string;
+    state_prov: string;
+    team_number: number;
+    website: string | null;
+}
+
+export interface TeamData {
+    [teamNumber: string]: {
+        primaryHex: string;
+        secondaryHex: string;
+        verified: boolean;
+        avatar?: string;
+        info: TeamInfo | {
+            Error: string;
+        };
+    };
+}

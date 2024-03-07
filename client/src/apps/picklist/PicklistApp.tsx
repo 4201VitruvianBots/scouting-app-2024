@@ -1,4 +1,5 @@
-import { AnalysisEntry, WindowData, TeamInfo } from './data';
+import { AnalysisEntry, WindowData } from './data';
+import { TeamData } from 'requests';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
@@ -21,7 +22,7 @@ function generateWindow(
     data: AnalysisEntry[],
     table: WindowData,
     setTable: Dispatch<WindowData>,
-    teamInfoJson: TeamInfo,
+    teamInfoJson: TeamData,
     addToFocused: Dispatch<WindowData>
 ) {
     switch (table.type) {
@@ -76,7 +77,7 @@ function PicklistApp() {
     const [analyzedData, reloadData] = useFetchJson<AnalysisEntry[]>(
         '/output_analysis.json'
     );
-    const [teamInfo] = useFetchJson<TeamInfo>('/team_info.json');
+    const [teamInfo] = useFetchJson<TeamData>('/team_info.json');
     
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();

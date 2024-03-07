@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
-import { AnalysisEntry, StatTableData, TeamInfo, WindowData } from '../data';
+import { AnalysisEntry, StatTableData, WindowData } from '../data';
+import { TeamData } from 'requests';
 import Dialog from '../../../components/Dialog';
 import StatColumnDialog from './StatColumnDialog';
 import blankImage from '../../../images/blank.png';
@@ -16,7 +17,7 @@ function StatTable({
     table: StatTableData;
     data: AnalysisEntry[];
     setTable: Dispatch<StatTableData>;
-    teamInfoJson: TeamInfo;
+    teamInfoJson: TeamData;
     onSubmit: Dispatch<WindowData>;
 }) {
     let sortedData: AnalysisEntry[];
