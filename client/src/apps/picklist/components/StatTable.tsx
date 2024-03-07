@@ -22,22 +22,20 @@ function StatTable({
     let sortedData: AnalysisEntry[];
     
     if (table.weighted) {
-        sortedData = table.weights ? data.sort(
+        sortedData = [...data].sort(
             (a, b) => {
                 let aSum = 0;
                 let bSum = 0;
                 for (let i = 0; i < table.columns.length; i++) {
-                    aSum += (a[table.columns[i]] as number) * (table.weights?.[i] ?? 0);
-                    bSum += (b[table.columns[i]] as number) * (table.weights?.[i] ?? 0);
+                    aSum += (a[table.columns[i]] as number) * (table.weights[i] ?? 0);
+                    bSum += (b[table.columns[i]] as number) * (table.weights[i] ?? 0);
                 }
                 return (aSum - bSum) * (table.ascending ? 1 : -1);
             }
-        ) : data;
-        table.weights = [];
-    }
-    else {
+        );
+    } else {
         sortedData = table.sortColumn
-            ? data.sort(
+            ? [...data].sort(
                 (a, b) =>
                     ((a[table.sortColumn!] as number) -
                         (b[table.sortColumn!] as number)) *
@@ -57,7 +55,9 @@ function StatTable({
 
     // Handle when the new StatColumn is submitted
     function handleAddColumn(column: string) {
-        setTable({ ...table, columns: [...table.columns, column], weights: [...table.weights, 0] });
+        const data = { ...table, columns: [...table.columns, column], weights: [...table.weights, 0] }
+        console.log(data);
+        setTable(data);
     }
 
     // Handle when a StatColumn component is deleted
@@ -94,7 +94,7 @@ function StatTable({
                         Team
                     </th>
                     {table.columns.map((column, i) => (
-                        <th className='space-x-2'>
+                        <th className='space-x-2 text-wrap max-w-20'>
                             {camelToSpaced(column)}
                             {table.weighted ? <>
                                     <br />
