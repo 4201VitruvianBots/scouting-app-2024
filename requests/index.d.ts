@@ -38,6 +38,7 @@ interface capabilities {
     chainTraversal: boolean
 }
 
+
 interface HighNote { 
     amp: boolean,
     source: boolean
@@ -116,6 +117,7 @@ export interface MatchData {
 export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
+    breakType: Record<Break, number>;
     defense: DefenseRank;
     defended: boolean;
     humanShooter?: {highNotes: HighNote};

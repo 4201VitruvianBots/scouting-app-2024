@@ -114,6 +114,7 @@ function SuperApp() {
             fouls: team.foulCounts,
             defense: team.defenseRank,
             defended: team.wasDefended,
+            breakType: team.breakCount,
             humanShooter: shooterPlayerTeam === team.teamNumber ? {
                 highNotes
             } : undefined
