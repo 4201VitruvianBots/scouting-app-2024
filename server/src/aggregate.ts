@@ -1,6 +1,6 @@
 import { MatchDataAggregations,SuperDataAggregations } from "requests";
 import { matchApp, superApp } from "./Schema.js";
-
+ 
 
 
 
@@ -11,7 +11,7 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         $group: {
             _id: {
                 matchNumber: '$metadata.matchNumber',
-                alliance: {
+                alliance: {  
                     $cond:  [
                         {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
                         'red',
@@ -33,49 +33,52 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
             }
         }
     }]);
-    // const spotLightCounts = await matchApp.aggregate([
-    //    { $group: {
-    //         _id: {
-    //             matchNumber: '$metadata.matchNumber',
-    //             alliance: {
-    //                 $cond:  [
-    //                     {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
-    //                     'red',
-    //                     'blue'
-    //                 ]
-    //             }
-    //         },
-    //         climbSource: {
-    //             $sum: { $cond: [{$eq: ['$climb', 'source']}, 1, 0]}
-    //         },
-    //         climbCenter: {
-    //             $sum: { $cond: [{$eq: ['$climb', 'center']}, 1, 0]}
-    //         },
-    //         climbAmp: {
-    //             $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
-    //         }, 
-    //     }},
-    //     {$lookup: {
-    //         from: 'superapps',
-    //         foreignField: 'metadata.matchNumber',
-    //         localField: '_id.matchNumber',
-    //         as: 'test'
-    //     }}
+    const spotLightCounts = await matchApp.aggregate([
+       { $group: {
+            _id: {
+                matchNumber: '$metadata.matchNumber',
+                alliance: {
+                    $cond:  [  
+                        {$in: [ '$metadata.robotPosition', ['red_1', 'red_2', 'red_3']]},
+                        'red',
+                        'blue'
+                    ]
+                }
+            },
+            climbSource: {
+                $sum: { $cond: [{$eq: ['$climb', 'source']}, 1, 0]}
+            },
+            climbCenter: {
+                $sum: { $cond: [{$eq: ['$climb', 'center']}, 1, 0]}
+            },
+            climbAmp: {
+                $sum: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
+            }, 
+        }},
+        {$lookup: {
+            from: 'superapps',
+            foreignField: 'metadata.matchNumber',
+            localField: '_id.matchNumber',
+            as: 'test'
+        }},
+        {  $unwind: "$test" }
+
+    
         // {$addFields: {
         //       "humanShooter.highNotes.amp":"$amp"
-        // }},
+        // }}
         // {$group:{_id:"$_id", HumanShooter:{$push:"$HumanShooter"}}},
-        // {$project:{HumanShooter:1,_id:0}}
+        // {$project:{HumanShooter:1,_id:0}},
         // {$group: {
         //     _id: {
         //     humanShooter: '$humanShooter.highNotes',
         // //       climb: { $cond: [{$eq: ['$climb', 'amp']}, 1, 0]}
         //      }
         //      }
+        // }
             
-        //  }   
-   // ])
-    //    { $lookup: {
+    //      },
+    //      { $lookup: {
     //         from: 'superapps',
     //         foreignField: 'humanShooter.highNotes.amp',
     //         localField: 'climb',
@@ -85,13 +88,37 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     //         spotlight: {
     //            $add: { $cond: [{ $eq: ['$humanShooter', '$climb']},1,0] }
     //         }
-    //     }}
+    //     }}   
+   ])
+       
     
     const matches = await matchApp.find().select('metadata.matchNumber metadata.robotTeam climb');
 
-    console.log(climbCounts, matches)
-//     console.log("spotLightCounts", spotLightCounts)
-//   console.log('dig into spotlight: ', spotLightCounts[0].test.humanShooter)
+     // console.log(climbCounts, matches)
+   console.log("spotLightCounts", spotLightCounts)
+   console.log('dig into spotlight: ', spotLightCounts[1].test.humanShooter.highNotes.amp)
+   console.log('dig into spotlight: ', spotLightCounts[1].test.humanShooter.highNotes.center)
+   console.log('dig into spotlight: ', spotLightCounts[1].test.humanShooter.highNotes.source)
+
+   spotLightCounts.forEach(jtest => {
+    //const ampMatches = spotLightCounts.filter(spotLightCount => spotLightCounts.humanShooter.highNotes.amp === spotLightCounts.climbAmp)
+    // const matchingClimbCounts = matchingMatches.map(match => climbCounts.find(climbCount => climbCount._id.matchNumber === match.metadata.matchNumber && climbCount.teams.includes(result._id.teamNumber))[match.climb])
+    // const harmonyCount = matchingClimbCounts.filter(e => e > 1).length;
+   // console.log(match)
+   console.log('test')
+   if (jtest.test.humanShooter != null){
+   //console.log(jtest)
+   console.log(Number(jtest.test.humanShooter.highNotes.source))
+   console.log(jtest.climbSource)
+    if( Number(jtest.test.humanShooter.highNotes.source) == jtest.climbSource){
+    console.log(jtest)} 
+    else {
+        delete spotLightCounts[0];
+    }
+   }
+   
+    //ampMatches; 
+})
 
     const result = (await matchApp.aggregate([
     { $group:{
@@ -131,26 +158,8 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
     return (await superApp.aggregate([
         {$group:{
              _id: {teamNumber: '$metadata.robotTeam'},
-             avgFouls: {$avg: {$add: [
-                {$convert: {input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert: {input: '$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{ input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
-            maxFouls: {$max: {$add: [
-                {$convert:{input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert: {input:'$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
+             avgFouls: {$avg: {$add: ['$fouls.inBot','$fouls.damageBot','$fouls.tipEntangBot','$fouls.pinBot','$fouls.podiumFoul','$fouls.zoneFoul','$fouls.stageFoul','$fouls.multiplePieces', 0,'fouls.overExtChute', ]}},
+             maxFouls: {$max: {$add: [ '$fouls.inBot','$fouls.damageBot','fouls.tipEntangBot', '$fouls.pinBot','$fouls.podiumFoul','$fouls.zoneFoul','$fouls.stageFoul', '$fouls.multiplePieces', 'fouls.overExtChute', ]}},
          } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))
 
