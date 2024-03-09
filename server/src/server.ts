@@ -14,7 +14,7 @@ const REMOTE = process.env.LOCATION === 'remote';
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({limit: '200mb'}));
 
 setUpSocket(app);
 
@@ -44,9 +44,9 @@ app.post('/data/super', async(req,res) => {
 app.post('/data/pit', async(req,res) => {
 
     const PitApp = new pitApp(req.body);
-    const aPitApp = await PitApp.save();
+    // const aPitApp = await PitApp.save();
 
-    console.log(aPitApp);
+    console.log(PitApp);
 
     res.end();
 });

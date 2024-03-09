@@ -94,6 +94,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
             type: String,
             enum: ['tank', 'swerve','MECANUM', 'other' ]
      },
+     photo: Buffer,
      comments: String
  });
 

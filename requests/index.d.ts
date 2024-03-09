@@ -136,6 +136,7 @@ export interface PitFile {
     pitBatteryCount: number;
     drivebase: drivebase;
     comments: string;
+    photo: string;
 }
 
 // - `WebSocket` `/status/report`
