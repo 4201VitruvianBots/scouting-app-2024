@@ -25,17 +25,12 @@ interface MatchScores {
     autoShootFar: number;
     autoAmp: number;
     autoMiss: number;
-    autoPreload: number;
-    autoPickup: number;
     hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
     teleShootNear: number;
     teleShootMid: number;
     teleShootFar: number;
     teleAmp: number;
     teleMiss: number;
-    telePickupSpeaker: number;
-    telePickupMiddle: number;
-    telePickupSource: number;
     trap: number;
 }
 const defualtScores: MatchScores = {
@@ -44,17 +39,12 @@ const defualtScores: MatchScores = {
     autoShootFar: 0,
     autoAmp: 0,
     autoMiss: 0,
-    autoPreload: 0,
-    autoPickup: 0,
     hold: 0,
     teleShootNear: 0,
     teleShootMid: 0,
     teleShootFar: 0,
     teleAmp: 0,
     teleMiss: 0,
-    telePickupSpeaker: 0,
-    telePickupMiddle: 0,
-    telePickupSource: 0,
     trap: 0,
 };
 
