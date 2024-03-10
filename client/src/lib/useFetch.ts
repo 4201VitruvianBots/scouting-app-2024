@@ -47,4 +47,4 @@ function useFetchJson<T = unknown>(url: string, defaultValue?: T) {
     return useFetch(url, Response.prototype.json, defaultValue);
 }
 
-export { useFetchJson, useFetchString, useFetch };
+export { useFetchJson, useFetchString };

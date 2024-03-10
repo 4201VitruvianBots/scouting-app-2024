@@ -1,6 +1,5 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
-import { useFetch } from '../../../lib/useFetch';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
 
@@ -31,14 +30,6 @@ function TeamSummary({
         teamInfo = {Error: "Team info not found"};
     }
     
-    const pitScoutImage = useFetch(
-        '/image/'+table.teamNumber+'.jpeg', // replace with your image URL
-        async function(this: Response) {
-          const blob = await this.blob();
-          return URL.createObjectURL(blob);
-      }
-    )[0];
-    
     if ('Error' in teamInfo) {
         return (
             <div className='flex space-x-10'>
@@ -47,7 +38,7 @@ function TeamSummary({
                     
                     <br />
                     
-                    <img src={pitScoutImage} width="400"/>
+                    <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
                 </div>
 
                 <div>
@@ -96,7 +87,7 @@ function TeamSummary({
 
                     <br />
                     
-                    <img src={pitScoutImage} width="400"/>
+                    <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
                 </div>
 
                 <div>
