@@ -69,7 +69,6 @@ function MatchApp() {
     const [climbPosition, setClimbPosition] = useState<ClimbPosition>('none');
     const [showCheck, setShowCheck] = useState(false);
     const [scouterName, setScouterName] = useState('');
-
     const [robotPosition, setRobotPosition] = useState<RobotPosition>();
 
     const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
@@ -91,7 +90,7 @@ function MatchApp() {
                 scouterName,
                 robotPosition,
                 matchNumber,
-                
+                robotTeam: undefined
             },
             leftStartingZone: leave,
             autoNotes: {
