@@ -1,5 +1,6 @@
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
+import { useFetch } from '../../../lib/useFetch';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
 
@@ -30,20 +31,27 @@ function TeamSummary({
         teamInfo = {Error: "Team info not found"};
     }
     
+    const pitScoutImage = useFetch(
+        '/image/'+table.teamNumber+'.jpeg', // replace with your image URL
+        async function(this: Response) {
+          const blob = await this.blob();
+          return URL.createObjectURL(blob);
+      }
+    )[0];
+    
     if ('Error' in teamInfo) {
         return (
             <div className='flex space-x-10'>
                 <div>
                     <h1 className='text-3xl'>Team {table.teamNumber}</h1>
+                    
+                    <br />
+                    
+                    <img src={pitScoutImage} width="400"/>
                 </div>
 
                 <div>
                     <h2 className='text-2xl'>Stats</h2>
-                    <p>Matches Played: {teamData.length}</p>
-                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
-                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
-
-                    <br />
 
                     {Object.keys(teamData[0]).map(e => {
                         if (
@@ -87,16 +95,13 @@ function TeamSummary({
                     </div>
 
                     <br />
+                    
+                    <img src={pitScoutImage} width="400"/>
                 </div>
 
                 <div>
                     <h2 className='text-2xl'>Stats</h2>
-                    <p>Matches Played: {teamData.length}</p>
-                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
-                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
-
-                    <br />
-
+                    
                     {Object.keys(teamData[0]).map(e => {
                         if (
                             e !== 'teamNumber' &&
