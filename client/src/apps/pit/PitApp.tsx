@@ -11,7 +11,7 @@ import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
 import { usePreventUnload } from '../../lib/usePreventUnload';
 import { useFetchJson } from '../../lib/useFetch';
-import { useQueue } from '../../lib/useQueue';
+import { postJson } from '../../lib/postJson';
 
 
 function PitApp() {
@@ -33,7 +33,6 @@ function PitApp() {
   };
 
   const [scoutedTeams, refreshScoutedTeams] = useFetchJson<number[]>('/data/pit/scouted-teams');
-  const [sendQueue, sendAll, queue, sending] = useQueue();
 
   const [autoInputValues, setAutoInputValues] = useState(['']);
   const [role, setRole] = useState<teamRoles|undefined>();
@@ -89,8 +88,9 @@ function PitApp() {
     };
 
     try {
-      sendQueue('/data/pit', data);
-      setTimeout(refreshScoutedTeams, 1000);
+      const result = await postJson('/data/pit', data);
+      if (!result.ok) throw new Error('Request Did Not Succeed');
+      refreshScoutedTeams();
       setAutoInputValues(['']);
       setAmpChecked(false);
       setAmpPrefChecked(false);
@@ -302,14 +302,6 @@ function PitApp() {
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
             <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
-
-            <div>
-                <div className='text-white'>Queue: {queue.length}</div>
-                <button onClick={sendAll}
-                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
-                >{sending ? 'Sending...': 'Resend All'}</button>
-            </div>
-
             </div>
         </>
     );
