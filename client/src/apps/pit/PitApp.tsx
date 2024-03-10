@@ -1,9 +1,8 @@
 import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Checkbox from '../../components/Checkbox';
 import { PitFile, teamRoles, drivebase } from 'requests';
-import { postJson } from '../../lib/postJson';
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
 import TeamDropdown from '../../components/TeamDropdown';
@@ -11,6 +10,8 @@ import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import { useFetchJson } from '../../lib/useFetch';
+import { useQueue } from '../../lib/useQueue';
 
 
 function PitApp() {
@@ -31,6 +32,8 @@ function PitApp() {
      setAutoInputValues([...autoInputValues, '']);
   };
 
+  const [scoutedTeams, refreshScoutedTeams] = useFetchJson<number[]>('/data/pit/scouted-teams');
+  const [sendQueue, sendAll, queue, sending] = useQueue();
 
   const [autoInputValues, setAutoInputValues] = useState(['']);
   const [role, setRole] = useState<teamRoles|undefined>();
@@ -51,6 +54,10 @@ function PitApp() {
 
   const [scouterName, setScouterName] = useState('');
 
+  useEffect(() => {
+    const timeout = setInterval(refreshScoutedTeams, 60 * 1000);
+    return () => clearInterval(timeout);
+  }, [refreshScoutedTeams]);
   
   const handleSubmit = async() => {
     if (!drivetrain || !role){
@@ -82,8 +89,8 @@ function PitApp() {
     };
 
     try {
-      const result = await postJson('/data/pit', data);
-      if (!result.ok) throw new Error('Request Did Not Succeed');
+      sendQueue('/data/pit', data);
+      setTimeout(refreshScoutedTeams, 1000);
       setAutoInputValues(['']);
       setAmpChecked(false);
       setAmpPrefChecked(false);
@@ -162,7 +169,7 @@ function PitApp() {
             <div className="flex justify-center items-center mb-8">
             <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg">
             <h1 className="text-center text-white">Team Number</h1>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} disabledOptions={scoutedTeams} />
             </div>
             </div>
             
@@ -295,6 +302,14 @@ function PitApp() {
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
             <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
+
+            <div>
+                <div className='text-white'>Queue: {queue.length}</div>
+                <button onClick={sendAll}
+                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
+                >{sending ? 'Sending...': 'Resend All'}</button>
+            </div>
+
             </div>
         </>
     );
