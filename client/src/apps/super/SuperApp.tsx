@@ -18,16 +18,11 @@ import { usePreventUnload } from '../../lib/usePreventUnload';
 const schedule = scheduleFile as MatchSchedule
 
 const foulTypes: Foul[] = [
-    'inBot',
-    'damageBot',
-    'overExtChute',
-    'pinBot',
-    'podiumFoul',
-    'stageFoul',
-    'tipEntangBot',
-    'zoneFoul',
-    'multiplePieces'
-];
+    'insideRobot',
+    'protectedZone', 
+    'pinning',
+    'multiplePieces',
+    'other' ];
 
 const defaultHighNote: HighNote = {
     amp: false,

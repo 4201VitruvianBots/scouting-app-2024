@@ -44,15 +44,11 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
  const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: superappsMetaDataSchema,
      fouls: {
-        inBot: Number,
-        damageBot: Number,
-        tipEntangBot: Number,
-        pinBot: Number,
-        podiumFoul: Number,
-        zoneFoul: Number,
-        stageFoul: Number,
-        overExtChute: Number,
-        multiplePieces: Number
+        insideRobot: Number, 
+        protectedZone: Number,
+        pinning: Number,
+        multiplePieces: Number,
+        other: Number
      },
     defense: {
         type: String,
