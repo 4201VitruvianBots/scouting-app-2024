@@ -77,19 +77,19 @@ function FieldButton({
         setLeave?.(!leave);
     };
 
-    const fieldColors = alliance ? ['bg-blue-200/70', 'bg-blue-400/70', 'bg-blue-600/70'] : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
+    const fieldColors = alliance ? ['bg-blue-300/70', 'bg-blue-500/70', 'bg-blue-600/70'] : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
 
     return (
         <>
             <div className='flex items-center justify-center gap-2 py-2'>
                 {!teleOp && (
                     <>
-                        <div className='flex-col items-center justify-center'>
-                            <h1 className='text-xl'>Did the robot earn mobility? &nbsp;</h1> 
-                            <p>The robot must cross the {alliance ? 'blue' : 'red'} line <br></br> to earn mobility.</p>
+                        <div className='flex-col items-center justify-center pr-3'>
+                            <h1 className='text-4xl'>Mobility? </h1> 
+                            <p>The robot must cross the gray<br/> line to earn mobility.</p>
                         </div>
                         <MultiButton
-                            className='h-[100px] flex-grow flex-row basis-0 text-2xl'
+                            className='h-[100px] flex-grow flex-row basis-0 text-4xl'
                             value={leave}
                             values={[true, false]}
                             labels={['Yes', 'No']}
