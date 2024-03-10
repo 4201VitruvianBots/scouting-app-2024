@@ -78,6 +78,54 @@ function MatchApp() {
         ['blue_1', 'blue_2', 'blue_3'] as (string | undefined)[]
     ).includes(robotPosition);
 
+    const handleAbsentRobot = async () => {
+        if (
+            robotPosition == undefined ||
+            matchNumber == undefined 
+        ) {
+            alert('Check if your signed in, and you have the match number')
+            return; }
+
+        const data: MatchData = {
+            metadata: {
+                scouterName,
+                robotPosition,
+                matchNumber,
+                
+            },
+            leftStartingZone: leave,
+            autoNotes: {
+                near: count.autoShootNear,
+                mid: count.autoShootMid,
+                far: count.autoShootFar,
+                amp: count.autoAmp,
+                miss: count.autoMiss
+            },
+            teleNotes: {
+                near: count.teleShootNear,
+                mid: count.teleShootMid,
+                far: count.teleShootFar,
+                amp: count.teleAmp,
+                miss: count.autoMiss
+            },
+            trapNotes: count.trap,
+            climb: climbPosition,
+        };
+        
+        sendQueue('/data/match', data);
+        setCount(defualtScores);
+        setClimbPosition('none');
+        setLeave(false);
+        setMatchNumber(matchNumber + 1);
+        setCountHistory([]);
+
+        setShowCheck(true);
+
+        setTimeout(() => {
+            setShowCheck(false);
+          }, 3000);
+    }
+
     const handleSubmit = async () => {
         if (
             robotPosition == undefined ||
@@ -218,6 +266,13 @@ function MatchApp() {
             <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
 
             <div>
+                <button onClick={() => {handleAbsentRobot(); scrollTo(0, 0);}} style={{ fontSize: '20px' }}
+                    className='px-2 py-1 mt-14 mb-2 text-center bg-green-500 rounded-md'>
+                        Absent
+                </button>
+            </div>
+
+            <div>
                 <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
                 <FieldButton
                     setCount={handleSetCount}
@@ -250,7 +305,7 @@ function MatchApp() {
                     </button>
                     <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
                         className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                                Submit
+                            Submit
                     </button>
 
                 </div>
