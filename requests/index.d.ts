@@ -195,3 +195,10 @@ export interface TeamData {
         };
     };
 }
+// - `GET` `/image/:teamId.jpeg` 
+// return image of team from pit data
+
+export interface RobotImageReturn {
+    teamNumber: number;
+    photo: string;
+}

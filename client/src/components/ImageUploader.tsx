@@ -20,7 +20,7 @@ function ImageUploader({value, onChange}: {
     }
 
     return (
-        <label>
+        <label className="justify-center">
             <input type="file" accept="image/jpeg" onChange={handleChange} />
             <img src={value} />
         </label>

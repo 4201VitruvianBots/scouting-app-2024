@@ -2,9 +2,10 @@ import express from 'express';
 import path from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp, superApp } from './Schema.js';
-import {averageAndMax, superAverageAndMax} from './aggregate.js'
+import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.js'
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
+
 
 // import { MatchData } from 'requests';
 
@@ -44,9 +45,9 @@ app.post('/data/super', async(req,res) => {
 app.post('/data/pit', async(req,res) => {
 
     const PitApp = new pitApp(req.body);
-    // const aPitApp = await PitApp.save();
+    const aPitApp = await PitApp.save();
 
-    console.log(PitApp);
+    console.log(aPitApp);
 
     res.end();
 });
@@ -66,6 +67,24 @@ app.get('/data/retrieve', async (req, res) => {
 
 app.get('/data/retrieve/super', async (req, res) => {
     res.send(await superAverageAndMax());
+})
+
+app.get('/image/:teamId.jpeg', async (req, res) => {
+    const teamId = req.params["teamId"];
+    console.log(teamId);
+
+    //Search the pit scouting database for info on this teamId
+    const imageData = await robotImageDisplay (parseInt(teamId));
+
+    console.log(imageData);
+    //If the Image data DOES NOT exists:
+    if (!imageData) {
+        //  Return a 404 response
+        res.status(404).send('Image does not exist in database.');
+    } else {
+         //  Return the image data
+        res.send(teamId);
+    }
 })
 
 app.use(express.static('static'));
