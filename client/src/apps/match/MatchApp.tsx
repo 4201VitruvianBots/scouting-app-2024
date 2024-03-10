@@ -177,6 +177,15 @@ function MatchApp() {
         
     };
 
+    const showConfirmationDialog = () => {
+        if (window.confirm('Are you sure you want to mark as absent?')) {
+          // User confirmed, call the action
+          handleAbsentRobot();
+          // Optionally, you can also scroll to the top
+          scrollTo(0, 0);
+        }
+      };
+
     const undoCount = () => {
         if (countHistory.length > 0) {
             setCountHistory(prevHistory => prevHistory.slice(0, -1));
@@ -266,9 +275,9 @@ function MatchApp() {
             <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
 
             <div>
-                <button onClick={() => {handleAbsentRobot(); scrollTo(0, 0);}} style={{ fontSize: '20px' }}
+                <button onClick={showConfirmationDialog} style={{ fontSize: '20px' }}
                     className='px-2 py-1 mt-14 mb-2 text-center bg-green-500 rounded-md'>
-                        Absent
+                        Robot Absent
                 </button>
             </div>
 
