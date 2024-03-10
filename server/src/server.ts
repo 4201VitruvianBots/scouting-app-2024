@@ -5,6 +5,8 @@ import { matchApp, pitApp, superApp } from './Schema.js';
 import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.js'
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
+import { PitFile } from 'requests';
+import dataUriToBuffer from 'data-uri-to-buffer';
 
 
 // import { MatchData } from 'requests';
@@ -43,8 +45,13 @@ app.post('/data/super', async(req,res) => {
 });
 
 app.post('/data/pit', async(req,res) => {
+    
+    const body = req.body as PitFile;
 
-    const PitApp = new pitApp(req.body);
+    const PitApp = new pitApp({
+        ...body,
+        photo: dataUriToBuffer(body.photo),
+    });
     const aPitApp = await PitApp.save();
 
     console.log(aPitApp);
@@ -70,21 +77,31 @@ app.get('/data/retrieve/super', async (req, res) => {
 })
 
 app.get('/image/:teamId.jpeg', async (req, res) => {
-    const teamId = req.params["teamId"];
+    const { teamId } = req.params;
     console.log(teamId);
 
     //Search the pit scouting database for info on this teamId
-    const imageData = await robotImageDisplay (parseInt(teamId));
+    const teamNumber = parseInt(teamId);
 
-    console.log(imageData);
+    if (isNaN(teamNumber)) {
+        res.status(400);
+        res.send('Query was not a number');
+        return;
+    }
+
+    const imageData = await robotImageDisplay(teamNumber);
+
     //If the Image data DOES NOT exists:
     if (!imageData) {
         //  Return a 404 response
-        res.status(404).send('Image does not exist in database.');
-    } else {
-         //  Return the image data
-        res.send(teamId);
+        res.status(404)
+        res.send('Image does not exist in database.');
+        return;
     }
+
+    res.contentType('image/jpeg');
+     //  Return the image data
+    res.send(imageData);
 })
 
 app.use(express.static('static'));

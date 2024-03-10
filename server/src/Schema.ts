@@ -67,8 +67,9 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
     }}
  });
 
+type PitDataSchemaType = {[K in keyof PitFile]: K extends 'photo' ? Buffer : PitFile[K]};
 
- const pitDataSchema = new mongoose.Schema<PitFile>({
+ const pitDataSchema = new mongoose.Schema<PitDataSchemaType>({
      scouterName: String,
      teamNumber: Number,
      capabilities: {
