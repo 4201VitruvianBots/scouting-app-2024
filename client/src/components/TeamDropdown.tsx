@@ -21,6 +21,7 @@ function TeamDropdown({
     return (<div className='contents team-search'>
         <SelectSearch
             options={teamOptions}
+           multiple={true}
             value={value?.toString()}
             onChange={value => onChange?.(parseInt(value as string))}
             search
