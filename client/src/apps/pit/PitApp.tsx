@@ -1,9 +1,8 @@
 import MultiButton from '../../components/MultiButton';
 //import ToggleButton from '../../components/ToggleButton'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Checkbox from '../../components/Checkbox';
 import { PitFile, teamRoles, drivebase } from 'requests';
-import { postJson } from '../../lib/postJson';
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
 import TeamDropdown from '../../components/TeamDropdown';
@@ -11,6 +10,8 @@ import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import { useFetchJson } from '../../lib/useFetch';
+import { postJson } from '../../lib/postJson';
 
 
 function PitApp() {
@@ -31,6 +32,7 @@ function PitApp() {
      setAutoInputValues([...autoInputValues, '']);
   };
 
+  const [scoutedTeams, refreshScoutedTeams] = useFetchJson<number[]>('/data/pit/scouted-teams');
 
   const [autoInputValues, setAutoInputValues] = useState(['']);
   const [role, setRole] = useState<teamRoles|undefined>();
@@ -51,6 +53,10 @@ function PitApp() {
 
   const [scouterName, setScouterName] = useState('');
 
+  useEffect(() => {
+    const timeout = setInterval(refreshScoutedTeams, 60 * 1000);
+    return () => clearInterval(timeout);
+  }, [refreshScoutedTeams]);
   
   const handleSubmit = async() => {
     if (!drivetrain || !role){
@@ -84,6 +90,7 @@ function PitApp() {
     try {
       const result = await postJson('/data/pit', data);
       if (!result.ok) throw new Error('Request Did Not Succeed');
+      refreshScoutedTeams();
       setAutoInputValues(['']);
       setAmpChecked(false);
       setAmpPrefChecked(false);
@@ -162,7 +169,7 @@ function PitApp() {
             <div className="flex justify-center items-center mb-8">
             <div className="flex flex-col items-center bg-[#2f3646] border-[#2f3646] border-4 h-24 w-2/4 justify-center rounded-lg">
             <h1 className="text-center text-white">Team Number</h1>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} disabledOptions={scoutedTeams} />
             </div>
             </div>
             
