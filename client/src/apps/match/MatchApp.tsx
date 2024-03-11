@@ -127,9 +127,6 @@ function MatchApp() {
         setCountHistory([...countHistory, count]);
         setCount(newCount);
     };
-    //const handleCount = (key: countKeys) => {
-    //    handleSetCount({ ...count, [key]: count[key] + 1 });
-    //};
 
     useEffect(() => {
         setTeamNumber(
