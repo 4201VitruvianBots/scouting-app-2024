@@ -4,6 +4,7 @@ import ButtonDropdown from '../../../components/ButtonDropdown';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
 import TeamDropdown from '../../../components/TeamDropdown';
+import CannedCommentBox from '../../../components/CannedComments';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
@@ -17,6 +18,7 @@ export interface SuperTeamState {
 function SuperTeam({
     teamState,
     setTeamState,
+
 }: {
     teamState: SuperTeamState;
     setTeamState: Dispatch<SuperTeamState>;
@@ -33,13 +35,29 @@ function SuperTeam({
     const handleWasDefended = (newDefended: boolean) => {
         setTeamState({ ...teamState, wasDefended: newDefended });
     };
-    const handleChangeTeam = (newChangeTeam: number) => {
-        setTeamState({ ...teamState, teamNumber: newChangeTeam });
+
+    const handleChangeTeam = (newChangeTeam: number ) => {
+        setTeamState({ ...teamState, teamNumber: newChangeTeam});
+    };
+   
+    const handleAddComment = (comments: string[] ) => {
+        setTeamState({ ...teamState, cannedComments: comments });
     };
 
+
+    // saves all the other inputs, ovverrides the one in setTeamState({... comments, X})
+   
     return (
         <div className='grid justify-items-center'>
-            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
+            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} /> 
+
+            <CannedCommentBox value={teamState.cannedComments} onChange={handleAddComment}/>
+            {/* handleAddComment takes the argument of comments (just a name we assigned it) that's of type string[], which 
+            checks out from what we told it onChange would give
+            setTeam
+             */}
+
+
             <ButtonDropdown value={teamState.foulCounts} setValue={handleFoul}>
                 Add Foul
             </ButtonDropdown>
