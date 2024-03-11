@@ -1,23 +1,35 @@
 import { Dispatch, SetStateAction } from 'react';
+import { MatchScores } from '../apps/match/MatchApp';
 import { ClimbPosition, ScouterPosition } from 'requests';
 import MultiButton from './MultiButton';
 
 function EndgameButton({
     setClimb,
+    setCount,
     climbPosition,
     alliance,
     scouterPosition,
+    count,
 }: {
     setClimb: Dispatch<SetStateAction<ClimbPosition>>;
+    setCount: Dispatch<SetStateAction<MatchScores>>;
     climbPosition: ClimbPosition;
     alliance: boolean | undefined;
     scouterPosition: ScouterPosition | undefined;
+    count: MatchScores;
 }) {
     // const [alliance, setAlliance] = useState(false); //false=red, true=blue, null=hollow purple
 
     const handleClimb = (newClimb: ClimbPosition) => {
         setClimb(newClimb);
     };
+
+    const handleTrap = () => {
+        setCount(prevCount => ({
+            ...prevCount,
+            ['trap']: prevCount['trap'] + 1,
+        }));
+    }
 
     return (
         <>
@@ -61,6 +73,12 @@ function EndgameButton({
                         'flex-column h-[60px] w-[217px] gap-4 text-4xl  ',
                     ]}
                 />
+            </div>
+            <div className = 'flex justify-center pt-24'>
+            <button onClick={() => { if (count.trap < 3) handleTrap() }} style={{ fontSize: '30px'}}
+                        className='px-2 py-1 text-center bg-blue-300 rounded-md'>
+                        Trap Notes: {count.trap}
+                    </button>
             </div>
         </>
     );

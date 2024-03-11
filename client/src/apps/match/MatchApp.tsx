@@ -17,8 +17,6 @@ import { usePreventUnload } from '../../lib/usePreventUnload';
 
 const schedule = scheduleFile as MatchSchedule
 
-type countKeys = keyof MatchScores;
-
 interface MatchScores {
     autoShootNear: number;
     autoShootMid: number;
@@ -185,9 +183,6 @@ function MatchApp() {
         setCountHistory([...countHistory, count]);
         setCount(newCount);
     };
-    const handleCount = (key: countKeys) => {
-        handleSetCount({ ...count, [key]: count[key] + 1 });
-    };
 
     useEffect(() => {
         setTeamNumber(
@@ -291,16 +286,15 @@ function MatchApp() {
                 />
                 <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
                 <EndgameButton
+                    setCount={handleSetCount}
                     climbPosition={climbPosition}
                     setClimb={setClimbPosition}
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
+                    count={count}
                 />
-                <div className='flex justify-center mt-20 mb-5'>
-                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '30px'}}
-                        className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
-                        Trap Note: {count.trap}
-                    </button>
+                <div className='flex flex-col justify-center mt-20 mb-5'>
+
                     <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
                         className='px-2 py-1 text-center bg-green-500 rounded-md'>
                             Submit

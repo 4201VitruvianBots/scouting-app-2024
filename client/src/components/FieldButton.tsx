@@ -77,7 +77,7 @@ function FieldButton({
         setLeave?.(!leave);
     };
 
-    const fieldColors = alliance ? ['bg-blue-300/70', 'bg-blue-500/70', 'bg-blue-600/70'] : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
+    const fieldColors = alliance ? ['bg-blue-300/70', 'bg-blue-500/70', 'bg-blue-700/70'] : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
 
     return (
         <>
