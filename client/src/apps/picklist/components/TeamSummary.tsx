@@ -1,7 +1,10 @@
+import Dialog from '../../../components/Dialog';
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
+import RobotPhotoDialog from './RobotPhotoDialog';
+import blankImage from '../../../images/blank.png';
 
 function TeamSummary({
     table,
@@ -35,15 +38,24 @@ function TeamSummary({
             <div className='flex space-x-10'>
                 <div>
                     <h1 className='text-3xl'>Team {table.teamNumber}</h1>
+                    
+                    <br />
+                    
+                    <Dialog
+                        trigger={open => (
+                            <button onClick={open}>
+                                <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                            </button>
+                        )}
+                        >
+                        {close => (
+                            <RobotPhotoDialog teamNumber={table.teamNumber} onClose={close} />
+                        )}
+                    </Dialog>
                 </div>
 
                 <div>
                     <h2 className='text-2xl'>Stats</h2>
-                    <p>Matches Played: {teamData.length}</p>
-                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
-                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
-
-                    <br />
 
                     {Object.keys(teamData[0]).map(e => {
                         if (
@@ -87,16 +99,24 @@ function TeamSummary({
                     </div>
 
                     <br />
+                    
+                    <Dialog
+                        trigger={open => (
+                            <button onClick={open}>
+                                <img src={`/image/${table.teamNumber}.jpeg`} width="400" alt=""
+                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.src = blankImage}} />
+                            </button>
+                        )}
+                        >
+                        {close => (
+                            <RobotPhotoDialog teamNumber={table.teamNumber} onClose={close} />
+                        )}
+                    </Dialog>
                 </div>
 
                 <div>
                     <h2 className='text-2xl'>Stats</h2>
-                    <p>Matches Played: {teamData.length}</p>
-                    <p>Wins: {teamData.filter(e => e.wins).length}</p>
-                    <p>Losses: {teamData.filter(e => !e.wins).length}</p>
-
-                    <br />
-
+                    
                     {Object.keys(teamData[0]).map(e => {
                         if (
                             e !== 'teamNumber' &&
