@@ -6,6 +6,7 @@ import StatColumnDialog from './StatColumnDialog';
 import blankImage from '../../../images/blank.png';
 import { MaterialSymbol } from 'react-material-symbols';
 import camelToSpaced from '../../../lib/camelCaseConvert';
+import RobotPhotoDialog from './RobotPhotoDialog';
 
 function StatTable({
     table,
@@ -57,7 +58,6 @@ function StatTable({
     // Handle when the new StatColumn is submitted
     function handleAddColumn(column: string) {
         const data = { ...table, columns: [...table.columns, column], weights: [...table.weights, 0] }
-        console.log(data);
         setTable(data);
     }
 
@@ -95,34 +95,42 @@ function StatTable({
                         Team
                     </th>
                     {table.columns.map((column, i) => (
-                        <th className='space-x-2 text-wrap max-w-20'>
-                            {camelToSpaced(column)}
-                            {table.weighted ? <>
-                                    <br />
-                                    <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
-                                </>
-                                :
-                                <button onClick={() => handleClickColumn(column)}>
-                                    {column === table.sortColumn ? (
-                                        table.ascending ? (
-                                            <MaterialSymbol icon='arrow_upward_alt' />
-                                        ) : (
-                                            <MaterialSymbol icon='arrow_downward_alt' />
-                                        )
-                                    ) : (
-                                        <MaterialSymbol icon='swap_vert' />
-                                    )}
+                        column === "robotImages" ? (
+                            <th className='space-x-2 text-wrap max-w-20'>
+                                {camelToSpaced(column)}
+                                <button onClick={() => handleDeleteColumn(i)}>
+                                    <MaterialSymbol icon='close' />
                                 </button>
-                            }
-                            <button onClick={() => handleStatSummaryClick(column)}>
-                                <MaterialSymbol icon='info' />
-                            </button>
-                            <button onClick={() => handleDeleteColumn(i)}>
-                                <MaterialSymbol icon='close' />
-                            </button>
-                        </th>
+                            </th>
+                        ) : (
+                            <th className='space-x-2 text-wrap max-w-20'>
+                                {camelToSpaced(column)}
+                                {table.weighted ? <>
+                                        <br />
+                                        <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
+                                    </>
+                                    :
+                                    <button onClick={() => handleClickColumn(column)}>
+                                        {column === table.sortColumn ? (
+                                            table.ascending ? (
+                                                <MaterialSymbol icon='arrow_upward_alt' />
+                                            ) : (
+                                                <MaterialSymbol icon='arrow_downward_alt' />
+                                            )
+                                        ) : (
+                                            <MaterialSymbol icon='swap_vert' />
+                                        )}
+                                    </button>
+                                }
+                                <button onClick={() => handleStatSummaryClick(column)}>
+                                    <MaterialSymbol icon='info' />
+                                </button>
+                                <button onClick={() => handleDeleteColumn(i)}>
+                                    <MaterialSymbol icon='close' />
+                                </button>
+                            </th>
+                        )
                     ))}
-
                     <th>
                         <Dialog
                             trigger={open => (
@@ -160,7 +168,24 @@ function StatTable({
                             </button>
                         </td>
                         {table.columns.map(column => (
-                            <td className='border border-black'>{entry[column]}</td>
+                            column === "robotImages" ? (
+                                <td className='border border-black'>
+                                    <Dialog
+                                        trigger={open => (
+                                            <button onClick={open}>
+                                                <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" 
+                                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.onerror = null; e.currentTarget.style.display = "none";}}/>
+                                            </button>
+                                        )}
+                                        >
+                                        {close => (
+                                            <RobotPhotoDialog teamNumber={entry.teamNumber} onClose={close} />
+                                        )}
+                                    </Dialog>
+                                </td>
+                            ) : (
+                                <td className='border border-black'>{entry[column]}</td>
+                            )
                         ))}
                     </tr>
                 ))}

@@ -1,7 +1,9 @@
+import Dialog from '../../../components/Dialog';
 import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
+import RobotPhotoDialog from './RobotPhotoDialog';
 
 function TeamSummary({
     table,
@@ -38,7 +40,17 @@ function TeamSummary({
                     
                     <br />
                     
-                    <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                    <Dialog
+                        trigger={open => (
+                            <button onClick={open}>
+                                <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                            </button>
+                        )}
+                        >
+                        {close => (
+                            <RobotPhotoDialog teamNumber={table.teamNumber} onClose={close} />
+                        )}
+                    </Dialog>
                 </div>
 
                 <div>
@@ -87,7 +99,17 @@ function TeamSummary({
 
                     <br />
                     
-                    <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                    <Dialog
+                        trigger={open => (
+                            <button onClick={open}>
+                                <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                            </button>
+                        )}
+                        >
+                        {close => (
+                            <RobotPhotoDialog teamNumber={table.teamNumber} onClose={close} />
+                        )}
+                    </Dialog>
                 </div>
 
                 <div>
