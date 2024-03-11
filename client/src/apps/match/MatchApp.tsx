@@ -14,35 +14,28 @@ import TeamDropdown from '../../components/TeamDropdown';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import ScoreMap from '../../components/ScoreMap';
 
 const schedule = scheduleFile as MatchSchedule
 
 type countKeys = keyof MatchScores;
 
 interface MatchScores {
-    autoShootNear: number;
-    autoShootMid: number;
-    autoShootFar: number;
+    autoSpeaker: number;
     autoAmp: number;
     autoMiss: number;
     hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
-    teleShootNear: number;
-    teleShootMid: number;
-    teleShootFar: number;
+    teleSpeaker: number;
     teleAmp: number;
     teleMiss: number;
     trap: number;
 }
 const defualtScores: MatchScores = {
-    autoShootNear: 0,
-    autoShootMid: 0,
-    autoShootFar: 0,
+    autoSpeaker: 0,
     autoAmp: 0,
     autoMiss: 0,
     hold: 0,
-    teleShootNear: 0,
-    teleShootMid: 0,
-    teleShootFar: 0,
+    teleSpeaker: 0,
     teleAmp: 0,
     teleMiss: 0,
     trap: 0,
@@ -253,7 +246,7 @@ function MatchApp() {
         //         >{sending ? 'Sending...': 'Resend All'}</button>
         //     </div>
         // </main >
-        <main className='bg-[#171c26] h-screen w-screen'>
+        <main className='bg-[#171c26] h-full w-full snap-y'>
             <div className='flex flex-col absolute right-4 top-4 z-20 gap-3 
             rounded-md bg-[#2f3646] p-2 pb-0'>
                 <Dialog
@@ -309,15 +302,45 @@ function MatchApp() {
                     className='snap-none'
                 />
             </button>
-            <div className='grid columns-1 text-center justify-center'>
-                <h1 className='py-8 text-center text-3xl 
-                font-bold text-[#48c55c]'>
+            <div className='grid columns-1 text-center justify-center 
+            border-b-2 border-[#2f3646] pb-8'>
+                <p className='py-8 text-center text-3xl 
+                font-bold text-[#48c55c] snap-center'>
                     Match Scouting App
-                </h1>
+                </p>
                 <NumberInput onChange={setMatchNumber} value={matchNumber} 
-                className='bg-[#2f3646] text-2xl pl-3 pt-2 pb-2 text-[#dee4f5]
+                className='bg-[#2f3646] text-2xl pl-[18px] pt-2 pb-2 text-[#dee4f5]
                 outline-none rounded' placeholder='Match Number'/>
                 <TeamDropdown onChange={setTeamNumber} value={teamNumber}/>
+            </div>
+            <div className='grid grid-cols-2 gap-10 px-10'>
+                        <div className='col-span-2 text-center'>
+                            <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
+                                Autonomous:
+                            </p>
+                        </div>
+                        <div>
+                            <ScoreMap alliance={blueAlliance} 
+                            scouterPosition={scouterPosition} 
+                            handleCount={handleCount} count={count}/>
+                        </div>
+                        <div className='text-white'>
+                            test
+                        </div>
+                        <div className='col-span-2 text-center'>
+                            <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
+                                Tele-Op:
+                            </p>
+                        </div>
+                        <div>
+                            <ScoreMap alliance={blueAlliance} 
+                            scouterPosition={scouterPosition} 
+                            handleCount={handleCount} count={count} 
+                            setClimb={setClimbPosition} climbPosition={climbPosition} teleop/>
+                        </div>
+                        <div className='text-white'>
+                            test
+                        </div>
             </div>
         </main>
     );
