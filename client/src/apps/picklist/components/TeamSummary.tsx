@@ -4,6 +4,7 @@ import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
+import blankImage from '../../../images/blank.png';
 
 function TeamSummary({
     table,
@@ -102,7 +103,8 @@ function TeamSummary({
                     <Dialog
                         trigger={open => (
                             <button onClick={open}>
-                                <img src={`/image/${table.teamNumber}.jpeg`} width="400"/>
+                                <img src={`/image/${table.teamNumber}.jpeg`} width="400" alt=""
+                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.src = blankImage}} />
                             </button>
                         )}
                         >

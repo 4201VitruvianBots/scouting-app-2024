@@ -169,12 +169,12 @@ function StatTable({
                         </td>
                         {table.columns.map(column => (
                             column === "robotImages" ? (
-                                <td className='border border-black'>
+                                <td className='border border-black border-separate'>
                                     <Dialog
                                         trigger={open => (
                                             <button onClick={open}>
-                                                <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" 
-                                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.onerror = null; e.currentTarget.style.display = "none";}}/>
+                                                <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" alt=""
+                                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.src = blankImage}} />
                                             </button>
                                         )}
                                         >
