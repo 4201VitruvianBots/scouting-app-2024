@@ -63,15 +63,24 @@ function SignIn({
     return (
         <>
             <div
-                className={`grid w-[400px] auto-rows-fr grid-cols-2 selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr_auto]' : pitScouting ? 'grid-rows-[auto_auto_auto]' : 'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'} grid-flow-col justify-center gap-3`}>
-                <p className='col-span-2 justify-self-center p-1 text-2xl font-medium text-green-600'>
+                className={`grid w-[400px] auto-rows-fr grid-cols-2 bg-[#171c26] px-5 py-3
+                    selection:box-border ${superScouting ? 'grid-rows-[auto_auto_1fr_1fr_auto]' : 
+                    pitScouting ? 'grid-rows-[auto_auto_auto]' : 
+                    'grid-rows-[auto_auto_1fr_1fr_1fr_0.5fr_1fr]'
+                    } grid-flow-col justify-center gap-3`}
+            >
+                <p className='col-span-2 justify-self-center 
+                p-1 text-2xl font-bold text-[#48c55c]'>
                     Sign-In
                 </p>
+
                 <TextInput
-                    className=' required col-span-2 h-[40px] justify-center text-xl text-black outline-double outline-sky-300 '
+                    className='bg-[#171c26] required col-span-2 h-[40px] text-[#dee4f5]
+                    justify-center text-xl outline outline-[#2f3646]'
                     value={scouterName}
                     onChange={onChangeScouterName}
-                    placeholder='Name'></TextInput>
+                    placeholder='Name'>
+                </TextInput>
 
                 {superScouting ? (
                     <MultiButton
@@ -81,12 +90,12 @@ function SignIn({
                         values={['red_ss', 'blue_ss']}
                         className={'text-xl'}
                         unSelectedClassName={[
-                            'text-red-500 bg-gray-300 ',
-                            'text-blue-500 bg-gray-300',
+                            'bg-[#2f3646] ',
+                            'text-[#93C6D6] bg-[#2f3646]',
                         ]}
                         selectedClassName={[
-                            'bg-red-500 text-white',
-                            'bg-blue-500 text-white',
+                            'bg-[#D16666] text-black',
+                            'bg-[#93C6D6] text-black',
                         ]}
                     />
 
@@ -111,49 +120,55 @@ function SignIn({
                             'red_2',
                             'red_3',
                         ]}
-                        className={'text-xl'}
+                        className={'text-xl rounded-lg'}
                         unSelectedClassName={[
-                            'text-blue-500 bg-gray-300',
-                            'text-blue-500 bg-gray-300',
-                            'text-blue-500 bg-gray-300',
-                            'text-red-500 bg-gray-300 ',
-                            'text-red-500 bg-gray-300',
-                            'text-red-500 bg-gray-300',
+                            'text-[#93C6D6] bg-[#2f3646]',
+                            'text-[#93C6D6] bg-[#2f3646]',
+                            'text-[#93C6D6] bg-[#2f3646]',
+                            'text-[#D16666] bg-[#2f3646]',
+                            'text-[#D16666] bg-[#2f3646]',
+                            'text-[#D16666] bg-[#2f3646]',
                         ]}
                         selectedClassName={[
-                            'bg-blue-500 text-white',
-                            'bg-blue-500 text-white',
-                            'bg-blue-500 text-white',
-                            'bg-red-500 text-white',
-                            'bg-red-500 text-white',
-                            'bg-red-500 text-white',
+                            'bg-[#93C6D6] text-black',
+                            'bg-[#93C6D6] text-black',
+                            'bg-[#93C6D6] text-black',
+                            'bg-[#D16666] text-black',
+                            'bg-[#D16666] text-black',
+                            'bg-[#D16666] text-black',
                         ]}
                     />
                 )}
 
                 {onChangeScouterPosition && (
-                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-4' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
-                    <MultiButton
-                        onChange={onChangeScouterPosition}
-                        value={scouterPosition}
-                        labels={['Blue on right', 'Red on right']}
-                        values={['blue_right', 'red_right']}
-                        className={'rounded-lg border-2  text-xl'}
-                        unSelectedClassName={'bg-gray-200 text-black'}
-                        selectedClassName={[
-                            'bg-blue-300 text-black border-blue-800',
-                            'bg-red-300 text-black border-red-800',
-                        ]}></MultiButton>
-                </div>
-
-                )}
-                
+                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-4' : 
+                    'row-start-6'} grid  grid-cols-2 gap-4`}
+                    >
+                        <MultiButton
+                            onChange={onChangeScouterPosition}
+                            value={scouterPosition}
+                            labels={['Blue on right', 'Red on right']}
+                            values={['blue_right', 'red_right']}
+                            className={'rounded-lg border-2  border-[#2f3646] text-xl mt-5'}
+                            unSelectedClassName={'bg-[#2f3646] text-[#dee4f5]'}
+                            selectedClassName={[
+                                'bg-[#93C6D6] text-black border-[#93C6D6]',
+                                'bg-[#D16666] text-black border-[#D16666]',
+                            ]}>
+                        </MultiButton>
+                    </div>
+                )} 
 
                 <div
-                    className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-5' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>
+                    className={`col-span-2 flex  flex-row justify-self-center 
+                    ${superScouting ? 'row-start-5' : pitScouting ? 'row-start-3' : 
+                    'row-start-7'} col-start-1 `}
+                >
                     <button
                         onClick={handleSubmit}
-                        className={` ${showCheck ? 'bg-green-500' : 'bg-gray-300'}  m-3 justify-center rounded-md bg-gray-300  px-5  py-3 text-xl hover:bg-green-500`}>
+                        className={`bg-[#48c55c]  ${showCheck ? 'bg-[#48c55c]' : 'bg-'}  
+                        m-3 justify-center rounded-md px-5 py-3 text-xl`}
+                    >
                         Submit
                     </button>
                 </div>

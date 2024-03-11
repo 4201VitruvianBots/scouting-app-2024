@@ -144,37 +144,135 @@ function MatchApp() {
     useStatus(robotPosition, matchNumber, scouterName);
 
     return (
-        <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center '>
-                {showCheck && (
-                    <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
-                )}
-            <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
-                <LinkButton link='/' className='snap-none'>
-                    <MaterialSymbol
-                        icon='home'
-                        size={60}
-                        fill
-                        grade={200}
-                        color='green'
-                        className='snap-none'
-                    />
-                </LinkButton>
+        // <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center '>
+        //         {showCheck && (
+        //             <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
+        //         )}
+        //     <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
+        //     <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+        //         <LinkButton link='/' className='snap-none'>
+        //             <MaterialSymbol
+        //                 icon='home'
+        //                 size={60}
+        //                 fill
+        //                 grade={200}
+        //                 color='green'
+        //                 className='snap-none'
+        //             />
+        //         </LinkButton>
                 
+        //         <Dialog
+        //             open
+        //             trigger={open => (
+        //                 <button onClick={open}>
+        //                     <MaterialSymbol
+        //                         icon='account_circle'
+        //                         size={60}
+        //                         fill
+        //                         grade={200}
+        //                         className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+        //                     />
+        //                 </button>
+        //             )}>
+                        
+        //             {close => (
+        //                 <SignIn
+        //                     scouterName={scouterName}
+        //                     onChangeScouterName={setScouterName}
+        //                     robotPosition={robotPosition}
+        //                     onChangeRobotPosition={setRobotPosition}
+        //                     scouterPosition={scouterPosition}
+        //                     onChangeScouterPosition={setScouterPosition}
+        //                     onSubmit={close}
+        //                 />
+        //             )}
+        //         </Dialog>
+        //         <button
+        //             onClick={undoCount}
+        //             className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+        //             <MaterialSymbol
+        //                 icon='undo'
+        //                 size={60}
+        //                 fill
+        //                 grade={200}
+        //                 color='black'
+        //                 className='snap-none'
+        //             />
+        //         </button>
+        //         <ConeStacker />
+        //     </div>
+           
+        //     <p className='text-2xl mt-2 mb-2'>Match Number</p>
+        //     <NumberInput onChange={setMatchNumber} value={matchNumber} />
+        //     <p className='text-2xl mt-2 mb-2'>Team Number</p>
+        //     <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
+
+        //     <div>
+        //         <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
+        //         <FieldButton
+        //             setCount={handleSetCount}
+        //             setLeave={setLeave}
+        //             teleOp={false}
+        //             count={count}
+        //             leave={leave}
+        //             alliance={blueAlliance}
+        //             scouterPosition={scouterPosition}
+        //         />
+        //         <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Tele-Op</h2>
+        //         <FieldButton
+        //             setCount={handleSetCount}
+        //             teleOp={true}
+        //             count={count}
+        //             alliance={blueAlliance}
+        //             scouterPosition={scouterPosition}
+        //         />
+        //         <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
+        //         <EndgameButton
+        //             climbPosition={climbPosition}
+        //             setClimb={setClimbPosition}
+        //             alliance={blueAlliance}
+        //             scouterPosition={scouterPosition}
+        //         />
+        //         <div className='flex justify-center mt-20 mb-5'>
+        //             <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '30px'}}
+        //                 className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
+        //                 Trap Note: {count.trap}
+        //             </button>
+        //             <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
+        //                 className='px-2 py-1 text-center bg-green-500 rounded-md'>
+        //                         Submit
+        //             </button>
+
+        //         </div>
+        //     </div>
+
+        //     <div>
+        //         <div>Queue: {queue.length}</div>
+        //         <button onClick={sendAll}
+        //                 className='px-2 py-1 text-center bg-amber-500 rounded-md'
+        //         >{sending ? 'Sending...': 'Resend All'}</button>
+        //     </div>
+        // </main >
+        <main className='bg-[#171c26] h-screen w-screen'>
+            <div className='flex flex-col absolute right-4 top-4 z-20 gap-3 
+            rounded-md bg-[#2f3646] p-2 pb-0'>
                 <Dialog
-                    open
-                    trigger={open => (
+                open
+                trigger={
+                    open => (
                         <button onClick={open}>
                             <MaterialSymbol
                                 icon='account_circle'
                                 size={60}
                                 fill
                                 grade={200}
-                                className={` ${scouterName && robotPosition ? 'text-green-400' : 'text-gray-400'} snap-none`}
+                                className={
+                                    `${scouterName && robotPosition ? 'text-[#48c55c]' : 
+                                    'text-[#dee4f5]'}`
+                                }
                             />
                         </button>
-                    )}>
-                        
+                    )}>   
                     {close => (
                         <SignIn
                             scouterName={scouterName}
@@ -187,72 +285,41 @@ function MatchApp() {
                         />
                     )}
                 </Dialog>
-                <button
-                    onClick={undoCount}
-                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
-                        icon='undo'
+                        icon='home'
                         size={60}
                         fill
                         grade={200}
-                        color='black'
+                        color='#dee4f5'
                         className='snap-none'
                     />
-                </button>
-                <ConeStacker />
+                </LinkButton>
             </div>
-           
-            <p className='text-2xl mt-2 mb-2'>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
-            <p className='text-2xl mt-2 mb-2'>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
-
-            <div>
-                <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
-                <FieldButton
-                    setCount={handleSetCount}
-                    setLeave={setLeave}
-                    teleOp={false}
-                    count={count}
-                    leave={leave}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
+            <button
+                onClick={undoCount}
+                className='fixed left-4 top-4 z-20 aspect-square rounded 
+                bg-[#dee4f5] p-1 font-bold text-black '>
+                <MaterialSymbol
+                    icon='undo'
+                    size={60}
+                    fill
+                    grade={200}
+                    color='black'
+                    className='snap-none'
                 />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Tele-Op</h2>
-                <FieldButton
-                    setCount={handleSetCount}
-                    teleOp={true}
-                    count={count}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
-                />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
-                <EndgameButton
-                    climbPosition={climbPosition}
-                    setClimb={setClimbPosition}
-                    alliance={blueAlliance}
-                    scouterPosition={scouterPosition}
-                />
-                <div className='flex justify-center mt-20 mb-5'>
-                    <button onClick={() => { if (count.trap < 3) handleCount('trap') }} style={{ fontSize: '30px'}}
-                        className='px-2 py-1 text-center bg-blue-300 rounded-md mr-2 block absolute left-24'>
-                        Trap Note: {count.trap}
-                    </button>
-                    <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
-                        className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                                Submit
-                    </button>
-
-                </div>
+            </button>
+            <div className='grid columns-1 text-center justify-center'>
+                <h1 className='py-8 text-center text-3xl 
+                font-bold text-[#48c55c]'>
+                    Match Scouting App
+                </h1>
+                <NumberInput onChange={setMatchNumber} value={matchNumber} 
+                className='bg-[#2f3646] text-2xl pl-3 pt-2 pb-2 text-[#dee4f5]
+                outline-none rounded' placeholder='Match Number'/>
+                <TeamDropdown onChange={setTeamNumber} value={teamNumber}/>
             </div>
-
-            <div>
-                <div>Queue: {queue.length}</div>
-                <button onClick={sendAll}
-                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
-                >{sending ? 'Sending...': 'Resend All'}</button>
-            </div>
-        </main >
+        </main>
     );
 } 
 

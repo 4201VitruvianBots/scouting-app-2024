@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { MatchScores } from '../apps/match/MatchApp';
 import { ScouterPosition } from 'requests';
 import MultiButton from './MultiButton';

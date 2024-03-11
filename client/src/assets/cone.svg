@@ -1,7 +1,7 @@
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
 	<title>Cone Icon</title>
 	<style>
-		.s0 { opacity: 1;fill: #FF7000 } 
+		.s0 { opacity: 1;fill: #dee4f5 } 
 	</style>
 	<g id="Shape 1 copy">
 		<path id="Path 0" fill-rule="evenodd" class="s0" d="m660 0l163 577h-566l163-577zm-303 502h366l-120-427h-126z"/>

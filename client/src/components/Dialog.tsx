@@ -41,7 +41,7 @@ function Dialog({
                 ref={dialogRef}
                 onClose={() => setOpen(false)}
                 onClick={handleClick}
-                className='overflow-visible rounded-md bg-gray-100 p-5'>
+                className='overflow-visible rounded-md bg-[#2f3646] p-5'>
                 {open &&
                     (typeof children === 'function'
                         ? children(() => setOpen(false))
