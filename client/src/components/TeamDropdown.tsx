@@ -2,8 +2,6 @@ import { Dispatch } from 'react';
 import teamsString from '../assets/teams.txt?raw';
 import SelectSearch, { SelectSearchOption } from 'react-select-search';
 
-'select-search-container';
-
 const teamOptions: SelectSearchOption[] = teamsString
     .split(/\r?\n/g)
     .filter(e => e !== '')
@@ -18,15 +16,16 @@ function TeamDropdown({
     value?: number | undefined;
     onChange?: Dispatch<number>;
 }) {
-    return (<div className='contents team-search'>
-        <SelectSearch
+    return (
+        <div className='pt-5'>        
+            <SelectSearch
             options={teamOptions}
             value={value?.toString()}
             onChange={value => onChange?.(parseInt(value as string))}
             search
-            placeholder='Select Team Number...'
-       />
-       </div>
+            placeholder='Select Team Number'
+            />
+        </div>
     );
 }
 

@@ -17,7 +17,8 @@ function NumberInput({
             value={value?? ''}
             type='number'
             onChange={
-                onChange ? event => onChange(event.target.value?parseFloat(event.target.value): undefined) : undefined
+                onChange ? event => 
+                onChange(event.target.value?parseFloat(event.target.value): undefined) : undefined
             }
             {...otherProps}
         />
