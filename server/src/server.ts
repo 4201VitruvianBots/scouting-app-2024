@@ -95,7 +95,7 @@ app.get('/image/:teamId.jpeg', async (req, res) => {
     if (!imageData) {
         //  Return a 404 response
         res.status(404)
-        res.send('Image does not exist in database.');
+        res.sendFile(path.resolve('static/fallback.png'))
         return;
     }
 
