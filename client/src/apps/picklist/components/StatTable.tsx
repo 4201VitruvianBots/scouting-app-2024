@@ -155,8 +155,8 @@ function StatTable({
                         <td>
                             <img
                                 src={
-                                    teamInfoJson[entry.teamNumber].avatar
-                                        ? `data:image/png;base64,${teamInfoJson[entry.teamNumber].avatar}`
+                                    teamInfoJson[entry.teamNumber]?.avatar
+                                        ? `data:image/png;base64,${teamInfoJson[entry.teamNumber]!.avatar}`
                                         : blankImage
                                 }
                             />
