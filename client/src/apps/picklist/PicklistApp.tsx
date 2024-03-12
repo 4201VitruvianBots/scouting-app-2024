@@ -17,6 +17,7 @@ import StatSummary from './components/StatSummary';
 import TeamSummaryDialog from './components/TeamSummaryDialog';
 import TeamSummary from './components/TeamSummary';
 import { Dispatch } from 'react';
+import FinalPicklist from './components/FinalPicklist';
 
 function generateWindow(
     data: AnalysisEntry[],
@@ -83,7 +84,7 @@ function PicklistApp() {
         useWorkspaceState<WindowData>();
 
     return (
-        <main className='grid h-screen grid-rows-[auto_1fr]'>
+        <main className='grid h-screen grid-rows-[auto_1fr] relative overflow-hidden'>
             <div className='flex items-center border-b border-black py-3 bg-gray-100'>
                 <LinkButton
                     link='/'
@@ -194,6 +195,7 @@ function PicklistApp() {
                     );
                 }}
             </Workspace>
+            <FinalPicklist />
         </main>
     );
 }
