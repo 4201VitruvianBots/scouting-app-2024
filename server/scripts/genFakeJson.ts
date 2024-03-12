@@ -12,20 +12,60 @@ function randfloat(max: number, min = 0) {
     return (max - min) * Math.random() + min;
 }
 
-const teams: number[] = [];
+const teams: number[] = `4
+498
+696
+973
+980
+1148
+1159
+1165
+1197
+1572
+2102
+2429
+2485
+2543
+2658
+2710
+2839
+3128
+3255
+3328
+3473
+3512
+3647
+3759
+3863
+4201
+4322
+4414
+4415
+4481
+4501
+5124
+5137
+5199
+5419
+6036
+6658
+6764
+7157
+7777
+8006
+8020
+8119
+8891
+9408
+9452
+9505
+9520
+9538
+9635`.split('\n').map(str => parseInt(str));
 
-function getTeamNum() {
-    let num: number;
-    do {
-        num = randint(10000);
-    } while (num in teams);
-    teams.push(num);
-    return num;
-}
-
-const data = new Array(40).fill(0).map(() => (
+const data = teams.map(team => (
     {
-        teamNumber: getTeamNum(),
+        teamNumber: team,
         scouterName: 'Nate',
         autoAmpNotes: randint(5),
         autoSpeakerNear: randint(5),
