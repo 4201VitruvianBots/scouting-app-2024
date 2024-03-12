@@ -131,26 +131,8 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
     return (await superApp.aggregate([
         {$group:{
              _id: {teamNumber: '$metadata.robotTeam'},
-             avgFouls: {$avg: {$add: [
-                {$convert: {input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert: {input: '$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{ input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
-            maxFouls: {$max: {$add: [
-                {$convert:{input:'$fouls.inBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert: {input:'$fouls.damageBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.tipEntangBot',to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.pinBot', to: 'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.podiumFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.zoneFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.stageFoul',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'$fouls.multiplePieces',to:'int', onError: 0, onNull: 0}},
-                {$convert:{input:'fouls.overExtChute',to:'int', onError: 0, onNull: 0}}]}},
+             avgFouls: {$avg: {$add: ['$fouls.protectedZone', '$fouls.multiplePieces', '$fouls.insideRobot', '$fouls.pinning', '$fouls.other']}},
+             maxFouls: {$max: {$add: ['$fouls.protectedZone', '$fouls.multiplePieces', '$fouls.insideRobot', '$fouls.pinning', '$fouls.other']}},
          } satisfies { [K in keyof SuperDataAggregations]: unknown }}
     ]))
 

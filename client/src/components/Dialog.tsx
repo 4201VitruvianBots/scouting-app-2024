@@ -27,7 +27,8 @@ function Dialog({
         }
     }, [open]);
 
-    const handleClick: MouseEventHandler<HTMLDialogElement> = ({currentTarget, clientX, clientY}) => {
+    const handleClick: MouseEventHandler<HTMLDialogElement> = ({target, currentTarget, clientX, clientY}) => {
+        if (currentTarget !== target) return;
         const { left, right, top, bottom } = currentTarget.getBoundingClientRect();
         
         if (clientX > left && clientX < right && clientY > top && clientY < bottom) return;
