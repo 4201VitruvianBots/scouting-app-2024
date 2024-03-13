@@ -74,6 +74,7 @@ export interface MatchDataAggregations{
     maxTrapNotes: number;
     avgClimbRate: number;
     harmonyRate: number;
+    scoringLocation: unknown;
 }
 
 export interface SuperDataAggregations{
