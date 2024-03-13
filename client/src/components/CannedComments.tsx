@@ -1,9 +1,14 @@
 import { Dispatch } from 'react';
 import SelectSearch, { SelectSearchOption } from 'react-select-search';
+import { CommentValues } from 'requests';
 
-const commentOptions: SelectSearchOption[] = ([
+const commentOptions: ({[K in keyof SelectSearchOption]: K extends 'value' ? CommentValues : SelectSearchOption[K]})[] = ([
     {name: 'good vibes', value:'good_vibes'},
-    {name: 'good driving', value:'good_driving'},
+    {name: 'epic vibes', value:'epic_vibes'},
+    {name: 'wacky vibes', value:'wacky_vibes'},
+    {name: 'mad good driving', value:'mad_good_driving'},
+    {name: 'mid driving', value:'mid_driving'},
+    {name: 'dnp driving', value:'dnp_driving'}
 ]);
 
 

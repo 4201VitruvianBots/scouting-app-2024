@@ -29,6 +29,13 @@ export type DefenseRank =
     | 'fullDef' 
     | 'someDef' 
     | 'noDef'
+export type CommentValues =
+    | 'good_vibes'
+    | 'epic_vibes'
+    | 'wacky_vibes'
+    | 'mad_good_driving'
+    | 'mid_driving'
+    | 'dnp_driving'
 
 interface capabilities { 
     amp: boolean,
@@ -48,8 +55,8 @@ interface preference {
     speakerPerfer:boolean,
     trapPrefer: boolean,
     climbPrefer: boolean,
-
 }
+
 export type SuperPosition = 
     | 'red_ss'
     | 'blue_ss';

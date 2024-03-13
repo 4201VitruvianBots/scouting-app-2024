@@ -80,6 +80,7 @@ const defaultSuperTeamState: SuperTeamState = {
     defenseRank: 'noDef',
     wasDefended: false,
     teamNumber: undefined,
+    cannedComments: []
 };
 
 function SuperApp() {
