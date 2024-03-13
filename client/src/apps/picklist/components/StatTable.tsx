@@ -30,8 +30,11 @@ function StatTable({
                 let aSum = 0;
                 let bSum = 0;
                 for (let i = 0; i < table.columns.length; i++) {
-                    aSum += (a[table.columns[i]] as number) * (table.weights[i] ?? 0);
-                    bSum += (b[table.columns[i]] as number) * (table.weights[i] ?? 0);
+                    const aValue = a[table.columns[i]];
+                    const bValue = b[table.columns[i]];
+                    if (typeof aValue !== 'number' || typeof bValue !== 'number') continue;
+                    aSum += (aValue) * (table.weights[i] ?? 0);
+                    bSum += (bValue) * (table.weights[i] ?? 0);
                 }
                 return (aSum - bSum) * (table.ascending ? 1 : -1);
             }
@@ -91,7 +94,7 @@ function StatTable({
             <table className='border border-black'>
                 <thead className='sticky top-0 border border-black'>
                     <tr className='border border-black'>
-                        <th colSpan={2} className='border border-black'>
+                        <th className='border border-black'>
                             Team
                         </th>
                         {table.columns.map((column, i) => (
