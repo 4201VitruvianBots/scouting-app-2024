@@ -58,50 +58,43 @@ function SuperTeam({
 //many divs, kinda ugly
     return (
         <div>
+            <p className='text-zinc-100 underline text-lg'>Team Number</p>
             <div className='flex justify-center'>
             <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
             </div>
         <p className='mt-5 text-4xl text-zinc-100 underline'>Fouls</p>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('insideRobot')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Inside Robot: {teamState.foulCounts.insideRobot || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseFoul('insideRobot')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('insideRobot')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('insideRobot')}>+Inside Robot: {teamState.foulCounts.insideRobot || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('protectedZone')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Protected Zone: {teamState.foulCounts.protectedZone || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseFoul('protectedZone')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('protectedZone')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('protectedZone')}>+Protected Zone: {teamState.foulCounts.protectedZone || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('pinning')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Pinning: {teamState.foulCounts.pinning || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseFoul('pinning')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('pinning')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('pinning')}>+Pinning: {teamState.foulCounts.pinning || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('multiplePieces')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Multiple Pieces: {teamState.foulCounts.multiplePieces || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseFoul('multiplePieces')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('multiplePieces')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('multiplePieces')}>+Multiple Pieces: {teamState.foulCounts.multiplePieces || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('other')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Other: {teamState.foulCounts.other || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseFoul('other')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('other')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('other')}>+Other: {teamState.foulCounts.other || 0}</button>
         </div>
         <p className='mt-5 text-4xl text-zinc-100 underline'>Breaks</p>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('mechanismDmg')}>-</button>
-            <p className='text-zinc-100 mt-4'>Mechanism Dmg: {teamState.breakCount.mechanismDmg || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseBreak('mechanismDmg')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('mechanismDmg')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('mechanismDmg')}>+Mechanism Dmg: {teamState.breakCount.mechanismDmg || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('batteryFall')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Battery Fall: {teamState.breakCount.batteryFall || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseBreak('batteryFall')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('batteryFall')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('batteryFall')}>+Battery Fall: {teamState.breakCount.batteryFall || 0}</button>
         </div>
-        <div className='flex justify-between'>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('commsFail')}>-</button>
-            <p className='text-lg text-zinc-100 mt-4'>Comms Fail: {teamState.breakCount.commsFail || 0}</p>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3' onClick={() => handleIncreaseBreak('commsFail')}>+</button>
+        <div className='flex justify-center'>
+            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('commsFail')}>-</button>
+            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('commsFail')}>+Comms Fail: {teamState.breakCount.commsFail || 0}</button>
         </div>
             <MultiButton
                 onChange={handleDefense}
