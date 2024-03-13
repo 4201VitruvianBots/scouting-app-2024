@@ -30,12 +30,17 @@ export type DefenseRank =
     | 'someDef' 
     | 'noDef'
 export type CommentValues =
-    | 'good_vibes'
-    | 'epic_vibes'
-    | 'wacky_vibes'
-    | 'mad_good_driving'
-    | 'mid_driving'
-    | 'dnp_driving'
+    | 'great_driving'
+    | 'good_driving'
+    | 'source_only'
+    | 'clogging'
+    | 'effective_defense'
+    | 'mid_defense'
+    | 'ineffective_defense'
+    | 'sturdy_build'
+    | 'weak_build'
+    | 'drives_under_stage'
+    | 'avoids_under_stage'
 
 interface capabilities { 
     amp: boolean,

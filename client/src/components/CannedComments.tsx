@@ -1,57 +1,43 @@
 import { Dispatch } from 'react';
-import { SelectSearchOption } from 'react-select-search';
 import { CommentValues } from 'requests';
 import Select from 'react-select'
 
 const commentOptions: {
-    [K in keyof Select]: K extends 'value'
-        ? CommentValues
-        : SelectSearchOption[K];
+    value: CommentValues;
+    label: string;
 }[] = [
-    { name: 'good vibes', value: 'good_vibes' },
-    { name: 'epic vibes', value: 'epic_vibes' },
-    { name: 'wacky vibes', value: 'wacky_vibes' },
-    { name: 'mad good driving', value: 'mad_good_driving' },
-    { name: 'mid driving', value: 'mid_driving' },
-    { name: 'dnp driving', value: 'dnp_driving' },
+    { label: 'great driving', value: 'great_driving' },
+    { label: 'good driving', value: 'good_driving' },
+    { label: 'source only', value: 'source_only' },
+    { label: 'clogging', value: 'clogging' },
+    { label: 'effective defense', value: 'effective_defense' },
+    { label: 'mid defense', value: 'mid_defense' },
+    { label: 'ineffective defense', value: 'ineffective_defense' },
+    { label: 'sturdy build', value: 'sturdy_build' },
+    { label: 'weak build', value: 'weak_build' },
+    { label: 'drives under stage', value: 'drives_under_stage' },
+    { label: 'avoids under stage', value: 'avoids_under_stage' },
 ];
-
-console.log(commentOptions);
 
 function CannedCommentBox({
     value,
     onChange,
 }: {
-    value?: string[] | undefined;
-    onChange?: Dispatch<string[]>;
+    value?: CommentValues[] | undefined;
+    onChange?: Dispatch<CommentValues[]>;
 }) {
     return (
         <div className='contents'>
-            {/* <SelectSearch
-                options={commentOptions}
-                multiple
-                value={value}
-                onChange={value => onChange?.((value as string[]).map(optionValue => optionValue.toString()))}
-                search
-                placeholder='Select Team Number...'
-            /> */}
 
             <Select
                 closeMenuOnSelect={false}
                 // defaultValue={[colourOptions[0], colourOptions[1]]}
                 isMulti
-            
-                options={commentOptions}
-                // onChange={value =>
-                //     onChange?.(
-                //         (value as string[]).map(optionValue =>
-                //             optionValue.toString()
-                //         )
-                //     )
-                // }
-
-
-                onChange={value => onChange?.((Array.isArray(value) ? value : [value]).map(optionValue => optionValue.toString()))}
+                value={value}
+                
+                options={commentOptions as unknown as CommentValues[]}
+                
+                onChange={value => onChange?.(value as CommentValues[])}
                 // styles={colourStyles}
             />
         </div>
