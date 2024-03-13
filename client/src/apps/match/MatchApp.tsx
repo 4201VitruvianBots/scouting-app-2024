@@ -15,6 +15,7 @@ import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
 import ScoreMap from '../../components/ScoreMap';
+import MultiButton from '../../components/MultiButton';
 
 const schedule = scheduleFile as MatchSchedule
 
@@ -314,33 +315,50 @@ function MatchApp() {
                 <TeamDropdown onChange={setTeamNumber} value={teamNumber}/>
             </div>
             <div className='grid grid-cols-2 gap-10 px-10'>
-                        <div className='col-span-2 text-center'>
-                            <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
-                                Autonomous:
-                            </p>
-                        </div>
-                        <div>
-                            <ScoreMap alliance={blueAlliance} 
-                            scouterPosition={scouterPosition} 
-                            handleCount={handleCount} count={count}/>
-                        </div>
-                        <div className='text-white'>
-                            test
-                        </div>
-                        <div className='col-span-2 text-center'>
-                            <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
-                                Tele-Op:
-                            </p>
-                        </div>
-                        <div>
-                            <ScoreMap alliance={blueAlliance} 
-                            scouterPosition={scouterPosition} 
-                            handleCount={handleCount} count={count} 
-                            setClimb={setClimbPosition} climbPosition={climbPosition} teleop/>
-                        </div>
-                        <div className='text-white'>
-                            test
-                        </div>
+                <div className='col-span-2 text-center'>
+                    <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
+                        Autonomous:
+                    </p>
+                </div>
+                <div>
+                    <ScoreMap alliance={blueAlliance} 
+                        scouterPosition={scouterPosition} 
+                        handleCount={handleCount} count={count}
+                    />
+                </div>
+                <div className='grid p-32'>
+                    <button onClick={() => handleCount('autoMiss')}
+                    className='bg-[#dee4f5] text-4xl rounded'>
+                        Missed: {count.autoMiss}
+                    </button>
+                </div>  
+                <div className='col-span-2 text-center'>
+                    <p className='py-5 text-3xl font-bold text-[#48c55c] snap-start'>
+                        Tele-Op:
+                    </p>
+                </div>
+                <div>
+                    <ScoreMap alliance={blueAlliance} 
+                        scouterPosition={scouterPosition} 
+                        handleCount={handleCount} count={count} 
+                        setClimb={setClimbPosition} climbPosition={climbPosition} teleop
+                    />
+                </div>
+                <div className='grid px-20 gap-10 py-10'>
+                    <button onClick={() => handleCount('teleMiss')}
+                    className='bg-[#dee4f5] text-4xl rounded'>
+                        Missed: {count.teleMiss}
+                    </button>
+                    <MultiButton onChange={setClimbPosition?? (() => {})}
+                        unSelectedClassName={
+                            blueAlliance ? 'bg-[#96c6d6] text-4xl rounded' : 
+                            'bg-[#D16666] text-4xl rounded'
+                        }
+                        selectedClassName='bg-[#a4ebaf] text-4xl rounded'
+                        value={climbPosition} values={['park', 'failed', 'none']}
+                        labels={['Parked', 'Failed', 'None']}
+                    />
+                </div>
             </div>
         </main>
     );

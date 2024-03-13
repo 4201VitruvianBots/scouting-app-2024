@@ -27,8 +27,6 @@ function ScoreMap({
     count: MatchScores;
 }) {
     
-
-
     return(
         <div className={`relative pl-5 overflow-hidden 
         ${scouterPosition === 'red_right' ? 'rotate-180' : ''}`}>
@@ -44,9 +42,9 @@ function ScoreMap({
             </button>
             <button onClick={() => handleCount(teleop ? 'teleAmp' : 'autoAmp')} 
             className={alliance ? 
-                `bg-[#96c6d6] absolute right-[24%] bottom-0 h-[8.5%] w-[19%] text-4xl
+                `bg-[#96c6d6] absolute right-[24%] bottom-[0%] h-[8.5%] w-[19%] text-4xl
                 ${scouterPosition === 'red_right' ? 'rotate-180' : ''}` : 
-                `bg-[#D16666] absolute left-[27.7%] bottom-0 h-[8.5%] w-[19%] text-4xl
+                `bg-[#D16666] absolute left-[27.7%] bottom-[0%] h-[8.5%] w-[19%] text-4xl
                 ${scouterPosition === 'red_right' ? 'rotate-180' : ''}`
             }>
                 {teleop ? count.teleAmp : count.autoAmp}
