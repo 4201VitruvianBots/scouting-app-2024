@@ -3,11 +3,16 @@ import { AnalysisEntry, StatTableData, WindowData } from '../data';
 import { TeamData } from 'requests';
 import Dialog from '../../../components/Dialog';
 import StatColumnDialog from './StatColumnDialog';
-import blankImage from '../../../images/blank.png';
 import { MaterialSymbol } from 'react-material-symbols';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import RobotPhotoDialog from './RobotPhotoDialog';
 import TeamItem from './TeamItem';
+
+const isNumber = (num: unknown): num is number => {
+    return typeof num === 'number';
+}
+
+const sumReduction: [(prev: number, current: number) => number, 0] = [(prev, current) => prev + current, 0];
 
 function StatTable({
     table,
@@ -27,15 +32,9 @@ function StatTable({
     if (table.weighted) {
         sortedData = [...data].sort(
             (a, b) => {
-                let aSum = 0;
-                let bSum = 0;
-                for (let i = 0; i < table.columns.length; i++) {
-                    const aValue = a[table.columns[i]];
-                    const bValue = b[table.columns[i]];
-                    if (typeof aValue !== 'number' || typeof bValue !== 'number') continue;
-                    aSum += (aValue) * (table.weights[i] ?? 0);
-                    bSum += (bValue) * (table.weights[i] ?? 0);
-                }
+                const aSum = table.columns.map(column => a[column]).filter(isNumber).map((e, i) => e * table.weights[i]).reduce(...sumReduction);
+                const bSum = table.columns.map(column => b[column]).filter(isNumber).map((e, i) => e * table.weights[i]).reduce(...sumReduction);
+
                 return (aSum - bSum) * (table.ascending ? 1 : -1);
             }
         );
@@ -166,8 +165,7 @@ function StatTable({
                                         <Dialog
                                             trigger={open => (
                                                 <button onClick={open}>
-                                                    <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" alt=""
-                                                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.src = blankImage}} />
+                                                    <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" alt="" />
                                                 </button>
                                             )}
                                             >
