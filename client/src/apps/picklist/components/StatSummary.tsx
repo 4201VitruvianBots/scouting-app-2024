@@ -1,7 +1,9 @@
-import base64toImage from '../../../lib/base64toImage';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, StatSummaryData } from '../data';
 import { TeamData } from 'requests';
+
+const empty1x1Base64: string =
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 function StatSummary({
     table,
@@ -24,34 +26,21 @@ function StatSummary({
     const sortedEntryDataPoints = sortedEntries.map(entry => entry[1]);
 
     // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
-    const empty1x1Base64: string =
-        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-
     const lowTeamNumber = sortedEntryTeamNumbers[0];
-    const lowTeamAvatar = base64toImage(
-        teamInfoJson
-            ? teamInfoJson[lowTeamNumber]?.avatar ?? empty1x1Base64
-            : empty1x1Base64
-    );
+    const lowTeamAvatar = teamInfoJson[lowTeamNumber]?.avatar ?? empty1x1Base64
     const lowDataPoint = sortedEntryDataPoints[0];
 
     const medianTeamNumber =
         sortedEntryTeamNumbers[Math.floor(sortedEntryTeamNumbers.length / 2)];
-    const medianTeamAvatar = base64toImage(
-        teamInfoJson
-            ? teamInfoJson[medianTeamNumber]?.avatar ?? empty1x1Base64
-            : empty1x1Base64
-    );
+    const medianTeamAvatar = 
+        teamInfoJson[medianTeamNumber]?.avatar ?? empty1x1Base64;
     const medainDataPoint =
         sortedEntryDataPoints[Math.floor(sortedEntryDataPoints.length / 2)];
 
     const highTeamNumber =
         sortedEntryTeamNumbers[sortedEntryTeamNumbers.length - 1];
-    const highTeamAvatar = base64toImage(
-        teamInfoJson
-            ? teamInfoJson[highTeamNumber]?.avatar ?? empty1x1Base64
-            : empty1x1Base64
-    );
+    const highTeamAvatar = 
+        teamInfoJson[highTeamNumber]?.avatar ?? empty1x1Base64;
     const highDataPoint =
         sortedEntryDataPoints[sortedEntryDataPoints.length - 1];
 
@@ -94,7 +83,7 @@ function StatSummary({
             <div className='flex space-x-4'>
                 <p>Low: {lowDataPoint}</p>
                 <p>by </p>
-                <img src={lowTeamAvatar.src} max-width='32' max-height='32' />
+                <img src={`data:image/png;base64,${lowTeamAvatar}`} max-width='32' max-height='32' />
                 <p>Team {lowTeamNumber}</p>
             </div>
 
@@ -102,7 +91,7 @@ function StatSummary({
                 <p>Median: {medainDataPoint}</p>
                 <p>by </p>
                 <img
-                    src={medianTeamAvatar.src}
+                    src={`data:image/png;base64,${medianTeamAvatar}`}
                     max-width='32'
                     max-height='32'
                 />
@@ -112,7 +101,7 @@ function StatSummary({
             <div className='flex space-x-4'>
                 <p>High: {highDataPoint}</p>
                 <p>by </p>
-                <img src={highTeamAvatar.src} max-width='32' max-height='32' />
+                <img src={`data:image/png;base64,${highTeamAvatar}`} max-width='32' max-height='32' />
                 <p>Team {highTeamNumber}</p>
             </div>
         </>

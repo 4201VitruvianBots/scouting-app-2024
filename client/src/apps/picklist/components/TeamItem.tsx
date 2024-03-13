@@ -26,8 +26,8 @@ function TeamItem(
                 <td>
                     <img
                         src={
-                            teamInfoJson[teamNumber].avatar
-                                ? `data:image/png;base64,${teamInfoJson[teamNumber].avatar}`
+                            teamInfoJson[teamNumber]?.avatar
+                                ? `data:image/png;base64,${teamInfoJson[teamNumber]?.avatar}`
                                 : blankImage
                         }
                     />

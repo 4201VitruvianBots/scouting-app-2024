@@ -132,6 +132,7 @@ export interface PitFile {
     pitBatteryCount: number;
     drivebase: drivebase;
     comments: string;
+    photo: string;
 }
 
 // - `WebSocket` `/status/report`
@@ -179,14 +180,12 @@ export interface TeamInfo {
     website: string | null;
 }
 
-export interface TeamData {
-    [teamNumber: string]: {
+export type TeamData = Partial<{
+    [key: string]: {
         primaryHex: string;
         secondaryHex: string;
         verified: boolean;
         avatar?: string;
-        info: TeamInfo | {
-            Error: string;
-        };
+        info?: TeamInfo;
     };
-}
+}>;
