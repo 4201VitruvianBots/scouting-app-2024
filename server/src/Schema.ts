@@ -64,7 +64,8 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
             amp: Boolean,
             source: Boolean,
             center: Boolean
-    }}
+    }},
+    cannedComments: [String]
  });
 
 
