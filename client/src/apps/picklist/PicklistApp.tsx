@@ -195,7 +195,7 @@ function PicklistApp() {
                     );
                 }}
             </Workspace>
-            <FinalPicklist onSubmit={addToFocused} teamInfoJson={teamInfo || {}}/>
+            <FinalPicklist onSubmit={addToFocused} teamInfoJson={teamInfo || {}} data={analyzedData}/>
         </main>
     );
 }
