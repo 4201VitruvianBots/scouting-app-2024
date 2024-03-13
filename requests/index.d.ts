@@ -81,7 +81,7 @@ export interface SuperDataAggregations{
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
-    robotTeam: number;
+    robotTeam?: number;
     robotPosition: RobotPosition 
 }
 
