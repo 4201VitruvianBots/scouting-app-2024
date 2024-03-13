@@ -1,5 +1,5 @@
 import { AnalysisEntry, WindowData } from './data';
-import { TeamData } from 'requests';
+import { PitResult, TeamData } from 'requests';
 import Workspace from '../../components/workspace/Workspace';
 import { useWorkspaceState } from '../../components/workspace/useWorkspaceState';
 import StatTable from './components/StatTable';
@@ -23,6 +23,7 @@ function generateWindow(
     table: WindowData,
     setTable: Dispatch<WindowData>,
     teamInfoJson: TeamData,
+    pitData: PitResult,
     addToFocused: Dispatch<WindowData>
 ) {
     switch (table.type) {
@@ -65,6 +66,7 @@ function generateWindow(
                 <TeamSummary
                     data={data}
                     table={table}
+                    pitData={pitData}
                     teamInfoJson={teamInfoJson}
                 />
             );
@@ -77,6 +79,7 @@ function PicklistApp() {
     const [analyzedData, reloadData] = useFetchJson<AnalysisEntry[]>(
         '/output_analysis.json'
     );
+    const [pitData, reloadPitData] = useFetchJson<PitResult>('/data/pit');
     const [teamInfo] = useFetchJson<TeamData>('/team_info.json');
     
     const [views, setViews, addToFocused, controls] =
@@ -98,7 +101,7 @@ function PicklistApp() {
                     />
                 </LinkButton>
                 
-                <button className='flex snap-none items-center justify-center px-2' onClick={reloadData} title="Refresh Data">
+                <button className='flex snap-none items-center justify-center px-2' onClick={() => {reloadData(); reloadPitData();}} title="Refresh Data">
                     <MaterialSymbol icon="refresh" size={50} grade={200} color='black' className='snap-none'/>
                 </button>
                 
@@ -189,6 +192,7 @@ function PicklistApp() {
                             value,
                             onChange,
                             teamInfo || {},
+                            pitData || {},
                             addToFocused
                         )
                     );

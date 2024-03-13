@@ -5,7 +5,7 @@ import { matchApp, pitApp, superApp } from './Schema.js';
 import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.js'
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
-import { PitFile } from 'requests';
+import { PitFile, PitResult } from 'requests';
 import { dataUriToBuffer } from 'data-uri-to-buffer';
 
 
@@ -106,6 +106,16 @@ app.get('/image/:teamId.jpeg', async (req, res) => {
     res.contentType('image/jpeg');
      //  Return the image data
     res.send(imageData);
+})
+
+app.get('/data/pit', async (req, res) => {
+    const entries = await pitApp.find({}, {fields: {photo: 0}});
+    
+    const result: PitResult = {};
+    
+    entries.forEach(entry => result[entry.teamNumber] = entry)
+    
+    res.send(result);
 })
 
 app.use(express.static('static'));

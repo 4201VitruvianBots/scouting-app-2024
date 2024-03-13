@@ -1,22 +1,25 @@
 import Dialog from '../../../components/Dialog';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
-import { TeamData } from 'requests';
+import { PitResult, TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
 
 function TeamSummary({
     table,
     data,
     teamInfoJson,
+    pitData,
 }: {
     table: TeamSummaryData;
     data: AnalysisEntry[];
     teamInfoJson: TeamData;
+    pitData: PitResult;
 }) {
     // Get the data for the team specified
     const teamData = data.filter(e => e.teamNumber === table.teamNumber);
     
     const {info: teamInfo, avatar} = teamInfoJson[table.teamNumber] ?? {};
+    const teamPitData = pitData[table.teamNumber];
     
     return (
         <div className='flex space-x-10'>
