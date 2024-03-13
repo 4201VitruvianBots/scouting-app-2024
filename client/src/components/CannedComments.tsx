@@ -1,16 +1,20 @@
 import { Dispatch } from 'react';
-import SelectSearch, { SelectSearchOption } from 'react-select-search';
+import { SelectSearchOption } from 'react-select-search';
 import { CommentValues } from 'requests';
+import Select from 'react-select'
 
-const commentOptions: ({[K in keyof SelectSearchOption]: K extends 'value' ? CommentValues : SelectSearchOption[K]})[] = ([
-    {name: 'good vibes', value:'good_vibes'},
-    {name: 'epic vibes', value:'epic_vibes'},
-    {name: 'wacky vibes', value:'wacky_vibes'},
-    {name: 'mad good driving', value:'mad_good_driving'},
-    {name: 'mid driving', value:'mid_driving'},
-    {name: 'dnp driving', value:'dnp_driving'}
-]);
-
+const commentOptions: {
+    [K in keyof Select]: K extends 'value'
+        ? CommentValues
+        : SelectSearchOption[K];
+}[] = [
+    { name: 'good vibes', value: 'good_vibes' },
+    { name: 'epic vibes', value: 'epic_vibes' },
+    { name: 'wacky vibes', value: 'wacky_vibes' },
+    { name: 'mad good driving', value: 'mad_good_driving' },
+    { name: 'mid driving', value: 'mid_driving' },
+    { name: 'dnp driving', value: 'dnp_driving' },
+];
 
 console.log(commentOptions);
 
@@ -20,26 +24,44 @@ function CannedCommentBox({
 }: {
     value?: string[] | undefined;
     onChange?: Dispatch<string[]>;
-}) 
+}) {
+    return (
+        <div className='contents'>
+            {/* <SelectSearch
+                options={commentOptions}
+                multiple
+                value={value}
+                onChange={value => onChange?.((value as string[]).map(optionValue => optionValue.toString()))}
+                search
+                placeholder='Select Team Number...'
+            /> */}
 
-{
-    return (<div className='contents'>
-        <SelectSearch
-            options={commentOptions}
-            multiple
-            value={value}
-          
-            onChange={value => onChange?.((value as string[]).map(optionValue => optionValue.toString()))}
-            search
-            placeholder='Select Team Number...'
-       />
-       </div>
+            <Select
+                closeMenuOnSelect={false}
+                // defaultValue={[colourOptions[0], colourOptions[1]]}
+                isMulti
+            
+                options={commentOptions}
+                // onChange={value =>
+                //     onChange?.(
+                //         (value as string[]).map(optionValue =>
+                //             optionValue.toString()
+                //         )
+                //     )
+                // }
+
+
+                onChange={value => onChange?.((Array.isArray(value) ? value : [value]).map(optionValue => optionValue.toString()))}
+                // styles={colourStyles}
+            />
+        </div>
     );
 }
 
 export default CannedCommentBox;
 
-{/*
+{
+    /*
 mapping SelectSearchOption to a strings for each one
 
 but, can't use .map on a single option (which this could be) 
@@ -63,4 +85,5 @@ the onChange we passed in was expecting type string[], so that checks out
 in SuperTeam, we set 
 
 
-*/}
+*/
+}
