@@ -161,10 +161,12 @@ function SuperApp() {
                                       'red_3',
                                   ]) satisfies RobotPosition[]
                         )[index],
+                        
                     },
                     fouls: team.foulCounts,
                     defense: team.defenseRank,
                     defended: team.wasDefended,
+                    cannedComments: team.cannedComments,
                     humanShooter:
                         shooterPlayerTeam === team.teamNumber
                             ? {

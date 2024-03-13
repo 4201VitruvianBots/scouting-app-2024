@@ -126,6 +126,7 @@ export interface SuperData {
     defense: DefenseRank;
     defended: boolean;
     humanShooter?: {highNotes: HighNote};
+    cannedComments: string[];
 
     
 }
