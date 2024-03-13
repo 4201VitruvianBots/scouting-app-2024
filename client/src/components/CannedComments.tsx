@@ -18,13 +18,13 @@ function CannedCommentBox({
 }) 
 
 {
-    return (<div className='contents team-search'>
+    return (<div className='contents'>
         <SelectSearch
             options={commentOptions}
             multiple
             value={value}
           
-            onChange={value => onChange?.((Array.isArray(value) ? value : [value]).map(optionValue => optionValue.toString()))}
+            onChange={value => onChange?.((value as string[]).map(optionValue => optionValue.toString()))}
             search
             placeholder='Select Team Number...'
        />
