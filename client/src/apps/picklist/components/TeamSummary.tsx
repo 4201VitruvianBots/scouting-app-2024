@@ -24,20 +24,22 @@ function TeamSummary({
                 <div className='flex space-x-4'>
                     {avatar && <img src={`data:image/png;base64,${avatar}`} />}
                     <h1 className='text-3xl'>
-                        Team {teamInfo?.team_number} - {teamInfo?.nickname}
+                        Team {teamInfo ? `${teamInfo.team_number} - ${teamInfo.nickname}` : table.teamNumber}
                     </h1>
                 </div>
 
-                <p className='max-w-md text-gray-500'>{teamInfo?.name}</p>
-                <br />
+                {teamInfo && <>
+                    <p className='max-w-md text-gray-500'>{teamInfo.name}</p>
+                    <br />
 
-                <div className='flex space-x-4'>
-                    <p>
-                        From {teamInfo?.city}, {teamInfo?.state_prov},{' '}
-                        {teamInfo?.country}
-                    </p>
-                    <p>Rookie Year: {teamInfo?.rookie_year}</p>
-                </div>
+                    <div className='flex space-x-4'>
+                        <p>
+                            From {teamInfo.city}, {teamInfo.state_prov},{' '}
+                            {teamInfo.country}
+                        </p>
+                        <p>Rookie Year: {teamInfo.rookie_year}</p>
+                    </div>
+                </>}
 
                 <br />
                 
