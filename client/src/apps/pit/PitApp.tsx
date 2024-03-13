@@ -66,7 +66,7 @@ function PitApp() {
     }
 
     const data: PitFile = {
-     scouterName: 'bcdsh',
+     scouterName: scouterName,
      teamNumber,
      capabilities: {
        amp: ampChecked,
