@@ -38,6 +38,7 @@ function CannedCommentBox({
                 options={commentOptions as unknown as CommentValues[]}
                 
                 onChange={value => onChange?.(value as CommentValues[])}
+                className='max-w-[60%]'
                 // styles={colourStyles}
             />
         </div>

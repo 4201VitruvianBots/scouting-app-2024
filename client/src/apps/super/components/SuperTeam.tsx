@@ -61,17 +61,6 @@ function SuperTeam({
             <ButtonDropdown value={teamState.foulCounts} setValue={handleFoul}>
                 Add Foul
             </ButtonDropdown>
-
-            {/* <button
-                className={` ${className} absolute text-5xl `}
-                onClick={() => handleCount(autoKey, teleKey)}
-                id='one'>
-            <p
-                className={`${scouterPosition === 'red_right' ? 'rotate-180' : ''} ${textClassName}  `}>
-                {label && `${label}: `}
-                {count[teleOp ? teleKey : autoKey]}
-            </p>
-            </button> */}
             
             <ButtonDropdown value={teamState.breakCount} setValue={handleBreak}>
                 Add Break
