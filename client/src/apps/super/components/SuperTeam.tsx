@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { Foul, Break, DefenseRank } from 'requests';
+import { Foul, Break, DefenseRank, CommentValues } from 'requests';
 import ButtonDropdown from '../../../components/ButtonDropdown';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
@@ -12,7 +12,7 @@ export interface SuperTeamState {
     defenseRank: DefenseRank;
     wasDefended: boolean;
     teamNumber: number | undefined;
-    cannedComments: string[];
+    cannedComments: CommentValues[];
 }
 
 function SuperTeam({
@@ -40,7 +40,7 @@ function SuperTeam({
         setTeamState({ ...teamState, teamNumber: newChangeTeam});
     };
    
-    const handleAddComment = (comments: string[] ) => {
+    const handleAddComment = (comments: CommentValues[] ) => {
         setTeamState({ ...teamState, cannedComments: comments });
     };
 
