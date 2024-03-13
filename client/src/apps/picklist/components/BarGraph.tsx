@@ -29,21 +29,14 @@ function BarGraph({
     // Create a list of colors for each team based on the colors stored in team_info.json
     const sortedTeamNumbers = sortedEntries.map(entry => entry.key as string);
 
-    let teamColors: ColorSchemeType = sortedTeamNumbers.map(() => '#7f7f7f');
+    const teamColors: ColorSchemeType = sortedTeamNumbers.map(teamNumber => teamInfoJson[teamNumber]?.primaryHex ?? '#7f7f7f');
 
-    try {
-        teamColors = sortedTeamNumbers.map(
-            teamNumber => teamInfoJson[teamNumber].primaryHex
-        );
-        return (
-            <BarChart
-                data={entries}
-                series={<BarSeries colorScheme={teamColors} />}
-            />
-        );
-    } catch (e) {
-        return <BarChart data={entries} />;
-    }
+    return (
+        <BarChart
+            data={entries}
+            series={<BarSeries colorScheme={teamColors} />}
+        />
+    );
 }
 
 export default BarGraph;

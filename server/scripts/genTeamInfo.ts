@@ -43,14 +43,12 @@ for (const team of teams) {
             primaryHex: '#7f7f7f',
             secondaryHex: '#7f7f7f',
             verified: false,
-            info: {Error: "Info not loaded"},
         };
     } else {
         teamInfo[team] = {
             primaryHex: colorJson.primaryHex,
             secondaryHex: colorJson.secondaryHex,
             verified: colorJson.verified,
-            info: {Error: "Info not loaded"},
         };
     }
 }
@@ -67,7 +65,7 @@ for (const team of teams) {
     const avatarJson = await avatar.json() as AvatarData;
     if (avatar.status !== 404) {
         // Some teams have no media results
-        teamInfo[team].avatar = avatarJson.find(e => e.type === 'avatar')?.details.base64Image;
+        teamInfo[team]!.avatar = avatarJson.find(e => e.type === 'avatar')?.details.base64Image;
     }
 }
 
@@ -80,8 +78,10 @@ for (const team of teams) {
             'X-TBA-Auth-Key': apiKey,
         },
     });
-    const infoJson = await info.json() as TeamInfo;
-    teamInfo[team].info = infoJson;
+    if (info.status !== 404) {
+        const infoJson = await info.json() as TeamInfo;
+        teamInfo[team]!.info = infoJson;
+    }
 }
 
 fs.writeFileSync('static/team_info.json', JSON.stringify(teamInfo));
