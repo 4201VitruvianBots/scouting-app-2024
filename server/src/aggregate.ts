@@ -1,5 +1,5 @@
-import { MatchDataAggregations,SuperDataAggregations } from "requests";
-import { matchApp, superApp } from "./Schema.js";
+import { MatchDataAggregations, SuperDataAggregations } from "requests";
+import { matchApp, superApp, pitApp } from "./Schema.js";
 
 
 
@@ -138,4 +138,9 @@ async function superAverageAndMax():Promise<SuperDataAggregations[]> {
 
 }
 
-export { averageAndMax, superAverageAndMax} 
+async function robotImageDisplay(teamNumber:number):Promise<Buffer | undefined> {
+    return (await pitApp.findOne({ teamNumber: teamNumber}, 'teamNumber photo'))?.photo
+
+}
+
+export { averageAndMax, superAverageAndMax, robotImageDisplay} 

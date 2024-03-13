@@ -10,6 +10,7 @@ import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import ImageUploader from '../../components/ImageUploader';
 import { useFetchJson } from '../../lib/useFetch';
 import { postJson } from '../../lib/postJson';
 
@@ -52,7 +53,7 @@ function PitApp() {
   const [climbingPrefChecked, setClimbingPrefChecked] = useState(false);
 
   const [scouterName, setScouterName] = useState('');
-
+  const [robotImage, setRobotImage] = useState('');
   useEffect(() => {
     const timeout = setInterval(refreshScoutedTeams, 60 * 1000);
     return () => clearInterval(timeout);
@@ -84,6 +85,7 @@ function PitApp() {
      teamRole: role,
      pitBatteryCount: batteryNumber,
      drivebase: drivetrain,
+     photo: robotImage,
      comments: additionalNotes
     };
 
@@ -106,6 +108,7 @@ function PitApp() {
       setTrapPrefChecked(false);
       setSpeakerChecked(false);
       setSpeakerPrefChecked(false);
+      setRobotImage('');
       } catch {
       alert('Sending Data Failed');
     }
@@ -297,6 +300,11 @@ function PitApp() {
     </div>
   </div>
 </div>
+            <h1 className='text-center text-white my-6'>Robot Image</h1> 
+                <ImageUploader 
+                value={robotImage}
+                onChange={setRobotImage}
+                />
             
             <h1 className="text-center text-white">Additional Notes?</h1>
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
