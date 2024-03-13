@@ -6,7 +6,7 @@ import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.
 import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
 import { PitFile } from 'requests';
-import dataUriToBuffer from 'data-uri-to-buffer';
+import { dataUriToBuffer } from 'data-uri-to-buffer';
 
 
 // import { MatchData } from 'requests';
