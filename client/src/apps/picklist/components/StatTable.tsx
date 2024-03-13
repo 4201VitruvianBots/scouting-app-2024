@@ -7,6 +7,7 @@ import blankImage from '../../../images/blank.png';
 import { MaterialSymbol } from 'react-material-symbols';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import RobotPhotoDialog from './RobotPhotoDialog';
+import TeamItem from './TeamItem';
 
 function StatTable({
     table,
@@ -75,11 +76,6 @@ function StatTable({
         const value = parseFloat(event.target.value);
         
         setTable({...table, weights: table.weights.map((e, i) => index === i ? value : e)});
-    }
-    
-    // Handle when a team on the stat table is clicked
-    function handleTeamSummaryClick(teamNumber: number) {
-        onSubmit({title: "Team " + teamNumber + " Summary", type: 'TeamSummary', teamNumber: teamNumber});
     }
     
     // Handle when a stat on the stat table is clicked
@@ -152,21 +148,11 @@ function StatTable({
             <tbody className='border border-black'>
                 {sortedData.map(entry => (
                     <tr className='border border-black'>
-                        <td>
-                            <img
-                                src={
-                                    teamInfoJson[entry.teamNumber].avatar
-                                        ? `data:image/png;base64,${teamInfoJson[entry.teamNumber].avatar}`
-                                        : blankImage
-                                }
-                            />
-                        </td>
-                        <td>
-                            {entry.teamNumber}
-                            <button onClick={() => handleTeamSummaryClick(entry.teamNumber)}>
-                                    <MaterialSymbol icon='info' />
-                            </button>
-                        </td>
+                        <TeamItem
+                            teamNumber={entry.teamNumber}
+                            teamInfoJson={teamInfoJson}
+                            onSubmit={onSubmit}
+                        />
                         {table.columns.map(column => (
                             column === "robotImages" ? (
                                 <td className='border border-black border-separate'>

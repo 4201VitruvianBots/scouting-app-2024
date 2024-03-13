@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
+import { WindowData } from '../data';
+import { TeamData } from 'requests';
+import TeamItem from './TeamItem';
 
-function FinalPicklist() {
+function FinalPicklist(
+    {
+        teamInfoJson,
+        onSubmit,
+    }: {
+        teamInfoJson: TeamData;
+        onSubmit: Dispatch<WindowData>;
+    }
+) {
     const [expanded, setExpanded] = useState(false);
+    
+    const [picklist, setPicklist] = useState<number[]>([4201, 4481, 4501, 1912]);
     
     function handleExpand() {
         setExpanded(!expanded);
+    }
+    
+    function handleRemoveTeam(index: number) {
+        setPicklist(picklist.filter((_, i) => i !== index));
     }
     
     return (
@@ -14,6 +31,18 @@ function FinalPicklist() {
                 <p className="text-2xl">Final Picklist</p>
                 <MaterialSymbol icon={expanded ? "arrow_drop_down" : "arrow_drop_up"} size={40}/>
             </button>
+            {expanded ?
+                <div className="text-center text-2xl space-y-3">
+                    {picklist.map((team, i) => {return (
+                        <div className="flex justify-center">
+                            <TeamItem teamNumber={team} teamInfoJson={teamInfoJson} onSubmit={onSubmit}/>
+                            <button onClick={() => handleRemoveTeam(i)}>
+                                <MaterialSymbol icon='close' />
+                            </button>
+                        </div>);})}
+                </div>
+                : <></>
+            }
         </div>
   );
 }
