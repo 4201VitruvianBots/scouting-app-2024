@@ -109,7 +109,7 @@ app.get('/image/:teamId.jpeg', async (req, res) => {
 })
 
 app.get('/data/pit', async (req, res) => {
-    const entries = await pitApp.find({}, {fields: {photo: 0}});
+    const entries = await pitApp.find({}, {photo: 0});
     
     const result: PitResult = {};
     
