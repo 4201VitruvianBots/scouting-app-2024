@@ -107,6 +107,7 @@ function SuperApp() {
                 robotPosition: ((superPosition === 'blue_ss' ? ['blue_1', 'blue_2', 'blue_3'] : ['red_1', 'red_2', 'red_3']) satisfies RobotPosition[])[index]
             },
             fouls: team.foulCounts,
+            break: team.breakCount,
             defense: team.defenseRank,
             defended: team.wasDefended,
             humanShooter: shooterPlayerTeam === team.teamNumber ? {
