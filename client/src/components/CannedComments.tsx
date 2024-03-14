@@ -7,8 +7,7 @@ export interface SelectOption<T> {
     label: string;
 }
 
-const commentOptions: 
-    SelectOption<CommentValues>[] = [
+const commentOptions: SelectOption<CommentValues>[] = [
     { label: 'great driving', value: 'great_driving' },
     { label: 'good driving', value: 'good_driving' },
     { label: 'source only', value: 'source_only' },
@@ -26,8 +25,8 @@ function CannedCommentBox({
     value,
     onChange,
 }: {
-    value?: SelectOption<CommentValues> | undefined;
-    onChange?: Dispatch<SelectOption<CommentValues>>;
+    value?: SelectOption<CommentValues>[] | undefined;
+    onChange?: Dispatch<SelectOption<CommentValues>[]>;
 }) {
     return (
         <div className='contents'>
@@ -38,9 +37,9 @@ function CannedCommentBox({
                 isMulti
                 value={value}
                 
-                options={commentOptions as unknown as SelectOption<CommentValues>}
+                options={commentOptions}
                 
-                onChange={value => onChange?.(value as SelectOption<CommentValues>)}
+                onChange={value => onChange?.(value as SelectOption<CommentValues>[])}
                 className='max-w-[60%]'
                 // styles={colourStyles}
             />

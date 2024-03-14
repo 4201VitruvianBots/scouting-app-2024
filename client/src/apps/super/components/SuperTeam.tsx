@@ -4,7 +4,7 @@ import ButtonDropdown from '../../../components/ButtonDropdown';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
 import TeamDropdown from '../../../components/TeamDropdown';
-import CannedCommentBox from '../../../components/CannedComments';
+import CannedCommentBox, { SelectOption } from '../../../components/CannedComments';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
@@ -12,7 +12,7 @@ export interface SuperTeamState {
     defenseRank: DefenseRank;
     wasDefended: boolean;
     teamNumber: number | undefined;
-    cannedComments: CommentValues[];
+    cannedComments: SelectOption<CommentValues>[];
 }
 
 function SuperTeam({
@@ -40,7 +40,7 @@ function SuperTeam({
         setTeamState({ ...teamState, teamNumber: newChangeTeam});
     };
    
-    const handleAddComment = (comments: CommentValues[] ) => {
+    const handleAddComment = (comments: SelectOption<CommentValues>[] ) => {
         setTeamState({ ...teamState, cannedComments: comments });
     };
 

@@ -164,7 +164,7 @@ function SuperApp() {
                                   highNotes,
                               }
                             : undefined,
-                    comments: team.cannedComments,
+                    comments: team.cannedComments.map(option => option.value),
                 }) satisfies SuperData
         );
 
