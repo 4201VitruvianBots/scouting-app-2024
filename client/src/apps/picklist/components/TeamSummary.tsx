@@ -3,6 +3,7 @@ import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
+import { snakeToSpaced } from '../../../lib/snakeCaseConvert';
 
 function TeamSummary({
     table,
@@ -60,7 +61,7 @@ function TeamSummary({
                 <h2 className='text-2xl'>Comments</h2>
                 
                 {teamData && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
-                    <p>{comment}: {count}</p>
+                    <p>{snakeToSpaced(comment)}: {count}</p>
                 ))}
 
                 <h2 className='text-2xl'>Stats</h2>
