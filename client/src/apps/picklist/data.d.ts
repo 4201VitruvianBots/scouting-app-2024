@@ -3,7 +3,7 @@ import { TabBase } from '../../components/workspace/workspaceData';
 
 export interface AnalysisEntry extends Record<string, string | number | boolean> {
     teamNumber: number;
-    comments: Record<CommentValues, number>;
+    Comments: Record<CommentValues, number>;
 }
 
 export interface StatTableData extends TabBase {

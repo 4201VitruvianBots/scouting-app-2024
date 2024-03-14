@@ -14,7 +14,7 @@ function TeamSummary({
     teamInfoJson: TeamData;
 }) {
     // Get the data for the team specified
-    const teamData = data.filter(e => e.teamNumber === table.teamNumber);
+    const teamData = data.find(e => e.teamNumber === table.teamNumber);
     
     const {info: teamInfo, avatar} = teamInfoJson[table.teamNumber] ?? {};
     
@@ -57,20 +57,25 @@ function TeamSummary({
             </div>
 
             <div>
+                <h2 className='text-2xl'>Comments</h2>
+                
+                {teamData && Object.entries(teamData.Comments).map(([comment, count]) => (
+                    <p>{comment}: {count}</p>
+                ))}
+
                 <h2 className='text-2xl'>Stats</h2>
                 
-                {Object.keys(teamData[0]).map(e => {
+                {teamData && Object.keys(teamData).map(e => {
                     if (
                         e !== 'teamNumber' &&
                         e !== 'scouterName' &&
-                        e !== 'climb'
+                        e !== 'climb' &&
+                        e !== 'Comments'
                     ) {
                         return (
                             <p key={e}>
                                 {camelToSpaced(e)}:{' '}
-                                {teamData
-                                    .map(e2 => Number(e2[e]))
-                                    .reduce((a, b) => a + b)}
+                                {teamData[e]}
                             </p>
                         );
                     }
