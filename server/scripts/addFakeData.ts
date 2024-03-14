@@ -1,7 +1,7 @@
 import { startDockerContainer } from 'database';
 import mongoose from 'mongoose';
 import { matchApp, superApp } from '../src/Schema.js';
-import { MatchData, SuperData } from 'requests';
+import { CommentValues, MatchData, SuperData } from 'requests';
 
 function randint(max: number, min = 0) {
     return Math.floor((max - min) * Math.random()) + min;
@@ -13,6 +13,20 @@ function choose<T>(array: T[]) {
 
 await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27017/');
+
+const comments: CommentValues[] = [
+    'great_driving', 
+    'good_driving', 
+    'source_only', 
+    'clogging', 
+    'effective_defense', 
+    'mid_defense', 
+    'ineffective_defense', 
+    'sturdy_build', 
+    'weak_build', 
+    'drives_under_stage', 
+    'avoids_under_stage', 
+]
 
 const teams = new Array(100).fill(0).map(() => Math.floor(10000 * Math.random()));
 
@@ -62,10 +76,12 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
                 podiumFoul: randint(2),
                 zoneFoul: randint(2),
                 stageFoul: randint(2),
-                overExtChute: randint(2)
+                overExtChute: randint(2),
+                multiplePieces: randint(2),
             },
             defense: choose(['fullDef', 'someDef', 'noDef']),
             defended: Math.random() > 0.5,
+            comments: comments.filter(() => randint(4) === 0),
             humanShooter: randint(3) === 0 ? {
                 highNotes: {
                     amp: Math.random() > 0.5,
