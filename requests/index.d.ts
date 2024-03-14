@@ -112,6 +112,7 @@ export interface MatchData {
 export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
+    break: Record<Break, number>;
     defense: DefenseRank;
     defended: boolean;
     humanShooter?: {highNotes: HighNote};
