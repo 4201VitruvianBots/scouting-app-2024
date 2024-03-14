@@ -172,7 +172,8 @@ function FieldButton({
             </div>
 
             <div
-                className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200 `}>
+                className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200 
+                ${!teleOp && count.hold ? 'grayscale' : ''}`}>
                 {(
                     <>
                         <RegionButton
@@ -193,7 +194,7 @@ function FieldButton({
                             className='!static h-[100px] flex-grow basis-0 bg-red-200'
                             label='Miss'
                         />
-                        {/* {!teleOp && (
+                        {!teleOp && (
                             <RegionButton
                                 teleOp={teleOp}
                                 count={count}
@@ -203,7 +204,7 @@ function FieldButton({
                                 className='!static h-[100px] flex-grow basis-0 bg-yellow-200'
                                 label='Held'
                             />
-                        )} */}
+                        )}
                     </>
                 )}
             </div>
