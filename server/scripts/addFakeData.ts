@@ -20,12 +20,11 @@ const comments: CommentValues[] = [
     'source_only', 
     'clogging', 
     'effective_defense', 
-    'mid_defense', 
+    'okay_defense', 
     'ineffective_defense', 
     'sturdy_build', 
     'weak_build', 
-    'drives_under_stage', 
-    'avoids_under_stage', 
+    'avoids_under_stage',
 ]
 
 const teams = new Array(100).fill(0).map(() => Math.floor(10000 * Math.random()));

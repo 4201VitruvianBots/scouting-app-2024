@@ -60,7 +60,7 @@ function TeamSummary({
             <div>
                 <h2 className='text-2xl'>Comments</h2>
                 
-                {teamData && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
+                {teamData && teamData.Comments && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
                     <p>{snakeToSpaced(comment)}: {count}</p>
                 ))}
 
