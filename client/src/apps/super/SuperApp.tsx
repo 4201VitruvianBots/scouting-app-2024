@@ -221,7 +221,7 @@ function SuperApp() {
             <NumberInput onChange={setMatchNumber} value={matchNumber} 
             className='m-2 p-2 text-black text-xl'/>
 
-            <div className='grid justify-items-center grid-cols-3 px-10'>
+            <div className='grid justify-items-center grid-cols-3 px-10 mt-16 gap-8'>
                 <SuperTeam teamState={team1} setTeamState={handleTeam1} />
                 <SuperTeam teamState={team2} setTeamState={handleTeam2} />
                 <SuperTeam teamState={team3} setTeamState={handleTeam3} />
