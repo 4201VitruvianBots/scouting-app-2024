@@ -14,14 +14,17 @@ console.log(teamOptions);
 function TeamDropdown({
     value,
     onChange,
+    disabledOptions,
 }: {
     value?: number | undefined;
     onChange?: Dispatch<number>;
+    disabledOptions?: number[];
 }) {
+    const options = disabledOptions ? teamOptions.map(e => ({...e, disabled: disabledOptions.includes(parseInt(e.value as string))})) : teamOptions;
+
     return (<div className='contents team-search'>
         <SelectSearch
-            options={teamOptions}
-            
+            options={options}
             value={value?.toString()}
             onChange={value => onChange?.(parseInt(value as string))}
             search

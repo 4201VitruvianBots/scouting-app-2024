@@ -27,7 +27,8 @@ function Dialog({
         }
     }, [open]);
 
-    const handleClick: MouseEventHandler<HTMLDialogElement> = ({currentTarget, clientX, clientY}) => {
+    const handleMouseDown: MouseEventHandler<HTMLDialogElement> = ({currentTarget, clientX, clientY, target}) => {
+        if (currentTarget !== target) return;
         const { left, right, top, bottom } = currentTarget.getBoundingClientRect();
         
         if (clientX > left && clientX < right && clientY > top && clientY < bottom) return;
@@ -40,7 +41,7 @@ function Dialog({
             <dialog
                 ref={dialogRef}
                 onClose={() => setOpen(false)}
-                onClick={handleClick}
+                onMouseDown={handleMouseDown}
                 className='overflow-visible rounded-md bg-gray-100 p-5'>
                 {open &&
                     (typeof children === 'function'

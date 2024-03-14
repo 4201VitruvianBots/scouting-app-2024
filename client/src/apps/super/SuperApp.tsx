@@ -50,15 +50,11 @@ const colourOptions: readonly colourOptions[] = [
 ];
 
 const foulTypes: Foul[] = [
-    'inBot',
-    'damageBot',
-    'overExtChute',
-    'pinBot',
-    'podiumFoul',
-    'stageFoul',
-    'tipEntangBot',
-    'zoneFoul',
+    'insideRobot',
+    'protectedZone', 
+    'pinning',
     'multiplePieces',
+    'other'
 ];
 
 const defaultHighNote: HighNote = {

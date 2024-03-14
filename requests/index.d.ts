@@ -12,15 +12,11 @@ export type RobotPosition =
     | 'blue_2'
     | 'blue_3'
 export type Foul = 
-    | 'inBot' 
-    | 'damageBot' 
-    | 'tipEntangBot' 
-    | 'pinBot' 
-    | 'podiumFoul' 
-    | 'zoneFoul' 
-    | 'stageFoul' 
-    | 'overExtChute'
-    | 'multiplePieces'
+    | 'insideRobot' 
+    | 'protectedZone' 
+    | 'pinning' 
+    | 'multiplePieces' 
+    | 'other' 
 export type Break =
     | 'mechanismDmg'
     | 'batteryFall'
@@ -99,7 +95,7 @@ export interface SuperDataAggregations{
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
-    robotTeam: number;
+    robotTeam?: number;
     robotPosition: RobotPosition 
 }
 
@@ -150,6 +146,7 @@ export interface PitFile {
     pitBatteryCount: number;
     drivebase: drivebase;
     comments: string;
+    photo: string;
 }
 
 // - `WebSocket` `/status/report`
@@ -197,14 +194,12 @@ export interface TeamInfo {
     website: string | null;
 }
 
-export interface TeamData {
-    [teamNumber: string]: {
+export type TeamData = Partial<{
+    [key: string]: {
         primaryHex: string;
         secondaryHex: string;
         verified: boolean;
         avatar?: string;
-        info: TeamInfo | {
-            Error: string;
-        };
+        info?: TeamInfo;
     };
-}
+}>;

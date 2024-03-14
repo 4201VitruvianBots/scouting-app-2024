@@ -44,15 +44,11 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
  const superScoutDataSchema = new mongoose.Schema<SuperData>({
      metadata: superappsMetaDataSchema,
      fouls: {
-        inBot: Number,
-        damageBot: Number,
-        tipEntangBot: Number,
-        pinBot: Number,
-        podiumFoul: Number,
-        zoneFoul: Number,
-        stageFoul: Number,
-        overExtChute: Number,
-        multiplePieces: Number
+        insideRobot: Number, 
+        protectedZone: Number,
+        pinning: Number,
+        multiplePieces: Number,
+        other: Number
      },
     defense: {
         type: String,
@@ -78,8 +74,9 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 
  });
 
+type PitDataSchemaType = {[K in keyof PitFile]: K extends 'photo' ? Buffer : PitFile[K]};
 
- const pitDataSchema = new mongoose.Schema<PitFile>({
+ const pitDataSchema = new mongoose.Schema<PitDataSchemaType>({
      scouterName: String,
      teamNumber: Number,
      capabilities: {
@@ -105,6 +102,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
             type: String,
             enum: ['tank', 'swerve','MECANUM', 'other' ]
      },
+     photo: Buffer,
      comments: String
  });
 

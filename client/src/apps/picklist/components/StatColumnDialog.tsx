@@ -18,8 +18,9 @@ function StatColumnDialog({
               e => e !== 'teamNumber' && typeof data[0][e] === 'number'
           )
         : [];
+    columns.push('robotImages');
+    
     const [column, setColumn] = useState<string>();
-
     const handleSubmit = () => {
         if (column) {
             onSubmit(column);
