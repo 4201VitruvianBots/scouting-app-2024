@@ -59,7 +59,7 @@ function TeamSummary({
             <div>
                 <h2 className='text-2xl'>Comments</h2>
                 
-                {teamData && Object.entries(teamData.Comments).map(([comment, count]) => (
+                {teamData && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
                     <p>{comment}: {count}</p>
                 ))}
 
