@@ -48,15 +48,10 @@ function SuperTeam({
     // saves all the other inputs, ovverrides the one in setTeamState({... comments, X})
    
     return (
-        <div className='grid justify-items-center'>
+        <div className='grid justify-items-center min-w-full'>
             <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} /> 
-
+            
             <CannedCommentBox value={teamState.cannedComments} onChange={handleAddComment}/>
-            {/* handleAddComment takes the argument of comments (just a name we assigned it) that's of type string[], which 
-            checks out from what we told it onChange would give
-            setTeam
-             */}
-
 
             <ButtonDropdown value={teamState.foulCounts} setValue={handleFoul}>
                 Add Foul
@@ -70,7 +65,7 @@ function SuperTeam({
                 value={teamState.defenseRank}
                 labels={['Full Defense', 'Some Defense', 'No Defense']}
                 values={['fullDef', 'someDef', 'noDef']}
-                className='text-black w-full my-2'
+                className='text-black w-full my-2 h-80% min-h-60%'
             />
             <div>
                 <Checkbox
@@ -81,6 +76,7 @@ function SuperTeam({
                     {' '} Was Defended?
                 </Checkbox>
             </div>
+           
         </div>
     );
 }

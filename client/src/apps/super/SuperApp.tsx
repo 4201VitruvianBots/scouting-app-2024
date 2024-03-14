@@ -291,12 +291,11 @@ function SuperApp() {
                 className='m-2 p-2 text-xl text-black'
             /> 
 
-            <div className='grid grid-cols-3 justify-items-center px-10'>
+            <div className='grid grid-cols-3 justify-items-center px-10 gap-10'>
                 <SuperTeam teamState={team1} setTeamState={handleTeam1} />
                 <SuperTeam teamState={team2} setTeamState={handleTeam2} />
                 <SuperTeam teamState={team3} setTeamState={handleTeam3} />
             </div>
-
             
 
             <MultiButton
@@ -324,24 +323,6 @@ function SuperApp() {
                 scouterPosition={scouterPosition}
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
-            {/* <div className='relative mx-auto h-[3em] w-[40em] px-[1em] '>
-                <CreatableSelect
-                    name='colors'
-                    className='basic-multi-select h-[2em] text-2xl'
-                    classNamePrefix='select '
-                    isMulti
-                    options={colourOptions}
-                   
-                />
-            </div>  */}
-
-            {/*<SelectSearch
-            options={options}
-            value={value?.toString()}
-            onChange={value => onChange?.(parseInt(value as string))}
-            search
-            placeholder='Select Comment...'
-            />*/}
 
             <button
                 onClick={() => {

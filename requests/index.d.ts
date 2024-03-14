@@ -31,11 +31,10 @@ export type CommentValues =
     | 'source_only'
     | 'clogging'
     | 'effective_defense'
-    | 'mid_defense'
+    | 'okay_defense'
     | 'ineffective_defense'
     | 'sturdy_build'
     | 'weak_build'
-    | 'drives_under_stage'
     | 'avoids_under_stage'
 
 

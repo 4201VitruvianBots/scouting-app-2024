@@ -69,7 +69,7 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
 */
     comments: [{
         type: String, 
-        enum: ['great_driving', 'good_driving', 'source_only','clogging', 'effective_defense', 'mid_defense','ineffective_defense', 'sturdy_build', 'weak_build', 'drives_under_stage','avoids_under_stage' ] satisfies CommentValues[]
+        enum: ['great_driving', 'good_driving', 'source_only','clogging', 'effective_defense', 'okay_defense','ineffective_defense', 'sturdy_build', 'weak_build', 'avoids_under_stage' ] satisfies CommentValues[]
     }]
 
  });

@@ -1,25 +1,92 @@
 import { Dispatch } from 'react';
 import { CommentValues } from 'requests';
-import Select from 'react-select'
+import chroma from 'chroma-js';
+// import { ColourOption, colourOptions } from '../data';
+import Select, { StylesConfig } from 'react-select';
 
 export interface SelectOption<T> {
     value: T;
     label: string;
+    color: string;
+}
+
+interface ColourOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
 }
 
 const commentOptions: SelectOption<CommentValues>[] = [
-    { label: 'great driving', value: 'great_driving' },
-    { label: 'good driving', value: 'good_driving' },
-    { label: 'source only', value: 'source_only' },
-    { label: 'clogging', value: 'clogging' },
-    { label: 'effective defense', value: 'effective_defense' },
-    { label: 'mid defense', value: 'mid_defense' },
-    { label: 'ineffective defense', value: 'ineffective_defense' },
-    { label: 'sturdy build', value: 'sturdy_build' },
-    { label: 'weak build', value: 'weak_build' },
-    { label: 'drives under stage', value: 'drives_under_stage' },
-    { label: 'avoids under stage', value: 'avoids_under_stage' },
+    { label: 'great driving', value: 'great_driving', color: '#00B8D9'},
+    { label: 'good driving', value: 'good_driving', color: '#00B8D9' },
+    { label: 'source only', value: 'source_only', color: '#8200d9' },
+    { label: 'clogging', value: 'clogging', color: '#d98d00' },
+    { label: 'effective defense', value: 'effective_defense', color: '#0052CC' },
+    { label: 'okay defense', value: 'okay_defense', color: '#0052CC' },
+    { label: 'ineffective defense', value: 'ineffective_defense', color: '#0052CC' },
+    { label: 'sturdy build', value: 'sturdy_build', color: '#00d982' },
+    { label: 'weak build', value: 'weak_build', color: '#00d982' },
+    { label: 'avoids under stage', value: 'avoids_under_stage', color: '#d90000' },
 ];
+
+
+const colourStyles: StylesConfig<ColourOption, true> = {
+    control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : undefined,
+        color: isDisabled
+          ? '#ccc'
+          : isSelected
+          ? chroma.contrast(color, 'white') > 2
+            ? 'white'
+            : 'black'
+          : data.color,
+        cursor: isDisabled ? 'not-allowed' : 'default',
+  
+        ':active': {
+          ...styles[':active'],
+          backgroundColor: !isDisabled
+            ? isSelected
+              ? data.color
+              : color.alpha(0.3).css()
+            : undefined,
+        },
+      };
+    },
+    multiValue: (styles, { data }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: color.alpha(0.1).css(),
+      };
+    },
+    multiValueLabel: (styles, { data }) => ({
+      ...styles,
+      color: data.color,
+    }),
+    multiValueRemove: (styles, { data }) => ({
+      ...styles,
+      color: data.color,
+      ':hover': {
+        backgroundColor: data.color,
+        color: 'white',
+      },
+    }),
+  };
+
+
+
 
 function CannedCommentBox({
     value,
@@ -33,46 +100,16 @@ function CannedCommentBox({
 
             <Select
                 closeMenuOnSelect={false}
-                // defaultValue={[colourOptions[0], colourOptions[1]]}
+                defaultValue={[commentOptions[3], commentOptions[3]]}
                 isMulti
                 value={value}
-                
                 options={commentOptions}
-                
                 onChange={value => onChange?.(value as SelectOption<CommentValues>[])}
-                className='max-w-[60%]'
-                // styles={colourStyles}
+                className='max-w-[70%] m-2 absolute text-xl '
+                styles={colourStyles}
             />
         </div>
     );
 }
 
 export default CannedCommentBox;
-
-{
-    /*
-mapping SelectSearchOption to a strings for each one
-
-but, can't use .map on a single option (which this could be) 
-
-onchange grabs a value, and you can give it a function to do something with that value
-need to set value to a string in order to set it to the state (and to use it in other places?)
-
-set values to string before map?
-
-if standalone, do x
-if multiple/array, do y
-
-
-how this works:
-line 26
-takes in value, which is SelectedOption value - a string or string array, then assigns it to an array, and then maps (splits and individually assigns) 
-each element in that array to be a string, if it wasn't already, so we went up with an array of strings.
-
-the onChange we passed in was expecting type string[], so that checks out
-
-in SuperTeam, we set 
-
-
-*/
-}
