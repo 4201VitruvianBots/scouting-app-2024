@@ -42,6 +42,8 @@ export type CommentValues =
     | 'drives_under_stage'
     | 'avoids_under_stage'
 
+
+
 interface capabilities { 
     amp: boolean,
     speaker: boolean
@@ -131,7 +133,7 @@ export interface SuperData {
     defense: DefenseRank;
     defended: boolean;
     humanShooter?: {highNotes: HighNote};
-
+    comments: CommentValues[];
     
 }
 

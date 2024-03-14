@@ -2,10 +2,13 @@ import { Dispatch } from 'react';
 import { CommentValues } from 'requests';
 import Select from 'react-select'
 
-const commentOptions: {
-    value: CommentValues;
+export interface SelectOption<T> {
+    value: T;
     label: string;
-}[] = [
+}
+
+const commentOptions: 
+    SelectOption<CommentValues>[] = [
     { label: 'great driving', value: 'great_driving' },
     { label: 'good driving', value: 'good_driving' },
     { label: 'source only', value: 'source_only' },
@@ -23,8 +26,8 @@ function CannedCommentBox({
     value,
     onChange,
 }: {
-    value?: CommentValues[] | undefined;
-    onChange?: Dispatch<CommentValues[]>;
+    value?: SelectOption<CommentValues> | undefined;
+    onChange?: Dispatch<SelectOption<CommentValues>>;
 }) {
     return (
         <div className='contents'>
@@ -35,9 +38,9 @@ function CannedCommentBox({
                 isMulti
                 value={value}
                 
-                options={commentOptions as unknown as CommentValues[]}
+                options={commentOptions as unknown as SelectOption<CommentValues>}
                 
-                onChange={value => onChange?.(value as CommentValues[])}
+                onChange={value => onChange?.(value as SelectOption<CommentValues>)}
                 className='max-w-[60%]'
                 // styles={colourStyles}
             />

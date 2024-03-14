@@ -80,7 +80,7 @@ const defaultSuperTeamState: SuperTeamState = {
     defenseRank: 'noDef',
     wasDefended: false,
     teamNumber: undefined,
-    cannedComments: []
+    cannedComments: [],
 };
 
 function SuperApp() {
@@ -99,13 +99,6 @@ function SuperApp() {
         { 1: SuperTeamState; 2: SuperTeamState; 3: SuperTeamState }[]
     >([]);
     const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
-    // const [comments, setComments] = useState<SelectSearchOption[]>([{name: 'foul1'}]);
-
-    // const [comments, setComments] = useState<
-
-    // const options = ['foul1', 'foul2', 'foul3']
-
-    // const teamOptions = SelectSearchOption['foul1', 'foul2', 'foul3'];
 
     useStatus(superPosition, matchNumber, scouterName);
 
@@ -171,6 +164,7 @@ function SuperApp() {
                                   highNotes,
                               }
                             : undefined,
+                    comments: team.cannedComments,
                 }) satisfies SuperData
         );
 
@@ -181,7 +175,6 @@ function SuperApp() {
         setTeam3(defaultSuperTeamState);
         setHistory([]);
         setMatchNumber(matchNumber + 1);
-
         setShowCheck(true);
         setTimeout(() => {
             setShowCheck(false);

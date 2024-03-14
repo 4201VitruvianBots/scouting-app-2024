@@ -1,5 +1,5 @@
 import mongoose  from "mongoose";
-import { MatchData, PitFile, SuperData } from "requests";
+import { CommentValues, MatchData, PitFile, SuperData } from "requests";
 
 const matchappsMetaDataSchema = {
     scouterName: String,
@@ -64,7 +64,18 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
             amp: Boolean,
             source: Boolean,
             center: Boolean
-    }}
+    }},
+    // Are you asking about this error?
+    // Currently the error is it's supposed to be a string array but it's only a string
+    // yeah I am
+    /*n different error now
+
+*/
+    comments: [{
+        type: String, 
+        enum: ['great_driving', 'good_driving', 'source_only','clogging', 'effective_defense', 'mid_defense','ineffective_defense', 'sturdy_build', 'weak_build', 'drives_under_stage','avoids_under_stage' ] satisfies CommentValues[]
+    }]
+
  });
 
 
