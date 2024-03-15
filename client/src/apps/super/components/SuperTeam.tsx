@@ -1,8 +1,9 @@
 import { Dispatch } from 'react';
-import { Foul, Break, DefenseRank } from 'requests';
+import { Foul, Break, DefenseRank, CommentValues } from 'requests';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
 import TeamDropdown from '../../../components/TeamDropdown';
+import CannedCommentBox, { SelectOption } from '../../../components/CannedComments';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
@@ -10,11 +11,13 @@ export interface SuperTeamState {
     defenseRank: DefenseRank;
     wasDefended: boolean;
     teamNumber: number | undefined;
+    cannedComments: SelectOption<CommentValues>[];
 }
 
 function SuperTeam({
     teamState,
     setTeamState,
+
 }: {
     teamState: SuperTeamState;
     setTeamState: Dispatch<SuperTeamState>;
@@ -25,8 +28,13 @@ function SuperTeam({
     const handleWasDefended = (newDefended: boolean) => {
         setTeamState({ ...teamState, wasDefended: newDefended });
     };
-    const handleChangeTeam = (newChangeTeam: number) => {
-        setTeamState({ ...teamState, teamNumber: newChangeTeam });
+
+    const handleChangeTeam = (newChangeTeam: number ) => {
+        setTeamState({ ...teamState, teamNumber: newChangeTeam});
+    };
+   
+    const handleAddComment = (comments: SelectOption<CommentValues>[] ) => {
+        setTeamState({ ...teamState, cannedComments: comments });
     };
     const handleIncreaseFoul = (foulType: keyof typeof teamState.foulCounts) => {
         const updatedFoulCounts = { ...teamState.foulCounts };
@@ -56,13 +64,26 @@ function SuperTeam({
     
     
 //many divs, kinda ugly
+
+    // saves all the other inputs, ovverrides the one in setTeamState({... comments, X})
+   
     return (
         <div>
-            <p className='text-zinc-100 underline text-lg'>Team Number</p>
-            <div className='flex justify-center'>
-            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
+            
+            <div className='mx-auto flex  flex-col content-center items-center justify-center '>
+
+            <p className='text-zinc-100 underline text-lg pt-3'>Team Number</p>
+            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} /> 
+            
+
+           
+            <p className='text-zinc-100 underline text-lg pt-3'>Notes</p>
+            <CannedCommentBox value={teamState.cannedComments} onChange={handleAddComment}/>
+            
             </div>
+            
         <p className='mt-5 text-4xl text-zinc-100 underline'>Fouls</p>
+       
         <div className='flex justify-center'>
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('insideRobot')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('insideRobot')}>+Inside Robot: {teamState.foulCounts.insideRobot || 0}</button>
@@ -83,7 +104,8 @@ function SuperTeam({
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('other')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('other')}>+Other: {teamState.foulCounts.other || 0}</button>
         </div>
-        <p className='mt-5 text-4xl text-zinc-100 underline'>Breaks</p>
+        
+        <p className='mt-7 text-4xl text-zinc-100 underline'>Breaks</p>
         <div className='flex justify-center'>
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('mechanismDmg')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('mechanismDmg')}>+Mechanism Dmg: {teamState.breakCount.mechanismDmg || 0}</button>
@@ -96,12 +118,13 @@ function SuperTeam({
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('commsFail')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('commsFail')}>+Comms Fail: {teamState.breakCount.commsFail || 0}</button>
         </div>
+       
             <MultiButton
                 onChange={handleDefense}
                 value={teamState.defenseRank}
                 labels={['Full Defense', 'Some Defense', 'No Defense']}
                 values={['fullDef', 'someDef', 'noDef']}
-                className='text-black w-full my-2'
+                className='text-black w-full my-2 h-80% min-h-60%'
             />
             <div>
                 <Checkbox

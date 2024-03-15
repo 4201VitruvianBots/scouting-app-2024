@@ -34,7 +34,7 @@ function useWorkspaceState<T extends TabBase>(
 }
 
 export {
-    // eslint-disable-next-line react-refresh/only-export-components
+   
     useWorkspaceState,
     type WorkspaceControls,
     type ResizeType,

@@ -1,7 +1,7 @@
 import { startDockerContainer } from 'database';
 import mongoose from 'mongoose';
 import { matchApp, superApp } from '../src/Schema.js';
-import { MatchData, SuperData } from 'requests';
+import { CommentValues, MatchData, SuperData } from 'requests';
 import { dotenvLoad } from 'dotenv-mono';
 
 function randint(max: number, min = 0) {
@@ -14,6 +14,19 @@ function choose<T>(array: T[]) {
 
 await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27017/');
+
+const comments: CommentValues[] = [
+    'great_driving', 
+    'good_driving', 
+    'source_only', 
+    'clogging', 
+    'effective_defense', 
+    'okay_defense', 
+    'ineffective_defense', 
+    'sturdy_build', 
+    'weak_build', 
+    'avoids_under_stage',
+];
 
 dotenvLoad({ path: '.env' });
 dotenvLoad({ path: '.env.local' });
@@ -88,10 +101,10 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
             },
             fouls: {
                 insideRobot: randint(2),
+                protectedZone: randint(2),
                 multiplePieces: randint(2),
                 other: randint(2),
                 pinning: randint(2),
-                protectedZone: randint(2),
             },
             break: {
                 batteryFall: randint(2),
@@ -100,6 +113,7 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
             },
             defense: choose(['fullDef', 'someDef', 'noDef']),
             defended: Math.random() > 0.5,
+            comments: comments.filter(() => randint(4) === 0),
             humanShooter: randint(3) === 0 ? {
                 highNotes: {
                     amp: Math.random() > 0.5,
