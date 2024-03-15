@@ -93,7 +93,13 @@ function TeamSummary({
                     )}
                 </Dialog>
             </div>
-
+            <div>
+                <h2 className='text-2xl'>Comments</h2>
+                
+                {(teamData && teamData.Comments) ? Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
+                    count > 0 && <p className={` ${commentToColor(comment)} `}>{snakeToSpaced(comment)}: {count}</p>
+                )) : <br />}
+            </div>
 
             <div className='pl-5'>
                 <h2 className='pb-2 text-2xl'>Comments</h2>

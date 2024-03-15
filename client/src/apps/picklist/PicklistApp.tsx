@@ -16,7 +16,7 @@ import StatSummaryDialog from './components/StatSummaryDialog';
 import StatSummary from './components/StatSummary';
 import TeamSummaryDialog from './components/TeamSummaryDialog';
 import TeamSummary from './components/TeamSummary';
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import FinalPicklist from './components/FinalPicklist';
 
 function generateWindow(
@@ -25,7 +25,8 @@ function generateWindow(
     setTable: Dispatch<WindowData>,
     teamInfoJson: TeamData,
     pitData: PitResult,
-    addToFocused: Dispatch<WindowData>
+    addToFocused: Dispatch<WindowData>,
+    setFinalPicklist: Dispatch<number[]>,
 ) {
     switch (table.type) {
         case 'StatTable':
@@ -36,6 +37,7 @@ function generateWindow(
                     table={table}
                     teamInfoJson={teamInfoJson}
                     onSubmit={addToFocused}
+                    onSetFinal={setFinalPicklist}
                 />
             );
         case 'BarGraph':
@@ -85,7 +87,9 @@ function PicklistApp() {
     
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
-
+    
+    const [finalPicklist, setFinalPicklist] = useState<number[]>([]);
+    
     return (
         <main className='grid h-screen grid-rows-[auto_1fr] relative overflow-hidden'>
             <div className='flex items-center border-b border-black py-3 bg-gray-100'>
@@ -194,12 +198,13 @@ function PicklistApp() {
                             onChange,
                             teamInfo || {},
                             pitData || {},
-                            addToFocused
+                            addToFocused,
+                            setFinalPicklist
                         )
                     );
                 }}
             </Workspace>
-            <FinalPicklist onSubmit={addToFocused} teamInfoJson={teamInfo || {}} data={analyzedData}/>
+            <FinalPicklist onSubmit={addToFocused} teamInfoJson={teamInfo || {}} data={analyzedData} picklist={finalPicklist} setPicklist={setFinalPicklist}/>
         </main>
     );
 }
