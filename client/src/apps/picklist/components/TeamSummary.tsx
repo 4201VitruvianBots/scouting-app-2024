@@ -3,6 +3,52 @@ import camelToSpaced from '../../../lib/camelCaseConvert';
 import { AnalysisEntry, TeamSummaryData } from '../data';
 import { PitResult, TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
+import { snakeToSpaced } from '../../../lib/snakeCaseConvert';
+
+// function commentToColor(comment: string) {
+//     switch (comment) {
+//         case 'great_driving':
+//         case 'good_driving':
+//             return 'text-[#19a8c2]';
+//         case 'source_only':
+//             return 'text-[#8200d9]';
+//         case 'clogging':
+//             return 'text-[#d98d00]';
+//         case 'effective_defense':
+//         case 'okay_defense':
+//         case 'ineffective_defense':
+//             return 'text-[#0052CC]';
+//         case 'sturdy_build':
+//         case 'weak_build':
+//             return 'text-[#0eb06f]';
+//         case 'avoids_under_stage':
+//             return 'text-[#d90000]'
+//         default:
+//                 return 'gray-500';
+    
+// }
+// }
+
+function commentToColor(comment: string) {
+        switch (comment) {
+            case 'good_driving':
+            case 'okay_defense':
+                return 'text-[#50a1c7]';
+            case 'clogging':
+            case 'source_only':
+            case 'avoids_under_stage':
+                return 'text-[#c78450]';
+            case 'weak_build':
+            case 'ineffective_defense':
+                return 'text-[#c75050]';
+            case 'sturdy_build':
+            case 'great_driving':
+            case 'effective_defense':
+                return 'text-[#5ac750]';
+            default:
+                    return 'gray-500';
+    }
+    }
 
 function TeamSummary({
     table,
@@ -16,7 +62,7 @@ function TeamSummary({
     pitData: PitResult;
 }) {
     // Get the data for the team specified
-    const teamData = data.filter(e => e.teamNumber === table.teamNumber);
+    const teamData = data.find(e => e.teamNumber === table.teamNumber);
     
     const {info: teamInfo, avatar} = teamInfoJson[table.teamNumber] ?? {};
     const teamPitData = pitData[table.teamNumber];
@@ -27,20 +73,22 @@ function TeamSummary({
                 <div className='flex space-x-4'>
                     {avatar && <img src={`data:image/png;base64,${avatar}`} />}
                     <h1 className='text-3xl'>
-                        Team {teamInfo?.team_number} - {teamInfo?.nickname}
+                        Team {teamInfo ? `${teamInfo.team_number} - ${teamInfo.nickname}` : table.teamNumber}
                     </h1>
                 </div>
 
-                <p className='max-w-md text-gray-500'>{teamInfo?.name}</p>
-                <br />
+                {teamInfo && <>
+                    <p className='max-w-md text-gray-500'>{teamInfo.name}</p>
+                    <br />
 
-                <div className='flex space-x-4'>
-                    <p>
-                        From {teamInfo?.city}, {teamInfo?.state_prov},{' '}
-                        {teamInfo?.country}
-                    </p>
-                    <p>Rookie Year: {teamInfo?.rookie_year}</p>
-                </div>
+                    <div className='flex space-x-4'>
+                        <p>
+                            From {teamInfo.city}, {teamInfo.state_prov},{' '}
+                            {teamInfo.country}
+                        </p>
+                        <p>Rookie Year: {teamInfo.rookie_year}</p>
+                    </div>
+                </>}
 
                 <br />
                 
@@ -58,20 +106,25 @@ function TeamSummary({
             </div>
 
             <div>
+                <h2 className='text-2xl'>Comments</h2>
+                
+                {teamData && teamData.Comments && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
+                    count > 0 && <p className={` ${commentToColor(comment)} `}>{snakeToSpaced(comment)}: {count}</p>
+                ))}
+
                 <h2 className='text-2xl'>Stats</h2>
                 
-                {Object.keys(teamData[0]).map(e => {
+                {teamData && Object.keys(teamData).map(e => {
                     if (
                         e !== 'teamNumber' &&
                         e !== 'scouterName' &&
-                        e !== 'climb'
+                        e !== 'climb' &&
+                        e !== 'Comments'
                     ) {
                         return (
                             <p key={e}>
                                 {camelToSpaced(e)}:{' '}
-                                {teamData
-                                    .map(e2 => Number(e2[e]))
-                                    .reduce((a, b) => a + b)}
+                                {teamData[e]}
                             </p>
                         );
                     }

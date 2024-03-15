@@ -82,6 +82,18 @@ const data = teams.map(team => (
         teleNonAmpedSpeakerMid: randint(5),
         teleNonAmpedSpeakerNear: randint(5),
         trapNotes: randint(2),
+        Comments: {
+            great_driving: randint(5), 
+            good_driving: randint(5), 
+            source_only: randint(5), 
+            clogging: randint(5), 
+            effective_defense: randint(5), 
+            okay_defense: randint(5), 
+            ineffective_defense: randint(5), 
+            sturdy_build: randint(5), 
+            weak_build: randint(5), 
+            avoids_under_stage: randint(5),
+        }
     }
 ));
 

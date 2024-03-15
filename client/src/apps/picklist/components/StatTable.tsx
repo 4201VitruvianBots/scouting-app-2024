@@ -3,10 +3,16 @@ import { AnalysisEntry, StatTableData, WindowData } from '../data';
 import { TeamData } from 'requests';
 import Dialog from '../../../components/Dialog';
 import StatColumnDialog from './StatColumnDialog';
-import blankImage from '../../../images/blank.png';
 import { MaterialSymbol } from 'react-material-symbols';
 import camelToSpaced from '../../../lib/camelCaseConvert';
 import RobotPhotoDialog from './RobotPhotoDialog';
+import TeamItem from './TeamItem';
+
+const isNumber = (num: unknown): num is number => {
+    return typeof num === 'number';
+}
+
+const sumReduction: [(prev: number, current: number) => number, 0] = [(prev, current) => prev + current, 0];
 
 function StatTable({
     table,
@@ -26,12 +32,9 @@ function StatTable({
     if (table.weighted) {
         sortedData = [...data].sort(
             (a, b) => {
-                let aSum = 0;
-                let bSum = 0;
-                for (let i = 0; i < table.columns.length; i++) {
-                    aSum += (a[table.columns[i]] as number) * (table.weights[i] ?? 0);
-                    bSum += (b[table.columns[i]] as number) * (table.weights[i] ?? 0);
-                }
+                const aSum = table.columns.map(column => a[column]).filter(isNumber).map((e, i) => e * table.weights[i]).reduce(...sumReduction);
+                const bSum = table.columns.map(column => b[column]).filter(isNumber).map((e, i) => e * table.weights[i]).reduce(...sumReduction);
+
                 return (aSum - bSum) * (table.ascending ? 1 : -1);
             }
         );
@@ -77,120 +80,109 @@ function StatTable({
         setTable({...table, weights: table.weights.map((e, i) => index === i ? value : e)});
     }
     
-    // Handle when a team on the stat table is clicked
-    function handleTeamSummaryClick(teamNumber: number) {
-        onSubmit({title: "Team " + teamNumber + " Summary", type: 'TeamSummary', teamNumber: teamNumber});
-    }
-    
     // Handle when a stat on the stat table is clicked
     function handleStatSummaryClick(column: string) {
         onSubmit({title: camelToSpaced(column), type: 'StatSummary', column: column});
     }
 
     return (
-        <table className='border border-black'>
-            <thead className='sticky top-0 border border-black'>
-                <tr className='border border-black'>
-                    <th colSpan={2} className='border border-black'>
-                        Team
-                    </th>
-                    {table.columns.map((column, i) => (
-                        column === "robotImages" ? (
-                            <th className='space-x-2 text-wrap max-w-20'>
-                                {camelToSpaced(column)}
-                                <button onClick={() => handleDeleteColumn(i)}>
-                                    <MaterialSymbol icon='close' />
-                                </button>
-                            </th>
-                        ) : (
-                            <th className='space-x-2 text-wrap max-w-20'>
-                                {camelToSpaced(column)}
-                                {table.weighted ? <>
-                                        <br />
-                                        <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
-                                    </>
-                                    :
-                                    <button onClick={() => handleClickColumn(column)}>
-                                        {column === table.sortColumn ? (
-                                            table.ascending ? (
-                                                <MaterialSymbol icon='arrow_upward_alt' />
-                                            ) : (
-                                                <MaterialSymbol icon='arrow_downward_alt' />
-                                            )
-                                        ) : (
-                                            <MaterialSymbol icon='swap_vert' />
-                                        )}
-                                    </button>
-                                }
-                                <button onClick={() => handleStatSummaryClick(column)}>
-                                    <MaterialSymbol icon='info' />
-                                </button>
-                                <button onClick={() => handleDeleteColumn(i)}>
-                                    <MaterialSymbol icon='close' />
-                                </button>
-                            </th>
-                        )
-                    ))}
-                    <th>
-                        <Dialog
-                            trigger={open => (
-                                <button className='px-4' onClick={open}>
-                                    <MaterialSymbol icon='add' />
-                                </button>
-                            )}>
-                            {close => (
-                                <StatColumnDialog
-                                    data={data}
-                                    onSubmit={handleAddColumn}
-                                    onClose={close}
-                                />
-                            )}
-                        </Dialog>
-                    </th>
-                </tr>
-            </thead>
-            <tbody className='border border-black'>
-                {sortedData.map(entry => (
+        <div className="space-y-2">
+            <button className="border border-black">
+                Add To Final Picklist
+            </button>
+            <table className='border border-black'>
+                <thead className='sticky top-0 border border-black'>
                     <tr className='border border-black'>
-                        <td>
-                            <img
-                                src={
-                                    teamInfoJson[entry.teamNumber]?.avatar
-                                        ? `data:image/png;base64,${teamInfoJson[entry.teamNumber]!.avatar}`
-                                        : blankImage
-                                }
-                            />
-                        </td>
-                        <td>
-                            {entry.teamNumber}
-                            <button onClick={() => handleTeamSummaryClick(entry.teamNumber)}>
-                                    <MaterialSymbol icon='info' />
-                            </button>
-                        </td>
-                        {table.columns.map(column => (
+                        <th className='border border-black'>
+                            Team
+                        </th>
+                        {table.columns.map((column, i) => (
                             column === "robotImages" ? (
-                                <td className='border border-black border-separate'>
-                                    <Dialog
-                                        trigger={open => (
-                                            <button onClick={open}>
-                                                <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" alt=""
-                                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {e.currentTarget.src = blankImage}} />
-                                            </button>
-                                        )}
-                                        >
-                                        {close => (
-                                            <RobotPhotoDialog teamNumber={entry.teamNumber} onClose={close} />
-                                        )}
-                                    </Dialog>
-                                </td>
+                                <th className='space-x-2 text-wrap max-w-20'>
+                                    {camelToSpaced(column)}
+                                    <button onClick={() => handleDeleteColumn(i)}>
+                                        <MaterialSymbol icon='close' />
+                                    </button>
+                                </th>
                             ) : (
-                                <td className='border border-black'>{entry[column]}</td>
+                                <th className='space-x-2 text-wrap max-w-20'>
+                                    {camelToSpaced(column)}
+                                    {table.weighted ? <>
+                                            <br />
+                                            <input type='number' onChange={(event) => handleWeightChange(i, event)} className="w-12" />
+                                        </>
+                                        :
+                                        <button onClick={() => handleClickColumn(column)}>
+                                            {column === table.sortColumn ? (
+                                                table.ascending ? (
+                                                    <MaterialSymbol icon='arrow_upward_alt' />
+                                                ) : (
+                                                    <MaterialSymbol icon='arrow_downward_alt' />
+                                                )
+                                            ) : (
+                                                <MaterialSymbol icon='swap_vert' />
+                                            )}
+                                        </button>
+                                    }
+                                    <button onClick={() => handleStatSummaryClick(column)}>
+                                        <MaterialSymbol icon='info' />
+                                    </button>
+                                    <button onClick={() => handleDeleteColumn(i)}>
+                                        <MaterialSymbol icon='close' />
+                                    </button>
+                                </th>
                             )
                         ))}
+                        <th>
+                            <Dialog
+                                trigger={open => (
+                                    <button className='px-4' onClick={open}>
+                                        <MaterialSymbol icon='add' />
+                                    </button>
+                                )}>
+                                {close => (
+                                    <StatColumnDialog
+                                        data={data}
+                                        onSubmit={handleAddColumn}
+                                        onClose={close}
+                                    />
+                                )}
+                            </Dialog>
+                        </th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody className='border border-black'>
+                    {sortedData.map(entry => (
+                        <tr className='border border-black'>
+                            <TeamItem
+                                teamNumber={entry.teamNumber}
+                                teamInfoJson={teamInfoJson}
+                                onSubmit={onSubmit}
+                            />
+                            {table.columns.map(column => (
+                                column === "robotImages" ? (
+                                    <td className='border border-black border-separate'>
+                                        <Dialog
+                                            trigger={open => (
+                                                <button onClick={open}>
+                                                    <img src={`/image/${entry.teamNumber}.jpeg`} width="100" height="100" alt="" />
+                                                </button>
+                                            )}
+                                            >
+                                            {close => (
+                                                <RobotPhotoDialog teamNumber={entry.teamNumber} onClose={close} />
+                                            )}
+                                        </Dialog>
+                                    </td>
+                                ) : (
+                                    <td className='border border-black'>{entry[column]}</td>
+                                )
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

@@ -3,32 +3,44 @@ import LinkButton from '../../components/LinkButton';
 import SignIn from '../../components/SignIn';
 import { useEffect, useState } from 'react';
 import Dialog from '../../components/Dialog';
-import { Foul, SuperPosition, Break, MatchSchedule, SuperData, HighNote, RobotPosition, ScouterPosition } from 'requests';
+import {
+    Foul,
+    SuperPosition,
+    Break,
+    MatchSchedule,
+    SuperData,
+    HighNote,
+    RobotPosition,
+    ScouterPosition,
+} from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
 import NumberInput from '../../components/NumberInput';
 import MultiButton from '../../components/MultiButton';
-import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+// import CreatableSelect from 'react-select/creatable';
+// import SelectSearch, { SelectSearchOption } from 'react-select-search';
 
-const schedule = scheduleFile as MatchSchedule
+const schedule = scheduleFile as MatchSchedule;
+
 
 const foulTypes: Foul[] = [
     'insideRobot',
     'protectedZone', 
     'pinning',
     'multiplePieces',
-    'other' ];
+    'other'
+];
 
 const defaultHighNote: HighNote = {
     amp: false,
     center: false,
     source: false,
-}
+};
 const breakTypes: Break[] = ['mechanismDmg', 'batteryFall', 'commsFail'];
 
 const defaultSuperTeamState: SuperTeamState = {
@@ -43,8 +55,8 @@ const defaultSuperTeamState: SuperTeamState = {
     defenseRank: 'noDef',
     wasDefended: false,
     teamNumber: undefined,
+    cannedComments: [],
 };
-
 
 function SuperApp() {
     usePreventUnload();
@@ -55,10 +67,12 @@ function SuperApp() {
     const [team3, setTeam3] = useState(defaultSuperTeamState);
     const [shooterPlayerTeam, setShooterPlayerTeam] = useState<number>();
     const [sendQueue, sendAll, queue, sending] = useQueue();
-    const [matchNumber, setMatchNumber] = useState<number>(); 
+    const [matchNumber, setMatchNumber] = useState<number>();
     const [showCheck, setShowCheck] = useState(false);
-    const [highNotes, setHighNotes] = useState(defaultHighNote); 
-    const [history, setHistory] = useState<{1: SuperTeamState, 2: SuperTeamState, 3: SuperTeamState}[]>([]);
+    const [highNotes, setHighNotes] = useState(defaultHighNote);
+    const [history, setHistory] = useState<
+        { 1: SuperTeamState; 2: SuperTeamState; 3: SuperTeamState }[]
+    >([]);
     const [scouterPosition, setScouterPosition] = useState<ScouterPosition>();
 
     useStatus(superPosition, matchNumber, scouterName);
@@ -69,22 +83,22 @@ function SuperApp() {
             {
                 1: team1,
                 2: team2,
-                3: team3
-            }
-        ])
-    }
+                3: team3,
+            },
+        ]);
+    };
     const handleTeam1 = (teamValue: SuperTeamState) => {
         setTeam1(teamValue);
-        saveHistory()
-    }
+        saveHistory();
+    };
     const handleTeam2 = (teamValue: SuperTeamState) => {
         setTeam2(teamValue);
-        saveHistory()
-    }
+        saveHistory();
+    };
     const handleTeam3 = (teamValue: SuperTeamState) => {
         setTeam3(teamValue);
-        saveHistory()
-    }
+        saveHistory();
+    };
 
     const handleSubmit = async () => {
         if (
@@ -92,38 +106,51 @@ function SuperApp() {
             superPosition === undefined ||
             matchNumber === undefined ||
             team1.teamNumber === undefined ||
-            team2.teamNumber === undefined || 
+            team2.teamNumber === undefined ||
             team3.teamNumber === undefined
-        ){
-            alert('data is missing! :(')
-            return; }
+        ) {
+            alert('data is missing! :(');
+            return;
+        }
 
-        const data = [team1, team2, team3].map((team, index) => 
-        ({
-            metadata: {
-                scouterName,
-                matchNumber,
-                robotTeam:team.teamNumber!,
-                robotPosition: ((superPosition === 'blue_ss' ? ['blue_1', 'blue_2', 'blue_3'] : ['red_1', 'red_2', 'red_3']) satisfies RobotPosition[])[index]
-            },
-            fouls: team.foulCounts,
+        const data = [team1, team2, team3].map(
+            (team, index) =>
+                ({
+                    metadata: {
+                        scouterName,
+                        matchNumber,
+                        robotTeam: team.teamNumber!,
+                        robotPosition: (
+                            (superPosition === 'blue_ss'
+                                ? ['blue_1', 'blue_2', 'blue_3']
+                                : [
+                                      'red_1',
+                                      'red_2',
+                                      'red_3',
+                                  ]) satisfies RobotPosition[]
+                        )[index],
+                    },
+                    fouls: team.foulCounts,
+                    break: team.breakCount,
             defense: team.defenseRank,
-            defended: team.wasDefended,
-            humanShooter: shooterPlayerTeam === team.teamNumber ? {
-                highNotes
-            } : undefined
-            
-        } satisfies SuperData
-        ));
+                    defended: team.wasDefended,
+                    humanShooter:
+                        shooterPlayerTeam === team.teamNumber
+                            ? {
+                                  highNotes,
+                              }
+                            : undefined,
+                    comments: team.cannedComments.map(option => option.value),
+                }) satisfies SuperData
+        );
 
-        data.map(e => sendQueue('/data/super', e))
+        data.map(e => sendQueue('/data/super', e));
         setHighNotes(defaultHighNote);
         setTeam1(defaultSuperTeamState);
         setTeam2(defaultSuperTeamState);
         setTeam3(defaultSuperTeamState);
         setHistory([]);
         setMatchNumber(matchNumber + 1);
-
         setShowCheck(true);
         setTimeout(() => {
             setShowCheck(false);
@@ -132,15 +159,27 @@ function SuperApp() {
 
     useEffect(() => {
         if (!schedule || !superPosition || !matchNumber) {
-            setTeam1(team1 => ({...team1, teamNumber: undefined}));
-            setTeam2(team2 => ({...team2, teamNumber: undefined}));
-            setTeam3(team3 => ({...team3, teamNumber: undefined}));
+            setTeam1(team1 => ({ ...team1, teamNumber: undefined }));
+            setTeam2(team2 => ({ ...team2, teamNumber: undefined }));
+            setTeam3(team3 => ({ ...team3, teamNumber: undefined }));
             return;
         }
         const blueAlliance = superPosition === 'blue_ss';
-        setTeam1(team1 => ({...team1, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_1' : 'red_1']}));
-        setTeam2(team2 => ({...team2, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_2' : 'red_2']}));
-        setTeam3(team3 => ({...team3, teamNumber: schedule[matchNumber]?.[blueAlliance ? 'blue_3' : 'red_3']}));
+        setTeam1(team1 => ({
+            ...team1,
+            teamNumber:
+                schedule[matchNumber]?.[blueAlliance ? 'blue_1' : 'red_1'],
+        }));
+        setTeam2(team2 => ({
+            ...team2,
+            teamNumber:
+                schedule[matchNumber]?.[blueAlliance ? 'blue_2' : 'red_2'],
+        }));
+        setTeam3(team3 => ({
+            ...team3,
+            teamNumber:
+                schedule[matchNumber]?.[blueAlliance ? 'blue_3' : 'red_3'],
+        }));
     }, [matchNumber, superPosition]);
 
     const undoHistoryCount = () => {
@@ -154,12 +193,23 @@ function SuperApp() {
     };
 
     return (
-        <main className='text-center bg-[#171c26]'>
+        <main className='bg-[#171c26] text-center'>
             {showCheck && (
-                <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
+                <MaterialSymbol
+                    icon='check'
+                    size={150}
+                    fill
+                    grade={200}
+                    color='green'
+                    className='absolute right-10 top-0 ml-10'
+                />
             )}
-            <h1 className='col-span-3 text-3xl text-[#48c55c] font-bold p-5'>Super Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+            <h1 className='col-span-3 p-5 text-3xl font-bold text-[#48c55c]'>
+                Super Scouting App
+            </h1>
+            
+            <div className='fixed left-4 top-4 z-20 flex flex-row gap-3 rounded-md bg-slate-200 p-1'>
+               
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
@@ -170,6 +220,7 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </LinkButton>
+
                 <Dialog
                     open
                     trigger={open => (
@@ -189,22 +240,22 @@ function SuperApp() {
                     )}>
                     {close => (
                         <SignIn
-                        scouterName={scouterName}
-                        onChangeScouterName={setScouterName}
-                        robotPosition={superPosition}
-                        onChangeRobotPosition={setSuperPosition}
-                        superScouting
-                        scouterPosition={scouterPosition}
+                            scouterName={scouterName}
+                            onChangeScouterName={setScouterName}
+                            robotPosition={superPosition}
+                            onChangeRobotPosition={setSuperPosition}
+                            superScouting
+                            scouterPosition={scouterPosition}
                             onChangeScouterPosition={setScouterPosition}
-
-                        onSubmit={close}
-                        
-                    />
+                            onSubmit={close}
+                        />
                     )}
                 </Dialog>
+                
 
-                <button onClick={undoHistoryCount}
-                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                <button
+                    onClick={undoHistoryCount}
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800]  p-1  font-bold text-black '>
                     <MaterialSymbol
                         icon='undo'
                         size={60}
@@ -214,28 +265,41 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </button>
-
-                <ConeStacker />
+                
+           
             </div>
-            <p className='text-xl text-white'>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} 
-            className='m-2 p-2 text-black text-xl'/>
 
-            <div className='grid justify-items-center grid-cols-3 px-10'>
+            <p className='text-xl text-white'>Match Number</p>
+            <NumberInput
+                onChange={setMatchNumber}
+                value={matchNumber}
+                className='m-2 p-2 text-xl text-black'
+            /> 
+
+            <div className='grid grid-cols-3 justify-items-center px-10 gap-10'>
                 <SuperTeam teamState={team1} setTeamState={handleTeam1} />
                 <SuperTeam teamState={team2} setTeamState={handleTeam2} />
                 <SuperTeam teamState={team3} setTeamState={handleTeam3} />
             </div>
             
-            <MultiButton 
-                className='outline-black max-w-40 w-full mx-5 mt-10'
-                onChange={setShooterPlayerTeam}
-                values={[team1.teamNumber ?? -1, team2.teamNumber ?? -2,team3.teamNumber ?? -3]} // ugly hack hehe
-                labels={[team1.teamNumber ?? 'Team 1', team2.teamNumber ?? 'Team 2',team3.teamNumber ?? 'Team 3'].map(e => e.toString())}
-                value={shooterPlayerTeam}
-                selectedClassName = 'bg-[#48c55c]'
-                unSelectedClassName = 'bg-white'/>
 
+            <MultiButton
+                className='mx-5 mt-10 w-full max-w-40 outline-black'
+                onChange={setShooterPlayerTeam}
+                values={[
+                    team1.teamNumber ?? -1,
+                    team2.teamNumber ?? -2,
+                    team3.teamNumber ?? -3,
+                ]} // ugly hack hehe
+                labels={[
+                    team1.teamNumber ?? 'Team 1',
+                    team2.teamNumber ?? 'Team 2',
+                    team3.teamNumber ?? 'Team 3',
+                ].map(e => e.toString())}
+                value={shooterPlayerTeam}
+                selectedClassName='bg-[#48c55c]'
+                unSelectedClassName='bg-white'
+            />
 
             <MultiSelectFieldButton
                 highNotes={highNotes}
@@ -244,19 +308,24 @@ function SuperApp() {
                 scouterPosition={scouterPosition}
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
 
-            <button
-                    onClick={() => {handleSubmit(); scrollTo(0, 0);}}
-                    className='rounded-md bg-[#48c55c] px-4 py-2 m-5 text-lg max-w-80 w-full'>
-                    Submit
-            </button>
-            
-            <div>
-                <div className="text-white">Queue: {queue.length}</div>
-                <button onClick={sendAll}
-                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
-                >{sending ? 'Sending...': 'Resend All'}</button>
-            </div>
 
+            <button
+                onClick={() => {
+                    handleSubmit();
+                    scrollTo(0, 0);
+                }}
+                className='m-5 w-full max-w-80 rounded-md bg-[#48c55c] px-4 py-2 text-lg'>
+                Submit
+            </button>
+
+            <div>
+                <div className='text-white'>Queue: {queue.length}</div>
+                <button
+                    onClick={sendAll}
+                    className='rounded-md bg-amber-500 px-2 py-1 text-center'>
+                    {sending ? 'Sending...' : 'Resend All'}
+                </button>
+            </div>
         </main>
     );
 }

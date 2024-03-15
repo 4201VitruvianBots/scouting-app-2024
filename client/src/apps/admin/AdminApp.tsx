@@ -5,9 +5,6 @@ import { ScouterTable } from "./components/ScouterTable";
 import { MatchTable } from "./components/MatchTable";
 //import { useFetchJson } from "../../lib/useFetch";
 
-
-
-
 function AdminApp() {
     const status = useStatusRecieve();
 

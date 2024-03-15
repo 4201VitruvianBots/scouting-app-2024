@@ -6,7 +6,6 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 import SignIn from '../../components/SignIn';
-import ConeStacker from '../../components/ConeStacker';
 import Dialog from '../../components/Dialog';
 import NumberInput from '../../components/NumberInput';
 import { useStatus } from '../../lib/useStatus';
@@ -23,10 +22,10 @@ interface MatchScores {
     autoShootFar: number;
     autoAmp: number;
     autoMiss: number;
-    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
     teleShootNear: number;
     teleShootMid: number;
     teleShootFar: number;
+    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes 
     teleAmp: number;
     teleMiss: number;
     trap: number;
@@ -37,10 +36,10 @@ const defualtScores: MatchScores = {
     autoShootFar: 0,
     autoAmp: 0,
     autoMiss: 0,
-    hold: 0,
     teleShootNear: 0,
     teleShootMid: 0,
     teleShootFar: 0,
+    hold: 0, 
     teleAmp: 0,
     teleMiss: 0,
     trap: 0,
@@ -93,7 +92,7 @@ function MatchApp() {
                 mid: count.teleShootMid,
                 far: count.teleShootFar,
                 amp: count.teleAmp,
-                miss: count.autoMiss
+                miss: count.teleMiss
             },
             trapNotes: count.trap,
             climb: climbPosition,
@@ -200,7 +199,8 @@ function MatchApp() {
                     <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
                 )}
             <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
-            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+            
+            <div className='fixed left-4 top-4 z-20 flex flex-row gap-3 rounded-md bg-slate-200 p-1'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
@@ -240,7 +240,7 @@ function MatchApp() {
                 </Dialog>
                 <button
                     onClick={undoCount}
-                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800]  font-bold text-black '>
                     <MaterialSymbol
                         icon='undo'
                         size={60}
@@ -250,7 +250,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
-                <ConeStacker />
+              
             </div>
            
             <p className='text-2xl mt-2 mb-2'>Match Number</p>

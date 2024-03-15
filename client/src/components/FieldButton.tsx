@@ -194,17 +194,6 @@ function FieldButton({
                             className='!static h-[100px] flex-grow basis-0 bg-red-200'
                             label='Miss'
                         />
-                        {!teleOp && (
-                            <RegionButton
-                                teleOp={teleOp}
-                                count={count}
-                                handleCount={handleCount}
-                                autoKey='hold'
-                                teleKey='hold'
-                                className='!static h-[100px] flex-grow basis-0 bg-yellow-200'
-                                label='Held'
-                            />
-                        )}
                     </>
                 )}
             </div>

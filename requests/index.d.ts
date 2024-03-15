@@ -25,6 +25,19 @@ export type DefenseRank =
     | 'fullDef' 
     | 'someDef' 
     | 'noDef'
+export type CommentValues =
+    | 'great_driving'
+    | 'good_driving'
+    | 'source_only'
+    | 'clogging'
+    | 'effective_defense'
+    | 'okay_defense'
+    | 'ineffective_defense'
+    | 'sturdy_build'
+    | 'weak_build'
+    | 'avoids_under_stage'
+
+
 
 interface capabilities { 
     amp: boolean,
@@ -44,8 +57,8 @@ interface preference {
     speakerPerfer:boolean,
     trapPrefer: boolean,
     climbPrefer: boolean,
-
 }
+
 export type SuperPosition = 
     | 'red_ss'
     | 'blue_ss';
@@ -112,10 +125,11 @@ export interface MatchData {
 export interface SuperData {
     metadata: MetaData;
     fouls: Record<Foul, number>;
+    break: Record<Break, number>;
     defense: DefenseRank;
     defended: boolean;
     humanShooter?: {highNotes: HighNote};
-
+    comments: CommentValues[];
     
 }
 
