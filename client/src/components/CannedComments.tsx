@@ -1,7 +1,6 @@
 import { Dispatch } from 'react';
 import { CommentValues } from 'requests';
 import chroma from 'chroma-js';
-// import { ColourOption, colourOptions } from '../data';
 import Select, { StylesConfig } from 'react-select';
 
 export interface SelectOption<T> {
@@ -84,8 +83,6 @@ const colourStyles: StylesConfig<ColourOption, true> = {
       },
     }),
   };
-
-
 
 
 function CannedCommentBox({
