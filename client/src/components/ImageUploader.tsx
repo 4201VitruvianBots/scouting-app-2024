@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from "react";
+import { MaterialSymbol } from "react-material-symbols";
 
 function ImageUploader({value, onChange}: {
     value: string;
@@ -20,9 +21,24 @@ function ImageUploader({value, onChange}: {
     }
 
     return (
-        <label className="justify-center">
-            <input type="file" accept="image/jpeg" onChange={handleChange} />
-            <img src={value} />
+        <label className="justify-center flex ">
+            <input type="file" accept="image/jpeg" onChange={handleChange} className= 'hidden'/>
+            
+            <div className="max-h-[270px] max-w-[200px] object-contain">
+            
+            {value ?  <img src={value} /> :  <MaterialSymbol
+                        icon='add_a_photo'
+                        size={50}
+                        fill
+                  
+                        color='green'
+                        className='snap-none'
+                    />}
+
+           
+               
+            </div>
+            
         </label>
     );
 }

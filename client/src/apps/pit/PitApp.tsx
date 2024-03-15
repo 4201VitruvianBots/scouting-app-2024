@@ -19,16 +19,16 @@ function PitApp() {
     usePreventUnload();
   
   
-     const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-      const newAutoInputValues = [...autoInputValues];
-      newAutoInputValues[index] = event.target.value;
-      setAutoInputValues(newAutoInputValues);
-    };
+    //  const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    //   const newAutoInputValues = [...autoInputValues];
+    //   newAutoInputValues[index] = event.target.value;
+    //   setAutoInputValues(newAutoInputValues);
+    // };
 
-    const removeAutoInput = (id: number) => {
-     const newInputValues = autoInputValues.filter((_, i) => i !== id);
-     setAutoInputValues(newInputValues);
-  };
+  //   const removeAutoInput = (id: number) => {
+  //    const newInputValues = autoInputValues.filter((_, i) => i !== id);
+  //    setAutoInputValues(newInputValues);
+  // };
     const addAnotherAuto = () => {
      setAutoInputValues([...autoInputValues, '']);
   };
@@ -233,24 +233,9 @@ function PitApp() {
             </div>
             
             <div className="ml-1 flex flex-col items-center justify-center">
-              <h1 className="text-center text-white mb-4">Auto Capability?</h1>
-              <div className="flex flex-col items-center justify-center space-y-4">
-                {autoInputValues.map((value, index) => (
-                <div key={index} className="flex items-center justify-center space-x-2">
-                  <input
-                  className='w-2/3 border-1 rounded-lg border border-gray-700 text-3xl text-center'
-                  type="text"
-                  placeholder="Type and #"
-                  value={value}
-                  onChange={(event) => handleAutoInputChange(index, event)}/>
-                  <button
-                  className="bg-red-400 font-sans font-semibold text-black text-sm md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2"
-                  onClick={() => removeAutoInput(index)}>
-                    Remove
-                    </button>
-                  </div>
-               ))}
-            </div>
+             
+              
+
             <button className="bg-[#48c55c] font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad mt-4 mb-5" onClick={addAnotherAuto}>Add input</button>
             </div>
 
@@ -300,13 +285,14 @@ function PitApp() {
     </div>
   </div>
 </div>
-            <h1 className='text-center text-white my-6'>Robot Image</h1> 
+            <h1 className='text-center text-white my-2 '>Robot Image</h1> 
                 <ImageUploader 
                 value={robotImage}
                 onChange={setRobotImage}
+                
                 />
             
-            <h1 className="text-center text-white">Additional Notes?</h1>
+            <h1 className="text-center text-white pt-6" >Additional Notes?</h1>
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
             <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
