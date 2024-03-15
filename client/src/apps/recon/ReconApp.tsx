@@ -57,11 +57,11 @@ function ReconApp() {;
             </LinkButton>
             </div>
            <NumberInput className='rounded-lg border-2 border-slate-900 text-center text-2xl text-black' placeholder="type match #" value={matchNumber} onChange={setMatchNumber}></NumberInput>
-           <button className='rounded-lg border-2 border-slate-900 text-lg' onClick={() => {reloadRetrieveMatch(); reloadRetrieveSuper()}}>Reload Data</button>
+           <button className='rounded-lg border-2 border-slate-900 text-lg my-3' onClick={() => {reloadRetrieveMatch(); reloadRetrieveSuper()}}>Reload Data</button>
             <table className="border-4 border-slate-700 bg-[#171c26]">
                 <thead>
                    <tr>
-                    <td className="border-4 border-slate-700">Team</td>
+                    <td className="border-4 pl-40 justify-center border-slate-700">Team</td>
                     {teams.map((team, index) => <th className="border-4 border-slate-700">
                         <TeamDropdown value={team} onChange={value => setTeams(teams.map((team, index2) => index===index2? value : team))}/>
                         <button onClick={() => setTeams(teams.filter((_, index2) => index!==index2))}>X</button>
