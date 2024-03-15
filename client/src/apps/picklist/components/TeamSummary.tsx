@@ -5,6 +5,54 @@ import { TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
 import { snakeToSpaced } from '../../../lib/snakeCaseConvert';
 
+// function commentToColor(comment: string) {
+//     switch (comment) {
+//         case 'great_driving':
+//         case 'good_driving':
+//             return 'text-[#19a8c2]';
+//         case 'source_only':
+//             return 'text-[#8200d9]';
+//         case 'clogging':
+//             return 'text-[#d98d00]';
+//         case 'effective_defense':
+//         case 'okay_defense':
+//         case 'ineffective_defense':
+//             return 'text-[#0052CC]';
+//         case 'sturdy_build':
+//         case 'weak_build':
+//             return 'text-[#0eb06f]';
+//         case 'avoids_under_stage':
+//             return 'text-[#d90000]'
+//         default:
+//                 return 'gray-500';
+    
+// }
+// }
+
+function commentToColor(comment: string) {
+        switch (comment) {
+            case 'great_driving':
+            case 'good_driving':
+                return 'text-[#0e7db0]';
+            case 'source_only':
+                return 'text-[#7d0eb0]';
+            case 'clogging':
+                return 'text-[#d98d00]';
+            case 'effective_defense':
+            case 'okay_defense':
+            case 'ineffective_defense':
+                return 'text-[#110eb0]';
+            case 'sturdy_build':
+            case 'weak_build':
+                return 'text-[#04940c]';
+            case 'avoids_under_stage':
+                return 'text-[#b00e0e]'
+            default:
+                    return 'gray-500';
+        
+    }
+    }
+
 function TeamSummary({
     table,
     data,
@@ -18,6 +66,9 @@ function TeamSummary({
     const teamData = data.find(e => e.teamNumber === table.teamNumber);
     
     const {info: teamInfo, avatar} = teamInfoJson[table.teamNumber] ?? {};
+
+    
+    
     
     return (
         <div className='flex space-x-10'>
@@ -61,7 +112,7 @@ function TeamSummary({
                 <h2 className='text-2xl'>Comments</h2>
                 
                 {teamData && teamData.Comments && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
-                    <p>{snakeToSpaced(comment)}: {count}</p>
+                    count > 0 && <p className={` ${commentToColor(comment)} `}>{snakeToSpaced(comment)}: {count}</p>
                 ))}
 
                 <h2 className='text-2xl'>Stats</h2>

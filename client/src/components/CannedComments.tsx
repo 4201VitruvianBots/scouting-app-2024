@@ -19,8 +19,8 @@ interface ColourOption {
 }
 
 const commentOptions: SelectOption<CommentValues>[] = [
-    { label: 'great driving', value: 'great_driving', color: '#00B8D9'},
-    { label: 'good driving', value: 'good_driving', color: '#00B8D9' },
+    { label: 'great driving', value: 'great_driving', color: '#1193ab'},
+    { label: 'good driving', value: 'good_driving', color: '#1193ab' },
     { label: 'source only', value: 'source_only', color: '#8200d9' },
     { label: 'clogging', value: 'clogging', color: '#d98d00' },
     { label: 'effective defense', value: 'effective_defense', color: '#0052CC' },
