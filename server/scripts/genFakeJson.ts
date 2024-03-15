@@ -82,7 +82,7 @@ const data = teams.map(team => (
         teleNonAmpedSpeakerMid: randint(5),
         teleNonAmpedSpeakerNear: randint(5),
         trapNotes: randint(2),
-        comments: {
+        Comments: {
             great_driving: randint(5), 
             good_driving: randint(5), 
             source_only: randint(5), 
