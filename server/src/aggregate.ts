@@ -106,17 +106,36 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         maxAutoSpeakerNotes: {$max: {$add: ['$autoNotes.near', '$autoNotes.mid', '$autoNotes.far']}},
         maxAutoAmpNotes: { $max: '$autoNotes.amp' },
         maxTrapNotes: {$max: '$trapNotes'},
-        scoringLocation: { $push: {
-               $let: {
+        scoringLocation: {
+            $push: {
+              $let: {
                 vars: {
-                    totalNear: {$add: ['$autoNotes.near', '$teleNotes.near']},
-                    totalMid: {$add: ['$autoNotes.mid', '$teleNotes.mid']},
-                    totalFar: {$add: ['autoNotes.far', '$teleNotes.far']}
+                
+                  totalNear: {$gt:{ $add: ['$autoNotes.near', '$teleNotes.near'] }, 0},
+                  totalMid: { $add: ['$autoNotes.mid', '$teleNotes.mid'] },
+                  totalFar: { $add: ['$autoNotes.far', '$teleNotes.far'] }, 
+                gte: 0
                 },
-                in: {'$$totalNear', '$$totalMid', '$$totalFar'}
-               }
-               }
-               },
+                in: {
+                  $cond: {
+                    if: {
+                      $eq: ['$$totalNear', { $sum: ['totalNear'] }]
+                    },
+                    then: 'near',
+                    else: {
+                      $cond: {
+                        if: {
+                          $eq: ['$$totalMid', { $sum: ['totalMid'] }]
+                        },
+                        then: 'mid',
+                        else: 'far'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
         avgClimbRate: {$avg: {$cond: [{$in: ['$climb', ['source', 'center', 'amp']]}, 1,{$cond: [{$eq:['$climb', 'failed']},0,null]}]}},
         
     } satisfies { [K in keyof Omit<MatchDataAggregations, 'harmonyRate'>]: unknown }}

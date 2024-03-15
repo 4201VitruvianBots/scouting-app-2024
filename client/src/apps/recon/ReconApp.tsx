@@ -19,7 +19,8 @@ const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'maxAutoAmpNotes',
     'maxTrapNotes',
     'avgClimbRate',
-    "harmonyRate"
+    "harmonyRate",
+    'scoringLocation'
 ]
 const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
     'avgFouls',
