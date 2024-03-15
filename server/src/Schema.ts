@@ -50,6 +50,11 @@ const matchDataSchema = new mongoose.Schema<MatchData>({
         multiplePieces: Number,
         other: Number
      },
+     break: {
+       mechanismDmg: Number,
+       batteryFall: Number,
+       commsFail: Number
+    },
     defense: {
         type: String,
         enum: ['fullDef', 'someDef', 'noDef']

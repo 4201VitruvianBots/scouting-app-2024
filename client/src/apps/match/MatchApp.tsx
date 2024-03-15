@@ -23,10 +23,10 @@ interface MatchScores {
     autoShootFar: number;
     autoAmp: number;
     autoMiss: number;
-    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
     teleShootNear: number;
     teleShootMid: number;
     teleShootFar: number;
+    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes 
     teleAmp: number;
     teleMiss: number;
     trap: number;
@@ -37,10 +37,10 @@ const defualtScores: MatchScores = {
     autoShootFar: 0,
     autoAmp: 0,
     autoMiss: 0,
-    hold: 0,
     teleShootNear: 0,
     teleShootMid: 0,
     teleShootFar: 0,
+    hold: 0, 
     teleAmp: 0,
     teleMiss: 0,
     trap: 0,
@@ -93,7 +93,7 @@ function MatchApp() {
                 mid: count.teleShootMid,
                 far: count.teleShootFar,
                 amp: count.teleAmp,
-                miss: count.autoMiss
+                miss: count.teleMiss
             },
             trapNotes: count.trap,
             climb: climbPosition,

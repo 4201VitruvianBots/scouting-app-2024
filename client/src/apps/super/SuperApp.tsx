@@ -152,7 +152,8 @@ function SuperApp() {
                         )[index],
                     },
                     fouls: team.foulCounts,
-                    defense: team.defenseRank,
+                    break: team.breakCount,
+            defense: team.defenseRank,
                     defended: team.wasDefended,
                     humanShooter:
                         shooterPlayerTeam === team.teamNumber
