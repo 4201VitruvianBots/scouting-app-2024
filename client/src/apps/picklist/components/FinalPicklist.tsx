@@ -5,24 +5,28 @@ import { TeamData } from 'requests';
 import TeamItem from './TeamItem';
 import SelectSearch from 'react-select-search';
 
-function FinalPicklist(
+function picklist(
     {
         teamInfoJson,
         onSubmit,
         data,
+        picklist,
+        setPicklist
     }: {
         teamInfoJson: TeamData;
         onSubmit: Dispatch<WindowData>;
         data: AnalysisEntry[] | undefined;
+        picklist: number[];
+        setPicklist: Dispatch<number[]>;
     }
 ) {
     // Get all team numbers from the json data
     const teamNumbers = data?.map(e => e.teamNumber.toString()) ?? [];
     
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [expanded, setExpanded] = useState(false);
     
-    const [picklist, setPicklist] = useState<number[]>([]);
-    
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [newTeamNumber, setNewTeamNumber] = useState<string>();
     
     function handleExpand() {
@@ -31,6 +35,14 @@ function FinalPicklist(
     
     function handleRemoveTeam(index: number) {
         setPicklist(picklist.filter((_, i) => i !== index));
+    }
+    
+    function moveTeamNumber(index: number, up: boolean) {
+        if (up && index > 0) {
+            setPicklist(picklist.slice(0, index - 1).concat(picklist[index], picklist[index - 1], picklist.slice(index + 1)));
+        } else if (index < picklist.length - 1) {
+            setPicklist(picklist.slice(0, index).concat(picklist[index + 1], picklist[index], picklist.slice(index + 2)));
+        }
     }
     
     function addNewTeamNumber(teamNumber: string) {
@@ -51,6 +63,14 @@ function FinalPicklist(
                     <div className="text-center text-2xl space-y-3 overflow-y-auto self-stretch">
                         {picklist.map((team, i) => {return (
                             <div className="flex justify-center">
+                                <div className="flex flex-col -space-y-3">
+                                    <button onClick={() => moveTeamNumber(i, true)}>
+                                        <MaterialSymbol icon='arrow_drop_up' />
+                                    </button>
+                                    <button onClick={() => moveTeamNumber(i, false)}>
+                                        <MaterialSymbol icon='arrow_drop_down' />
+                                    </button>
+                                </div>
                                 <TeamItem teamNumber={team} teamInfoJson={teamInfoJson} onSubmit={onSubmit}/>
                                 <button onClick={() => handleRemoveTeam(i)}>
                                     <MaterialSymbol icon='close' />
@@ -74,4 +94,4 @@ function FinalPicklist(
   );
 }
 
-export default FinalPicklist;
+export default picklist;

@@ -20,12 +20,14 @@ function StatTable({
     data,
     teamInfoJson,
     onSubmit,
+    onSetFinal,
 }: {
     table: StatTableData;
     data: AnalysisEntry[];
     setTable: Dispatch<StatTableData>;
     teamInfoJson: TeamData;
     onSubmit: Dispatch<WindowData>;
+    onSetFinal: Dispatch<number[]>;
 }) {
     let sortedData: AnalysisEntry[];
     
@@ -87,8 +89,8 @@ function StatTable({
 
     return (
         <div className="space-y-2">
-            <button className="border border-black">
-                Add To Final Picklist
+            <button className="border border-black" onClick={() => onSetFinal(sortedData.map((entry) => entry.teamNumber))}>
+                Set As Final Picklist
             </button>
             <table className='border border-black'>
                 <thead className='sticky top-0 border border-black'>

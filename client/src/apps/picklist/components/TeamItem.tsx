@@ -35,11 +35,9 @@ function TeamItem(
             )}
             <td>
                 {teamNumber}
-                {teamInfoJson[teamNumber] && (
-                <button onClick={() => handleTeamSummaryClick(teamNumber)}>
+                {<button onClick={() => handleTeamSummaryClick(teamNumber)}>
                         <MaterialSymbol icon='info' />
-                </button>
-                )}
+                </button>}
             </td>
         </>
     );

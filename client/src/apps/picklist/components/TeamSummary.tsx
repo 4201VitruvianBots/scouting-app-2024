@@ -108,9 +108,9 @@ function TeamSummary({
             <div>
                 <h2 className='text-2xl'>Comments</h2>
                 
-                {teamData && teamData.Comments && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
+                {(teamData && teamData.Comments) ? Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
                     count > 0 && <p className={` ${commentToColor(comment)} `}>{snakeToSpaced(comment)}: {count}</p>
-                ))}
+                )) : <br />}
 
                 <h2 className='text-2xl'>Stats</h2>
                 
