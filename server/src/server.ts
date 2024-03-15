@@ -50,11 +50,11 @@ app.post('/data/pit', async(req,res) => {
 
     const PitApp = new pitApp({
         ...body,
-        photo: dataUriToBuffer(body.photo),
+        photo: Buffer.from(dataUriToBuffer(body.photo).buffer),
     });
     const aPitApp = await PitApp.save();
 
-    console.log(aPitApp);
+    console.log(`Pit data recieved for ${body.teamNumber}`);
 
     res.end();
 });
