@@ -31,25 +31,22 @@ import { snakeToSpaced } from '../../../lib/snakeCaseConvert';
 
 function commentToColor(comment: string) {
         switch (comment) {
-            case 'great_driving':
             case 'good_driving':
-                return 'text-[#0e7db0]';
-            case 'source_only':
-                return 'text-[#7d0eb0]';
-            case 'clogging':
-                return 'text-[#d98d00]';
-            case 'effective_defense':
             case 'okay_defense':
-            case 'ineffective_defense':
-                return 'text-[#110eb0]';
-            case 'sturdy_build':
-            case 'weak_build':
-                return 'text-[#04940c]';
+                return 'text-[#50a1c7]';
+            case 'clogging':
+            case 'source_only':
             case 'avoids_under_stage':
-                return 'text-[#b00e0e]'
+                return 'text-[#c78450]';
+            case 'weak_build':
+            case 'ineffective_defense':
+                return 'text-[#c75050]';
+            case 'sturdy_build':
+            case 'great_driving':
+            case 'effective_defense':
+                return 'text-[#5ac750]';
             default:
                     return 'gray-500';
-        
     }
     }
 

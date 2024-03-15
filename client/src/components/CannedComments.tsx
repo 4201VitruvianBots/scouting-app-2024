@@ -19,16 +19,16 @@ interface ColourOption {
 }
 
 const commentOptions: SelectOption<CommentValues>[] = [
-    { label: 'great driving', value: 'great_driving', color: '#1193ab'},
-    { label: 'good driving', value: 'good_driving', color: '#1193ab' },
-    { label: 'source only', value: 'source_only', color: '#8200d9' },
-    { label: 'clogging', value: 'clogging', color: '#d98d00' },
-    { label: 'effective defense', value: 'effective_defense', color: '#0052CC' },
-    { label: 'okay defense', value: 'okay_defense', color: '#0052CC' },
-    { label: 'ineffective defense', value: 'ineffective_defense', color: '#0052CC' },
-    { label: 'sturdy build', value: 'sturdy_build', color: '#00d982' },
-    { label: 'weak build', value: 'weak_build', color: '#00d982' },
-    { label: 'avoids under stage', value: 'avoids_under_stage', color: '#d90000' },
+    { label: 'great driving', value: 'great_driving', color: '#5ac750'},
+    { label: 'good driving', value: 'good_driving', color: '#50a1c7' },
+    { label: 'source only', value: 'source_only', color: '#c78450' },
+    { label: 'clogging', value: 'clogging', color: '#c78450' },
+    { label: 'effective defense', value: 'effective_defense', color: '#5ac750' },
+    { label: 'okay defense', value: 'okay_defense', color: '#50a1c7' },
+    { label: 'ineffective defense', value: 'ineffective_defense', color: '#c75050' },
+    { label: 'sturdy build', value: 'sturdy_build', color: '#5ac750' },
+    { label: 'weak build', value: 'weak_build', color: '#c75050' },
+    { label: 'avoids under stage', value: 'avoids_under_stage', color: '#c78450' },
 ];
 
 
@@ -105,7 +105,7 @@ function CannedCommentBox({
                 value={value}
                 options={commentOptions}
                 onChange={value => onChange?.(value as SelectOption<CommentValues>[])}
-                className='max-w-[80%] m-2 justify-center text-xl '
+                className='max-w-[90%] min-w-[50%] m-2 absolute text-xl '
                 styles={colourStyles}
             />
         </div>
