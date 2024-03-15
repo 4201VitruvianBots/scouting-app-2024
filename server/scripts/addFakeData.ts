@@ -2,6 +2,7 @@ import { startDockerContainer } from 'database';
 import mongoose from 'mongoose';
 import { matchApp, superApp } from '../src/Schema.js';
 import { MatchData, SuperData } from 'requests';
+import { dotenvLoad } from 'dotenv-mono';
 
 function randint(max: number, min = 0) {
     return Math.floor((max - min) * Math.random()) + min;
@@ -14,7 +15,38 @@ function choose<T>(array: T[]) {
 await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27017/');
 
-const teams = new Array(100).fill(0).map(() => Math.floor(10000 * Math.random()));
+dotenvLoad({ path: '.env' });
+dotenvLoad({ path: '.env.local' });
+
+const apiKey = process.env.API_KEY!;
+const eventKey = process.env.EVENT_KEY!;
+console.log(apiKey)
+
+interface SimpleTeam {
+    key: string;
+    team_number: number;
+    nickname?: string;
+    name: string;
+    city?: string;
+    state_prov?: string;
+    country?: string;
+}
+
+const result = await fetch(
+    `https://www.thebluealliance.com/api/v3/event/${eventKey}/teams/simple`,
+    {
+        headers: {
+            'X-TBA-Auth-Key': apiKey,
+        },
+    }
+);
+
+console.log(result.status)
+
+const data = (await result.json()) as SimpleTeam[];
+console.log(data);
+const teams = data.map(e => e.team_number).sort((a, b) => a - b);
+console.log(teams);
 
 for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
     for (const robotPosition of ['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3'] as const) {
@@ -55,14 +87,16 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
                 matchNumber: matchNumber,
             },
             fouls: {
-                inBot: randint(2),
-                damageBot: randint(2),
-                tipEntangBot: randint(2),
-                pinBot: randint(2),
-                podiumFoul: randint(2),
-                zoneFoul: randint(2),
-                stageFoul: randint(2),
-                overExtChute: randint(2)
+                insideRobot: randint(2),
+                multiplePieces: randint(2),
+                other: randint(2),
+                pinning: randint(2),
+                protectedZone: randint(2),
+            },
+            break: {
+                batteryFall: randint(2),
+                commsFail: randint(2),
+                mechanismDmg: randint(2),
             },
             defense: choose(['fullDef', 'someDef', 'noDef']),
             defended: Math.random() > 0.5,
