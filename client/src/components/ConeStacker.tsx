@@ -7,7 +7,7 @@ function ConeStacker() {
         <Dialog
             trigger={open => (
                 <button className="" onClick={open}>
-                    <img className="w-[68px] h-[68px]" src={coneIcon} />
+                    <img className="w-[60px] h-[60px]" src={coneIcon} />
                 </button>
             )}>{close => (<>
                 <button

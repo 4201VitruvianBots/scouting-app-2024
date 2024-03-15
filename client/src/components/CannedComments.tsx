@@ -104,6 +104,7 @@ function CannedCommentBox({
                 onChange={value => onChange?.(value as SelectOption<CommentValues>[])}
                 className='max-w-[90%] min-w-[50%] m-2 absolute text-xl '
                 styles={colourStyles}
+                isSearchable={false}
             />
         </div>
     );

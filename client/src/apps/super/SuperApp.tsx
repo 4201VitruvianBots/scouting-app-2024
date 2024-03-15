@@ -18,7 +18,6 @@ import { SuperTeamState } from './components/SuperTeam';
 import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
 import NumberInput from '../../components/NumberInput';
 import MultiButton from '../../components/MultiButton';
-import ConeStacker from '../../components/ConeStacker';
 import { useStatus } from '../../lib/useStatus';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
@@ -28,26 +27,6 @@ import { usePreventUnload } from '../../lib/usePreventUnload';
 
 const schedule = scheduleFile as MatchSchedule;
 
-interface colourOptions {
-    readonly value: string;
-    readonly label: string;
-    readonly color: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
-}
-
-const colourOptions: readonly colourOptions[] = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
 
 const foulTypes: Foul[] = [
     'insideRobot',
@@ -228,7 +207,9 @@ function SuperApp() {
             <h1 className='col-span-3 p-5 text-3xl font-bold text-[#48c55c]'>
                 Super Scouting App
             </h1>
-            <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-2'>
+            
+            <div className='fixed left-4 top-4 z-20 flex flex-row gap-3 rounded-md bg-slate-200 p-1'>
+               
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
@@ -239,6 +220,7 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </LinkButton>
+
                 <Dialog
                     open
                     trigger={open => (
@@ -269,10 +251,11 @@ function SuperApp() {
                         />
                     )}
                 </Dialog>
+                
 
                 <button
                     onClick={undoHistoryCount}
-                    className='z-10 aspect-square snap-none rounded bg-[#f07800] p-1 font-bold text-black '>
+                    className='z-10 aspect-square snap-none rounded bg-[#f07800]  p-1  font-bold text-black '>
                     <MaterialSymbol
                         icon='undo'
                         size={60}
@@ -282,9 +265,10 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </button>
-
-                <ConeStacker />
+                
+           
             </div>
+
             <p className='text-xl text-white'>Match Number</p>
             <NumberInput
                 onChange={setMatchNumber}
