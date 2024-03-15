@@ -5,30 +5,6 @@ import { PitResult, TeamData } from 'requests';
 import RobotPhotoDialog from './RobotPhotoDialog';
 import { snakeToSpaced } from '../../../lib/snakeCaseConvert';
 
-// function commentToColor(comment: string) {
-//     switch (comment) {
-//         case 'great_driving':
-//         case 'good_driving':
-//             return 'text-[#19a8c2]';
-//         case 'source_only':
-//             return 'text-[#8200d9]';
-//         case 'clogging':
-//             return 'text-[#d98d00]';
-//         case 'effective_defense':
-//         case 'okay_defense':
-//         case 'ineffective_defense':
-//             return 'text-[#0052CC]';
-//         case 'sturdy_build':
-//         case 'weak_build':
-//             return 'text-[#0eb06f]';
-//         case 'avoids_under_stage':
-//             return 'text-[#d90000]'
-//         default:
-//                 return 'gray-500';
-    
-// }
-// }
-
 function commentToColor(comment: string) {
         switch (comment) {
             case 'good_driving':
@@ -68,7 +44,7 @@ function TeamSummary({
     const teamPitData = pitData[table.teamNumber];
     
     return (
-        <div className='flex space-x-10'>
+        <div className='flex flex-row'>
             <div>
                 <div className='flex space-x-4'>
                     {avatar && <img src={`data:image/png;base64,${avatar}`} />}
@@ -105,14 +81,14 @@ function TeamSummary({
                 </Dialog>
             </div>
 
-            <div>
-                <h2 className='text-2xl'>Comments</h2>
+            <div className='pl-5'>
+                <h2 className='text-2xl pb-2'>Comments</h2>
                 
                 {teamData && teamData.Comments && Object.entries(teamData.Comments).sort(([_, a], [__, b]) => b - a).map(([comment, count]) => (
                     count > 0 && <p className={` ${commentToColor(comment)} `}>{snakeToSpaced(comment)}: {count}</p>
                 ))}
 
-                <h2 className='text-2xl'>Stats</h2>
+                <h2 className='text-2xl pt-5 pb-2'>Stats</h2>
                 
                 {teamData && Object.keys(teamData).map(e => {
                     if (
@@ -129,6 +105,36 @@ function TeamSummary({
                         );
                     }
                 })}
+
+                
+            </div>
+            <div>
+                <h2 className='text-2xl pb-2'>Pit Scout Info</h2>
+                
+                <p className='indent-3'> Role: {teamPitData?.teamRole}</p>
+                <p className='indent-3'> Batteries: {teamPitData?.pitBatteryCount}</p>
+                <p className='indent-3'> Drivetrain: {teamPitData?.drivebase}</p>
+                <p className='indent-3'> Notes: {teamPitData?.comments}</p>
+                
+                <p className='text-lg font-semibold text-green-800 pt-2'>Capabilities</p>
+                <p className='indent-3'>Amp: {teamPitData?.capabilities.amp ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Speaker: {teamPitData?.capabilities.speaker ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Trap: {teamPitData?.capabilities.trap ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Climb: {teamPitData?.capabilities.climb ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Chain traversal: {teamPitData?.capabilities.chainTraversal ? 'Yes' : 'No'}</p>
+
+                <p className='text-lg font-semibold text-green-800 pt-2'>Preferences</p>
+                <p className='indent-3'>Amp: {teamPitData?.preference.ampPrefer ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Speaker: {teamPitData?.preference.speakerPerfer ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Trap: {teamPitData?.preference.trapPrefer ? 'Yes' : 'No'}</p>
+                <p className='indent-3'>Climb: {teamPitData?.preference.climbPrefer ? 'Yes' : 'No'}</p>
+                
+               
+                {/* <p className='text-lg font-semibold text-green-800 pt-2'>More Info</p> */}
+
+               
+                
+                
             </div>
         </div>
     );
