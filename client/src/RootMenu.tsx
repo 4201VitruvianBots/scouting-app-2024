@@ -1,5 +1,16 @@
 import LinkButton from './components/LinkButton';
 
+import { MaterialSymbol } from 'react-material-symbols';
+
+const images = [
+    'bg-field-blue',
+    'bg-field-red',
+    'bg-field-red-endgame',
+    'bg-field-blue-endgame',
+    'bg-field-blue-super',
+    'bg-field-red-super'
+];
+
 function RootMenu() {
     return (
         <main className='min-h-screen bg-[#171c26] text-white text-center 
@@ -32,6 +43,10 @@ function RootMenu() {
                 className='text-5xl bg-[#2f3646] rounded-3xl'>
                     Games
                 </LinkButton>
+            <div className='absolute opacity-0'>
+                {images.map(e => <div className={e} />)}
+                <MaterialSymbol icon='search' />
+            </div>
         </main>
     );
 }
