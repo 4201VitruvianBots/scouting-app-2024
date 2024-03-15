@@ -96,7 +96,7 @@ function CannedCommentBox({
     onChange?: Dispatch<SelectOption<CommentValues>[]>;
 }) {
     return (
-        <div className='contents'>
+        <div className='contents p-10 '>
 
             <Select
                 closeMenuOnSelect={false}
@@ -105,7 +105,7 @@ function CannedCommentBox({
                 value={value}
                 options={commentOptions}
                 onChange={value => onChange?.(value as SelectOption<CommentValues>[])}
-                className='max-w-[70%] m-2 absolute text-xl '
+                className='max-w-[80%] m-2 justify-center text-xl '
                 styles={colourStyles}
             />
         </div>

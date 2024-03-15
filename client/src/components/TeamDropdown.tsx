@@ -22,7 +22,7 @@ function TeamDropdown({
 }) {
     const options = disabledOptions ? teamOptions.map(e => ({...e, disabled: disabledOptions.includes(parseInt(e.value as string))})) : teamOptions;
 
-    return (<div className='contents team-search'>
+    return (<div className='contents team-search mx-auto '>
         <SelectSearch
             options={options}
             value={value?.toString()}

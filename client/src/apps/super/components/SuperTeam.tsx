@@ -69,12 +69,20 @@ function SuperTeam({
    
     return (
         <div>
-            <p className='text-zinc-100 underline text-lg'>Team Number</p>
-            <div className='flex justify-center'>
-            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam}/> 
-            <CannedCommentBox value={teamState.cannedComments} onChange={handleAddComment}/>
+            
+            <div>
+            <p className='text-zinc-100 underline text-lg pt-3'>Team Number</p>
+            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} /> 
             </div>
+
+            <div >
+            <p className='text-zinc-100 underline text-lg'>Notes</p>
+            <CannedCommentBox value={teamState.cannedComments} onChange={handleAddComment}/>
+            
+            </div>
+            
         <p className='mt-5 text-4xl text-zinc-100 underline'>Fouls</p>
+        <div className='py-5'>
         <div className='flex justify-center'>
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseFoul('insideRobot')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseFoul('insideRobot')}>+Inside Robot: {teamState.foulCounts.insideRobot || 0}</button>
@@ -107,6 +115,7 @@ function SuperTeam({
         <div className='flex justify-center'>
             <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => handleDecreaseBreak('commsFail')}>-</button>
             <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 w-44' onClick={() => handleIncreaseBreak('commsFail')}>+Comms Fail: {teamState.breakCount.commsFail || 0}</button>
+        </div>
         </div>
             <MultiButton
                 onChange={handleDefense}
