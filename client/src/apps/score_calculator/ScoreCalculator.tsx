@@ -194,39 +194,40 @@ function ScoreCalculator() {
 
                 <div className='col-span-2 grid grid-cols-2 justify-center gap-2 bg-slate-200 p-3 '>
                     <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                        Auto Points:{' '}
+                        Leave:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
-                            {autoLeave * 2 + autoSpeaker * 5 + autoAmp * 2}
+                            {autoLeave * 2}
                         </span>
                     </p>
                     <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center '>
-                        Tele Points:{' '}
+                       Speaker:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
-                            {teleSpeaker * 2 +
+                            {autoSpeaker*5+
+                            teleSpeaker * 2 +
                                 ampedTeleSpeaker * 5 +
                                 teleAmp * 1}
                         </span>
                     </p>
                     <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                        Climb Points:{' '}
+                        Amp:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
-                            {park * 1 +
+                        {autoAmp*2+
+                            teleAmp*1}
+                            
+                        </span>
+                    </p>
+
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                        Stage:{' '}
+                        <span className='rounded-lg bg-black/15 p-2 py-1'>
+                        {park * 1 +
                                 climb * 3 +
                                 cimbSpot * 4 +
                                 trap * 5 +
                                 harmony * 2}
                         </span>
                     </p>
-
-                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                        Speaker Points:{' '}
-                        <span className='rounded-lg bg-black/15 p-2 py-1'>
-                            {autoSpeaker * 5 +
-                                teleSpeaker * 2 +
-                                ampedTeleSpeaker * 5}
-                        </span>
-                    </p>
-                    <p className='text-black-100 text-md col-span-2 self-center rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                    {/* <p className='text-black-100 text-md col-span-2 self-center rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
                         Total Points:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
                             {autoLeave * 2 +
@@ -241,7 +242,7 @@ function ScoreCalculator() {
                                 trap * 5 +
                                 harmony * 2}
                         </span>
-                    </p>
+                    </p> */}
                 </div>
             </div>
         </div>
