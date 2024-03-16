@@ -48,15 +48,20 @@ app.post('/data/pit', async(req,res) => {
     
     const body = req.body as PitFile;
 
-    const PitApp = new pitApp({
-        ...body,
-        photo: Buffer.from(dataUriToBuffer(body.photo).buffer),
-    });
-    const aPitApp = await PitApp.save();
+    try {
+        const PitApp = new pitApp({
+            ...body,
+            photo: Buffer.from(dataUriToBuffer(body.photo).buffer),
+        });
+        const aPitApp = await PitApp.save();
 
-    console.log(`Pit data recieved for ${body.teamNumber}`);
+        console.log(`Pit data recieved for ${body.teamNumber}`);
 
-    res.end();
+        res.end();
+    } catch (e) {
+        res.status(500);
+        res.end();
+    }
 });
 
 if (REMOTE) {
