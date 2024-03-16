@@ -62,6 +62,8 @@ function PitApp() {
   }, [refreshScoutedTeams]);
   
   const handleSubmit = async() => {
+    if (sending) return;
+
     if (!drivetrain || !role){
       alert('data is missing :(')
       return
