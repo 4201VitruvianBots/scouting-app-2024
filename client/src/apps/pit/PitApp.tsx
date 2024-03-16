@@ -19,20 +19,6 @@ function PitApp() {
     usePreventUnload();
   
   
-    //  const handleAutoInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    //   const newAutoInputValues = [...autoInputValues];
-    //   newAutoInputValues[index] = event.target.value;
-    //   setAutoInputValues(newAutoInputValues);
-    // };
-
-  //   const removeAutoInput = (id: number) => {
-  //    const newInputValues = autoInputValues.filter((_, i) => i !== id);
-  //    setAutoInputValues(newInputValues);
-  // };
-    const addAnotherAuto = () => {
-     setAutoInputValues([...autoInputValues, '']);
-  };
-
   const [scoutedTeams, refreshScoutedTeams] = useFetchJson<number[]>('/data/pit/scouted-teams');
 
   const [sending, setSending] = useState(false);
@@ -242,7 +228,7 @@ function PitApp() {
              
               
 
-            <button className="bg-[#48c55c] font-sans text-lg font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-2 py-2 shadow-xl place-content-center mx-auto !flex pad mt-4 mb-5" onClick={addAnotherAuto}>Add input</button>
+            
             </div>
 
         

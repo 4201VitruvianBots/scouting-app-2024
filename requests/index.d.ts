@@ -149,6 +149,8 @@ export interface PitFile {
     photo: string;
 }
 
+export type PitResult = Partial<Record<number, Omit<PitFile, 'photo'>>>;
+
 // - `WebSocket` `/status/report`
 // client -> server
 
