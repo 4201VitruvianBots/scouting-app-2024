@@ -73,7 +73,7 @@ function SuperTeam({
             <div className='mx-auto flex  flex-col content-center items-center justify-center '>
 
             <p className='text-zinc-100 underline text-lg pt-3'>Team Number</p>
-            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} /> 
+            <TeamDropdown value={teamState.teamNumber} onChange={handleChangeTeam} allowAbsent/> 
             
 
            

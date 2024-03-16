@@ -11,20 +11,25 @@ const teamOptions: SelectSearchOption[] = teamsString
 
 console.log(teamOptions);
 
+const teamOptionsWithAbsent: SelectSearchOption[] = [{value: '0', name: 'Absent'}, ...teamOptions];
+
 function TeamDropdown({
     value,
     onChange,
     disabledOptions,
+    allowAbsent = false,
 }: {
     value?: number | undefined;
     onChange?: Dispatch<number>;
     disabledOptions?: number[];
+    allowAbsent?: boolean;
 }) {
-    const options = disabledOptions ? teamOptions.map(e => ({...e, disabled: disabledOptions.includes(parseInt(e.value as string))})) : teamOptions;
+    const options = allowAbsent ? teamOptionsWithAbsent : teamOptions;
+    const optionsWithDisabled = disabledOptions ? options.map(e => ({...e, disabled: disabledOptions.includes(parseInt(e.value as string))})) : options;
 
     return (<div className='contents team-search mx-auto '>
         <SelectSearch
-            options={options}
+            options={optionsWithDisabled}
             value={value?.toString()}
             onChange={value => onChange?.(parseInt(value as string))}
             search
