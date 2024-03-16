@@ -7,7 +7,9 @@ import fs from 'fs';
 const bluePositions: RobotPosition[] = ['blue_1', 'blue_2', 'blue_3'];
 const redPositions: RobotPosition[] = ['red_1', 'red_2', 'red_3'];
 
-const schedule = fs.existsSync('static/matchSchedule.json') ? JSON.parse(fs.readFileSync('static/matchSchedule.json', {encoding:"utf8"})) as MatchSchedule : undefined
+const scheduleFile = '../client/src/assets/matchSchedule.json'
+
+const schedule = fs.existsSync(scheduleFile) ? JSON.parse(fs.readFileSync(scheduleFile, {encoding:"utf8"})) as MatchSchedule : undefined
 
 const status: StatusRecieve = { matches: {}, scouters: [] };
 

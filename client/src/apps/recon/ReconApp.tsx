@@ -6,6 +6,9 @@ import {StatRow,SuperStatRow} from "./components/StatRow";
 import { MaterialSymbol } from "react-material-symbols";
 import TeamDropdown from "../../components/TeamDropdown";
 import NumberInput from "../../components/NumberInput";
+import scheduleJson from '../../assets/matchSchedule.json';
+
+const schedule = scheduleJson as MatchSchedule;
 
 const matchStats:(Exclude<keyof MatchDataAggregations, '_id'>)[] = [
     'averageTeleSpeakerNotes',
@@ -29,7 +32,6 @@ const superStats:(Exclude<keyof SuperDataAggregations, '_id'>)[] = [
 function ReconApp() {;
     const [retrieveMatch, reloadRetrieveMatch] = useFetchJson<MatchDataAggregations[]>('/data/retrieve')
     const [retrieveSuper, reloadRetrieveSuper] = useFetchJson<SuperDataAggregations[]>('/data/retrieve/super')
-    const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
     const [matchNumber, setMatchNumber] = useState<number>()
     const [teams, setTeams] = useState<(number | undefined)[]>([undefined])
 
@@ -38,7 +40,7 @@ function ReconApp() {;
         const match = schedule?.[matchNumber];
         if (!match) return
         setTeams([match.red_1, match.red_2, match.red_3, match.blue_1, match.blue_2, match.blue_3])
-    },[matchNumber, schedule])
+    },[matchNumber])
 
     return (
         <main className='mx-auto flex grid-flow-row flex-col content-center items-center justify-center bg-[#171c26] h-screen text-white'>
