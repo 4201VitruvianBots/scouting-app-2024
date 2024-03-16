@@ -35,6 +35,8 @@ function PitApp() {
 
   const [scoutedTeams, refreshScoutedTeams] = useFetchJson<number[]>('/data/pit/scouted-teams');
 
+  const [sending, setSending] = useState(false);
+
   const [autoInputValues, setAutoInputValues] = useState(['']);
   const [role, setRole] = useState<teamRoles|undefined>();
   const [drivetrain, setDrivetrain] = useState<drivebase| undefined>();
@@ -89,6 +91,7 @@ function PitApp() {
      comments: additionalNotes
     };
 
+    setSending(true);
     try {
       const result = await postJson('/data/pit', data);
       if (!result.ok) throw new Error('Request Did Not Succeed');
@@ -109,10 +112,11 @@ function PitApp() {
       setSpeakerChecked(false);
       setSpeakerPrefChecked(false);
       setRobotImage('');
-      } catch {
+    } catch {
       alert('Sending Data Failed');
     }
-    }
+    setSending(false);
+  }
 
   const inputBattery = {
     width: '150px',
@@ -295,7 +299,7 @@ function PitApp() {
             <h1 className="text-center text-white pt-6" >Additional Notes?</h1>
             <input className='place-content-center mx-auto w-5/6 !flex border-1 rounded-lg border border-gray-700 text-4xl text-center mb-3' onChange={event => setAdditionalNotes(event.target.value)} value={additionalNotes} type="text"></input>
 
-            <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>Submit</button>
+            <button onClick={handleSubmit} className='bg-[#48c55c] font-sans text-4xl font-semibold text-black md:bg-opacity-50 border-1 rounded-lg border border-gray-700 px-4 py-4 shadow-xl place-content-center mx-auto w-min !flex pad '>{sending ? 'Sending...' : 'Submit'}</button>
             </div>
         </>
     );
