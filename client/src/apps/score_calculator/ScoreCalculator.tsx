@@ -20,11 +20,7 @@ function ScoreCalculator() {
   const [cimbSpot, setClimbSpot] = useState(Number)
   const [trap, setTrap] = useState(Number)
   const [harmony, setHarmony] = useState(Number)
-  const [autoPoints, setAutoPoints] = useState(Number)
 
-
-  
-    setAutoPoints((autoLeave*2) + (autoSpeaker*5) + (autoAmp*2))
 
   
 
@@ -49,64 +45,64 @@ function ScoreCalculator() {
                 </LinkButton>
             </div>
        
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoLeave(autoLeave - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoLeave(autoLeave + 1)}>+ Auto Leave ({autoLeave})</button>
-        </div>
+    
+    <div className='grid grid-flow-row grid-cols-[auto_auto] justify-center '>
 
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoSpeaker(autoSpeaker - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoSpeaker(autoSpeaker + 1)}>+ Auto Speaker ({autoSpeaker})</button>
-        </div>
+   
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoLeave(autoLeave - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoLeave(autoLeave + 1)}>+ Auto Leave ({autoLeave})</button>
+     
 
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoAmp(autoAmp - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoAmp(autoAmp + 1)}>+ Auto Amp ({autoAmp})</button>
-        </div>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoSpeaker(autoSpeaker - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoSpeaker(autoSpeaker + 1)}>+ Auto Speaker ({autoSpeaker})</button>
+      
+
+      
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAutoAmp(autoAmp - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAutoAmp(autoAmp + 1)}>+ Auto Amp ({autoAmp})</button>
+       
           
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTeleSpeaker(teleSpeaker - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTeleSpeaker(teleSpeaker + 1)}>+ Tele Speaker ({teleSpeaker})</button>
-        </div>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTeleSpeaker(teleSpeaker - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTeleSpeaker(teleSpeaker + 1)}>+ Tele Speaker ({teleSpeaker})</button>
+      
 
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAmpedTeleSpeaker(ampedTeleSpeaker - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAmpedTeleSpeaker(ampedTeleSpeaker + 1)}>+ Amped Tele Speaker ({ampedTeleSpeaker})</button>
-        </div>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setAmpedTeleSpeaker(ampedTeleSpeaker - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setAmpedTeleSpeaker(ampedTeleSpeaker + 1)}>+ Amped Tele Speaker ({ampedTeleSpeaker})</button>
+      
 
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTeleAmp(teleAmp - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTeleAmp(teleAmp + 1)}>+ Tele Amp ({teleAmp})</button>
-        </div>
-
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setPark(park - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setPark(park + 1)}>+ Park ({park})</button>
-        </div>
-
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setClimb(climb - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setClimb(climb + 1)}>+ Climb ({climb})</button>
-        </div>
-
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setClimbSpot(cimbSpot - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setClimbSpot(cimbSpot + 1)}>+ Spotlit Climb ({cimbSpot})</button>
-        </div>
-
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTrap(trap - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTrap(trap + 1)}>+ Trap Note ({trap})</button>
-        </div>
-
-        <div className='flex justify-center'>
-            <button className='text-zinc-100 text-lg bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setHarmony(harmony - 1)}>-</button>
-            <button className='text-zinc-100 text-lg bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setHarmony(harmony + 1)}>+ Harmony ({harmony})</button>
-        </div>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTeleAmp(teleAmp - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTeleAmp(teleAmp + 1)}>+ Tele Amp ({teleAmp})</button>
+        
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setPark(park - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setPark(park + 1)}>+ Park ({park})</button>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setClimb(climb - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setClimb(climb + 1)}>+ Climb ({climb})</button>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setClimbSpot(cimbSpot - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setClimbSpot(cimbSpot + 1)}>+ Spotlit Climb ({cimbSpot})</button>
+       
+            <button className='text-zinc-100 text-md blue bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setTrap(trap - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setTrap(trap + 1)}>+ Trap Note ({trap})</button>
+       
+            <button className='text-zinc-100 text-md bg-red-400 border rounded-md py-2 px-3 mt-3' onClick={() => setHarmony(harmony - 1)}>-</button>
+            <button className='text-zinc-100 text-md bg-slate-600 border rounded-md py-2 px-3 mt-3 min-w-55' onClick={() => setHarmony(harmony + 1)}>+ Harmony ({harmony})</button>
+       
           
-         
-          <p>{autoPoints}</p>
-          
+         <div className='grid grid-cols-2 col-span-2 justify-center bg-slate-200 p-3 gap-2 mt-3'>
+          <p className='text-black-100 text-md bg-green-400/70 rounded-md border-green-800 py-2 px-3 text-center'>Auto Points: <span className='p-2 bg-black/15 rounded-lg py-1'>{(autoLeave*2) + (autoSpeaker*5) + (autoAmp*2)}</span></p>
+          <p className='text-black-100 text-md bg-green-400/70 rounded-md border-green-800 py-2 px-3 text-center '>Tele Points: <span className='p-2 bg-black/15 rounded-lg py-1'>{(teleSpeaker*2) + (ampedTeleSpeaker*5) + (teleAmp*1)}</span></p>
+          <p className='text-black-100 text-md bg-green-400/70 rounded-md border-green-800 py-2 px-3 text-center'>Climb Points: <span className='p-2 bg-black/15 rounded-lg py-1'>{(park*1)+(climb*3) + (cimbSpot*4) + (trap*5) + (harmony*2)}</span></p>
+
+          <p className='text-black-100 text-md bg-green-400/70 rounded-md border-green-800 py-2 px-3 text-center'>Speaker Points: <span className='p-2 bg-black/15 rounded-lg py-1'>{(autoSpeaker*5)+(teleSpeaker*2)+(ampedTeleSpeaker*5)}</span></p>
+          <p className='text-black-100 text-md bg-green-400/70 rounded-md border-green-800 py-2 px-3 col-span-2 self-center text-center'>Total Points: <span className='p-2 bg-black/15 rounded-lg py-1'>{(autoLeave*2) + (autoSpeaker*5) + (autoAmp*2)+(teleSpeaker*2) + (ampedTeleSpeaker*5) + (teleAmp*1)+(park*1)+(climb*3) + (cimbSpot*4) + (trap*5) + (harmony*2)}</span></p>
+          </div>
+       
+          </div>
           </>
                 
     );
