@@ -15,6 +15,8 @@ import PublicApp from './apps/public/PublicApp';
 import PicklistApp from './apps/picklist/PicklistApp';
 import 'react-material-symbols/rounded';
 import Games from './apps/games/Games';
+import ScoringCalculator from './apps/score_calculator/ScoreCalculator';
+
 import { registerSW } from 'virtual:pwa-register';
 
 // Automatically reloads the page a second time to update the SW
@@ -60,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: 'games',
                 element: <Games />,
+            },
+            {
+                path: 'score_calculator',
+                element: <ScoringCalculator />,
             },
         ],
     },
