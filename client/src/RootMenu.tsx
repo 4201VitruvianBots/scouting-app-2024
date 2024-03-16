@@ -43,6 +43,10 @@ function RootMenu() {
                 className='text-5xl bg-[#2f3646] rounded-3xl'>
                     Games
                 </LinkButton>
+                <LinkButton link='/score_calculator'
+                className='text-5xl bg-[#2f3646] rounded-3xl col-span-2'>
+                    Scoring Calculator
+                </LinkButton>
             <div className='absolute opacity-0'>
                 {images.map(e => <div className={e} />)}
                 <MaterialSymbol icon='search' />
