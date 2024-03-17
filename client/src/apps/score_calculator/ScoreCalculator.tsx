@@ -5,11 +5,29 @@ import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
 import MultiButton from '../../components/MultiButton';
 
-function decrement(setter: Dispatch<SetStateAction<number>>) {
-    return () =>
-        setter(currentValue =>
-            currentValue > 0 ? currentValue - 1 : currentValue
-        );
+function Counter({
+    value,
+    onChange,
+    children,
+}: {
+    value: number;
+    onChange: Dispatch<SetStateAction<number>>;
+    children: string;
+}) {
+    return (
+        <>
+            <button
+                className='text-md my-2 rounded-l-lg border bg-red-400 py-2 px-4 text-zinc-100'
+                onClick={() => onChange(value > 0 ? value - 1 : value)}>
+                -
+            </button>
+            <button
+                className='text-md min-w-55 my-2 rounded-r-lg border bg-slate-600 px-3  py-2 text-zinc-100'
+                onClick={() => onChange(value + 1)}>
+                + {children} ({value})
+            </button>
+        </>
+    );
 }
 
 function ScoreCalculator() {
@@ -21,7 +39,7 @@ function ScoreCalculator() {
     const [teleAmp, setTeleAmp] = useState(Number);
     const [park, setPark] = useState(Number);
     const [climb, setClimb] = useState(Number);
-    const [cimbSpot, setClimbSpot] = useState(Number);
+    const [climbSpot, setClimbSpot] = useState(Number);
     const [trap, setTrap] = useState(Number);
     const [harmony, setHarmony] = useState(Number);
     const [speakerOnly, setSpeakerOnly] = useState(Boolean);
@@ -56,7 +74,7 @@ function ScoreCalculator() {
                     value={speakerOnly}
                     labels={['All', 'Speaker Only']}
                     values={[false, true]}
-                    className={'text-sm rounded-md'}
+                    className={'rounded-md text-sm'}
                     unSelectedClassName='text-gray-500 bg-gray-300 '
                     selectedClassName='bg-green-500 text-white'
                 />
@@ -75,147 +93,57 @@ function ScoreCalculator() {
                 </LinkButton>
             </div>
 
-            <div
-                className={`grid flex-grow grid-flow-row grid-cols-[auto_auto] justify-center gap-1 ${speakerOnly ? 'grid-rows-[auto_1fr_1fr_1fr_auto]' : ''}`}>
+            <div className='flex flex-grow flex-col gap-2'>
                 <button
                     onClick={handleReset}
                     className='text-md col-span-2 rounded-md border bg-blue-400/70 px-3 py-2 text-black'>
                     Reset All
                 </button>
+                <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0'>
+                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                        <Counter value={autoLeave} onChange={setAutoLeave}>
+                            Auto Leave
+                        </Counter>
+                        <Counter value={autoSpeaker} onChange={setAutoSpeaker}>
+                            Auto Speaker
+                        </Counter>
+                        <Counter value={autoAmp} onChange={setAutoAmp}>
+                            Auto Amp
+                        </Counter>
+                    </div>
+                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                        <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
+                            Tele Speaker
+                        </Counter>
+                        <Counter
+                            value={ampedTeleSpeaker}
+                            onChange={setAmpedTeleSpeaker}>
+                            Amped Tele Speaker
+                        </Counter>
 
-                {speakerOnly || (
-                    <>
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setAutoLeave)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setAutoLeave(autoLeave + 1)}>
-                            + Auto Leave ({autoLeave})
-                        </button>
-                    </>
-                )}
+                        <Counter value={teleAmp} onChange={setTeleAmp}>
+                            Tele Amp
+                        </Counter>
+                    </div>
 
-                <button
-                    className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                    onClick={decrement(setAutoSpeaker)}>
-                    -
-                </button>
-                <button
-                    className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                    onClick={() => setAutoSpeaker(autoSpeaker + 1)}>
-                    + Auto Speaker ({autoSpeaker})
-                </button>
-
-                {speakerOnly || (
-                    <>
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setAutoAmp)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setAutoAmp(autoAmp + 1)}>
-                            + Auto Amp ({autoAmp})
-                        </button>
-                    </>
-                )}
-
-                <button
-                    className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                    onClick={decrement(setTeleSpeaker)}>
-                    -
-                </button>
-                <button
-                    className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                    onClick={() => setTeleSpeaker(teleSpeaker + 1)}>
-                    + Tele Speaker ({teleSpeaker})
-                </button>
-
-                <button
-                    className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                    onClick={decrement(setAmpedTeleSpeaker)}>
-                    -
-                </button>
-                <button
-                    className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                    onClick={() => setAmpedTeleSpeaker(ampedTeleSpeaker + 1)}>
-                    + Amped Tele Speaker ({ampedTeleSpeaker})
-                </button>
-
-                {speakerOnly || (
-                    <>
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setTeleAmp)}>
-                            -
-                        </button>
-
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setTeleAmp(teleAmp + 1)}>
-                            + Tele Amp ({teleAmp})
-                        </button>
-
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setPark)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setPark(park + 1)}>
-                            + Park ({park})
-                        </button>
-
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setClimb)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setClimb(climb + 1)}>
-                            + Climb ({climb})
-                        </button>
-
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setClimbSpot)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setClimbSpot(cimbSpot + 1)}>
-                            + Spotlit Climb ({cimbSpot})
-                        </button>
-
-                        <button
-                            className='text-md blue rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setTrap)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setTrap(trap + 1)}>
-                            + Trap Note ({trap})
-                        </button>
-
-                        <button
-                            className='text-md rounded-md border bg-red-400 px-3 py-2 text-zinc-100 '
-                            onClick={decrement(setHarmony)}>
-                            -
-                        </button>
-                        <button
-                            className='text-md min-w-55 rounded-md border bg-slate-600 px-3 py-2  text-zinc-100'
-                            onClick={() => setHarmony(harmony + 1)}>
-                            + Harmony ({harmony})
-                        </button>
-                    </>
-                )}
+                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                        <Counter value={park} onChange={setPark}>
+                            Park
+                        </Counter>
+                        <Counter value={climb} onChange={setClimb}>
+                            Climb
+                        </Counter>
+                        <Counter value={climbSpot} onChange={setClimbSpot}>
+                            Spotlit Climb
+                        </Counter>
+                        <Counter value={trap} onChange={setTrap}>
+                            Trap
+                        </Counter>
+                        <Counter value={harmony} onChange={setHarmony}>
+                            Harmonies
+                        </Counter>
+                    </div>
+                </div>
 
                 <div className='col-span-2 grid grid-cols-2 justify-center gap-2 bg-slate-200 p-3'>
                     {speakerOnly || (
@@ -235,8 +163,7 @@ function ScoreCalculator() {
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
                             {autoSpeaker * 5 +
                                 teleSpeaker * 2 +
-                                ampedTeleSpeaker * 5 +
-                                teleAmp * 1}
+                                ampedTeleSpeaker * 5}
                         </span>
                     </p>
 
@@ -254,7 +181,7 @@ function ScoreCalculator() {
                                 <span className='rounded-lg bg-black/15 p-2 py-1'>
                                     {park * 1 +
                                         climb * 3 +
-                                        cimbSpot * 4 +
+                                        climbSpot * 4 +
                                         trap * 5 +
                                         harmony * 2}
                                 </span>
