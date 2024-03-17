@@ -95,7 +95,7 @@ function StatTable({
             <table className='border border-black'>
                 <thead className='sticky top-0 border border-black'>
                     <tr className='border border-black'>
-                        <th className='border border-black'>
+                        <th className='border border-black' colSpan={2}>
                             Team
                         </th>
                         {table.columns.map((column, i) => (

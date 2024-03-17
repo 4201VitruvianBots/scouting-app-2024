@@ -112,7 +112,7 @@ function TeamSummary({
                             ([comment, count]) =>
                                 count > 0 && (
                                     <p
-                                        className={` text-md m-2 max-w-fit rounded-lg border bg-slate-600 pl-2 py-1 text-zinc-100 saturate-[75%]  ${commentToColor(comment)} `}>
+                                        className={` text-md m-2 max-w-fit rounded-lg border pl-2 py-1 text-zinc-100 saturate-[75%]  ${commentToColor(comment)} `}>
                                         {snakeToSpaced(comment)}{' '}
                                         <span className='rounded-r-lg bg-black/15 p-2 py-1'>
                                         {count}
