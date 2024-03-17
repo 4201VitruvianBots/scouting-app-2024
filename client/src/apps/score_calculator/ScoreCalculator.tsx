@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
+import NumberInput from '../../components/NumberInput';
 
 function Counter({
     value,
@@ -42,11 +43,13 @@ function ScoreCalculator() {
     const [trap, setTrap] = useState(0);
     const [harmony, setHarmony] = useState(0);
 
+    const [foulPoints, setFoulPoints] = useState<number | undefined>(0);
+
     const autoPoints = autoLeave * 2;
     const speakerPoints = autoSpeaker * 5 + teleSpeaker * 2 + ampedTeleSpeaker * 5;
     const ampPoints = autoAmp * 2 + teleAmp * 1;
     const stagePoints = park * 1 + climb * 3 + climbSpot * 4 + trap * 5 + harmony * 2;
-    const totalPoints = autoPoints + speakerPoints + ampPoints + stagePoints;
+    const totalPoints = autoPoints + speakerPoints + ampPoints + stagePoints + (foulPoints ?? 0);
 
     const handleReset = () => {
         setAutoLeave(0);
@@ -60,6 +63,7 @@ function ScoreCalculator() {
         setClimbSpot(0);
         setTrap(0);
         setHarmony(0);
+        setFoulPoints(0);
     };
 
     return (
@@ -169,8 +173,13 @@ function ScoreCalculator() {
                         </span>
                     </p>
 
-                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center col-span-2'>
-                        Total (without fouls):{' '}
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                        Foul Points:{' '}
+                        <NumberInput className='rounded-lg bg-black/15 p-2 py-1 w-16 text-center' value={foulPoints} onChange={setFoulPoints} />
+                    </p>
+
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center font-black'>
+                        Total:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
                             {totalPoints}
                         </span>
