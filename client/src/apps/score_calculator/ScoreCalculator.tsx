@@ -85,7 +85,7 @@ function ScoreCalculator() {
                     Reset All
                 </button>
                 <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0'>
-                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr'>
+                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center'>Auto</h2>
                         <Counter value={autoLeave} onChange={setAutoLeave}>
                             Auto Leave
@@ -97,7 +97,7 @@ function ScoreCalculator() {
                             Auto Amp
                         </Counter>
                     </div>
-                    <div className='grid w-11/12 snap-center snap-always grid-cols-[auto_1fr] p-2 grid-rows-[auto] auto-rows-fr'>
+                    <div className='grid w-11/12 snap-center snap-always grid-cols-[auto_1fr] p-2 grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center'>Teleop</h2>
                         <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
                             Tele Speaker
@@ -113,7 +113,7 @@ function ScoreCalculator() {
                         </Counter>
                     </div>
 
-                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr'>
+                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center'>Endgame</h2>
                         <Counter value={park} onChange={setPark}>
                             Park
