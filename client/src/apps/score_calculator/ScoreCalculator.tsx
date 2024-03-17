@@ -3,7 +3,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import LinkButton from '../../components/LinkButton';
 import { MaterialSymbol } from 'react-material-symbols';
-import MultiButton from '../../components/MultiButton';
 
 function Counter({
     value,
@@ -17,7 +16,7 @@ function Counter({
     return (
         <>
             <button
-                className='text-md my-2 rounded-l-lg border bg-red-400 py-2 px-4 text-zinc-100'
+                className='text-md my-2 rounded-l-lg border bg-red-400 px-4 py-2 text-zinc-100'
                 onClick={() => onChange(value > 0 ? value - 1 : value)}>
                 -
             </button>
@@ -31,18 +30,17 @@ function Counter({
 }
 
 function ScoreCalculator() {
-    const [autoLeave, setAutoLeave] = useState(Number);
-    const [autoSpeaker, setAutoSpeaker] = useState(Number);
-    const [autoAmp, setAutoAmp] = useState(Number);
-    const [teleSpeaker, setTeleSpeaker] = useState(Number);
-    const [ampedTeleSpeaker, setAmpedTeleSpeaker] = useState(Number);
-    const [teleAmp, setTeleAmp] = useState(Number);
-    const [park, setPark] = useState(Number);
-    const [climb, setClimb] = useState(Number);
-    const [climbSpot, setClimbSpot] = useState(Number);
-    const [trap, setTrap] = useState(Number);
-    const [harmony, setHarmony] = useState(Number);
-    const [speakerOnly, setSpeakerOnly] = useState(Boolean);
+    const [autoLeave, setAutoLeave] = useState(0);
+    const [autoSpeaker, setAutoSpeaker] = useState(0);
+    const [autoAmp, setAutoAmp] = useState(0);
+    const [teleSpeaker, setTeleSpeaker] = useState(0);
+    const [ampedTeleSpeaker, setAmpedTeleSpeaker] = useState(0);
+    const [teleAmp, setTeleAmp] = useState(0);
+    const [park, setPark] = useState(0);
+    const [climb, setClimb] = useState(0);
+    const [climbSpot, setClimbSpot] = useState(0);
+    const [trap, setTrap] = useState(0);
+    const [harmony, setHarmony] = useState(0);
 
     const handleReset = () => {
         setAutoLeave(0);
@@ -59,25 +57,12 @@ function ScoreCalculator() {
     };
 
     return (
-        <div
-            className={`flex ${speakerOnly ? 'h-[70vh]' : 'h-screen'} flex-col`}>
-            <div className='mb-7 border border-neutral-900 bg-gray-800'>
+        <div className='flex h-dvh flex-col'>
+            <div className='mb-2 border border-neutral-900 bg-gray-800'>
                 <br />
                 <h1 className='mb-4 text-center text-3xl  font-bold text-[#48c55c]'>
                     Score Calculator
                 </h1>
-            </div>
-
-            <div className='absolute right-4 top-4 col-span-2 grid grid-rows-[1fr_1fr] gap-2 self-center'>
-                <MultiButton
-                    onChange={setSpeakerOnly}
-                    value={speakerOnly}
-                    labels={['All', 'Speaker Only']}
-                    values={[false, true]}
-                    className={'rounded-md text-sm'}
-                    unSelectedClassName='text-gray-500 bg-gray-300 '
-                    selectedClassName='bg-green-500 text-white'
-                />
             </div>
 
             <div className='fixed left-4 top-4 z-20  flex flex-col gap-2 rounded-md bg-slate-200 p-1'>
@@ -93,14 +78,15 @@ function ScoreCalculator() {
                 </LinkButton>
             </div>
 
-            <div className='flex flex-grow flex-col gap-2'>
+            <div className='flex flex-grow flex-col'>
                 <button
                     onClick={handleReset}
-                    className='text-md col-span-2 rounded-md border bg-blue-400/70 px-3 py-2 text-black'>
+                    className='text-md col-span-2 mx-2 rounded-md border bg-blue-400/70 px-3 py-2 text-black'>
                     Reset All
                 </button>
                 <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0'>
-                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Auto</h2>
                         <Counter value={autoLeave} onChange={setAutoLeave}>
                             Auto Leave
                         </Counter>
@@ -111,7 +97,8 @@ function ScoreCalculator() {
                             Auto Amp
                         </Counter>
                     </div>
-                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                    <div className='grid w-11/12 snap-center snap-always grid-cols-[auto_1fr] p-2 grid-rows-[auto] auto-rows-fr'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Teleop</h2>
                         <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
                             Tele Speaker
                         </Counter>
@@ -126,7 +113,8 @@ function ScoreCalculator() {
                         </Counter>
                     </div>
 
-                    <div className='grid w-full snap-center snap-always grid-cols-[auto_1fr] p-2'>
+                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Endgame</h2>
                         <Counter value={park} onChange={setPark}>
                             Park
                         </Counter>
@@ -146,19 +134,15 @@ function ScoreCalculator() {
                 </div>
 
                 <div className='col-span-2 grid grid-cols-2 justify-center gap-2 bg-slate-200 p-3'>
-                    {speakerOnly || (
-                        <>
-                            <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                                Leave:{' '}
-                                <span className='rounded-lg bg-black/15 p-2 py-1'>
-                                    {autoLeave * 2}
-                                </span>
-                            </p>
-                        </>
-                    )}
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                        Leave:{' '}
+                        <span className='rounded-lg bg-black/15 p-2 py-1'>
+                            {autoLeave * 2}
+                        </span>
+                    </p>
 
                     <p
-                        className={` text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center ${speakerOnly ? 'col-span-2 max-h-12' : ''} `}>
+                        className={` text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center`}>
                         Speaker:{' '}
                         <span className='rounded-lg bg-black/15 p-2 py-1'>
                             {autoSpeaker * 5 +
@@ -167,27 +151,23 @@ function ScoreCalculator() {
                         </span>
                     </p>
 
-                    {speakerOnly || (
-                        <>
-                            <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                                Amp:{' '}
-                                <span className='rounded-lg bg-black/15 p-2 py-1'>
-                                    {autoAmp * 2 + teleAmp * 1}
-                                </span>
-                            </p>
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                        Amp:{' '}
+                        <span className='rounded-lg bg-black/15 p-2 py-1'>
+                            {autoAmp * 2 + teleAmp * 1}
+                        </span>
+                    </p>
 
-                            <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
-                                Stage:{' '}
-                                <span className='rounded-lg bg-black/15 p-2 py-1'>
-                                    {park * 1 +
-                                        climb * 3 +
-                                        climbSpot * 4 +
-                                        trap * 5 +
-                                        harmony * 2}
-                                </span>
-                            </p>
-                        </>
-                    )}
+                    <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
+                        Stage:{' '}
+                        <span className='rounded-lg bg-black/15 p-2 py-1'>
+                            {park * 1 +
+                                climb * 3 +
+                                climbSpot * 4 +
+                                trap * 5 +
+                                harmony * 2}
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>

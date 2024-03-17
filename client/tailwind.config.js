@@ -23,6 +23,9 @@ export default {
             },
             rotate: {
                 '60': '60deg', 
+            },
+            spacing: {
+                '23/24': '95.833333%'
             }
         },
 
