@@ -84,9 +84,9 @@ function ScoreCalculator() {
                     className='text-md col-span-2 mx-2 rounded-md border bg-blue-400/70 px-3 py-2 text-black'>
                     Reset All
                 </button>
-                <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0'>
-                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Auto</h2>
+                <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0 gap-2 p-2'>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Auto</h2>
                         <Counter value={autoLeave} onChange={setAutoLeave}>
                             Auto Leave
                         </Counter>
@@ -97,8 +97,8 @@ function ScoreCalculator() {
                             Auto Amp
                         </Counter>
                     </div>
-                    <div className='grid w-11/12 snap-center snap-always grid-cols-[auto_1fr] p-2 grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Teleop</h2>
+                    <div className='grid w-[calc(100%_-_2rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Teleop</h2>
                         <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
                             Tele Speaker
                         </Counter>
@@ -113,8 +113,8 @@ function ScoreCalculator() {
                         </Counter>
                     </div>
 
-                    <div className='grid w-23/24 snap-center snap-always grid-cols-[auto_1fr] p-2  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center'>Endgame</h2>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr]  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Endgame</h2>
                         <Counter value={park} onChange={setPark}>
                             Park
                         </Counter>
