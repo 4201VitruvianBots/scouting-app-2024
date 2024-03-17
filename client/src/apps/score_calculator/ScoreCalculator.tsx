@@ -16,12 +16,12 @@ function Counter({
     return (
         <>
             <button
-                className='text-md my-2 rounded-l-lg border bg-red-400 px-4 py-2 text-zinc-100'
+                className='text-md my-2 rounded-l-lg bg-red-400 px-4 py-2 text-zinc-100 active:brightness-75'
                 onClick={() => onChange(value > 0 ? value - 1 : value)}>
                 -
             </button>
             <button
-                className='text-md min-w-55 my-2 rounded-r-lg border bg-slate-600 px-3  py-2 text-zinc-100'
+                className='text-md min-w-55 my-2 rounded-r-lg bg-slate-600 px-3  py-2 text-zinc-100 active:brightness-75'
                 onClick={() => onChange(value + 1)}>
                 + {children} ({value})
             </button>
@@ -58,7 +58,7 @@ function ScoreCalculator() {
 
     return (
         <div className='flex h-dvh flex-col'>
-            <div className='mb-2 border border-neutral-900 bg-gray-800'>
+            <div className='mb-2 bg-gray-800'>
                 <br />
                 <h1 className='mb-4 text-center text-3xl  font-bold text-[#48c55c]'>
                     Score Calculator
@@ -81,11 +81,11 @@ function ScoreCalculator() {
             <div className='flex flex-grow flex-col'>
                 <button
                     onClick={handleReset}
-                    className='text-md col-span-2 mx-2 rounded-md border bg-blue-400/70 px-3 py-2 text-black'>
+                    className='text-md col-span-2 mx-2 rounded-md  bg-blue-400/70 px-3 py-2 text-black'>
                     Reset All
                 </button>
                 <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0 gap-2 p-2'>
-                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0 gap-1'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Auto</h2>
                         <Counter value={autoLeave} onChange={setAutoLeave}>
                             Auto Leave
@@ -97,7 +97,7 @@ function ScoreCalculator() {
                             Auto Amp
                         </Counter>
                     </div>
-                    <div className='grid w-[calc(100%_-_2rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0'>
+                    <div className='grid w-[calc(100%_-_2rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0 gap-1'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Teleop</h2>
                         <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
                             Tele Speaker
@@ -113,7 +113,7 @@ function ScoreCalculator() {
                         </Counter>
                     </div>
 
-                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr]  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0'>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr]  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0 gap-1'>
                         <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Endgame</h2>
                         <Counter value={park} onChange={setPark}>
                             Park
