@@ -4,4 +4,9 @@ dist/
 package.json
 package-lock.json
 
+data-analysis/
+
 client/public/ConeStacker/
+client/src/assets/
+
+server/static
