@@ -8,7 +8,16 @@ export interface BatteryManager extends EventTarget {
     /** A number representing the system's battery charge level scaled to a value between 0.0 and 1.0. */
     readonly level: number;
 
-    addEventListener(type: string | 'chargingchange' | 'chargingtimechange' | 'dischargingtimechange' | 'levelchange', callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void;
+    addEventListener(
+        type:
+            | string
+            | 'chargingchange'
+            | 'chargingtimechange'
+            | 'dischargingtimechange'
+            | 'levelchange',
+        callback: EventListenerOrEventListenerObject | null,
+        options?: AddEventListenerOptions | boolean
+    ): void;
 }
 
 declare global {

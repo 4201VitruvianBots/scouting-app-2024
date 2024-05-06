@@ -1,25 +1,27 @@
-import { Dispatch } from "react";
-import { MaterialSymbol } from "react-material-symbols";
-import { TeamData } from "requests";
-import { WindowData } from "../data";
-import blankImage from "../../../images/blank.png";
+import { Dispatch } from 'react';
+import { MaterialSymbol } from 'react-material-symbols';
+import { TeamData } from 'requests';
+import { WindowData } from '../data';
+import blankImage from '../../../images/blank.png';
 
-function TeamItem(
-    {
-        teamNumber,
-        teamInfoJson,
-        onSubmit,
-    }: {
-            teamNumber: number;
-            teamInfoJson: TeamData;
-            onSubmit: Dispatch<WindowData>;
-    }
-) {
+function TeamItem({
+    teamNumber,
+    teamInfoJson,
+    onSubmit,
+}: {
+    teamNumber: number;
+    teamInfoJson: TeamData;
+    onSubmit: Dispatch<WindowData>;
+}) {
     // Handle when a team on the stat table is clicked
     function handleTeamSummaryClick(teamNumber: number) {
-        onSubmit({title: "Team " + teamNumber + " Summary", type: 'TeamSummary', teamNumber: teamNumber});
+        onSubmit({
+            title: 'Team ' + teamNumber + ' Summary',
+            type: 'TeamSummary',
+            teamNumber: teamNumber,
+        });
     }
-    
+
     return (
         <>
             {teamInfoJson[teamNumber] && (
@@ -35,9 +37,11 @@ function TeamItem(
             )}
             <td>
                 {teamNumber}
-                {<button onClick={() => handleTeamSummaryClick(teamNumber)}>
+                {
+                    <button onClick={() => handleTeamSummaryClick(teamNumber)}>
                         <MaterialSymbol icon='info' />
-                </button>}
+                    </button>
+                }
             </td>
         </>
     );

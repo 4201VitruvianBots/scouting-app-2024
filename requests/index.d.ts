@@ -1,8 +1,13 @@
 export type ClimbPosition = StageLocation | 'park' | 'none' | 'failed';
-export type StageLocation = 'amp' | 'source' | 'center'
-export type PickupLocation = 'speaker' | 'middle' | 'source' | 'preload' | 'pickup'
-export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round' 
-export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other' 
+export type StageLocation = 'amp' | 'source' | 'center';
+export type PickupLocation =
+    | 'speaker'
+    | 'middle'
+    | 'source'
+    | 'preload'
+    | 'pickup';
+export type teamRoles = 'scoring' | 'defense' | 'support' | 'all-round';
+export type drivebase = 'tank' | 'swerve' | 'MECANUM' | 'other';
 
 export type RobotPosition =
     | 'red_1'
@@ -10,21 +15,15 @@ export type RobotPosition =
     | 'red_3'
     | 'blue_1'
     | 'blue_2'
-    | 'blue_3'
-export type Foul = 
-    | 'insideRobot' 
-    | 'protectedZone' 
-    | 'pinning' 
-    | 'multiplePieces' 
-    | 'other' 
-export type Break =
-    | 'mechanismDmg'
-    | 'batteryFall'
-    | 'commsFail'
-export type DefenseRank = 
-    | 'fullDef' 
-    | 'someDef' 
-    | 'noDef'
+    | 'blue_3';
+export type Foul =
+    | 'insideRobot'
+    | 'protectedZone'
+    | 'pinning'
+    | 'multiplePieces'
+    | 'other';
+export type Break = 'mechanismDmg' | 'batteryFall' | 'commsFail';
+export type DefenseRank = 'fullDef' | 'someDef' | 'noDef';
 export type CommentValues =
     | 'great_driving'
     | 'good_driving'
@@ -35,46 +34,40 @@ export type CommentValues =
     | 'ineffective_defense'
     | 'sturdy_build'
     | 'weak_build'
-    | 'avoids_under_stage'
+    | 'avoids_under_stage';
 
-
-
-interface capabilities { 
-    amp: boolean,
-    speaker: boolean
-    trap: boolean,
-    climb: boolean,
-    chainTraversal: boolean
+interface capabilities {
+    amp: boolean;
+    speaker: boolean;
+    trap: boolean;
+    climb: boolean;
+    chainTraversal: boolean;
 }
 
-interface HighNote { 
-    amp: boolean,
-    source: boolean
-    center: boolean,
+interface HighNote {
+    amp: boolean;
+    source: boolean;
+    center: boolean;
 }
 interface preference {
-    ampPrefer: boolean,
-    speakerPerfer:boolean,
-    trapPrefer: boolean,
-    climbPrefer: boolean,
+    ampPrefer: boolean;
+    speakerPerfer: boolean;
+    trapPrefer: boolean;
+    climbPrefer: boolean;
 }
 
-export type SuperPosition = 
-    | 'red_ss'
-    | 'blue_ss';
+export type SuperPosition = 'red_ss' | 'blue_ss';
 // export type ScoringLocation = 'A' | 'B';
 
-export type ScouterPosition = 
-    | 'red_right'
-    | 'blue_right';
+export type ScouterPosition = 'red_right' | 'blue_right';
 
-export interface MatchDataAggregations{
-    _id: {teamNumber: number}
+export interface MatchDataAggregations {
+    _id: { teamNumber: number };
     averageTeleSpeakerNotes: number;
     averageTeleAmpNotes: number;
     averageAutoSpeakerNotes: number;
     averageAutoAmpNotes: number;
-    averageTrapNotes:number;
+    averageTrapNotes: number;
     maxTeleSpeakerNotes: number;
     maxTeleAmpNotes: number;
     maxAutoSpeakerNotes: number;
@@ -84,27 +77,25 @@ export interface MatchDataAggregations{
     harmonyRate: number;
 }
 
-export interface SuperDataAggregations{
-    _id: {teamNumber: number}
+export interface SuperDataAggregations {
+    _id: { teamNumber: number };
     avgFouls: number;
     maxFouls: number;
-
 }
 
 export interface MetaData {
     scouterName: string;
     matchNumber: number;
     robotTeam?: number;
-    robotPosition: RobotPosition 
+    robotPosition: RobotPosition;
 }
 
-
 interface ScoreRanges {
-    near: number,
-    mid: number,
-    far: number,
-    amp: number,
-    miss: number
+    near: number;
+    mid: number;
+    far: number;
+    amp: number;
+    miss: number;
 }
 
 // - `POST` `/data/match`
@@ -128,12 +119,11 @@ export interface SuperData {
     break: Record<Break, number>;
     defense: DefenseRank;
     defended: boolean;
-    humanShooter?: {highNotes: HighNote};
+    humanShooter?: { highNotes: HighNote };
     comments: CommentValues[];
-    
 }
 
-// - `POST` `/data/pits` 
+// - `POST` `/data/pits`
 // `<form>` files?
 
 export interface PitFile {
@@ -155,8 +145,8 @@ export type PitResult = Partial<Record<number, Omit<PitFile, 'photo'>>>;
 // client -> server
 
 export interface StatusReport {
-    robotPosition: RobotPosition|SuperPosition|undefined;
-    matchNumber: number|undefined;
+    robotPosition: RobotPosition | SuperPosition | undefined;
+    matchNumber: number | undefined;
     scouterName: string;
     battery: number | undefined;
 }
@@ -166,13 +156,17 @@ export interface StatusReport {
 
 export interface StatusRecieve {
     scouters: StatusReport[];
-    matches: MatchStatus
+    matches: MatchStatus;
 }
 
-export type MatchStatus = Record<number, Record<RobotPosition, {schedule: number, real:number[]}> & Record<SuperPosition, boolean>> 
+export type MatchStatus = Record<
+    number,
+    Record<RobotPosition, { schedule: number; real: number[] }> &
+        Record<SuperPosition, boolean>
+>;
 // - `GET` `/data/schedule.json`
 
-export type MatchSchedule = Record<number, Record<RobotPosition,number>>;
+export type MatchSchedule = Record<number, Record<RobotPosition, number>>;
 
 export interface TeamInfo {
     address: null;

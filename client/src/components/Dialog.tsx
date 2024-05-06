@@ -1,4 +1,10 @@
-import { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
+import {
+    MouseEventHandler,
+    ReactNode,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 function Dialog({
     open: openProp,
@@ -27,14 +33,26 @@ function Dialog({
         }
     }, [open]);
 
-    const handleMouseDown: MouseEventHandler<HTMLDialogElement> = ({currentTarget, clientX, clientY, target}) => {
+    const handleMouseDown: MouseEventHandler<HTMLDialogElement> = ({
+        currentTarget,
+        clientX,
+        clientY,
+        target,
+    }) => {
         if (currentTarget !== target) return;
-        const { left, right, top, bottom } = currentTarget.getBoundingClientRect();
-        
-        if (clientX > left && clientX < right && clientY > top && clientY < bottom) return;
+        const { left, right, top, bottom } =
+            currentTarget.getBoundingClientRect();
+
+        if (
+            clientX > left &&
+            clientX < right &&
+            clientY > top &&
+            clientY < bottom
+        )
+            return;
 
         setOpen(false);
-    }
+    };
 
     return (
         <>

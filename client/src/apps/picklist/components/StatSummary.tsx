@@ -27,19 +27,19 @@ function StatSummary({
 
     // Create a list of the avatar data for each team based on the base64 images stored under the key 'avatar' in the team_info.json file
     const lowTeamNumber = sortedEntryTeamNumbers[0];
-    const lowTeamAvatar = teamInfoJson[lowTeamNumber]?.avatar ?? empty1x1Base64
+    const lowTeamAvatar = teamInfoJson[lowTeamNumber]?.avatar ?? empty1x1Base64;
     const lowDataPoint = sortedEntryDataPoints[0];
 
     const medianTeamNumber =
         sortedEntryTeamNumbers[Math.floor(sortedEntryTeamNumbers.length / 2)];
-    const medianTeamAvatar = 
+    const medianTeamAvatar =
         teamInfoJson[medianTeamNumber]?.avatar ?? empty1x1Base64;
     const medainDataPoint =
         sortedEntryDataPoints[Math.floor(sortedEntryDataPoints.length / 2)];
 
     const highTeamNumber =
         sortedEntryTeamNumbers[sortedEntryTeamNumbers.length - 1];
-    const highTeamAvatar = 
+    const highTeamAvatar =
         teamInfoJson[highTeamNumber]?.avatar ?? empty1x1Base64;
     const highDataPoint =
         sortedEntryDataPoints[sortedEntryDataPoints.length - 1];
@@ -83,7 +83,11 @@ function StatSummary({
             <div className='flex space-x-4'>
                 <p>Low: {lowDataPoint}</p>
                 <p>by </p>
-                <img src={`data:image/png;base64,${lowTeamAvatar}`} max-width='32' max-height='32' />
+                <img
+                    src={`data:image/png;base64,${lowTeamAvatar}`}
+                    max-width='32'
+                    max-height='32'
+                />
                 <p>Team {lowTeamNumber}</p>
             </div>
 
@@ -101,7 +105,11 @@ function StatSummary({
             <div className='flex space-x-4'>
                 <p>High: {highDataPoint}</p>
                 <p>by </p>
-                <img src={`data:image/png;base64,${highTeamAvatar}`} max-width='32' max-height='32' />
+                <img
+                    src={`data:image/png;base64,${highTeamAvatar}`}
+                    max-width='32'
+                    max-height='32'
+                />
                 <p>Team {highTeamNumber}</p>
             </div>
         </>

@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import chalk from 'chalk';
 import Docker from 'dockerode';
 import dotenv from 'dotenv-mono';
 dotenv.load();
@@ -22,7 +22,9 @@ function buildDockerImage() {
             // Print build process
             stream.on('data', chunk => {
                 try {
-                    process.stdout.write(chalk.gray(JSON.parse(chunk)?.stream ?? ''));
+                    process.stdout.write(
+                        chalk.gray(JSON.parse(chunk)?.stream ?? '')
+                    );
                 } catch (e) {
                     /* empty */
                 }

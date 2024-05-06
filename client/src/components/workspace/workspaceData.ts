@@ -22,7 +22,7 @@ class SplitData<T extends TabBase> {
 }
 
 class TabsData<T extends TabBase> {
-    readonly type = 'tabs'
+    readonly type = 'tabs';
     tabs: T[];
     selected = 0;
 
@@ -38,10 +38,19 @@ interface StateProps<T> {
     onChange: Dispatch<SetStateAction<T>>;
 }
 
-type TabsSplice<T extends TabBase> = (values: (value: TabsData<T>) => TabsData<T>[]) => void;
+type TabsSplice<T extends TabBase> = (
+    values: (value: TabsData<T>) => TabsData<T>[]
+) => void;
 
 interface TabBase {
     title: string;
 }
 
-export { SplitData, TabsData, type PaneData, type StateProps, type TabsSplice, type TabBase };
+export {
+    SplitData,
+    TabsData,
+    type PaneData,
+    type StateProps,
+    type TabsSplice,
+    type TabBase,
+};

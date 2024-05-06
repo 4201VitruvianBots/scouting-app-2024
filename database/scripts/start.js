@@ -12,7 +12,9 @@ async function startDockerContainer(containerName) {
     try {
         containers = await docker.listContainers({ all: true });
     } catch (e) {
-        console.error(chalk.red('\nDocker operation failed, is Docker running?\n'));
+        console.error(
+            chalk.red('\nDocker operation failed, is Docker running?\n')
+        );
         console.error(e);
         process.exit(1);
     }
@@ -26,12 +28,16 @@ async function startDockerContainer(containerName) {
 
     if (existingContainer) {
         console.log(
-            chalk.blue(`Container "${containerName}" already exists. Starting it...`)
+            chalk.blue(
+                `Container "${containerName}" already exists. Starting it...`
+            )
         );
         container = docker.getContainer(existingContainer.Id);
     } else {
         if (containerName) {
-            console.log(chalk.gray(`Container "${containerName}" does not exist.`));
+            console.log(
+                chalk.gray(`Container "${containerName}" does not exist.`)
+            );
         }
         console.log(chalk.blue('Creating and starting a new container...'));
         container = await docker.createContainer({

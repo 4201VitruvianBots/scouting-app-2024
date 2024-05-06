@@ -1,15 +1,25 @@
 import { Application } from 'express';
-import expressWs from 'express-ws'
-import { MatchSchedule, StatusRecieve, StatusReport, RobotPosition, SuperPosition } from 'requests';
+import expressWs from 'express-ws';
+import {
+    MatchSchedule,
+    StatusRecieve,
+    StatusReport,
+    RobotPosition,
+    SuperPosition,
+} from 'requests';
 import { matchApp, superApp } from './Schema.js';
 import fs from 'fs';
 
 const bluePositions: RobotPosition[] = ['blue_1', 'blue_2', 'blue_3'];
 const redPositions: RobotPosition[] = ['red_1', 'red_2', 'red_3'];
 
-const scheduleFile = '../client/src/assets/matchSchedule.json'
+const scheduleFile = '../client/src/assets/matchSchedule.json';
 
-const schedule = fs.existsSync(scheduleFile) ? JSON.parse(fs.readFileSync(scheduleFile, {encoding:"utf8"})) as MatchSchedule : undefined
+const schedule = fs.existsSync(scheduleFile)
+    ? (JSON.parse(
+          fs.readFileSync(scheduleFile, { encoding: 'utf8' })
+      ) as MatchSchedule)
+    : undefined;
 
 const status: StatusRecieve = { matches: {}, scouters: [] };
 
@@ -21,37 +31,85 @@ function notifyWatchers() {
     statusWatchers.forEach(watcher => watcher());
 }
 
-async function updateMatchStatus() { 
-    const matchEntries = await matchApp.find()
-    .select('metadata.matchNumber metadata.robotTeam metadata.robotPosition')
-    const superEntries = await superApp.find().select('metadata.matchNumber metadata.robotPosition')
+async function updateMatchStatus() {
+    const matchEntries = await matchApp
+        .find()
+        .select(
+            'metadata.matchNumber metadata.robotTeam metadata.robotPosition'
+        );
+    const superEntries = await superApp
+        .find()
+        .select('metadata.matchNumber metadata.robotPosition');
 
-    const matchNumbers = [...[...Object.keys(schedule??{})].map(number => parseInt(number)), ...matchEntries.map(match => match.metadata.matchNumber)].filter ((value, index, self) => self.indexOf(value) === index)
+    const matchNumbers = [
+        ...[...Object.keys(schedule ?? {})].map(number => parseInt(number)),
+        ...matchEntries.map(match => match.metadata.matchNumber),
+    ].filter((value, index, self) => self.indexOf(value) === index);
 
-    const matchOutput = Object.fromEntries(matchNumbers.map (matchNumber => [matchNumber, {
-        // Normal scouters
-        ...Object.fromEntries((['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3']satisfies RobotPosition[]).map (robotPosition => [robotPosition, {
-            schedule: schedule?.[matchNumber]?.[robotPosition], 
-            real: matchEntries.filter(matchEntry => matchEntry.metadata.matchNumber === matchNumber && matchEntry.metadata.robotPosition === robotPosition).map (matchEntry => matchEntry.metadata.robotTeam)
-        }])),
-        // Super scouters
-        ...Object.fromEntries((['red_ss', 'blue_ss'] satisfies SuperPosition[]).map(superPosition => [superPosition,
-            superEntries.some(entry =>
-                entry.metadata.matchNumber === matchNumber
-                && (superPosition === 'blue_ss' ? bluePositions : redPositions).includes(entry.metadata.robotPosition))]))
-    }]))
+    const matchOutput = Object.fromEntries(
+        matchNumbers.map(matchNumber => [
+            matchNumber,
+            {
+                // Normal scouters
+                ...Object.fromEntries(
+                    (
+                        [
+                            'red_1',
+                            'red_2',
+                            'red_3',
+                            'blue_1',
+                            'blue_2',
+                            'blue_3',
+                        ] satisfies RobotPosition[]
+                    ).map(robotPosition => [
+                        robotPosition,
+                        {
+                            schedule: schedule?.[matchNumber]?.[robotPosition],
+                            real: matchEntries
+                                .filter(
+                                    matchEntry =>
+                                        matchEntry.metadata.matchNumber ===
+                                            matchNumber &&
+                                        matchEntry.metadata.robotPosition ===
+                                            robotPosition
+                                )
+                                .map(
+                                    matchEntry => matchEntry.metadata.robotTeam
+                                ),
+                        },
+                    ])
+                ),
+                // Super scouters
+                ...Object.fromEntries(
+                    (['red_ss', 'blue_ss'] satisfies SuperPosition[]).map(
+                        superPosition => [
+                            superPosition,
+                            superEntries.some(
+                                entry =>
+                                    entry.metadata.matchNumber ===
+                                        matchNumber &&
+                                    (superPosition === 'blue_ss'
+                                        ? bluePositions
+                                        : redPositions
+                                    ).includes(entry.metadata.robotPosition)
+                            ),
+                        ]
+                    )
+                ),
+            },
+        ])
+    );
 
-    status.matches = matchOutput as unknown as StatusRecieve['matches']
-    notifyWatchers()
- }
+    status.matches = matchOutput as unknown as StatusRecieve['matches'];
+    notifyWatchers();
+}
 
-updateMatchStatus()
+updateMatchStatus();
 
 function setUpSocket(expressApp: Application) {
     const { app } = expressWs(expressApp);
 
     app.ws('/status/scouter', (ws, _req) => {
-
         // Create an object to hold the scouter info
         const scouter: StatusReport = {
             battery: undefined,
@@ -61,7 +119,7 @@ function setUpSocket(expressApp: Application) {
         };
 
         // put the scouter into the list of scouters
-        status.scouters.push(scouter)
+        status.scouters.push(scouter);
         notifyWatchers();
 
         // When new data is recieved
@@ -82,8 +140,8 @@ function setUpSocket(expressApp: Application) {
     app.ws('/status/admin', (ws, _req) => {
         // Function to send an update
         const sendUpdate = () => {
-            ws.send(JSON.stringify(status))
-        }
+            ws.send(JSON.stringify(status));
+        };
 
         // Send immediately
         sendUpdate();
@@ -96,7 +154,7 @@ function setUpSocket(expressApp: Application) {
             // Remove from the array of watchers
             statusWatchers.splice(statusWatchers.indexOf(sendUpdate), 1);
         });
-    })
-};
+    });
+}
 
-export {setUpSocket, updateMatchStatus};
+export { setUpSocket, updateMatchStatus };

@@ -61,10 +61,8 @@ function FieldButton({
     alliance: boolean | undefined;
     scouterPosition: ScouterPosition | undefined;
 }) {
-
-
     const handleCount = (autoKey: countKeys, teleKey: countKeys) => {
-        if (teleOp || !count.hold){
+        if (teleOp || !count.hold) {
             const finalKey = teleOp ? teleKey : autoKey;
             setCount(prevCount => ({
                 ...prevCount,
@@ -77,7 +75,9 @@ function FieldButton({
         setLeave?.(!leave);
     };
 
-    const fieldColors = alliance ? ['bg-blue-300/70', 'bg-blue-500/70', 'bg-blue-700/70'] : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
+    const fieldColors = alliance
+        ? ['bg-blue-300/70', 'bg-blue-500/70', 'bg-blue-700/70']
+        : ['bg-red-200/70', 'bg-red-400/70', 'bg-red-600/70'];
 
     return (
         <>
@@ -85,11 +85,14 @@ function FieldButton({
                 {!teleOp && (
                     <>
                         <div className='flex-col items-center justify-center pr-3'>
-                            <h1 className='text-4xl'>Mobility? </h1> 
-                            <p>The robot must cross the gray<br/> line to earn mobility.</p>
+                            <h1 className='text-4xl'>Mobility? </h1>
+                            <p>
+                                The robot must cross the gray
+                                <br /> line to earn mobility.
+                            </p>
                         </div>
                         <MultiButton
-                            className='h-[100px] flex-grow flex-row basis-0 text-4xl'
+                            className='h-[100px] flex-grow basis-0 flex-row text-4xl'
                             value={leave}
                             values={[true, false]}
                             labels={['Yes', 'No']}
@@ -174,7 +177,7 @@ function FieldButton({
             <div
                 className={`flex w-[40em] flex-row gap-2 py-2 transition-[filter] duration-200 
                 ${!teleOp && count.hold ? 'grayscale' : ''}`}>
-                {(
+                {
                     <>
                         <RegionButton
                             teleOp={teleOp}
@@ -195,7 +198,7 @@ function FieldButton({
                             label='Miss'
                         />
                     </>
-                )}
+                }
             </div>
         </>
     );

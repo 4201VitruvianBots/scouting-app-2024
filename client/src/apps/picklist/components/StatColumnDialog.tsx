@@ -19,7 +19,7 @@ function StatColumnDialog({
           )
         : [];
     columns.push('robotImages');
-    
+
     const [column, setColumn] = useState<string>();
     const handleSubmit = () => {
         if (column) {
@@ -51,7 +51,9 @@ function StatColumnDialog({
                     search
                 />
             </label>
-            <button className='font-normal' onClick={handleSubmit}>Create</button>
+            <button className='font-normal' onClick={handleSubmit}>
+                Create
+            </button>
         </>
     );
 }

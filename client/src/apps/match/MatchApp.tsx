@@ -1,7 +1,13 @@
 import EndgameButton from './components/EndGameButton';
 import FieldButton from './components/FieldButton';
 import LinkButton from '../../components/LinkButton';
-import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
+import {
+    ClimbPosition,
+    MatchData,
+    MatchSchedule,
+    RobotPosition,
+    ScouterPosition,
+} from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
@@ -14,7 +20,7 @@ import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
 
-const schedule = scheduleFile as MatchSchedule
+const schedule = scheduleFile as MatchSchedule;
 
 interface MatchScores {
     autoShootNear: number;
@@ -25,7 +31,7 @@ interface MatchScores {
     teleShootNear: number;
     teleShootMid: number;
     teleShootFar: number;
-    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes 
+    hold: number; // Did the robot hold a note between auto and teleop? 0=no, 1=yes
     teleAmp: number;
     teleMiss: number;
     trap: number;
@@ -39,7 +45,7 @@ const defualtScores: MatchScores = {
     teleShootNear: 0,
     teleShootMid: 0,
     teleShootFar: 0,
-    hold: 0, 
+    hold: 0,
     teleAmp: 0,
     teleMiss: 0,
     trap: 0,
@@ -65,19 +71,17 @@ function MatchApp() {
     ).includes(robotPosition);
 
     const handleAbsentRobot = async () => {
-        if (
-            robotPosition == undefined ||
-            matchNumber == undefined 
-        ) {
-            alert('Check if your signed in, and you have the match number')
-            return; }
+        if (robotPosition == undefined || matchNumber == undefined) {
+            alert('Check if your signed in, and you have the match number');
+            return;
+        }
 
         const data: MatchData = {
             metadata: {
                 scouterName,
                 robotPosition,
                 matchNumber,
-                robotTeam: undefined
+                robotTeam: undefined,
             },
             leftStartingZone: leave,
             autoNotes: {
@@ -85,19 +89,19 @@ function MatchApp() {
                 mid: count.autoShootMid,
                 far: count.autoShootFar,
                 amp: count.autoAmp,
-                miss: count.autoMiss
+                miss: count.autoMiss,
             },
             teleNotes: {
                 near: count.teleShootNear,
                 mid: count.teleShootMid,
                 far: count.teleShootFar,
                 amp: count.teleAmp,
-                miss: count.teleMiss
+                miss: count.teleMiss,
             },
             trapNotes: count.trap,
             climb: climbPosition,
         };
-        
+
         sendQueue('/data/match', data);
         setCount(defualtScores);
         setClimbPosition('none');
@@ -109,8 +113,8 @@ function MatchApp() {
 
         setTimeout(() => {
             setShowCheck(false);
-          }, 3000);
-    }
+        }, 3000);
+    };
 
     const handleSubmit = async () => {
         if (
@@ -118,8 +122,9 @@ function MatchApp() {
             matchNumber == undefined ||
             teamNumber == undefined
         ) {
-            alert('data is missing! :(')
-            return; }
+            alert('data is missing! :(');
+            return;
+        }
 
         const data: MatchData = {
             metadata: {
@@ -134,14 +139,14 @@ function MatchApp() {
                 mid: count.autoShootMid,
                 far: count.autoShootFar,
                 amp: count.autoAmp,
-                miss: count.autoMiss
+                miss: count.autoMiss,
             },
             teleNotes: {
                 near: count.teleShootNear,
                 mid: count.teleShootMid,
                 far: count.teleShootFar,
                 amp: count.teleAmp,
-                miss: count.autoMiss
+                miss: count.autoMiss,
             },
             trapNotes: count.trap,
             climb: climbPosition,
@@ -158,19 +163,17 @@ function MatchApp() {
 
         setTimeout(() => {
             setShowCheck(false);
-          }, 3000);
-
-        
+        }, 3000);
     };
 
     const showConfirmationDialog = () => {
         if (window.confirm('Are you sure you want to mark as absent?')) {
-          // User confirmed, call the action
-          handleAbsentRobot();
-          // Optionally, you can also scroll to the top
-          scrollTo(0, 0);
+            // User confirmed, call the action
+            handleAbsentRobot();
+            // Optionally, you can also scroll to the top
+            scrollTo(0, 0);
         }
-      };
+    };
 
     const undoCount = () => {
         if (countHistory.length > 0) {
@@ -195,11 +198,18 @@ function MatchApp() {
 
     return (
         <main className='mx-auto flex w-min grid-flow-row flex-col content-center items-center justify-center '>
-                {showCheck && (
-                    <MaterialSymbol icon="check" size={150} fill grade={200} color='green' className='ml-10 absolute top-0 right-10'/>
-                )}
+            {showCheck && (
+                <MaterialSymbol
+                    icon='check'
+                    size={150}
+                    fill
+                    grade={200}
+                    color='green'
+                    className='absolute right-10 top-0 ml-10'
+                />
+            )}
             <h1 className='my-8 text-center text-3xl'>Match Scouting App</h1>
-            
+
             <div className='fixed left-4 top-4 z-20 flex flex-row gap-3 rounded-md bg-slate-200 p-1'>
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
@@ -211,7 +221,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
+
                 <Dialog
                     open
                     trigger={open => (
@@ -225,7 +235,6 @@ function MatchApp() {
                             />
                         </button>
                     )}>
-                        
                     {close => (
                         <SignIn
                             scouterName={scouterName}
@@ -250,23 +259,26 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
-              
             </div>
-           
-            <p className='text-2xl mt-2 mb-2'>Match Number</p>
+
+            <p className='mb-2 mt-2 text-2xl'>Match Number</p>
             <NumberInput onChange={setMatchNumber} value={matchNumber} />
-            <p className='text-2xl mt-2 mb-2'>Team Number</p>
-            <TeamDropdown onChange={setTeamNumber} value={teamNumber}  />
+            <p className='mb-2 mt-2 text-2xl'>Team Number</p>
+            <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
 
             <div>
-                <button onClick={showConfirmationDialog} style={{ fontSize: '20px' }}
-                    className='px-2 py-1 mt-14 mb-2 text-center bg-green-500 rounded-md'>
-                        Robot Absent
+                <button
+                    onClick={showConfirmationDialog}
+                    style={{ fontSize: '20px' }}
+                    className='mb-2 mt-14 rounded-md bg-green-500 px-2 py-1 text-center'>
+                    Robot Absent
                 </button>
             </div>
 
             <div>
-                <h2 className='mt-12 mb-5 text-center text-5xl text-green-600 font-semibold'>Autonomous</h2>
+                <h2 className='mb-5 mt-12 text-center text-5xl font-semibold text-green-600'>
+                    Autonomous
+                </h2>
                 <FieldButton
                     setCount={handleSetCount}
                     setLeave={setLeave}
@@ -276,7 +288,9 @@ function MatchApp() {
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Tele-Op</h2>
+                <h2 className='my-6 mt-12 text-center text-5xl font-semibold text-green-600'>
+                    Tele-Op
+                </h2>
                 <FieldButton
                     setCount={handleSetCount}
                     teleOp={true}
@@ -284,7 +298,9 @@ function MatchApp() {
                     alliance={blueAlliance}
                     scouterPosition={scouterPosition}
                 />
-                <h2 className='my-6 mt-12 text-center text-5xl text-green-600 font-semibold'>Endgame</h2>
+                <h2 className='my-6 mt-12 text-center text-5xl font-semibold text-green-600'>
+                    Endgame
+                </h2>
                 <EndgameButton
                     setCount={handleSetCount}
                     climbPosition={climbPosition}
@@ -293,27 +309,31 @@ function MatchApp() {
                     scouterPosition={scouterPosition}
                     count={count}
                 />
-                <div className='flex flex-col justify-center mt-20 mb-5'>
-
-                    <button onClick={() => {handleSubmit(); scrollTo(0, 0);}} style={{ fontSize: '30px' }}
-                        className='px-2 py-1 text-center bg-green-500 rounded-md'>
-                            Submit
+                <div className='mb-5 mt-20 flex flex-col justify-center'>
+                    <button
+                        onClick={() => {
+                            handleSubmit();
+                            scrollTo(0, 0);
+                        }}
+                        style={{ fontSize: '30px' }}
+                        className='rounded-md bg-green-500 px-2 py-1 text-center'>
+                        Submit
                     </button>
-
                 </div>
             </div>
 
             <div>
                 <div>Queue: {queue.length}</div>
-                <button onClick={sendAll}
-                        className='px-2 py-1 text-center bg-amber-500 rounded-md'
-                >{sending ? 'Sending...': 'Resend All'}</button>
+                <button
+                    onClick={sendAll}
+                    className='rounded-md bg-amber-500 px-2 py-1 text-center'>
+                    {sending ? 'Sending...' : 'Resend All'}
+                </button>
             </div>
-        </main >
+        </main>
     );
-} 
-
+}
 
 export type { MatchScores, ClimbPosition };
 
-export default MatchApp
+export default MatchApp;

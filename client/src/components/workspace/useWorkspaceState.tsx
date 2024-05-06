@@ -33,9 +33,4 @@ function useWorkspaceState<T extends TabBase>(
     return [views, setViews, addToFocused, { setAddToFocused }];
 }
 
-export {
-   
-    useWorkspaceState,
-    type WorkspaceControls,
-    type ResizeType,
-};
+export { useWorkspaceState, type WorkspaceControls, type ResizeType };

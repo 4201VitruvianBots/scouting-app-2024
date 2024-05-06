@@ -19,7 +19,10 @@ const server = app.listen(8080, () => {
 });
 
 if (REMOTE) {
-    const url = await ngrok.connect({ authtoken: process.env.NGROK_TOKEN, addr: 8080 });
+    const url = await ngrok.connect({
+        authtoken: process.env.NGROK_TOKEN,
+        addr: 8080,
+    });
     console.log(chalk.green(`Server is accessible at ${url}`));
 }
 
@@ -38,7 +41,7 @@ const handleExit = async () => {
     console.log(chalk.green('Done'));
 
     process.exit();
-}
+};
 
 process.on('SIGINT', handleExit);
 process.on('SIGTERM', handleExit);

@@ -25,7 +25,11 @@ function StatSummaryDialog({
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({ title: title || camelToSpaced(column || ''), column, type: 'StatSummary' });
+            onSubmit({
+                title: title || camelToSpaced(column || ''),
+                column,
+                type: 'StatSummary',
+            });
             onClose?.();
         }
     };
@@ -39,11 +43,14 @@ function StatSummaryDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
+
             <label>
                 Column
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    options={columns.map(e => ({
+                        value: e,
+                        name: camelToSpaced(e),
+                    }))}
                     value={column}
                     placeholder='Select Stat'
                     onChange={value => setColumn(value as string)}
@@ -57,7 +64,7 @@ function StatSummaryDialog({
                         value={title}
                         onChange={setTitle}
                         placeholder={camelToSpaced(column || '')}
-                        className="p-1"
+                        className='p-1'
                     />
                 </label>
             </p>

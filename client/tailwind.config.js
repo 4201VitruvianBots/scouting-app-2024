@@ -7,7 +7,7 @@ export default {
             backgroundImage: {
                 'field-blue': "url('images/blueSideCropped.png')",
                 'field-red': "url('images/redSideCropped.png')",
-                
+
                 'field-red-endgame': "url('images/fieldmapREDendgame.png')",
                 'field-blue-endgame': "url('images/fieldmapBLUEendgame.png')",
                 'field-blue-super': "url('images/blueSideSuper.png')",
@@ -16,17 +16,17 @@ export default {
             colors: {
                 darkred: '#7c1034',
                 lightblue: 'cfe5ff',
-                medblue: '252f9c'
+                medblue: '252f9c',
             },
             fontFamily: {
-                sans: 'Poppins'
+                sans: 'Poppins',
             },
             rotate: {
-                '60': '60deg', 
+                60: '60deg',
             },
             spacing: {
-                '23/24': '95.833333%'
-            }
+                '23/24': '95.833333%',
+            },
         },
 
         plugins: [],
