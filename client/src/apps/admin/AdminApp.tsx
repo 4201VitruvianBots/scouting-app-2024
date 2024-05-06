@@ -8,8 +8,6 @@ import { MatchTable } from "./components/MatchTable";
 function AdminApp() {
     const status = useStatusRecieve();
 
-    console.log(status.matches)
-
    // const [schedule] = useFetchJson<MatchSchedule>('/matchSchedule.json');
 
     

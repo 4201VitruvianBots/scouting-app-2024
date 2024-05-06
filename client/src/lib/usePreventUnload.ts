@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 function usePreventUnload(preventUnload = true) {
     useEffect(() => {
-        console.log(preventUnload)
         // Only run if preventUnload is true
         if (!preventUnload) return
 

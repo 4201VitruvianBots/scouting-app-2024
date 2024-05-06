@@ -23,12 +23,8 @@ setUpSocket(app);
 
 app.post('/data/match', async(req,res) => {
     
-    const matchapp = new matchApp(req.body);
-    const aMatchApp = await matchapp.save();
+    await new matchApp(req.body).save();
     updateMatchStatus()
-
-    // Debugging, remove later
-    console.log(aMatchApp);
 
     res.end();
     
@@ -36,10 +32,7 @@ app.post('/data/match', async(req,res) => {
 
 app.post('/data/super', async(req,res) => {
 
-    const SuperApp = new superApp(req.body);
-    const aSuperApp = await SuperApp.save();
-
-    console.log(aSuperApp);
+    await new superApp(req.body).save();
 
     res.end();
 });
@@ -89,7 +82,6 @@ app.get('/data/pit/scouted-teams', async (req, res) => {
 
 app.get('/image/:teamId.jpeg', async (req, res) => {
     const { teamId } = req.params;
-    console.log(teamId);
 
     //Search the pit scouting database for info on this teamId
     const teamNumber = parseInt(teamId);

@@ -89,10 +89,6 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
     
     const matches = await matchApp.find().select('metadata.matchNumber metadata.robotTeam climb');
 
-    console.log(climbCounts, matches)
-//     console.log("spotLightCounts", spotLightCounts)
-//   console.log('dig into spotlight: ', spotLightCounts[0].test.humanShooter)
-
     const result = (await matchApp.aggregate([
     { $group:{
         _id: {teamNumber: '$metadata.robotTeam'},
@@ -115,13 +111,8 @@ async function averageAndMax():Promise<MatchDataAggregations[]>{
         const matchingMatches = matches.filter(match => match.metadata.robotTeam === result._id.teamNumber)
         const matchingClimbCounts = matchingMatches.map(match => climbCounts.find(climbCount => climbCount._id.matchNumber === match.metadata.matchNumber && climbCount.teams.includes(result._id.teamNumber))[match.climb])
         const harmonyCount = matchingClimbCounts.filter(e => e > 1).length;
-        console.log('Team:', result._id.teamNumber, harmonyCount, matchingMatches)
         result.harmonyRate = harmonyCount / matchingMatches.length;
     })
-
-    
-
-    console.log(result.map(e => e.harmonyRate))
 
     return result;
 }

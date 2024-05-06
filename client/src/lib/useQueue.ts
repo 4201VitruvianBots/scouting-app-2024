@@ -8,7 +8,6 @@ function useQueue(): [send: (url: string, data: unknown) => void, sendAll: () =>
     const [sending, setSending] = useState(false);
     
     const attemptSend = useCallback(() => {
-        console.log(sending, queue)
         if (sending || queue.length === 0) return;
         setSending(true)
         Promise.allSettled(queue.map(queueItem => (

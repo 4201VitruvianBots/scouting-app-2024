@@ -9,8 +9,6 @@ const teamOptions: SelectSearchOption[] = teamsString
     .filter(e => e !== '')
     .map(e => ({ name: e, value: e }));
 
-console.log(teamOptions);
-
 const teamOptionsWithAbsent: SelectSearchOption[] = [{value: '0', name: 'Absent'}, ...teamOptions];
 
 function TeamDropdown({
