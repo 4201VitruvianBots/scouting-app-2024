@@ -7,12 +7,14 @@ const docker = new Docker();
 
 async function startDockerContainer(containerName) {
     // Check if the container with the given name exists
+    let containers;
 
     try {
-        const containers = await docker.listContainers({ all: true });
+        containers = await docker.listContainers({ all: true });
     } catch (e) {
-        console.error('\nDocker operation failed, do you need to start docker?\n');
-        throw e;
+        console.error(chalk.red('\nDocker operation failed, is Docker running?\n'));
+        console.error(e);
+        process.exit(1);
     }
     const existingContainer = containerName
         ? containers.find(containerInfo => {
