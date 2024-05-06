@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { MatchScores } from '../apps/match/MatchApp';
+import { MatchScores } from '../MatchApp';
 import { ClimbPosition, ScouterPosition } from 'requests';
-import MultiButton from './MultiButton';
+import MultiButton from '../../../components/MultiButton';
 
 function EndgameButton({
     setClimb,

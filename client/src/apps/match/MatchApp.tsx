@@ -1,5 +1,5 @@
-import EndgameButton from '../../components/EndGameButton';
-import FieldButton from '../../components/FieldButton';
+import EndgameButton from './components/EndGameButton';
+import FieldButton from './components/FieldButton';
 import LinkButton from '../../components/LinkButton';
 import { ClimbPosition, MatchData, MatchSchedule, RobotPosition, ScouterPosition } from 'requests';
 import { SetStateAction, useEffect, useState } from 'react';

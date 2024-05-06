@@ -10,7 +10,7 @@ import Dialog from '../../components/Dialog';
 import SignIn from '../../components/SignIn';
 import ConeStacker from '../../components/ConeStacker';
 import { usePreventUnload } from '../../lib/usePreventUnload';
-import ImageUploader from '../../components/ImageUploader';
+import ImageUploader from './components/ImageUploader';
 import { useFetchJson } from '../../lib/useFetch';
 import { postJson } from '../../lib/postJson';
 

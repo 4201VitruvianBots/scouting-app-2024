@@ -15,7 +15,7 @@ import {
 } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
-import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
+import MultiSelectFieldButton from './components/MultiSelectFieldButton';
 import NumberInput from '../../components/NumberInput';
 import MultiButton from '../../components/MultiButton';
 import { useStatus } from '../../lib/useStatus';

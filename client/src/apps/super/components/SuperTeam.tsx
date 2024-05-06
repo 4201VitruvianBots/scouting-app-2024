@@ -3,7 +3,7 @@ import { Foul, Break, DefenseRank, CommentValues } from 'requests';
 import MultiButton from '../../../components/MultiButton';
 import Checkbox from '../../../components/Checkbox';
 import TeamDropdown from '../../../components/TeamDropdown';
-import CannedCommentBox, { SelectOption } from '../../../components/CannedComments';
+import CannedCommentBox, { SelectOption } from './CannedComments';
 
 export interface SuperTeamState {
     foulCounts: Record<Foul, number>;
