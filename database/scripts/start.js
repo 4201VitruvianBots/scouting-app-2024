@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import Docker from 'dockerode';
 import dotenv from 'dotenv-mono';
 dotenv.load();
@@ -17,14 +18,14 @@ async function startDockerContainer(containerName) {
 
     if (existingContainer) {
         console.log(
-            `Container "${containerName}" already exists. Starting it...`
+            chalk.blue(`Container "${containerName}" already exists. Starting it...`)
         );
         container = docker.getContainer(existingContainer.Id);
     } else {
         if (containerName) {
-            console.log(`Container "${containerName}" does not exist.`);
+            console.log(chalk.gray(`Container "${containerName}" does not exist.`));
         }
-        console.log('Creating and starting a new container...');
+        console.log(chalk.blue('Creating and starting a new container...'));
         container = await docker.createContainer({
             Image: process.env.IMAGE_NAME, // You can specify a different image if needed
             name: containerName, // Set Name to undefined for an unnamed container
@@ -37,10 +38,10 @@ async function startDockerContainer(containerName) {
     }
 
     if ((await container.inspect()).State.Running) {
-        console.log('Container already running');
+        console.log(chalk.gray('Container already running'));
     } else {
         await container.start();
-        console.log('Started container');
+        console.log(chalk.green('Started container'));
     }
     return container;
 }

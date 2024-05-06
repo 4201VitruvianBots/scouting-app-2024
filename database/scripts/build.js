@@ -1,12 +1,13 @@
+import chalk from 'chalk'
 import Docker from 'dockerode';
 import dotenv from 'dotenv-mono';
 dotenv.load();
 
 const docker = new Docker();
 
-async function buildDockerImage() {
-    console.log('Building docker image...\n');
-    await docker.buildImage(
+function buildDockerImage() {
+    console.log(chalk.blue('Building docker image...\n'));
+    docker.buildImage(
         {
             src: ['Dockerfile'],
             context: '.',
@@ -14,21 +15,21 @@ async function buildDockerImage() {
         { t: process.env.IMAGE_NAME },
         (err, stream) => {
             if (err) {
-                console.error('Error building Docker image:', err);
+                console.error(chalk.red('Error building Docker image:'), err);
                 return;
             }
 
             // Print build process
             stream.on('data', chunk => {
                 try {
-                    process.stdout.write(JSON.parse(chunk)?.stream ?? '');
+                    process.stdout.write(chalk.gray(JSON.parse(chunk)?.stream ?? ''));
                 } catch (e) {
                     /* empty */
                 }
             });
 
             stream.on('end', () => {
-                console.log('Docker image build complete.');
+                console.log(chalk.blue('Docker image build complete.'));
             });
         }
     );

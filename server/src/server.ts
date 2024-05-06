@@ -1,10 +1,11 @@
 import express from 'express';
 import path from 'path';
+import chalk from 'chalk';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp, superApp } from './Schema.js';
 import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.js'
 import { setUpSocket, updateMatchStatus } from './status.js';
-import { PitFile, PitResult } from 'requests';
+import { MatchData, PitFile, PitResult, SuperData } from 'requests';
 import { dataUriToBuffer } from 'data-uri-to-buffer';
 
 
@@ -20,17 +21,22 @@ app.use(express.json({limit: '200mb'}));
 setUpSocket(app);
 
 app.post('/data/match', async(req,res) => {
+    const body = req.body as MatchData;
     
-    await new matchApp(req.body).save();
-    updateMatchStatus()
+    await new matchApp(body).save();
+    updateMatchStatus();
+    console.log(chalk.gray(`Match data recieved for team ${body.metadata.robotTeam} match ${body.metadata.matchNumber}`))
 
     res.end();
     
 });
 
 app.post('/data/super', async(req,res) => {
+    const body = req.body as SuperData;
 
-    await new superApp(req.body).save();
+    await new superApp(body).save();
+    updateMatchStatus();
+    console.log(chalk.gray(`Super data recieved for team ${body.metadata.robotTeam} match ${body.metadata.matchNumber}`))
 
     res.end();
 });
@@ -48,7 +54,7 @@ app.post('/data/pit', async(req,res) => {
 
         await PitApp.save();
 
-        console.log(`Pit data recieved for ${body.teamNumber}`);
+        console.log(chalk.gray(`Pit data recieved for ${body.teamNumber}`));
 
         res.end();
     } catch (e) {
