@@ -3,7 +3,6 @@ import path from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { matchApp, pitApp, superApp } from './Schema.js';
 import {averageAndMax, superAverageAndMax, robotImageDisplay} from './aggregate.js'
-import { importAllData } from './transfer.js';
 import { setUpSocket, updateMatchStatus } from './status.js';
 import { PitFile, PitResult } from 'requests';
 import { dataUriToBuffer } from 'data-uri-to-buffer';
@@ -13,7 +12,6 @@ import { dataUriToBuffer } from 'data-uri-to-buffer';
 
 // If DEV is true then the app should forward requests to localhost:5173 instead of serving from /static
 const DEV = process.env.NODE_ENV === 'dev';
-const REMOTE = process.env.LOCATION === 'remote';
 
 const app = express();
 
@@ -58,14 +56,6 @@ app.post('/data/pit', async(req,res) => {
         res.end();
     }
 });
-
-if (REMOTE) {
-    app.post('/data/sync', async (req, res) => {
-        await importAllData(req.body);
-        res.end();
-    })
-}
-
 
 app.get('/data/retrieve', async (req, res) => {
     res.send(await averageAndMax());
