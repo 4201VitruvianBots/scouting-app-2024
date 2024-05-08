@@ -49,13 +49,8 @@ function RootMenu() {
                 Picklist
             </LinkButton>
             <LinkButton
-                link='/games'
-                className='rounded-3xl bg-[#2f3646] text-5xl'>
-                Games
-            </LinkButton>
-            <LinkButton
                 link='/score_calculator'
-                className='col-span-2 rounded-3xl bg-[#2f3646] text-5xl'>
+                className='rounded-3xl bg-[#2f3646] text-5xl'>
                 Scoring Calculator
             </LinkButton>
             <div className='absolute opacity-0'>
