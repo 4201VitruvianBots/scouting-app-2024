@@ -262,7 +262,7 @@ function MatchApp() {
             </div>
 
             <p className='mb-2 mt-2 text-2xl'>Match Number</p>
-            <NumberInput onChange={setMatchNumber} value={matchNumber} />
+            <NumberInput className='border border-black' onChange={setMatchNumber} value={matchNumber} />
             <p className='mb-2 mt-2 text-2xl'>Team Number</p>
             <TeamDropdown onChange={setTeamNumber} value={teamNumber} />
 
