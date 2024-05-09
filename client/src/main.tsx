@@ -66,7 +66,7 @@ const router = createBrowserRouter([
             {
                 path: 'score_calculator',
                 element: <ScoringCalculator />,
-            }
+            },
         ],
     },
 ]);
