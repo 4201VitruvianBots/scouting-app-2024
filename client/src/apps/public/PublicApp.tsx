@@ -1,4 +1,4 @@
-import LinkButton from "../../components/LinkButton";
+import LinkButton from '../../components/LinkButton';
 
 function PublicApp() {
     return (

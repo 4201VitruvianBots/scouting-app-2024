@@ -8,9 +8,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js
-- npm
-- Docker (server only)
+-   Node.js
+-   npm
+-   Docker (server only)
 
 ### Installation
 

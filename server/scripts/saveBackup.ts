@@ -6,6 +6,9 @@ import fs from 'fs';
 await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27107/');
 
-fs.writeFileSync('static/backup.json', JSON.stringify(await exportAllData(), null, 4));
+fs.writeFileSync(
+    'static/backup.json',
+    JSON.stringify(await exportAllData(), null, 4)
+);
 
 await mongoose.disconnect();

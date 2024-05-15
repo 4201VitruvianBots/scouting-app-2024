@@ -61,40 +61,40 @@ const teams: number[] = `4
 9505
 9520
 9538
-9635`.split('\n').map(str => parseInt(str));
+9635`
+    .split('\n')
+    .map(str => parseInt(str));
 
-const data = teams.map(team => (
-    {
-        teamNumber: team,
-        scouterName: 'Nate',
-        autoAmpNotes: randint(5),
-        autoSpeakerNear: randint(5),
-        autoSpeakerMid: randint(5),
-        autoSpeakerFar: randint(5),
-        climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
-        highNotes: randint(5),
-        leftStartingZone: Math.random() > 0.5,
-        teleAmpedSpeakerFar: randint(5),
-        teleAmpedSpeakerMid: randint(5),
-        teleAmpedSpeakerNear: randint(5),
-        teleAmpNotes: randint(5),
-        teleNonAmpedSpeakerFar: randint(5),
-        teleNonAmpedSpeakerMid: randint(5),
-        teleNonAmpedSpeakerNear: randint(5),
-        trapNotes: randint(2),
-        Comments: {
-            great_driving: randint(5), 
-            good_driving: randint(5), 
-            source_only: randint(5), 
-            clogging: randint(5), 
-            effective_defense: randint(5), 
-            okay_defense: randint(5), 
-            ineffective_defense: randint(5), 
-            sturdy_build: randint(5), 
-            weak_build: randint(5), 
-            avoids_under_stage: randint(5),
-        }
-    }
-));
+const data = teams.map(team => ({
+    teamNumber: team,
+    scouterName: 'Nate',
+    autoAmpNotes: randint(5),
+    autoSpeakerNear: randint(5),
+    autoSpeakerMid: randint(5),
+    autoSpeakerFar: randint(5),
+    climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
+    highNotes: randint(5),
+    leftStartingZone: Math.random() > 0.5,
+    teleAmpedSpeakerFar: randint(5),
+    teleAmpedSpeakerMid: randint(5),
+    teleAmpedSpeakerNear: randint(5),
+    teleAmpNotes: randint(5),
+    teleNonAmpedSpeakerFar: randint(5),
+    teleNonAmpedSpeakerMid: randint(5),
+    teleNonAmpedSpeakerNear: randint(5),
+    trapNotes: randint(2),
+    Comments: {
+        great_driving: randint(5),
+        good_driving: randint(5),
+        source_only: randint(5),
+        clogging: randint(5),
+        effective_defense: randint(5),
+        okay_defense: randint(5),
+        ineffective_defense: randint(5),
+        sturdy_build: randint(5),
+        weak_build: randint(5),
+        avoids_under_stage: randint(5),
+    },
+}));
 
 fs.writeFileSync('static/output_analysis.json', JSON.stringify(data));

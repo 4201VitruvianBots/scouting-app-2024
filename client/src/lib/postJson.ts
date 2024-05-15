@@ -6,4 +6,4 @@ function postJson(url: string, data: unknown) {
     });
 }
 
-export {postJson};
+export { postJson };

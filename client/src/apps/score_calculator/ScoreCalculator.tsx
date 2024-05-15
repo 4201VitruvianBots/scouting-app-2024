@@ -46,10 +46,17 @@ function ScoreCalculator() {
     const [foulPoints, setFoulPoints] = useState<number | undefined>(0);
 
     const autoPoints = autoLeave * 2;
-    const speakerPoints = autoSpeaker * 5 + teleSpeaker * 2 + ampedTeleSpeaker * 5;
+    const speakerPoints =
+        autoSpeaker * 5 + teleSpeaker * 2 + ampedTeleSpeaker * 5;
     const ampPoints = autoAmp * 2 + teleAmp * 1;
-    const stagePoints = park * 1 + climb * 3 + climbSpot * 4 + trap * 5 + harmony * 2;
-    const totalPoints = autoPoints + speakerPoints + ampPoints + stagePoints + (foulPoints ?? 0);
+    const stagePoints =
+        park * 1 + climb * 3 + climbSpot * 4 + trap * 5 + harmony * 2;
+    const totalPoints =
+        autoPoints +
+        speakerPoints +
+        ampPoints +
+        stagePoints +
+        (foulPoints ?? 0);
 
     const handleReset = () => {
         setAutoLeave(0);
@@ -94,9 +101,11 @@ function ScoreCalculator() {
                     className='text-md col-span-2 mx-2 rounded-md  bg-blue-400/70 px-3 py-2 text-black active:brightness-75'>
                     Reset All
                 </button>
-                <div className='flex flex-grow snap-x snap-mandatory flex-row overflow-x-auto *:flex-shrink-0 gap-2 p-2'>
-                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0 gap-1'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Auto</h2>
+                <div className='flex flex-grow snap-x snap-mandatory flex-row gap-2 overflow-x-auto p-2 *:flex-shrink-0'>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always auto-rows-fr grid-cols-[auto_1fr] grid-rows-[auto] gap-1 md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-center text-xl font-bold text-green-600'>
+                            Auto
+                        </h2>
                         <Counter value={autoLeave} onChange={setAutoLeave}>
                             Auto Leave
                         </Counter>
@@ -107,8 +116,10 @@ function ScoreCalculator() {
                             Auto Amp
                         </Counter>
                     </div>
-                    <div className='grid w-[calc(100%_-_2rem)] snap-center snap-always grid-cols-[auto_1fr] grid-rows-[auto] auto-rows-fr md:w-auto md:flex-grow md:basis-0 gap-1'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Teleop</h2>
+                    <div className='grid w-[calc(100%_-_2rem)] snap-center snap-always auto-rows-fr grid-cols-[auto_1fr] grid-rows-[auto] gap-1 md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-center text-xl font-bold text-green-600'>
+                            Teleop
+                        </h2>
                         <Counter value={teleSpeaker} onChange={setTeleSpeaker}>
                             Tele Speaker
                         </Counter>
@@ -123,8 +134,10 @@ function ScoreCalculator() {
                         </Counter>
                     </div>
 
-                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always grid-cols-[auto_1fr]  grid-rows-[auto] auto-rows-fr  md:w-auto md:flex-grow md:basis-0 gap-1'>
-                        <h2 className='col-span-2 text-xl text-green-600 text-center font-bold'>Endgame</h2>
+                    <div className='grid w-[calc(100%_-_1rem)] snap-center snap-always auto-rows-fr  grid-cols-[auto_1fr] grid-rows-[auto]  gap-1 md:w-auto md:flex-grow md:basis-0'>
+                        <h2 className='col-span-2 text-center text-xl font-bold text-green-600'>
+                            Endgame
+                        </h2>
                         <Counter value={park} onChange={setPark}>
                             Park
                         </Counter>
@@ -175,7 +188,11 @@ function ScoreCalculator() {
 
                     <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center'>
                         Foul Points:{' '}
-                        <NumberInput className='rounded-lg bg-black/15 p-2 py-1 w-16 text-center' value={foulPoints} onChange={setFoulPoints} />
+                        <NumberInput
+                            className='w-16 rounded-lg bg-black/15 p-2 py-1 text-center'
+                            value={foulPoints}
+                            onChange={setFoulPoints}
+                        />
                     </p>
 
                     <p className='text-black-100 text-md rounded-md border-green-800 bg-green-400/70 px-3 py-2 text-center font-black'>

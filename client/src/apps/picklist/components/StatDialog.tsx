@@ -12,9 +12,9 @@ function StatDialog({
     onClose?: () => void;
 }) {
     const [title, setTitle] = useState('');
-    
+
     const [weighted, setWeighted] = useState(false);
-    
+
     const handleSubmit = () => {
         onSubmit({
             title: title || 'Stat Table',

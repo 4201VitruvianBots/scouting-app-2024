@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import { dotenvLoad } from 'dotenv-mono';
-import fs from 'fs'; 
+import fs from 'fs';
 
 dotenvLoad({ path: '.env' });
 dotenvLoad({ path: '.env.local' });
@@ -38,7 +38,6 @@ const result = await fetch(
     }
 );
 
-
 function teamNumber(teamString: string) {
     return parseInt(teamString.slice(3));
 }
@@ -60,6 +59,9 @@ const schedule = Object.fromEntries(
 
 console.log(schedule);
 
-fs.writeFileSync('../client/src/assets/matchSchedule.json', JSON.stringify(schedule));
+fs.writeFileSync(
+    '../client/src/assets/matchSchedule.json',
+    JSON.stringify(schedule)
+);
 
-console.log('Don\'t forget to run npm run build!');
+console.log("Don't forget to run npm run build!");

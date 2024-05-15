@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { MatchScores } from '../apps/match/MatchApp';
+import { MatchScores } from '../MatchApp';
 import { ClimbPosition, ScouterPosition } from 'requests';
-import MultiButton from './MultiButton';
+import MultiButton from '../../../components/MultiButton';
 
 function EndgameButton({
     setClimb,
@@ -29,7 +29,7 @@ function EndgameButton({
             ...prevCount,
             ['trap']: prevCount['trap'] + 1,
         }));
-    }
+    };
 
     return (
         <>
@@ -74,11 +74,15 @@ function EndgameButton({
                     ]}
                 />
             </div>
-            <div className = 'flex justify-center pt-24'>
-            <button onClick={() => { if (count.trap < 3) handleTrap() }} style={{ fontSize: '30px'}}
-                        className='px-2 py-1 text-center bg-blue-300 rounded-md'>
-                        Trap Notes: {count.trap}
-                    </button>
+            <div className='flex justify-center pt-24'>
+                <button
+                    onClick={() => {
+                        if (count.trap < 3) handleTrap();
+                    }}
+                    style={{ fontSize: '30px' }}
+                    className='rounded-md bg-blue-300 px-2 py-1 text-center'>
+                    Trap Notes: {count.trap}
+                </button>
             </div>
         </>
     );

@@ -9,12 +9,16 @@ dotenv.load({ path: '.env.local' });
 await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27107/');
 
-console.log('Sending to remote server...')
+console.log('Sending to remote server...');
 
 const result = await sendExport();
 
 if (!result?.ok) {
-    console.error(result ? `Request failed: ${result.status} ${result.statusText}` : 'Request failed');
+    console.error(
+        result
+            ? `Request failed: ${result.status} ${result.statusText}`
+            : 'Request failed'
+    );
 }
 
 await mongoose.disconnect();

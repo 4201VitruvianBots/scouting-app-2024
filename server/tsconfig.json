@@ -12,7 +12,7 @@
         // Handled by @typescript-esilnt
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        "noFallthroughCasesInSwitch": false,
+        "noFallthroughCasesInSwitch": false
     },
     "include": ["src/**/*.ts"]
 }

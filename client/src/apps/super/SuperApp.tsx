@@ -15,7 +15,7 @@ import {
 } from 'requests';
 import SuperTeam from './components/SuperTeam';
 import { SuperTeamState } from './components/SuperTeam';
-import MultiSelectFieldButton from '../../components/MultiSelectFieldButton';
+import MultiSelectFieldButton from './components/MultiSelectFieldButton';
 import NumberInput from '../../components/NumberInput';
 import MultiButton from '../../components/MultiButton';
 import { useStatus } from '../../lib/useStatus';
@@ -27,13 +27,12 @@ import { usePreventUnload } from '../../lib/usePreventUnload';
 
 const schedule = scheduleFile as MatchSchedule;
 
-
 const foulTypes: Foul[] = [
     'insideRobot',
-    'protectedZone', 
+    'protectedZone',
     'pinning',
     'multiplePieces',
-    'other'
+    'other',
 ];
 
 const defaultHighNote: HighNote = {
@@ -132,7 +131,7 @@ function SuperApp() {
                     },
                     fouls: team.foulCounts,
                     break: team.breakCount,
-            defense: team.defenseRank,
+                    defense: team.defenseRank,
                     defended: team.wasDefended,
                     humanShooter:
                         shooterPlayerTeam === team.teamNumber
@@ -207,9 +206,8 @@ function SuperApp() {
             <h1 className='col-span-3 p-5 text-3xl font-bold text-[#48c55c]'>
                 Super Scouting App
             </h1>
-            
+
             <div className='fixed left-4 top-4 z-20 flex flex-row gap-3 rounded-md bg-slate-200 p-1'>
-               
                 <LinkButton link='/' className='snap-none'>
                     <MaterialSymbol
                         icon='home'
@@ -251,7 +249,6 @@ function SuperApp() {
                         />
                     )}
                 </Dialog>
-                
 
                 <button
                     onClick={undoHistoryCount}
@@ -265,8 +262,6 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </button>
-                
-           
             </div>
 
             <p className='text-xl text-white'>Match Number</p>
@@ -274,14 +269,13 @@ function SuperApp() {
                 onChange={setMatchNumber}
                 value={matchNumber}
                 className='m-2 p-2 text-xl text-black'
-            /> 
+            />
 
-            <div className='grid grid-cols-3 justify-items-center px-10 gap-10'>
+            <div className='grid grid-cols-3 justify-items-center gap-10 px-10'>
                 <SuperTeam teamState={team1} setTeamState={handleTeam1} />
                 <SuperTeam teamState={team2} setTeamState={handleTeam2} />
                 <SuperTeam teamState={team3} setTeamState={handleTeam3} />
             </div>
-            
 
             <MultiButton
                 className='mx-5 mt-10 w-full max-w-40 outline-black'
@@ -307,7 +301,6 @@ function SuperApp() {
                 alliance={superPosition === 'blue_ss'}
                 scouterPosition={scouterPosition}
                 className='relative mx-auto my-5 h-[40em] w-[40em] justify-items-center bg-cover bg-center '></MultiSelectFieldButton>
-
 
             <button
                 onClick={() => {

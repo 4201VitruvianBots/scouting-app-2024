@@ -1,4 +1,3 @@
-
 import { EffectCallback, useEffect, useRef } from 'react';
 
 function useWatch(callback: EffectCallback, dependency: unknown) {

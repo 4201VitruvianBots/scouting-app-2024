@@ -15,7 +15,7 @@ function TeamSummaryDialog({
 }) {
     // Get all team numbers from the json data
     const teamNumbers = data?.map(e => e.teamNumber.toString()) ?? [];
-    
+
     // Sort the team numbers
     teamNumbers.sort((a, b) => Number(a) - Number(b));
 
@@ -24,7 +24,13 @@ function TeamSummaryDialog({
 
     const handleSubmit = () => {
         if (teamNumber) {
-            onSubmit({ title: teamNumber ? title || "Team " + teamNumber + " Summary" : "", teamNumber: Number(teamNumber), type: 'TeamSummary' });
+            onSubmit({
+                title: teamNumber
+                    ? title || 'Team ' + teamNumber + ' Summary'
+                    : '',
+                teamNumber: Number(teamNumber),
+                type: 'TeamSummary',
+            });
             onClose?.();
         }
     };
@@ -38,7 +44,7 @@ function TeamSummaryDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
+
             <label>
                 Team
                 <SelectSearch
@@ -55,8 +61,12 @@ function TeamSummaryDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={teamNumber ? title || "Team " + teamNumber + " Summary" : ""}
-                        className="p-1"
+                        placeholder={
+                            teamNumber
+                                ? title || 'Team ' + teamNumber + ' Summary'
+                                : ''
+                        }
+                        className='p-1'
                     />
                 </label>
             </p>

@@ -24,13 +24,19 @@ function BarGraphDialog({
     const [title, setTitle] = useState('');
     const [column, setColumn] = useState<string>();
     const [ascending, setAscending] = useState(false);
-    
+
     const [showAll, setShowAll] = useState(true);
     const [top, setTop] = useState('');
 
     const handleSubmit = () => {
         if (column) {
-            onSubmit({title: title || camelToSpaced(column || ''), column, ascending, type: 'BarGraph', top: parseInt(top)});
+            onSubmit({
+                title: title || camelToSpaced(column || ''),
+                column,
+                ascending,
+                type: 'BarGraph',
+                top: parseInt(top),
+            });
             onClose?.();
         }
     };
@@ -44,11 +50,14 @@ function BarGraphDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
+
             <label>
                 Column
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    options={columns.map(e => ({
+                        value: e,
+                        name: camelToSpaced(e),
+                    }))}
                     value={column}
                     placeholder='Select Stat'
                     onChange={value => setColumn(value as string)}
@@ -66,11 +75,13 @@ function BarGraphDialog({
                 </label>
             </p>
             <p>
-                <Checkbox checked={showAll} onChange={setShowAll}>Show All?</Checkbox>
+                <Checkbox checked={showAll} onChange={setShowAll}>
+                    Show All?
+                </Checkbox>
             </p>
             <p>
                 <label>
-                    Show Top 
+                    Show Top
                     <TextInput
                         value={top}
                         onChange={setTop}

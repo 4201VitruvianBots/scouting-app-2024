@@ -26,7 +26,7 @@ function generateWindow(
     teamInfoJson: TeamData,
     pitData: PitResult,
     addToFocused: Dispatch<WindowData>,
-    setFinalPicklist: Dispatch<number[]>,
+    setFinalPicklist: Dispatch<number[]>
 ) {
     switch (table.type) {
         case 'StatTable':
@@ -84,15 +84,15 @@ function PicklistApp() {
     );
     const [pitData, reloadPitData] = useFetchJson<PitResult>('/data/pit');
     const [teamInfo] = useFetchJson<TeamData>('/team_info.json');
-    
+
     const [views, setViews, addToFocused, controls] =
         useWorkspaceState<WindowData>();
-    
+
     const [finalPicklist, setFinalPicklist] = useState<number[]>([]);
-    
+
     return (
-        <main className='grid h-screen grid-rows-[auto_1fr] relative overflow-hidden'>
-            <div className='flex items-center border-b border-black py-3 bg-gray-100'>
+        <main className='relative grid h-screen grid-rows-[auto_1fr] overflow-hidden'>
+            <div className='flex items-center border-b border-black bg-gray-100 py-3'>
                 <LinkButton
                     link='/'
                     className='flex snap-none items-center justify-center px-2'>
@@ -105,16 +105,37 @@ function PicklistApp() {
                         className='snap-none'
                     />
                 </LinkButton>
-                
-                <button className='flex snap-none items-center justify-center px-2' onClick={() => {reloadData(); reloadPitData();}} title="Refresh Data">
-                    <MaterialSymbol icon="refresh" size={50} grade={200} color='black' className='snap-none'/>
+
+                <button
+                    className='flex snap-none items-center justify-center px-2'
+                    onClick={() => {
+                        reloadData();
+                        reloadPitData();
+                    }}
+                    title='Refresh Data'>
+                    <MaterialSymbol
+                        icon='refresh'
+                        size={50}
+                        grade={200}
+                        color='black'
+                        className='snap-none'
+                    />
                 </button>
-                
+
                 <Dialog
                     trigger={open => (
-                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Table">
-                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
-                                <MaterialSymbol icon="table" size={50} grade={200} color='black' className='snap-none'/>
+                        <button
+                            className='flex snap-none items-center justify-center px-2'
+                            onClick={open}
+                            title='Add Stat Table'>
+                            <div className='flex items-center justify-center border border-black bg-gray-300 p-1'>
+                                <MaterialSymbol
+                                    icon='table'
+                                    size={50}
+                                    grade={200}
+                                    color='black'
+                                    className='snap-none'
+                                />
                             </div>
                         </button>
                     )}>
@@ -124,9 +145,18 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Stat Summary">
-                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
-                                <MaterialSymbol icon="graphic_eq" size={50} grade={200} color='black' className='snap-none'/>
+                        <button
+                            className='flex snap-none items-center justify-center px-2'
+                            onClick={open}
+                            title='Add Stat Summary'>
+                            <div className='flex items-center justify-center border border-black bg-gray-300 p-1'>
+                                <MaterialSymbol
+                                    icon='graphic_eq'
+                                    size={50}
+                                    grade={200}
+                                    color='black'
+                                    className='snap-none'
+                                />
                             </div>
                         </button>
                     )}>
@@ -140,9 +170,18 @@ function PicklistApp() {
                 </Dialog>
                 <Dialog
                     trigger={open => (
-                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Bar Graph">
-                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
-                                <MaterialSymbol icon="bar_chart_4_bars" size={50} grade={200} color='black' className='snap-none'/>
+                        <button
+                            className='flex snap-none items-center justify-center px-2'
+                            onClick={open}
+                            title='Add Bar Graph'>
+                            <div className='flex items-center justify-center border border-black bg-gray-300 p-1'>
+                                <MaterialSymbol
+                                    icon='bar_chart_4_bars'
+                                    size={50}
+                                    grade={200}
+                                    color='black'
+                                    className='snap-none'
+                                />
                             </div>
                         </button>
                     )}>
@@ -172,9 +211,18 @@ function PicklistApp() {
                 </Dialog> */}
                 <Dialog
                     trigger={open => (
-                        <button className='flex snap-none items-center justify-center px-2' onClick={open} title="Add Team Summary">
-                            <div className='flex items-center justify-center bg-gray-300 border border-black p-1'>
-                                <MaterialSymbol icon="robot" size={50} grade={200} color='black' className='snap-none'/>
+                        <button
+                            className='flex snap-none items-center justify-center px-2'
+                            onClick={open}
+                            title='Add Team Summary'>
+                            <div className='flex items-center justify-center border border-black bg-gray-300 p-1'>
+                                <MaterialSymbol
+                                    icon='robot'
+                                    size={50}
+                                    grade={200}
+                                    color='black'
+                                    className='snap-none'
+                                />
                             </div>
                         </button>
                     )}>
@@ -186,7 +234,9 @@ function PicklistApp() {
                         />
                     )}
                 </Dialog>
-                <h1 className='text-3xl font-bold flex-grow text-center xl:absolute xl:p-6 left-1/2 xl:-translate-x-1/2'>Statistical Analysis</h1>
+                <h1 className='left-1/2 flex-grow text-center text-3xl font-bold xl:absolute xl:-translate-x-1/2 xl:p-6'>
+                    Statistical Analysis
+                </h1>
             </div>
             <Workspace value={views} onChange={setViews} controls={controls}>
                 {(value, onChange) => {
@@ -204,7 +254,13 @@ function PicklistApp() {
                     );
                 }}
             </Workspace>
-            <FinalPicklist onSubmit={addToFocused} teamInfoJson={teamInfo || {}} data={analyzedData} picklist={finalPicklist} setPicklist={setFinalPicklist}/>
+            <FinalPicklist
+                onSubmit={addToFocused}
+                teamInfoJson={teamInfo || {}}
+                data={analyzedData}
+                picklist={finalPicklist}
+                setPicklist={setFinalPicklist}
+            />
         </main>
     );
 }

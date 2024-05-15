@@ -18,7 +18,7 @@
 
 @layer utilities {
     .trapezoid-r {
-        clip-path: polygon( 0 0, 0 100%, 100% 75%, 100% 25%);
+        clip-path: polygon(0 0, 0 100%, 100% 75%, 100% 25%);
     }
     .trapezoid-l {
         clip-path: polygon(100% 0, 100% 100%, 0 75%, 0 25%);

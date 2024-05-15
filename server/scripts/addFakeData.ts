@@ -16,15 +16,15 @@ await startDockerContainer(process.env.CONTAINER_NAME);
 await mongoose.connect('mongodb://0.0.0.0:27017/');
 
 const comments: CommentValues[] = [
-    'great_driving', 
-    'good_driving', 
-    'source_only', 
-    'clogging', 
-    'effective_defense', 
-    'okay_defense', 
-    'ineffective_defense', 
-    'sturdy_build', 
-    'weak_build', 
+    'great_driving',
+    'good_driving',
+    'source_only',
+    'clogging',
+    'effective_defense',
+    'okay_defense',
+    'ineffective_defense',
+    'sturdy_build',
+    'weak_build',
     'avoids_under_stage',
 ];
 
@@ -33,7 +33,7 @@ dotenvLoad({ path: '.env.local' });
 
 const apiKey = process.env.API_KEY!;
 const eventKey = process.env.EVENT_KEY!;
-console.log(apiKey)
+console.log(apiKey);
 
 interface SimpleTeam {
     key: string;
@@ -54,7 +54,7 @@ const result = await fetch(
     }
 );
 
-console.log(result.status)
+console.log(result.status);
 
 const data = (await result.json()) as SimpleTeam[];
 console.log(data);
@@ -62,7 +62,14 @@ const teams = data.map(e => e.team_number).sort((a, b) => a - b);
 console.log(teams);
 
 for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
-    for (const robotPosition of ['red_1', 'red_2', 'red_3', 'blue_1', 'blue_2', 'blue_3'] as const) {
+    for (const robotPosition of [
+        'red_1',
+        'red_2',
+        'red_3',
+        'blue_1',
+        'blue_2',
+        'blue_3',
+    ] as const) {
         console.log(matchNumber);
         const team = choose(teams);
         await new matchApp({
@@ -71,9 +78,16 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
                 mid: randint(5),
                 near: randint(5),
                 amp: randint(5),
-                miss: randint(5)
+                miss: randint(5),
             },
-            climb: choose(['amp', 'center', 'failed', 'none', 'park', 'source']),
+            climb: choose([
+                'amp',
+                'center',
+                'failed',
+                'none',
+                'park',
+                'source',
+            ]),
             leftStartingZone: Math.random() > 0.5,
             metadata: {
                 robotPosition,
@@ -86,12 +100,12 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
                 mid: randint(10),
                 near: randint(10),
                 amp: randint(10),
-                miss: randint(10)
+                miss: randint(10),
             },
-        
+
             trapNotes: randint(2),
-        } satisfies MatchData).save()
-        
+        } satisfies MatchData).save();
+
         await new superApp({
             metadata: {
                 robotPosition,
@@ -114,14 +128,17 @@ for (let matchNumber = 1; matchNumber < 400; matchNumber++) {
             defense: choose(['fullDef', 'someDef', 'noDef']),
             defended: Math.random() > 0.5,
             comments: comments.filter(() => randint(4) === 0),
-            humanShooter: randint(3) === 0 ? {
-                highNotes: {
-                    amp: Math.random() > 0.5,
-                    source: Math.random() > 0.5,
-                    center: Math.random() > 0.5
-                }
-            } : undefined
-        } satisfies SuperData).save()
+            humanShooter:
+                randint(3) === 0
+                    ? {
+                          highNotes: {
+                              amp: Math.random() > 0.5,
+                              source: Math.random() > 0.5,
+                              center: Math.random() > 0.5,
+                          },
+                      }
+                    : undefined,
+        } satisfies SuperData).save();
     }
 }
 

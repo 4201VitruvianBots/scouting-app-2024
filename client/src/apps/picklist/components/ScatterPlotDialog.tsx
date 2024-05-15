@@ -27,7 +27,11 @@ function ScatterPlotDialog({
     const handleSubmit = () => {
         if (xColumn && yColumn) {
             onSubmit({
-                title: title || camelToSpaced((xColumn || "")) + "/" + camelToSpaced(yColumn || ""),
+                title:
+                    title ||
+                    camelToSpaced(xColumn || '') +
+                        '/' +
+                        camelToSpaced(yColumn || ''),
                 xColumn: xColumn || '',
                 yColumn: yColumn || '',
                 type: 'ScatterPlotGraph',
@@ -45,11 +49,14 @@ function ScatterPlotDialog({
                     <MaterialSymbol icon='close' />
                 </button>
             </div>
-            
+
             <label>
                 X axis
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    options={columns.map(e => ({
+                        value: e,
+                        name: camelToSpaced(e),
+                    }))}
                     value={xColumn}
                     placeholder='Select X axis'
                     onChange={value => setXColumn(value as string)}
@@ -59,7 +66,10 @@ function ScatterPlotDialog({
             <label>
                 Y axis
                 <SelectSearch
-                    options={columns.map(e => ({ value: e, name: camelToSpaced(e) }))}
+                    options={columns.map(e => ({
+                        value: e,
+                        name: camelToSpaced(e),
+                    }))}
                     value={yColumn}
                     placeholder='Select Y axis'
                     onChange={value => setYColumn(value as string)}
@@ -72,7 +82,13 @@ function ScatterPlotDialog({
                     <TextInput
                         value={title}
                         onChange={setTitle}
-                        placeholder={xColumn && yColumn ? camelToSpaced(xColumn) + "/" + camelToSpaced(yColumn) : ""}
+                        placeholder={
+                            xColumn && yColumn
+                                ? camelToSpaced(xColumn) +
+                                  '/' +
+                                  camelToSpaced(yColumn)
+                                : ''
+                        }
                     />
                 </label>
             </p>

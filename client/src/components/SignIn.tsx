@@ -3,7 +3,6 @@ import { RobotPosition, ScouterPosition, SuperPosition } from 'requests';
 import MultiButton from './MultiButton';
 import TextInput from './TextInput';
 
-
 function SignIn({
     scouterName,
     onChangeScouterName,
@@ -18,16 +17,14 @@ function SignIn({
     scouterName: string;
     onChangeScouterName: Dispatch<string>;
     onSubmit: () => void;
-    scouterPosition?: ScouterPosition | undefined
+    scouterPosition?: ScouterPosition | undefined;
     onChangeScouterPosition?: Dispatch<ScouterPosition>;
-    
 } & (
     | {
           superScouting: true;
           pitScouting?: false;
           robotPosition: SuperPosition | undefined;
           onChangeRobotPosition: Dispatch<SuperPosition>;
-
       }
     | {
           superScouting?: false;
@@ -35,9 +32,6 @@ function SignIn({
 
           robotPosition: RobotPosition | undefined;
           onChangeRobotPosition: Dispatch<RobotPosition>;
-
-         
-         
       }
     | {
           superScouting?: false;
@@ -45,8 +39,6 @@ function SignIn({
 
           robotPosition?: undefined;
           onChangeRobotPosition?: undefined;
-
-          
       }
 )) {
     const [showCheck, setShowCheck] = useState<boolean>(false);
@@ -89,8 +81,6 @@ function SignIn({
                             'bg-blue-500 text-white',
                         ]}
                     />
-
-                    
                 ) : pitScouting ? undefined : (
                     <MultiButton
                         onChange={onChangeRobotPosition}
@@ -132,22 +122,21 @@ function SignIn({
                 )}
 
                 {onChangeScouterPosition && (
-                    <div className={`col-span-2 col-start-1 ${superScouting ? 'row-start-4' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
-                    <MultiButton
-                        onChange={onChangeScouterPosition}
-                        value={scouterPosition}
-                        labels={['Blue on right', 'Red on right']}
-                        values={['blue_right', 'red_right']}
-                        className={'rounded-lg border-2  text-xl'}
-                        unSelectedClassName={'bg-gray-200 text-black'}
-                        selectedClassName={[
-                            'bg-blue-300 text-black border-blue-800',
-                            'bg-red-300 text-black border-red-800',
-                        ]}></MultiButton>
-                </div>
-
+                    <div
+                        className={`col-span-2 col-start-1 ${superScouting ? 'row-start-4' : 'row-start-6'} grid  grid-cols-2 gap-4`}>
+                        <MultiButton
+                            onChange={onChangeScouterPosition}
+                            value={scouterPosition}
+                            labels={['Blue on right', 'Red on right']}
+                            values={['blue_right', 'red_right']}
+                            className={'rounded-lg border-2  text-xl'}
+                            unSelectedClassName={'bg-gray-200 text-black'}
+                            selectedClassName={[
+                                'bg-blue-300 text-black border-blue-800',
+                                'bg-red-300 text-black border-red-800',
+                            ]}></MultiButton>
+                    </div>
                 )}
-                
 
                 <div
                     className={`col-span-2 flex  flex-row justify-self-center ${superScouting ? 'row-start-5' : pitScouting ? 'row-start-3' : 'row-start-7'} col-start-1 `}>

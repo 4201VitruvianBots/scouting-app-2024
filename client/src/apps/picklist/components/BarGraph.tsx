@@ -29,7 +29,9 @@ function BarGraph({
     // Create a list of colors for each team based on the colors stored in team_info.json
     const sortedTeamNumbers = sortedEntries.map(entry => entry.key as string);
 
-    const teamColors: ColorSchemeType = sortedTeamNumbers.map(teamNumber => teamInfoJson[teamNumber]?.primaryHex ?? '#7f7f7f');
+    const teamColors: ColorSchemeType = sortedTeamNumbers.map(
+        teamNumber => teamInfoJson[teamNumber]?.primaryHex ?? '#7f7f7f'
+    );
 
     return (
         <BarChart

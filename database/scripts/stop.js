@@ -1,7 +1,9 @@
+import chalk from 'chalk';
+
 async function stopDockerContainer(container) {
-    console.log('Stopping container...');
+    console.log(chalk.blue('Stopping container...'));
     await container.stop();
-    console.log('Stopped container');
+    console.log(chalk.green('Stopped container'));
 }
 
 export { stopDockerContainer };

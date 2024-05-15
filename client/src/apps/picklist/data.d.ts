@@ -1,13 +1,14 @@
 import { CommentValues } from 'requests';
 import { TabBase } from '../../components/workspace/workspaceData';
 
-export interface AnalysisEntry extends Record<string, string | number | boolean> {
+export interface AnalysisEntry
+    extends Record<string, string | number | boolean> {
     teamNumber: number;
     Comments: Record<CommentValues, number>;
 }
 
 export interface StatTableData extends TabBase {
-    type: "StatTable";
+    type: 'StatTable';
     columns: string[];
     sortColumn?: string;
     ascending: boolean;
@@ -19,23 +20,28 @@ export interface BarGraphData extends TabBase {
     column: string;
     ascending: boolean;
     top: number;
-    type: "BarGraph";
+    type: 'BarGraph';
 }
 
 export interface ScatterPlotGraphData extends TabBase {
     xColumn: string;
     yColumn: string;
-    type: "ScatterPlotGraph";
+    type: 'ScatterPlotGraph';
 }
 
 export interface StatSummaryData extends TabBase {
     column: string;
-    type: "StatSummary";
+    type: 'StatSummary';
 }
 
 export interface TeamSummaryData extends TabBase {
     teamNumber: number;
-    type: "TeamSummary";
+    type: 'TeamSummary';
 }
 
-export type WindowData = StatTableData | BarGraphData | ScatterPlotGraphData | StatSummaryData | TeamSummaryData; // | WeightedTableData | BlankTableData | ...
+export type WindowData =
+    | StatTableData
+    | BarGraphData
+    | ScatterPlotGraphData
+    | StatSummaryData
+    | TeamSummaryData; // | WeightedTableData | BlankTableData | ...

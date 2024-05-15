@@ -7,7 +7,7 @@ function base64toImage(base64: string): HTMLImageElement {
         byteNumbers[j] = byteCharacters.charCodeAt(j);
     }
     const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], {type: 'image/png'});
+    const blob = new Blob([byteArray], { type: 'image/png' });
     avatarImage.src = URL.createObjectURL(blob);
     return avatarImage;
 }
