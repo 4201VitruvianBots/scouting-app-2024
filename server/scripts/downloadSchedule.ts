@@ -5,7 +5,9 @@ import fs from 'fs';
 dotenvLoad({ path: '.env' });
 dotenvLoad({ path: '.env.local' });
 const apiKey = process.env.API_KEY!;
-const eventKey = process.env.EVENT_KEY!;
+const eventKey = process.env.EVENT_KEY!;    
+
+console.log(apiKey);
 interface SimpleMatch {
     key: string;
     comp_level: 'qm' | 'ef' | 'qf' | 'sf' | 'f';

@@ -22,6 +22,7 @@ import { useStatus } from '../../lib/useStatus';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import ConeStacker from '../../components/ConeStacker';
 // import CreatableSelect from 'react-select/creatable';
 // import SelectSearch, { SelectSearchOption } from 'react-select-search';
 
@@ -262,6 +263,7 @@ function SuperApp() {
                         className='snap-none'
                     />
                 </button>
+                <ConeStacker />
             </div>
 
             <p className='text-xl text-white'>Match Number</p>

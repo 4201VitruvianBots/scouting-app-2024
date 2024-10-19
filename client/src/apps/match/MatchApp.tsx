@@ -19,6 +19,7 @@ import TeamDropdown from '../../components/TeamDropdown';
 import { useQueue } from '../../lib/useQueue';
 import scheduleFile from '../../assets/matchSchedule.json';
 import { usePreventUnload } from '../../lib/usePreventUnload';
+import ConeStacker from '../../components/ConeStacker';
 
 const schedule = scheduleFile as MatchSchedule;
 
@@ -259,6 +260,7 @@ function MatchApp() {
                         className='snap-none'
                     />
                 </button>
+                <ConeStacker />
             </div>
 
             <p className='mb-2 mt-2 text-2xl'>Match Number</p>
